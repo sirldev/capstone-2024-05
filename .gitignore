@@ -1,0 +1,6 @@
+retrieval/secrets.json
+test.ipynb
+documents
+__pycache__
+retrieval/document.csv
+.DS_Store
