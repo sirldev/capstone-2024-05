@@ -20,3 +20,5 @@ jobs:
           auto_approve: true
           auto_merge: true
           pr_title: Update From Upstream
+          retries: 2
+          retry_after: 60
