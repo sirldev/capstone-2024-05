@@ -2,7 +2,7 @@ name: Sync Fork
 
 on:
   schedule:
-    - cron: "*/30 * * * *" # every 30 minutes
+    - cron: "0 9 * * *"
   workflow_dispatch: # on button click
 
 jobs:
@@ -16,7 +16,7 @@ jobs:
           owner: kookmin-sw
           repo: capstone-2024-05
           base: main
-          head: main
+          head: feature/02
           auto_approve: true
           auto_merge: true
-          pr_title: chore Update from parent repository
+          pr_title: Update From Upstream
