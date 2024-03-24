@@ -14,5 +14,9 @@ jobs:
         with:
           token: ${{ secrets.PERSONAL_TOKEN }}
           owner: kookmin-sw
+          repo: capstone-2024-05
           base: main
           head: main
+          auto_approve: true
+          auto_merge: true
+          pr_title: chore Update from parent repository
