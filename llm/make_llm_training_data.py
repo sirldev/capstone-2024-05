@@ -44,7 +44,8 @@ for file_name in raw_data_list:
                 ) as json_file:
                     json.dump(json_object, json_file, ensure_ascii=False, indent="\t")
             except Exception as e:
-                with open("./parsing_error.txt", "w") as file:
+                with open("./parsing_error.txt", "a") as file:
                     file.write(f"{file_name}_{i}.json" + "\n")
+                    file.write(str(e) + "\n")
                     file.write(original_response + "\n")
                     file.write("\n")
