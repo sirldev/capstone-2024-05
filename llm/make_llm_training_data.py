@@ -29,15 +29,22 @@ for file_name in raw_data_list:
                 },
             ],
         )
-        response = completion.choices[0].message.content
+        original_response = completion.choices[0].message.content
+        response = original_response
         for i in range(1, 4):
-            s_idx = response.find("```json")
-            e_idx = response.find("```", 3)
-            s_idx += 7  # "```json" length
-            raw_json = response[s_idx:e_idx]
-            json_object = json.loads(raw_json)
-            response = response[e_idx + 3 :]
-            with open(
-                f"{OUTPUT_DATA_PATH}/{file_name}_{i}.json", "w", encoding="utf-8"
-            ) as json_file:
-                json.dump(json_object, json_file, ensure_ascii=False, indent="\t")
+            try:
+                s_idx = response.find("```json")
+                e_idx = response.find("```", 3)
+                s_idx += 7  # "```json" length
+                raw_json = response[s_idx:e_idx]
+                json_object = json.loads(raw_json)
+                response = response[e_idx + 3 :]
+                with open(
+                    f"{OUTPUT_DATA_PATH}/{file_name}_{i}.json", "w", encoding="utf-8"
+                ) as json_file:
+                    json.dump(json_object, json_file, ensure_ascii=False, indent="\t")
+            except Exception as e:
+                with open("./parsing_error.txt", "w") as file:
+                    file.write(f"{file_name}_{i}.json" + "\n")
+                    file.write(original_response + "\n")
+                    file.write("\n")
