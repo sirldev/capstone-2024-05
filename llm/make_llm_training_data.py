@@ -25,7 +25,7 @@ for file_name in raw_data_list:
                 {"role": "system", "content": config["prompt"]["persona"]},
                 {
                     "role": "user",
-                    "content": f"{config['prompt']['instruction_generation']}\n```\n{document}\n```\n'''\n{config['prompt']['instruction_generation_one_shot']}\n'''",
+                    "content": f"{config["prompt"]["instruction_generation"]}\n```\n{document}",
                 },
             ],
         )
