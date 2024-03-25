@@ -25,20 +25,18 @@ for file_name in raw_data_list:
                 {"role": "system", "content": config["prompt"]["persona"]},
                 {
                     "role": "user",
-                    "content": f"{config["prompt"]["instruction_generation"]}\n```\n{document}",
+                    "content": f"{config['prompt']['instruction_generation']}\n```\n{document}",
                 },
             ],
         )
         response = completion.choices[0].message.content
-        response = response.replace("```", "")
         for i in range(1, 4):
-            s_idx = response.find(f"{i}번: ")
-            s_idx += 4  # "{i}번: " length
-            e_idx = response.find(f"{i + 1}번: ")
-            if e_idx == -1:  # not exist -> last data
-                e_idx = len(response)
+            s_idx = response.find("```json")
+            e_idx = response.find("```", 3)
+            s_idx += 7  # "```json" length
             raw_json = response[s_idx:e_idx]
             json_object = json.loads(raw_json)
+            response = response[e_idx + 3 :]
             with open(
                 f"{OUTPUT_DATA_PATH}/{file_name}_{i}.json", "w", encoding="utf-8"
             ) as json_file:
