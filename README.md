@@ -3,17 +3,20 @@
 > 2024 KookminUniv SW 캡스톤 디자인 5조  
 > Github page : [https://kookmin-sw.github.io/capstone-2024-05/](https://kookmin-sw.github.io/capstone-2024-05/)
 
-
+<br/>
+<br/>
 
 ## 📔 목차
-
 - [💡 프로젝트 소개](#💡-프로젝트-소개)
 - [🛠️ 기술스택](#🛠️-기술스택)
 - [💻 서비스 구조도](#💻-서비스-구조도)
 - [📌 주요 기능](#📌-주요-기능)
-- [🧑🏻‍💻 팀 소개](#🧑🏻‍💻-팀-소개)
+- [🧑‍💻 팀 소개](#🧑‍💻-팀-소개)
 <!-- - [✏️ 사용법](#-사용법)
 - [📹 시연 영상](#-시연-영상) -->
+
+<br/>
+<br/>
 
 ## 💡 프로젝트 소개
 
@@ -30,14 +33,114 @@ CloudFormation은 AWS 리소스를 자동으로 생성해 주는 서비스입니
 * **오류 감소** : **'Stack OrderFlow'** 를 통해 생성된 템플릿은 유효성 검사를 진행하므로, 사용자가 직접 템플릿을 작성했을 때 발생할 수 있는 실수를 방지할 수 있습니다.
 * **지식 공유** : 템플릿 파일 허브 기능을 통해 사용자들은 다른 사람들이 어떤 요구사항으로 어떤 템플릿을 생성했는지 볼 수 있어, 리소스 관리에 대한 지식과 영감을 얻을 수 있습니다.
 
+<br/>
+<br/>
 
 ## 🛠️ 기술스택
 
+<!-- ### AI
+
+### Backend
+
+<img src="https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white"/>
+<img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=flat-square&logo=postgreSQL&logoColor=white"/>
+
+### Frontend
+
+<img src="https://img.shields.io/badge/Next.js-000000?style=flat-square&logo=nextdotjs&logoColor=white"/>
+
+### Tools
+
+<img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=GitHub&logoColor=white"/> <img src="https://img.shields.io/badge/Figma-F24E1E?style=flat-square&logo=Figma&logoColor=white"/> <img src="https://img.shields.io/badge/Notion-000000?style=flat-square&logo=Notion&logoColor=white"/> -->
+
+### 📚 AI
+<div style="text-align:center">
+  <table >
+    <tr>
+      <td><strong>Framework</strong></td>
+      <td><img src="https://img.shields.io/badge/LangChain-294444?style=&logo=LangChain&logoColor=white" style="margin-top: 6px;"/>
+    </tr>
+    <tr>
+      <td><strong>Library</strong></td>
+      <td><img src="https://img.shields.io/badge/PyTorch-EE4C2C?style=&logo=pytorch&logoColor=white" style="margin-top: 6px;"/>
+    </tr>
+   </table>     
+  </div>
+<br />
+
+### 📚 Backend
+<div style="text-align:center">
+  <table >
+    <tr>
+      <td><strong>Framework</strong></td>
+      <td><img src="https://img.shields.io/badge/FastAPI-009688?style=&logo=fastapi&logoColor=white" style="margin-top: 6px;"/>
+    </tr>
+    <tr>
+      <td><strong>Database</strong></td>
+      <td><img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=&logo=postgreSQL&logoColor=white" style="margin-top: 6px;"/>
+    </tr>
+   </table>     
+  </div>
+<br />
+
+### 📚 Frontend
+<div style="text-align:center">
+  <table >
+    <tr>
+      <td><strong>Framework</strong></td>
+      <td><img src="https://img.shields.io/badge/Next.js-000000?style=e&logo=nextdotjs&logoColor=white" style="margin-top: 6px;"/>
+    </tr>
+   </table>     
+  </div>
+  <br />
+
+
+### 📚 Tools
+<div style="text-align:center">
+  <table>
+  <tr>
+      <td><strong>Version Control</strong></td>
+      <td><img alt="RED" src ="https://img.shields.io/badge/git-E6484F.svg?style=&logo=git&logoColor=white" style="margin-top: 6px;"/>  <img alt="RED" src ="https://img.shields.io/badge/github-%23121011.svg?style=&logo=github&logoColor=white style="margin-top: 6px;""/> </td>
+    </tr>
+    <tr>
+      <td><strong>Project Management</strong></td>
+      <td><img alt="RED" src ="https://img.shields.io/badge/Notion-000000.svg?&style=&logo=Notion&logoColor=white" style="margin-top: 6px;"/></td>
+    </tr>
+    <tr>
+      <td><strong>Design</strong></td>
+      <td><img alt="RED" src ="https://img.shields.io/badge/Figma-F24E1E.svg?&style=&logo=Figma&logoColor=white" style="margin-top: 6px;"/></td>
+    </tr>
+   </table>  
+  </div>
+<br />
+
+<br/>
+
 ## 💻 서비스 구조도
+
+
+
+<br/><br/>
 
 ## 📌 주요 기능
 
-## 🧑🏻‍💻 팀 소개
+* 사용자 프롬프트 기반 템플릿 생성
+
+
+* 템플릿 유효성 검사 
+   
+
+* 템플릿 허브   
+	* 사용자의 서비스 이용 사례 저장 및 공유
+
+* 템플릿 수정 기능
+	* 사용자가 직접 Template에 내용을 추가 / 삭제할 수 있는 기능
+
+
+
+<br/><br/>
+
+## 🧑‍💻 팀 소개
 
 - 윤상원[팀장]
 > - 학번 : 20181651
