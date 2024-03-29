@@ -103,7 +103,9 @@ CloudFormation은 AWS 리소스를 자동으로 생성해 주는 서비스입니
 
 ## 💻 서비스 구조도
 
+![orderFlow_1](https://github.com/kookmin-sw/capstone-2024-05/assets/81635179/74100128-5140-466f-9cec-8f51b972d233)
 
+![orderFlow_2](https://github.com/kookmin-sw/capstone-2024-05/assets/81635179/d26f17bf-5dde-46c6-96ff-4a4758fa755c)
 
 <br/><br/>
 
