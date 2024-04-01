@@ -1,6 +1,7 @@
-retrieval/secrets.json
+secrets.json
 test.ipynb
 documents
 __pycache__
-retrieval/document.csv
+document.csv
 .DS_Store
+.python-version

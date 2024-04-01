@@ -1,6 +1,7 @@
 import json
+import os
 
-with open("secrets.json") as f:
+with open(os.path.join(os.path.dirname(__file__), "secrets.json")) as f:
     secrets = json.loads(f.read())
 
 
