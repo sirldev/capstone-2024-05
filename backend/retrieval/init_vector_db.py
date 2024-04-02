@@ -13,17 +13,17 @@ from settings import get_secret
 from tqdm.auto import tqdm
 
 # mysql
-db_passwd = get_secret("MYSQL_PSW")
+# db_passwd = get_secret("MYSQL_PSW")
 
-db = pymysql.connect(
-    user='root',
-    passwd=db_passwd,
-    host='127.0.0.1',
-    db='cfn-doc',
-    charset='utf8',
-)
+# db = pymysql.connect(
+#     user='root',
+#     passwd=db_passwd,
+#     host='127.0.0.1',
+#     db='cfn-doc',
+#     charset='utf8',
+# )
 
-print("DB connected!")
+# print("DB connected!")
 
 # huggingface hub
 documents = load_dataset("WinF/cfn_document", data_dir="data")
@@ -53,7 +53,7 @@ batch_size = 50
 texts = []
 metadatas = []
 count = 0
-cursor = db.cursor()
+# cursor = db.cursor()
 
 for _, record in enumerate(tqdm(documents["train"])):
     metadata = {
@@ -63,14 +63,15 @@ for _, record in enumerate(tqdm(documents["train"])):
 
     full_text = record["text"]
     full_text = full_text.replace("'", '"')
-    sql = f"insert into documents(content) values('{full_text}')"
-    cursor.execute(sql)
-    idx = cursor.lastrowid
+    # sql = f"insert into documents(content) values('{full_text}')"
+    # cursor.execute(sql)
+    # idx = cursor.lastrowid
     text_chunks = text_splitter.split_text(full_text)
     for i, text in enumerate(text_chunks):
         record = {
             "chunk": i,
-            "document-index": idx,
+            "content": text,
+            # "document-index": idx,
             **metadata
         }
         metadatas.append(record)
@@ -89,5 +90,5 @@ for _, record in enumerate(tqdm(documents["train"])):
                 print("retry")
                 time.sleep(1)
 
-db.commit()
-db.close()
+# db.commit()
+# db.close()
