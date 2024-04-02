@@ -1,18 +1,17 @@
-from typing import Dict, List, Tuple
+from typing import Dict, List
 
 from langchain_core.documents import Document
-from langchain_text_splitters import (HeaderType, LineType,
-                                      MarkdownHeaderTextSplitter)
+from langchain_text_splitters import HeaderType, LineType
 
 
-class MarkdownHeaderGroupSplitter(MarkdownHeaderTextSplitter):
+class MarkdownHeaderGroupSplitter():
     def __init__(
         self,
         headers_to_split_on_cnt: int,
         return_each_line: bool = False,
         strip_headers: bool = True,
     ):
-        """Create a new MarkdownHeaderTextSplitter.
+        """Create a new MarkdownHeaderGroupSplitter.
 
         Args:
             headers_to_split_on: Headers we want to track
