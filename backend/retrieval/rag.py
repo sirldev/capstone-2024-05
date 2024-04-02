@@ -11,7 +11,7 @@ sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 from utils.setup import setup_db, setup_embedding, setup_pinecone
 
 
-def retrieve_doc(question, db, pc_index, embedding, llm, top_k):
+def retrieve_doc(question, pc_index, embedding, llm, top_k):
     # embedded_question = embedding.embed_documents([question])
 
     # query_result = pc_index.query(
@@ -52,7 +52,7 @@ if __name__ == "__main__":
     logging.getLogger("langchain.retrievers.multi_query").setLevel(logging.INFO)
 
     # mysql
-    db = setup_db()
+    # db = setup_db()
 
     # pinecone
     pc_index = setup_pinecone()
@@ -63,10 +63,10 @@ if __name__ == "__main__":
 
     question = input("질문을 입력하세요: ")
 
-    result = retrieve_doc(question, db, pc_index, embedding, llm=llm, top_k=3)
+    result = retrieve_doc(question, pc_index, embedding, llm=llm, top_k=3)
 
     # for r in result:
     #     print(f"score: {r['score']}\n\ntitle: {r['title']}\n\ncontent: {r['content']}\n\n")
     print(result)
 
-    db.close()
+    # db.close()

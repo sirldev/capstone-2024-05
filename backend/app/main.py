@@ -30,7 +30,7 @@ def startup_event():
     global db, pc_index, embedding
 
     # mysql
-    db = setup_db()
+    # db = setup_db()
 
     # pinecone
     pc_index = setup_pinecone()
@@ -43,7 +43,7 @@ def startup_event():
 async def generate(instruction: Instruction):
     inst_sentence = instruction.instruction_sentence
 
-    retrieved_doc = retrieve_doc(question=inst_sentence, db=db, vector_db=pc_index, embedding=embedding, top_k=1)
+    retrieved_doc = retrieve_doc(question=inst_sentence, vector_db=pc_index, embedding=embedding, top_k=1)
 
     # template_file = gpt_genereate(instruction=instruction, retrieved_doc=retrieved_doc)
     template_file = gpt_generate_no_rag(instruction=instruction)
