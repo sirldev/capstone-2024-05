@@ -154,7 +154,7 @@ CloudFormation은 AWS 리소스를 자동으로 생성해 주는 서비스입니
 > - Email : sirl@kookmin.ac.kr
 
 - 성창엽
-> - 학번 : 2019
+> - 학번 : 20191611
 > - position : BE [Leader], AI
 > - Email : scy6500@kookmin.ac.kr
 
