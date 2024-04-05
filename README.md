@@ -40,7 +40,7 @@ CloudFormation은 AWS 리소스를 자동으로 생성해 주는 서비스입니
 
 ### 🤖 AI
 
-<table >
+<table>
   <tr>
     <td><strong>Framework</strong></td>
     <td><img src="https://img.shields.io/badge/LangChain-294444?style=&logo=LangChain&logoColor=white" style="margin-top: 6px;"/>
@@ -54,6 +54,7 @@ CloudFormation은 AWS 리소스를 자동으로 생성해 주는 서비스입니
 <br />
 
 ### 💾 Backend
+
 <table >
   <tr>
     <td><strong>Framework</strong></td>
@@ -64,19 +65,23 @@ CloudFormation은 AWS 리소스를 자동으로 생성해 주는 서비스입니
     <td><img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=&logo=postgreSQL&logoColor=white" style="margin-top: 6px;"/>
   </tr>
 </table>
+
 <br />
 
 ### 🖥️ Frontend
+
 <table >
   <tr>
     <td><strong>Framework</strong></td>
     <td><img src="https://img.shields.io/badge/Next.js-000000?style=e&logo=nextdotjs&logoColor=white" style="margin-top: 6px;"/>
   </tr>
-  </table>     
+</table>     
+
 <br />
 
 
 ### 📚 Tools
+
 <table>
   <tr>
     <td><strong>Version Control</strong></td>
@@ -94,6 +99,7 @@ CloudFormation은 AWS 리소스를 자동으로 생성해 주는 서비스입니
     <td><img alt="RED" src ="https://img.shields.io/badge/Figma-F24E1E.svg?&style=&logo=Figma&logoColor=white" style="margin-top: 6px;"/></td>
   </tr>
 </table>
+
 <br />
 
 <br/>
