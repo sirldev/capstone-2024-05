@@ -39,69 +39,66 @@ CloudFormation은 AWS 리소스를 자동으로 생성해 주는 서비스입니
 ## 🛠️ 기술스택
 
 ### 🤖 AI
-<div style="text-align:center">
-  <table >
-    <tr>
-      <td><strong>Framework</strong></td>
-      <td><img src="https://img.shields.io/badge/LangChain-294444?style=&logo=LangChain&logoColor=white" style="margin-top: 6px;"/>
-    </tr>
-    <tr>
-      <td><strong>Library</strong></td>
-      <td><img src="https://img.shields.io/badge/PyTorch-EE4C2C?style=&logo=pytorch&logoColor=white" style="margin-top: 6px;"/>
-    </tr>
-   </table>     
-  </div>
+
+<table >
+  <tr>
+    <td><strong>Framework</strong></td>
+    <td><img src="https://img.shields.io/badge/LangChain-294444?style=&logo=LangChain&logoColor=white" style="margin-top: 6px;"/>
+  </tr>
+  <tr>
+    <td><strong>Library</strong></td>
+    <td><img src="https://img.shields.io/badge/PyTorch-EE4C2C?style=&logo=pytorch&logoColor=white" style="margin-top: 6px;"/>
+  </tr>
+</table>
+
 <br />
 
 ### 💾 Backend
-<div style="text-align:center">
-  <table >
-    <tr>
-      <td><strong>Framework</strong></td>
-      <td><img src="https://img.shields.io/badge/FastAPI-009688?style=&logo=fastapi&logoColor=white" style="margin-top: 6px;"/>
-    </tr>
-    <tr>
-      <td><strong>Database</strong></td>
-      <td><img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=&logo=postgreSQL&logoColor=white" style="margin-top: 6px;"/>
-    </tr>
-   </table>     
-  </div>
+<table >
+  <tr>
+    <td><strong>Framework</strong></td>
+    <td><img src="https://img.shields.io/badge/FastAPI-009688?style=&logo=fastapi&logoColor=white" style="margin-top: 6px;"/>
+  </tr>
+  <tr>
+    <td><strong>Database</strong></td>
+    <td><img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=&logo=postgreSQL&logoColor=white" style="margin-top: 6px;"/>
+  </tr>
+</table>
 <br />
 
 ### 🖥️ Frontend
-<div style="text-align:center">
-  <table >
-    <tr>
-      <td><strong>Framework</strong></td>
-      <td><img src="https://img.shields.io/badge/Next.js-000000?style=e&logo=nextdotjs&logoColor=white" style="margin-top: 6px;"/>
-    </tr>
-   </table>     
-  </div>
-  <br />
+<table >
+  <tr>
+    <td><strong>Framework</strong></td>
+    <td><img src="https://img.shields.io/badge/Next.js-000000?style=e&logo=nextdotjs&logoColor=white" style="margin-top: 6px;"/>
+  </tr>
+  </table>     
+<br />
 
 
 ### 📚 Tools
-<div style="text-align:center">
-  <table>
+<table>
   <tr>
-      <td><strong>Version Control</strong></td>
-      <td><img alt="RED" src ="https://img.shields.io/badge/git-E6484F.svg?style=&logo=git&logoColor=white" style="margin-top: 6px;"/>  <img alt="RED" src ="https://img.shields.io/badge/github-%23121011.svg?style=&logo=github&logoColor=white style="margin-top: 6px;""/> </td>
-    </tr>
-    <tr>
-      <td><strong>Project Management</strong></td>
-      <td><img alt="RED" src ="https://img.shields.io/badge/Notion-000000.svg?&style=&logo=Notion&logoColor=white" style="margin-top: 6px;"/></td>
-    </tr>
-    <tr>
-      <td><strong>Design</strong></td>
-      <td><img alt="RED" src ="https://img.shields.io/badge/Figma-F24E1E.svg?&style=&logo=Figma&logoColor=white" style="margin-top: 6px;"/></td>
-    </tr>
-   </table>  
-  </div>
+    <td><strong>Version Control</strong></td>
+    <td>
+      <img alt="RED" src ="https://img.shields.io/badge/git-E6484F.svg?style=&logo=git&logoColor=white" style="margin-top: 6px;"/>
+      <img alt="RED" src ="https://img.shields.io/badge/github-%23121011.svg?style=&logo=github&logoColor=white" style="margin-top: 6px;"/>
+    </td>
+  </tr>
+  <tr>
+    <td><strong>Project Management</strong></td>
+    <td><img alt="RED" src ="https://img.shields.io/badge/Notion-000000.svg?&style=&logo=Notion&logoColor=white" style="margin-top: 6px;"/></td>
+  </tr>
+  <tr>
+    <td><strong>Design</strong></td>
+    <td><img alt="RED" src ="https://img.shields.io/badge/Figma-F24E1E.svg?&style=&logo=Figma&logoColor=white" style="margin-top: 6px;"/></td>
+  </tr>
+</table>
 <br />
 
 <br/>
 
-## 💻 서비스 구조도
+## 💻 서비스 개발 계획
 
 ![orderFlow_1](https://github.com/kookmin-sw/capstone-2024-05/assets/81635179/74100128-5140-466f-9cec-8f51b972d233)
 
@@ -140,7 +137,7 @@ CloudFormation은 AWS 리소스를 자동으로 생성해 주는 서비스입니
 > - Email : sirl@kookmin.ac.kr
 
 - 성창엽
-> - 학번 : 2019
+> - 학번 : 20191611
 > - position : BE [Leader], AI
 > - Email : scy6500@kookmin.ac.kr
 
