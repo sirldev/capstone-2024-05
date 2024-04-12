@@ -8,6 +8,7 @@ export default function CodeSpaceEditor() {
       height="90vh"
       defaultLanguage="javascript"
       defaultValue="// some comment"
+      theme="vs-dark"
     />
   );
 }

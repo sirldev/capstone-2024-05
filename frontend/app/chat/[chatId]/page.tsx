@@ -7,8 +7,8 @@ import {
 
 export default function ChatRoomPage() {
   return (
-    <div className="min-w-desktop flex h-screen max-h-screen w-full flex-col bg-blue-200 text-[#2A2A2A]">
-      <div className="w-desktop relative mx-auto flex h-full max-h-screen min-h-screen flex-col items-center justify-center bg-white">
+    <div className="flex h-screen max-h-screen w-full min-w-desktop flex-col bg-blue-200 text-[#2A2A2A]">
+      <div className="relative mx-auto flex h-full max-h-screen min-h-screen w-desktop flex-col items-center justify-center bg-white">
         <header className="sticky left-0 right-0 top-0 flex w-full items-center justify-between bg-white px-4 py-3 shadow-md">
           <ChevronLeftIcon className="h-6 w-6" />
           <MagnifyingGlassIcon className="h-6 w-6" />
