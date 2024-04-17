@@ -97,7 +97,7 @@ def validation_template(request: Request, file_name: str):
         "cloudformation",
         "validate-template",
         "--template-body",
-        "file://stat/examples/" + file_name,
+        "file://static/examples/" + file_name,
     ]
 
     with open(f"./static/examples/{file_name}", "r") as file:
