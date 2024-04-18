@@ -91,7 +91,6 @@ async def read_item(request: Request, id: int):
 
 @app.get("/template_validation/{file_name}", response_class=HTMLResponse)
 def validation_template(request: Request, file_name: str):
-    # print(file_name)
     validation_cmd = [
         "aws",
         "cloudformation",
@@ -104,10 +103,8 @@ def validation_template(request: Request, file_name: str):
         content = file.read()
 
     cmd = " ".join(validation_cmd)
-    # print(cmd)
 
     result = subprocess.run(validation_cmd, capture_output=True, text=True)
-    print(result)
 
     if result.returncode:
         return templates.TemplateResponse(
