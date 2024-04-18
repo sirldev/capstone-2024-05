@@ -8,6 +8,7 @@ documents
 __pycache__
 document.csv
 .python-version
+.env 
 
 /.vscode
 .vscode
