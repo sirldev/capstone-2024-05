@@ -15,36 +15,45 @@ import {
 } from '@tabler/icons-react';
 import classes from './featuregrid.module.css';
 
-export const MOCKDATA = [
+export const FEATURE = [
   {
     icon: IconGauge,
-    title: 'Extreme performance',
+    title: '진입 장벽 제거',
     description:
-      'This dust is actually a powerful poison that will even make a pro wrestler sick, Regice cloaks itself with frigid air of -328 degrees Fahrenheit',
+      '복잡한 CloudFormation의 문법과 방대한 문서 학습 필요 없이, 모든 사용자가 클라우드 리소스를 쉽게 관리할 수 있습니다.',
   },
   {
     icon: IconUser,
-    title: 'Privacy focused',
+    title: '자연어 분석',
     description:
-      'People say it can run at the same speed as lightning striking, Its icy body is so cold, it will not melt even if it is immersed in magma',
+      '사용자가 자연어로 필요한 인프라를 설명하면, AI가 이를 분석하여 필요한 CloudFormation 템플릿을 자동으로 생성합니다.',
   },
   {
     icon: IconCookie,
-    title: 'No third parties',
-    description:
-      'They’re popular, but they’re rare. Trainers who show them off recklessly may be targeted by thieves',
-  },
-  {
-    icon: IconLock,
     title: 'Secure by default',
     description:
       'Although it still can’t fly, its jumping power is outstanding, in Alola the mushrooms on Paras don’t grow up quite right',
   },
+];
+
+export const DIFFERENCE = [
   {
-    icon: IconMessage2,
-    title: '24/7 Support',
+    icon: IconLock,
+    title: 'CloudFormation 특화',
     description:
-      'Rapidash usually can be seen casually cantering in the fields and plains, Skitty is known to chase around after its own tail',
+      'RAG 기술을 적용하여 사용자의 요구에 가장 관련성 높은 정보를 검색하고 이를 바탕으로 템플릿을 생성합니다.',
+  },
+  {
+    icon: IconGauge,
+    title: 'Template Hub',
+    description:
+      '사용자들은 Template Hub를 통해 생성한 템플릿을 공유할 수 있으며, 다른 사용자들의 프롬프트와 템플릿을 참고할 수 있습니다.',
+  },
+  {
+    icon: IconCookie,
+    title: '유효성 검증',
+    description:
+      '템플릿 파일의 유효성 검증 기능을 통해서 신뢰도가 높은 템플릿 파일을 생성합니다.',
   },
 ];
 
@@ -71,30 +80,70 @@ export function Feature({ icon: Icon, title, description }: FeatureProps) {
 }
 
 export default function FeaturesGrid() {
-  const features = MOCKDATA.map((feature, index) => (
+  const features = FEATURE.map((feature, index) => (
+    <Feature {...feature} key={index} />
+  ));
+
+  const differences = DIFFERENCE.map((feature, index) => (
     <Feature {...feature} key={index} />
   ));
 
   return (
     <Container className={classes.wrapper}>
       <Title className={classes.title}>
-        Integrate effortlessly with any technology stack
+        <Text
+              component="span"
+              variant="gradient"
+              gradient={{ from: 'blue', to: 'cyan' }}
+              inherit
+            >
+              Feature
+        </Text>{' '}
+        
       </Title>
 
-      <Container size={560} p={0}>
+      <Container size={700} p={0}>
         <Text size="sm" className={classes.description}>
-          Every once in a while, you’ll see a Golbat that’s missing some fangs.
-          This happens when hunger drives it to try biting a Steel-type Pokémon.
+          Stack OrderFlow는 다음과 같은 특징을 가지고 있습니다.
         </Text>
       </Container>
 
       <SimpleGrid
-        mt={60}
+        mt={30}
         cols={{ base: 1, sm: 2, md: 3 }}
-        spacing={{ base: 'xl', md: 50 }}
+        spacing={{ base: 'xs', md: 50 }}
         verticalSpacing={{ base: 'xl', md: 50 }}
       >
         {features}
+      </SimpleGrid>
+      {/*  */}
+
+      
+
+      <Title className={classes.title} mt={60}>
+      <Text
+            component="span"
+            variant="gradient"
+            gradient={{ from: 'blue', to: 'cyan' }}
+            inherit
+          >
+            Differences
+          </Text>{' '}
+      </Title>
+
+      <Container size={700} p={0}>
+        <Text size="sm" className={classes.description}>
+          왜 다른 챗봇이 아닌 Stack OrderFlow를 사용해야 할까요?
+        </Text>
+      </Container>
+
+      <SimpleGrid
+        mt={30}
+        cols={{ base: 1, sm: 2, md: 3 }}
+        spacing={{ base: 'xs', md: 50 }}
+        verticalSpacing={{ base: 'xl', md: 50 }}
+      >
+        {differences}
       </SimpleGrid>
     </Container>
   );
