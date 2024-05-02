@@ -8,6 +8,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 
+from api.main import api_router
 from retrieval.rag import retrieve_doc
 from utils.gpt import gpt_generate_no_rag, gpt_genereate
 from utils.setup import setup_db, setup_embedding, setup_pinecone
@@ -176,3 +177,5 @@ async def create_user(user: UserBase, db: db_dependency):
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
+
+app.include_router(api_router)
