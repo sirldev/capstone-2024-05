@@ -1,6 +1,6 @@
 import os
 import sys
-from typing import Union, List
+from typing import Union, List, Annotated
 
 from fastapi import FastAPI, Request, HTTPException, Depends
 from fastapi.responses import HTMLResponse
@@ -12,34 +12,56 @@ from retrieval.rag import retrieve_doc
 from utils.gpt import gpt_generate_no_rag, gpt_genereate
 from utils.setup import setup_db, setup_embedding, setup_pinecone
 
-import typer
 import subprocess
 import json
 
-
+# for db
 from sqlalchemy.orm import Session
+from db import models, schemas, crud
+from db.database import engine, SessionLocal, DB_URL
 
-from db import crud, models, schemas
-from db.database import SessionLocal, engine
+app = FastAPI()
+models.Base.metadata.create_all(bind=engine)
+db = None
+pc_index = None
+embedding = None
 
-# sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
+
+# Data Validation
+class UserBase(BaseModel):
+    username: str
+    hashed_password: str
 
 
+class PromptAnsBase(BaseModel):
+    prompt: str
+    description: str
+    user_id: int  # FK
+
+
+class HashTagBase(BaseModel):
+    tag: str
+
+
+def get_db():
+    db = SessionLocal()
+    print(DB_URL)
+    try:
+        yield db
+    finally:
+        db.close()
+
+
+db_dependency = Annotated[Session, Depends(get_db)]
+
+
+###### retrieval code ######
 class Instruction(BaseModel):
     instruction_sentence: str
 
 
 class Answer(BaseModel):
     template_file: Union[str, None]
-
-
-app = FastAPI()
-db = None
-pc_index = None
-embedding = None
-
-
-###### retrieval code ######
 
 
 @app.on_event("startup")
@@ -131,28 +153,26 @@ def validation_template(request: Request, file_name: str):
 
 
 ###### Template Hub API Section ######
-@app.get("/api/")
-def root():
-    return {"message": "This is backend side API section"}
+@app.post("/create-dummy")  # get api개발을 위한 더미 생성용 api
+async def create_prompt(prompt: PromptAnsBase, db: db_dependency):
+    print(prompt)
+    db_promptAns = models.PromptAns(
+        prompt=prompt.prompt, description=prompt.description, user_id=prompt.user_id
+    )
+    db.add(db_promptAns)
+    db.commit()
+    db.refresh(db_promptAns)
 
 
-# 종속성 만들기 : 요청 당 독립적인 데이터베이스 세션/연결이 필요하고 요청이 완료되면 닫음
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+@app.get("/templates")
+async def get_templates(db: db_dependency):
+    templates = db.query(models.PromptAns).all()
+    return templates
 
 
-@app.get("/items/", response_model=List[schemas.Item])
-def read_items(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    items = crud.get_items(db, skip=skip, limit=limit)
-    return items
-
-
-@app.post("/items/", response_model=schemas.Item)
-def create_item_for_user(
-    user_id: int, item: schemas.ItemCreate, db: Session = Depends(get_db)
-):
-    return crud.create_user_item(db=db, item=item, user_id=user_id)
+@app.post("/create-user")
+async def create_user(user: UserBase, db: db_dependency):
+    db_user = models.User(username=user.username, hashed_password=user.hashed_password)
+    db.add(db_user)
+    db.commit()
+    db.refresh(db_user)
