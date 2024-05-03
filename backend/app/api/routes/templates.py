@@ -14,7 +14,7 @@ from utils.gpt import gpt_genereate
 
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 
-from main import embedding, llm, pc_index
+import main as app_main
 
 router = APIRouter()
 
@@ -70,8 +70,9 @@ async def create_template(
     request: Request, prompt: str, db: Session = Depends(get_db)
 ):
     try:
-        retrieved_doc = retrieve_doc(question=prompt, pc_index=pc_index, embedding=embedding, llm=llm)
+        retrieved_doc = retrieve_doc(question=prompt, pc_index=app_main.pc_index, embedding=app_main.embedding, llm=app_main.llm)
         template_file, documents_list = gpt_genereate(instruction=prompt, retrieved_doc=retrieved_doc)
+        print(f"{documents_list=}")
 
         db_promptAns = models.PromptAns(
             prompt=prompt.prompt,
