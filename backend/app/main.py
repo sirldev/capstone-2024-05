@@ -15,6 +15,8 @@ from langchain.chat_models import ChatOpenAI
 from pydantic import BaseModel
 from retrieval.rag import retrieve_doc
 # for db
+from db import models
+from db.database import engine
 from sqlalchemy.orm import Session
 from utils.gpt import gpt_generate_no_rag, gpt_genereate
 from utils.setup import setup_db, setup_embedding, setup_pinecone
@@ -26,32 +28,8 @@ pc_index = None
 embedding = None
 
 
-# Data Validation
-class UserBase(BaseModel):
-    username: str
-    hashed_password: str
-
-
-class PromptAnsBase(BaseModel):
-    prompt: str
-    description: str
-    user_id: int  # FK
-
-
 class HashTagBase(BaseModel):
     tag: str
-
-
-def get_db():
-    db = SessionLocal()
-    print(DB_URL)
-    try:
-        yield db
-    finally:
-        db.close()
-
-
-db_dependency = Annotated[Session, Depends(get_db)]
 
 
 ###### retrieval code ######
@@ -108,14 +86,6 @@ def read_root(request: Request):
     return templates.TemplateResponse(request=request, name="main.html")
 
 
-@app.get("/items/{id}", response_class=HTMLResponse)
-async def read_item(request: Request, id: int):
-
-    return templates.TemplateResponse(
-        request=request, name="item.html", context={"id": id}
-    )
-
-
 @app.get("/template_validation/{file_name}", response_class=HTMLResponse)
 def validation_template(request: Request, file_name: str):
     validation_cmd = [
@@ -167,19 +137,5 @@ async def create_prompt(prompt: PromptAnsBase, db: db_dependency):
     db.add(db_promptAns)
     db.commit()
     db.refresh(db_promptAns)
-
-
-@app.get("/templates")
-async def get_templates(db: db_dependency):
-    templates = db.query(models.PromptAns).all()
-    return templates
-
-
-@app.post("/create-user")
-async def create_user(user: UserBase, db: db_dependency):
-    db_user = models.User(username=user.username, hashed_password=user.hashed_password)
-    db.add(db_user)
-    db.commit()
-    db.refresh(db_user)
 
 app.include_router(api_router)
