@@ -8,24 +8,23 @@ from dotenv import load_dotenv
 from langchain.embeddings.openai import OpenAIEmbeddings
 from markdown_splitter import MarkdownHeaderGroupSplitter
 from pinecone import Pinecone
-from settings import get_secret
 from tqdm.auto import tqdm
 
 # huggingface hub
 documents = load_dataset("WinF/cfn_document", data_dir="data")
 
-# config file
-load_dotenv()
-config = configparser.ConfigParser()
-config.read("retrieval.conf")
+# get the base directory
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# load the .env file
+load_dotenv(os.path.join(BASE_DIR, ".env"))
 
 # pinecone
-PINECONE_APIKEY = get_secret("PINECONE_APIKEY")
+PINECONE_APIKEY = os.getenv("PINECONE_APIKEY")
 pc = Pinecone(api_key=f"{PINECONE_APIKEY}", environment="gcp-starter")
 pc_index = pc.Index("cfn-doc")
 
 # openai
-os.environ["OPENAI_API_KEY"] = get_secret("OPENAI_APIKEY")
+os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_APIKEY")
 embedding = OpenAIEmbeddings()
 
 markdown_splitter = MarkdownHeaderGroupSplitter(
