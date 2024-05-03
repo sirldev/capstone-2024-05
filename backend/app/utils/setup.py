@@ -1,13 +1,18 @@
 import os
 
 import pymysql
+from dotenv import load_dotenv
 from langchain.embeddings.openai import OpenAIEmbeddings
 from pinecone import Pinecone
-from retrieval.settings import get_secret
+
+# get the base directory
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# load the .env file
+load_dotenv(os.path.join(BASE_DIR, ".env"))
 
 
 def setup_db():
-    db_passwd = get_secret("MYSQL_PSW")
+    db_passwd = os.getenv("MYSQL_PSW")
 
     db = pymysql.connect(
         user='root',
@@ -23,15 +28,16 @@ def setup_db():
 
 
 def setup_pinecone():
-    PINECONE_APIKEY = get_secret("PINECONE_APIKEY")
-    pc = Pinecone(api_key=f"{PINECONE_APIKEY}", environment="gcp-starter")
+    PINECONE_APIKEY = os.getenv("PINECONE_APIKEY")
+    print(f"{PINECONE_APIKEY=}")
+    pc = Pinecone(api_key=PINECONE_APIKEY, environment="gcp-starter")
     pc_index = pc.Index("cfn-doc")
 
     return pc_index
 
 
 def setup_embedding():
-    os.environ["OPENAI_API_KEY"] = get_secret("OPENAI_APIKEY")
+    os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_APIKEY")
     embedding = OpenAIEmbeddings()
 
     return embedding
