@@ -116,6 +116,6 @@ def validation_template(request: Request, file_name: str):
         )
 
 
-from api.main import api_router
+from api.router import api_router
 
 app.include_router(api_router)
