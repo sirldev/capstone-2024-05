@@ -1,14 +1,11 @@
 import json
-import os
 import subprocess
-import sys
-from typing import Annotated, List, Union
+from typing import List, Union
 
-from api.main import api_router
 # for db
-from db import crud, models, schemas
-from db.database import DB_URL, SessionLocal, engine
-from fastapi import Depends, FastAPI, HTTPException, Request
+from db import models
+from db.database import engine
+from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -16,8 +13,8 @@ from langchain.chat_models import ChatOpenAI
 from pydantic import BaseModel
 from retrieval.rag import retrieve_doc
 from sqlalchemy.orm import Session
-from utils.gpt import gpt_generate_no_rag, gpt_genereate
-from utils.setup import setup_db, setup_embedding, setup_pinecone
+from utils.gpt import gpt_genereate
+from utils.setup import setup_embedding, setup_pinecone
 
 app = FastAPI()
 models.Base.metadata.create_all(bind=engine)
@@ -119,15 +116,6 @@ def validation_template(request: Request, file_name: str):
         )
 
 
-###### Template Hub API Section ######
-@app.post("/create-dummy")  # get api개발을 위한 더미 생성용 api
-async def create_prompt(prompt: PromptAnsBase, db: db_dependency):
-    print(prompt)
-    db_promptAns = models.PromptAns(
-        prompt=prompt.prompt, description=prompt.description, user_id=prompt.user_id
-    )
-    db.add(db_promptAns)
-    db.commit()
-    db.refresh(db_promptAns)
+from api.main import api_router
 
 app.include_router(api_router)
