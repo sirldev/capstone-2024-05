@@ -1,6 +1,6 @@
 'use client';
 
-import { Container, Title, Textarea, Text, Button, Group, AppShell, Burger, Grid, SimpleGrid, Paper } from '@mantine/core';
+import { Container, Title, LoadingOverlay, Loader, Textarea, Text, Button, Group, AppShell, Burger, Grid, SimpleGrid, Paper } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import {
   IconGauge,
@@ -13,9 +13,9 @@ import {
 import Link from 'next/link';
 // import { GithubIcon } from '@mantinex/dev-icons';
 import classes from './usepage.module.css';
-import FeaturesGrid from '../FeatureGrid';
-import CloudFormationDescription from '../CloudFormationDescription';
-import Usage from '../Usage';
+import FeaturesGrid from '../LandingSection/FeatureGrid';
+import CloudFormationDescription from '../LandingSection/CloudFormationDescription';
+import Usage from '../LandingSection/Usage';
 import Header from '../Header';
 import UserInput from './UserInput/Index';
 import References from './References/Index';
@@ -26,9 +26,17 @@ import Result from './Result';
 export default function UsePage() {
   
   const [currentComponent, setCurrentComponent] = useState('AWSDescription');
+  const [visible, setVisible] = useState(false);
 
   const handleComponentChange = () => {
-    setCurrentComponent('References');
+    // visible을 true로 설정하여 로딩 오버레이를 활성화
+    setVisible(true);
+
+    // 5초 후에 visible을 false로 설정하여 로딩 오버레이를 비활성화
+    setTimeout(() => {
+      setVisible(false);
+      setCurrentComponent('References'); // 이 부분은 다른 컴포넌트 로직에 맞게 설정
+    }, 3500);
   };
 
   return (
@@ -69,11 +77,14 @@ export default function UsePage() {
                 <AWSDescription />
               </Grid.Col>
             </Grid>
+
+            <LoadingOverlay visible={visible} loaderProps={{ children: <Loader color="blue" size="xl" type="dots" /> }} />
           </Container> :
+          
           <Container size="lg" className={classes.inner}>
           
             <Title className={classes.title} mt={0}>
-              템플릿 생성 중..
+              템플릿 생성 완료
             </Title> 
             
             <Grid grow mt='xl'>
@@ -84,6 +95,8 @@ export default function UsePage() {
                 <References />
               </Grid.Col>
             </Grid>
+
+            
           </Container>
         }
           

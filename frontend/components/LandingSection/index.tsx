@@ -3,9 +3,9 @@
 import { Container, Text, Button, Group } from '@mantine/core';
 // import { GithubIcon } from '@mantinex/dev-icons';
 import classes from './landing.module.css';
-import FeaturesGrid from '../FeatureGrid';
-import CloudFormationDescription from '../CloudFormationDescription';
-import Usage from '../Usage';
+import FeaturesGrid from './FeatureGrid';
+import CloudFormationDescription from './CloudFormationDescription';
+import Usage from './Usage';
 import { useRouter } from 'next/navigation';
 
 export default function LandingSection() {

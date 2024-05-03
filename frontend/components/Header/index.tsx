@@ -11,7 +11,7 @@ const links = [
   { link: '/', label: 'About' },
   { link: '/generator', label: 'Template Generator' },
   { link: '/hub', label: 'Template Hub' },
-  //   { link: '/community', label: 'Community' },
+  { link: '/login', label: 'Login' },
 ];
 
 export default function Header() {
@@ -19,7 +19,6 @@ export default function Header() {
   // useEffect(() => {
   //   setActive(router);
   // }, [router.pathname]);
-
 
   const router = useRouter()
   const pathname = usePathname()
@@ -59,11 +58,11 @@ export default function Header() {
           StackOrderFlow
         </Text>
         {/* <div className="font-bold text-[#0076E2]">StackOrderFlow</div> */}
-        <Group gap={5} visibleFrom="xs">
+        <Group gap={5} visibleFrom="sm">
           {items}
         </Group>
 
-        <Burger opened={opened} onClick={toggle} hiddenFrom="xs" size="sm" />
+        <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
       </Container>
     </header>
   );

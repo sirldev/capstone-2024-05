@@ -13,9 +13,9 @@ import {
 import Link from 'next/link';
 // import { GithubIcon } from '@mantinex/dev-icons';
 import classes from './references.module.css';
-import FeaturesGrid from '../../FeatureGrid';
-import CloudFormationDescription from '../../CloudFormationDescription';
-import Usage from '../../Usage';
+import FeaturesGrid from '../../LandingSection/FeatureGrid';
+import CloudFormationDescription from '../../LandingSection/CloudFormationDescription';
+import Usage from '../../LandingSection/Usage';
 import Header from '../../Header';
 
 export default function References() {
