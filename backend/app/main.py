@@ -1,59 +1,31 @@
-import os
-import sys
-from typing import Union, List, Annotated
+import json
+import subprocess
+from typing import List, Union
 
-from fastapi import FastAPI, Request, HTTPException, Depends
+# for db
+from db import models
+from db.database import engine
+from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from langchain.chat_models import ChatOpenAI
 from pydantic import BaseModel
-
-from api.main import api_router
 from retrieval.rag import retrieve_doc
-from utils.gpt import gpt_generate_no_rag, gpt_genereate
-from utils.setup import setup_db, setup_embedding, setup_pinecone
-
-import subprocess
-import json
-
-# for db
 from sqlalchemy.orm import Session
-from db import models, schemas, crud
-from db.database import engine, SessionLocal, DB_URL
+from utils.gpt import gpt_genereate
+from utils.setup import setup_embedding, setup_pinecone
 
 app = FastAPI()
 models.Base.metadata.create_all(bind=engine)
 db = None
 pc_index = None
 embedding = None
-
-
-# Data Validation
-class UserBase(BaseModel):
-    username: str
-    hashed_password: str
-
-
-class PromptAnsBase(BaseModel):
-    prompt: str
-    description: str
-    user_id: int  # FK
+llm = None
 
 
 class HashTagBase(BaseModel):
     tag: str
-
-
-def get_db():
-    db = SessionLocal()
-    print(DB_URL)
-    try:
-        yield db
-    finally:
-        db.close()
-
-
-db_dependency = Annotated[Session, Depends(get_db)]
 
 
 ###### retrieval code ######
@@ -63,11 +35,12 @@ class Instruction(BaseModel):
 
 class Answer(BaseModel):
     template_file: Union[str, None]
+    reference_documents: Union[List[str], None]
 
 
 @app.on_event("startup")
 def startup_event():
-    global db, pc_index, embedding
+    global db, pc_index, embedding, llm
 
     # mysql
     # db = setup_db()
@@ -77,20 +50,18 @@ def startup_event():
 
     # openai
     embedding = setup_embedding()
+    llm = ChatOpenAI()
 
 
-# @app.post("/generate", response_model=Answer)
-# async def generate(instruction: Instruction):
-#     inst_sentence = instruction.instruction_sentence
+@app.post("/generate", response_model=Answer)
+async def generate(instruction: Instruction):
+    inst_sentence = instruction.instruction_sentence
 
-#     retrieved_doc = retrieve_doc(
-#         question=inst_sentence, vector_db=pc_index, embedding=embedding, top_k=1
-#     )
+    retrieved_doc = retrieve_doc(question=inst_sentence, pc_index=pc_index, embedding=embedding, llm=llm)
 
-#     # template_file = gpt_genereate(instruction=instruction, retrieved_doc=retrieved_doc)
-#     template_file = gpt_generate_no_rag(instruction=instruction)
+    template_file, documents_list = gpt_genereate(instruction=instruction, retrieved_doc=retrieved_doc)
 
-#     return Answer(template_file=template_file)
+    return Answer(template_file=template_file, reference_documents=documents_list)
 
 
 ###### template validate code ######
@@ -102,14 +73,6 @@ templates = Jinja2Templates(directory="templates")
 @app.get("/", response_class=HTMLResponse)
 def read_root(request: Request):
     return templates.TemplateResponse(request=request, name="main.html")
-
-
-@app.get("/items/{id}", response_class=HTMLResponse)
-async def read_item(request: Request, id: int):
-
-    return templates.TemplateResponse(
-        request=request, name="item.html", context={"id": id}
-    )
 
 
 @app.get("/template_validation/{file_name}", response_class=HTMLResponse)
@@ -153,29 +116,6 @@ def validation_template(request: Request, file_name: str):
         )
 
 
-###### Template Hub API Section ######
-@app.post("/create-dummy")  # get api개발을 위한 더미 생성용 api
-async def create_prompt(prompt: PromptAnsBase, db: db_dependency):
-    print(prompt)
-    db_promptAns = models.PromptAns(
-        prompt=prompt.prompt, description=prompt.description, user_id=prompt.user_id
-    )
-    db.add(db_promptAns)
-    db.commit()
-    db.refresh(db_promptAns)
-
-
-@app.get("/templates")
-async def get_templates(db: db_dependency):
-    templates = db.query(models.PromptAns).all()
-    return templates
-
-
-@app.post("/create-user")
-async def create_user(user: UserBase, db: db_dependency):
-    db_user = models.User(username=user.username, hashed_password=user.hashed_password)
-    db.add(db_user)
-    db.commit()
-    db.refresh(db_user)
+from api.router import api_router
 
 app.include_router(api_router)
