@@ -1,12 +1,20 @@
+import os
+import sys
 from datetime import datetime
 from typing import Dict
-from pydantic import BaseModel
-from fastapi import APIRouter, HTTPException, Depends, Request
-from db.models import PromptAns
-from sqlalchemy.orm import Session
+
 from db import models
 from db.database import get_db
+from db.models import PromptAns
+from fastapi import APIRouter, Depends, HTTPException, Request
+from pydantic import BaseModel
+from retrieval.rag import retrieve_doc
+from sqlalchemy.orm import Session
+from utils.gpt import gpt_genereate
 
+sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
+
+from main import embedding, llm, pc_index
 
 router = APIRouter()
 
@@ -59,27 +67,12 @@ async def get_single_templates(db: Session = Depends(get_db)):
 ########### POST ###########
 @router.post("")
 async def create_template(
-    request: Request, prompt: PromptAnsBase, db: Session = Depends(get_db)
+    request: Request, prompt: str, db: Session = Depends(get_db)
 ):
-    # check authorization
     try:
-        user = (
-            db.query(models.User)
-            .filter(models.User.authorization == request.headers.get("Authorization"))
-            .first()
-        )
+        retrieved_doc = retrieve_doc(question=prompt, pc_index=pc_index, embedding=embedding, llm=llm)
+        template_file, documents_list = gpt_genereate(instruction=prompt, retrieved_doc=retrieved_doc)
 
-        # user_id와 일치하는 user가 없거나, user_id와 authorization이 일치하지 않을 때
-        if (not user) or (user.id != prompt.user_id):
-            raise HTTPException(status_code=401, detail="Authorization is not valid")
-    except Exception as e:
-        raise HTTPException(status_code=400, detail=e)
-
-    try:
-        # TODO : AI 통해서 template만들고 저장하기
-        ## 1. prompt.prompt를 AI에 넣어서 template 생성
-        ## 2. template 생성 후 db에 저장
-        ## 3. 생성된 template를 return
         db_promptAns = models.PromptAns(
             prompt=prompt.prompt,
             template=prompt.template,

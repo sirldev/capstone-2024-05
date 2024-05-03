@@ -5,6 +5,7 @@ import sys
 from typing import Annotated, List, Union
 
 from api.main import api_router
+# for db
 from db import crud, models, schemas
 from db.database import DB_URL, SessionLocal, engine
 from fastapi import Depends, FastAPI, HTTPException, Request
@@ -14,9 +15,6 @@ from fastapi.templating import Jinja2Templates
 from langchain.chat_models import ChatOpenAI
 from pydantic import BaseModel
 from retrieval.rag import retrieve_doc
-# for db
-from db import models
-from db.database import engine
 from sqlalchemy.orm import Session
 from utils.gpt import gpt_generate_no_rag, gpt_genereate
 from utils.setup import setup_db, setup_embedding, setup_pinecone
@@ -26,6 +24,7 @@ models.Base.metadata.create_all(bind=engine)
 db = None
 pc_index = None
 embedding = None
+llm = None
 
 
 class HashTagBase(BaseModel):
@@ -40,13 +39,6 @@ class Instruction(BaseModel):
 class Answer(BaseModel):
     template_file: Union[str, None]
     reference_documents: Union[List[str], None]
-
-
-app = FastAPI()
-db = None
-pc_index = None
-embedding = None
-llm = None
 
 
 @app.on_event("startup")
