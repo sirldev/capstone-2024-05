@@ -1,7 +1,14 @@
+# misc
+.DS_Store
+
+# backend
 secrets.json
 test.ipynb
 documents
 __pycache__
 document.csv
-.DS_Store
 .python-version
+.env 
+
+/.vscode
+.vscode
