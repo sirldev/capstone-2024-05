@@ -2,7 +2,9 @@ from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime, T
 from .database import Base
 from datetime import datetime
 from sqlalchemy.orm import relationship
+from passlib.context import CryptContext
 
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 class User(Base):
     __tablename__ = "users"
@@ -10,9 +12,11 @@ class User(Base):
     id = Column(Integer, primary_key=True, autoincrement=True, nullable=False)
     username = Column(String, unique=True, index=True, nullable=False)
     hashed_password = Column(String, default=True, nullable=False)
-    authenticated = Column(String, default=False, nullable=True)
 
     promptAnses = relationship("PromptAns", back_populates="user")
+
+    def hash_password(self, password):
+        self.hashed_password = pwd_context.hash(password)
 
 
 class PromptAns(Base):
