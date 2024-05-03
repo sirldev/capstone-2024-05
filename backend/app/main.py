@@ -17,9 +17,8 @@ import subprocess
 import json
 
 # for db
-from sqlalchemy.orm import Session
-from db import models, schemas, crud
-from db.database import engine, SessionLocal, DB_URL
+from db import models
+from db.database import engine
 
 app = FastAPI()
 models.Base.metadata.create_all(bind=engine)
@@ -28,32 +27,8 @@ pc_index = None
 embedding = None
 
 
-# Data Validation
-class UserBase(BaseModel):
-    username: str
-    hashed_password: str
-
-
-class PromptAnsBase(BaseModel):
-    prompt: str
-    description: str
-    user_id: int  # FK
-
-
 class HashTagBase(BaseModel):
     tag: str
-
-
-def get_db():
-    db = SessionLocal()
-    print(DB_URL)
-    try:
-        yield db
-    finally:
-        db.close()
-
-
-db_dependency = Annotated[Session, Depends(get_db)]
 
 
 ###### retrieval code ######
@@ -104,14 +79,6 @@ def read_root(request: Request):
     return templates.TemplateResponse(request=request, name="main.html")
 
 
-@app.get("/items/{id}", response_class=HTMLResponse)
-async def read_item(request: Request, id: int):
-
-    return templates.TemplateResponse(
-        request=request, name="item.html", context={"id": id}
-    )
-
-
 @app.get("/template_validation/{file_name}", response_class=HTMLResponse)
 def validation_template(request: Request, file_name: str):
     validation_cmd = [
@@ -154,28 +121,4 @@ def validation_template(request: Request, file_name: str):
 
 
 ###### Template Hub API Section ######
-@app.post("/create-dummy")  # get api개발을 위한 더미 생성용 api
-async def create_prompt(prompt: PromptAnsBase, db: db_dependency):
-    print(prompt)
-    db_promptAns = models.PromptAns(
-        prompt=prompt.prompt, description=prompt.description, user_id=prompt.user_id
-    )
-    db.add(db_promptAns)
-    db.commit()
-    db.refresh(db_promptAns)
-
-
-@app.get("/templates")
-async def get_templates(db: db_dependency):
-    templates = db.query(models.PromptAns).all()
-    return templates
-
-
-@app.post("/create-user")
-async def create_user(user: UserBase, db: db_dependency):
-    db_user = models.User(username=user.username, hashed_password=user.hashed_password)
-    db.add(db_user)
-    db.commit()
-    db.refresh(db_user)
-
 app.include_router(api_router)
