@@ -3,7 +3,7 @@ from fastapi import APIRouter, HTTPException
 
 from db.models import User
 from db.database import SessionLocal
-
+from utils.auth import create_access_token
 
 router = APIRouter()
 
@@ -18,6 +18,11 @@ class CreateUserBase(BaseModel):
         if "password" in values and v != values["password"]:
             raise HTTPException(status_code=422, detail="Password do not match")
         return v
+
+
+class LoginBase(BaseModel):
+    username: str
+    password: str
 
 
 @router.post("/create_user")
@@ -40,6 +45,27 @@ def create_user(params: CreateUserBase):
         raise http_exc
     except Exception as e:
         db.rollback()
+        raise HTTPException(status_code=500, detail=e)
+    finally:
+        db.close()
+
+
+@router.post("/login")
+def login(params: LoginBase):
+    db = SessionLocal()
+    try:
+        user = db.query(User).filter(User.username == params.username).first()
+        if not user or not user.verify_password(params.password):
+            raise HTTPException(
+                status_code=401,
+                detail="Incorrect username or password",
+                headers={"WWW-Authenticate": "Bearer"},
+            )
+        access_token = create_access_token(data={"sub": user.username})
+        return {"access_token": access_token, "token_type": "bearer"}
+    except HTTPException as http_exc:
+        raise http_exc
+    except Exception as e:
         raise HTTPException(status_code=500, detail=e)
     finally:
         db.close()
