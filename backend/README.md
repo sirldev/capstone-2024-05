@@ -23,6 +23,20 @@
     - app폴더로 이동 후
     - uvicorn main:app --reload
 
+### ENV
+
+DB_URL
+
+ACCESS_TOKEN_EXPIRE_MINUTES
+
+SECRET_KEY
+
+ALGORITHM
+
+PINECONE_APIKEY
+
+OPENAI_APIKEY
+
 ### 서버 디렉토리 구조
 
     - /app

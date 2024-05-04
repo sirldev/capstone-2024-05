@@ -1,9 +1,10 @@
 from pydantic import BaseModel, validator
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
+from sqlalchemy.orm import Session
 
 from db.models import User
-from db.database import SessionLocal
-
+from db.database import SessionLocal, get_db
+from utils.auth import create_access_token
 
 router = APIRouter()
 
@@ -20,9 +21,13 @@ class CreateUserBase(BaseModel):
         return v
 
 
+class LoginBase(BaseModel):
+    username: str
+    password: str
+
+
 @router.post("/create_user")
-def create_user(params: CreateUserBase):
-    db = SessionLocal()
+def create_user(params: CreateUserBase, db: Session = Depends(get_db)):
     try:
         user = db.query(User).filter(User.username == params.username).first()
         if user:
@@ -40,6 +45,26 @@ def create_user(params: CreateUserBase):
         raise http_exc
     except Exception as e:
         db.rollback()
+        raise HTTPException(status_code=500, detail=e)
+    finally:
+        db.close()
+
+
+@router.post("/login")
+def login(params: LoginBase, db: Session = Depends(get_db)):
+    try:
+        user = db.query(User).filter(User.username == params.username).first()
+        if not user or not user.verify_password(params.password):
+            raise HTTPException(
+                status_code=401,
+                detail="Incorrect username or password",
+                headers={"WWW-Authenticate": "Bearer"},
+            )
+        access_token = create_access_token(data={"sub": user.username})
+        return {"access_token": access_token, "token_type": "bearer"}
+    except HTTPException as http_exc:
+        raise http_exc
+    except Exception as e:
         raise HTTPException(status_code=500, detail=e)
     finally:
         db.close()
