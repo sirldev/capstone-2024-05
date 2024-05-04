@@ -9,6 +9,7 @@ __pycache__
 document.csv
 .python-version
 .env 
+/backend/.venv
 
 /.vscode
 .vscode
