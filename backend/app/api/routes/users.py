@@ -52,7 +52,6 @@ def create_user(params: CreateUserBase, db: Session = Depends(get_db)):
 
 @router.post("/login")
 def login(params: LoginBase, db: Session = Depends(get_db)):
-    db = SessionLocal()
     try:
         user = db.query(User).filter(User.username == params.username).first()
         if not user or not user.verify_password(params.password):
