@@ -11,11 +11,14 @@ black==24.3.0
 blinker==1.7.0
 cachetools==5.3.3
 certifi==2024.2.2
+cffi==1.16.0
 charset-normalizer==3.3.2
 click==8.1.7
 colorama==0.4.6
+cryptography==42.0.5
 dataclasses-json==0.6.4
 distro==1.9.0
+ecdsa==0.19.0
 environments-utils==1.0.13
 exceptiongroup==1.2.0
 fastapi==0.110.0
@@ -59,6 +62,8 @@ platformdirs==4.2.0
 protobuf==4.25.3
 psycopg2-binary==2.9.9
 pyarrow==15.0.2
+pyasn1==0.6.0
+pycparser==2.22
 pydantic==2.6.4
 pydantic_core==2.16.3
 pydeck==0.8.1b0
@@ -66,6 +71,7 @@ Pygments==2.17.2
 PyMySQL==1.1.0
 python-dateutil==2.9.0.post0
 python-dotenv==1.0.1
+python-jose==3.3.0
 pytz==2024.1
 PyYAML==6.0.1
 referencing==0.34.0
@@ -73,6 +79,7 @@ regex==2024.4.16
 requests==2.31.0
 rich==13.7.1
 rpds-py==0.18.0
+rsa==4.9
 shellingham==1.5.4
 six==1.16.0
 smmap==5.0.1
