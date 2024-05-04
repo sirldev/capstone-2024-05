@@ -1,8 +1,9 @@
 from pydantic import BaseModel, validator
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
+from sqlalchemy.orm import Session
 
 from db.models import User
-from db.database import SessionLocal
+from db.database import SessionLocal, get_db
 from utils.auth import create_access_token
 
 router = APIRouter()
@@ -26,8 +27,7 @@ class LoginBase(BaseModel):
 
 
 @router.post("/create_user")
-def create_user(params: CreateUserBase):
-    db = SessionLocal()
+def create_user(params: CreateUserBase, db: Session = Depends(get_db)):
     try:
         user = db.query(User).filter(User.username == params.username).first()
         if user:
@@ -51,7 +51,7 @@ def create_user(params: CreateUserBase):
 
 
 @router.post("/login")
-def login(params: LoginBase):
+def login(params: LoginBase, db: Session = Depends(get_db)):
     db = SessionLocal()
     try:
         user = db.query(User).filter(User.username == params.username).first()
