@@ -13,15 +13,61 @@
         - Default region name : ap-northeast-2 입력
         - Default output format : json 입력
 
-### requirments 설치하기
+### How to install (without Docker)
 
-    - pip install -r requirements.txt
+- repository clone
 
-### 서버 실행하기
+```shell
+git clone https://github.com/kookmin-sw/capstone-2024-05/tree/web-main
+```
 
-    - main함수 실행하면 됨.
-    - app폴더로 이동 후
-    - uvicorn main:app --reload
+- Backend 디렉토리로 이동
+
+```shell
+cd backend
+```
+
+- Python 가상 환경 설정
+
+```shell
+python -m venv .venv
+. .venv/bin/activate
+
+```
+
+- 필요한 package 설치
+
+```shell
+pip install -r requirements.txt
+```
+
+- 실행
+
+```shell
+cd app
+uvicorn main:app --host=0.0.0.0 --port=8000
+```
+
+### How to install (without Docker)
+
+- repository clone
+
+```shell
+git clone https://github.com/kookmin-sw/capstone-2024-05/tree/web-main
+```
+
+- Backend 디렉토리로 이동
+
+```shell
+cd backend
+```
+
+- Docker 빌드 후 실행하기
+
+```shell
+docker build . -t [image name]
+docker run -p [host port]:8000 --env-file .env [image name]
+```
 
 ### ENV
 
