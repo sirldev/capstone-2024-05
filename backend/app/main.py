@@ -57,9 +57,13 @@ def startup_event():
 async def generate(instruction: Instruction):
     inst_sentence = instruction.instruction_sentence
 
-    retrieved_doc = retrieve_doc(question=inst_sentence, pc_index=pc_index, embedding=embedding, llm=llm)
+    retrieved_doc = retrieve_doc(
+        question=inst_sentence, pc_index=pc_index, embedding=embedding, llm=llm
+    )
 
-    template_file, documents_list = gpt_genereate(instruction=instruction, retrieved_doc=retrieved_doc)
+    template_file, documents_list = gpt_genereate(
+        instruction=instruction, retrieved_doc=retrieved_doc
+    )
 
     return Answer(template_file=template_file, reference_documents=documents_list)
 
