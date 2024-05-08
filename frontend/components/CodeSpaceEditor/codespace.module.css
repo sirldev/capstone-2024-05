@@ -1,0 +1,24 @@
+.wrapper {
+  position: relative;
+  box-sizing: border-box;
+  background-color: light-dark(
+    var(--mantine-color-white),
+    var(--mantine-color-dark-8)
+  );
+}
+
+.inner {
+  position: relative;
+  padding-top: rem(200px);
+  padding-bottom: rem(120px);
+
+  @media (max-width: $ mantine-breakpoint-sm) {
+    padding-bottom: rem(80px);
+    padding-top: rem(80px);
+  }
+}
+
+.code-wrapper {
+  background-color: #dedede;
+  border-radius: 8px;
+}

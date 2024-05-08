@@ -29,7 +29,6 @@ def setup_db():
 
 def setup_pinecone():
     PINECONE_APIKEY = os.getenv("PINECONE_APIKEY")
-    print(f"{PINECONE_APIKEY=}")
     pc = Pinecone(api_key=PINECONE_APIKEY, environment="gcp-starter")
     pc_index = pc.Index("cfn-doc")
 
