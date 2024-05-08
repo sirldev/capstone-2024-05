@@ -1,0 +1,48 @@
+# AWS::Cognito::UserPool 초대 메시지 템플릿
+
+새 사용자에게 보내는 환영 메시지에 사용할 메시지 템플릿입니다.
+
+사용자 초대 메시지 사용자 지정을 참조하십시오.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "EmailMessage" : String,
+  "EmailSubject" : String,
+  "SMSMessage" : String
+}
+```
+
+## 속성
+
+`EmailMessage`  
+전자 메일 메시지에 대한 메시지 템플릿입니다. EmailMessage는 EmailSendingAccount가 DEVELOPER인 경우에만 허용됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `6`  
+_최대_: `20000`  
+_패턴_: `[p{L}p{M}p{S}p{N}p{P}s*]*{####}[p{L}p{M}p{S}p{N}p{P}s*]*`  
+_업데이트 필요 사항_: 중단 없음
+
+`EmailSubject`  
+전자 메일 메시지의 제목 줄입니다. EmailSubject는 EmailSendingAccount가 DEVELOPER인 경우에만 허용됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `140`  
+_패턴_: `[p{L}p{M}p{S}p{N}p{P}s]+`  
+_업데이트 필요 사항_: 중단 없음
+
+`SMSMessage`  
+SMS 메시지의 메시지 템플릿입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `6`  
+_최대_: `140`  
+_패턴_: `.*{####}.*`  
+_업데이트 필요 사항_: 중단 없음

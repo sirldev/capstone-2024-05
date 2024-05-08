@@ -1,0 +1,322 @@
+# AWS::SQS::대기열
+
+`AWS::SQS::Queue` 리소스는 Amazon SQS 표준 또는 FIFO 대기열을 생성합니다.
+
+다음 사항에 유의하세요.
+
+- 속성을 지정하지 않으면 `FifoQueue` Amazon SQS가 표준 대기열을 생성합니다.
+  **메모**  
+  대기열 유형을 생성한 후에는 변경할 수 없으며 기존 표준 대기열을 FIFO 대기열로 변환할 수 없습니다. 애플리케이션에 대한 새 FIFO 대기열을 생성하거나 기존 표준 대기열을 삭제하고 FIFO 대기열로 다시 생성해야 합니다. 자세한 내용은 Amazon SQS 개발자 안내서의 표준 대기열에서 FIFO 대기열로 이동을 참조하세요\*\*.
+- 속성에 대한 값을 제공하지 않으면 속성의 기본값을 사용하여 큐가 만들어집니다.
+- 대기열을 삭제하는 경우 동일한 이름의 대기열을 만들기 전에 최소 60초를 기다려야 합니다.
+- 새 대기열을 성공적으로 만들려면 대기열과 관련된 제한을 준수하고 대기열 범위 내에서 고유한 대기열 이름을 제공해야 합니다.
+
+FIFO(선입선출) 대기열 생성에 대한 자세한 내용은 Amazon SQS 개발자 안내서의 Amazon SQS 대기열 생성(AWS CloudFormation)을 참조하십시오\*\*.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::SQS::Queue",
+  "Properties" : {
+      "ContentBasedDeduplication" : Boolean,
+      "DeduplicationScope" : String,
+      "DelaySeconds" : Integer,
+      "FifoQueue" : Boolean,
+      "FifoThroughputLimit" : String,
+      "KmsDataKeyReusePeriodSeconds" : Integer,
+      "KmsMasterKeyId" : String,
+      "MaximumMessageSize" : Integer,
+      "MessageRetentionPeriod" : Integer,
+      "QueueName" : String,
+      "ReceiveMessageWaitTimeSeconds" : Integer,
+      "RedriveAllowPolicy" : Json,
+      "RedrivePolicy" : Json,
+      "SqsManagedSseEnabled" : Boolean,
+      "Tags" : [Tag, ... ],
+      "VisibilityTimeout" : Integer
+    }
+}
+```
+
+## 속성
+
+`ContentBasedDeduplication`  
+FIFO(선입선출) 대기열의 경우 콘텐츠 기반 중복 제거를 활성화할지 여부를 지정합니다. 중복 제거 간격 동안 Amazon SQS는 동일한 콘텐츠로 전송된 메시지를 중복으로 취급하고 메시지 사본 하나만 전송합니다. 자세한 내용은 `ContentBasedDeduplication`Amazon SQS API Reference`CreateQueue`의 작업 _ 속성을 참조하십시오_.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`DeduplicationScope`  
+FIFO 대기열의 높은 처리량의 경우 메시지 중복 제거가 메시지 그룹 또는 대기열 수준에서 발생하는지 여부를 지정합니다. 유효한 값은 `messageGroup` 및 `queue`입니다.  
+FIFO 대기열에 대해 높은 처리량을 활성화하려면 이 속성을 로 `messageGroup` ** 설정하고 속성을 `FifoThroughputLimit` 로 설정합니다`perMessageGroupId`. 이러한 속성을 이러한 값 이외의 값으로 설정하면 일반 처리량이 적용되고 지정된 대로 중복 제거가 발생합니다. 자세한 내용은 Amazon SQS 개발자 안내서의 높은 FIFO 대기열 처리량 및 메시지 관련 할당량을 참조하세요**.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`DelaySeconds`  
+큐에 있는 모든 메시지의 배달이 지연되는 시간(초)입니다. 정수 값을 `0` to `900` (15분)로 지정할 수 있습니다. 기본값은 `0`입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`FifoQueue`  
+true로 설정하면 FIFO 대기열을 생성합니다. 이 속성을 지정하지 않으면 Amazon SQS가 표준 대기열을 생성합니다. 자세한 내용은 _Amazon SQS 개발자 안내서의 FIFO 대기열을 참조하세요_.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`FifoThroughputLimit`  
+FIFO 대기열의 높은 처리량의 경우 FIFO 대기열 처리량 할당량이 전체 대기열에 적용되는지 또는 메시지 그룹별로 적용되는지를 지정합니다. 유효한 값은 `perQueue` 및 `perMessageGroupId`입니다.  
+FIFO 대기열에 대해 높은 처리량을 활성화하려면 이 속성을 로 `perMessageGroupId` ** 설정하고 속성을 `DeduplicationScope` 로 설정합니다`messageGroup`. 이러한 속성을 이러한 값 이외의 값으로 설정하면 일반 처리량이 적용되고 지정된 대로 중복 제거가 발생합니다. 자세한 내용은 Amazon SQS 개발자 안내서의 높은 FIFO 대기열 처리량 및 메시지 관련 할당량을 참조하세요**.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`KmsDataKeyReusePeriodSeconds`  
+Amazon SQS가 AWS KMS를 다시 호출하기 전에 데이터 키를 재사용하여 메시지를 암호화하거나 해독할 수 있는 시간(초)입니다. 값은 60(1분)에서 86,400(24시간) 사이의 정수여야 합니다. 기본값은 300(5분)입니다.  
+기간이 짧을수록 보안은 향상되지만 AWS KMS에 대한 호출이 증가하여 프리 티어 이후에 요금이 발생할 수 있습니다. 자세한 내용은 _Amazon SQS 개발자 안내서의 저장 중 암호화를 참조하세요_.
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`KmsMasterKeyId`  
+Amazon SQS용 AWS Key Management Service(KMS) 또는 사용자 지정 KMS의 ID입니다. Amazon SQS용 AWS 관리형 KMS를 사용하려면 (기본) 별칭 ARN, 별칭 이름(예: `alias/aws/sqs`), 키 ARN 또는 키 ID를 지정합니다. 자세한 내용은 다음을 참조하세요.
+
+- Amazon SQS 개발자 안내서\* \*의 저장 중 암호화
+- Amazon SQS API Reference\* \*의 CreateQueue
+- AWS Key Management Service API 참조\* \*의 요청 파라미터
+- AWS Key Management Service 모범 사례 백서의 Key Management Service(KMS) 섹션
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열  
+  _업데이트 필요 사항_: 중단 없음
+
+`MaximumMessageSize`  
+Amazon SQS가 메시지를 거부하기 전에 메시지에 포함할 수 있는 바이트 수의 제한입니다. `1,024` 바이트(1KiB)에서 `262,144` 바이트(256KiB)까지의 정수 값을 지정할 수 있습니다. 기본값은 `262,144` (256KiB)입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`MessageRetentionPeriod`  
+Amazon SQS가 메시지를 보관하는 시간(초)입니다. `60` 초(1분)에서 `1,209,600` 초(14일) 사이의 정수 값을 지정할 수 있습니다. 기본값은 `345,600` 초(4일)입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`QueueName`  
+큐의 이름입니다. FIFO 대기열을 생성하려면 FIFO 대기열의 이름이 접미사로 끝나야 합니다 `.fifo` . 자세한 내용은 *Amazon SQS 개발자 안내서*의 FIFO 대기열을 참조하세요.  
+이름을 지정하지 않으면 AWS CloudFormation에서 고유한 물리적 ID를 생성하고 해당 ID를 대기열 이름으로 사용합니다. 자세한 내용은 *AWS CloudFormation 사용 설명서*의 이름 유형을 참조하세요.  
+이름을 지정하면 이 리소스를 대체해야 하는 업데이트를 수행할 수 없습니다. 중단이 필요 없거나 약간의 중단이 필요한 업데이트를 수행할 수 있습니다. 리소스를 바꿔야 하는 경우 새 이름을 지정합니다.
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ReceiveMessageWaitTimeSeconds`  
+메시지를 아직 사용할 수 없는 경우 빈 응답을 반환하지 않고 메시지가 응답에 포함되기 위해 메시지가 큐에 있을 때까지 ReceiveMessage 작업 호출이 대기하는 기간(초)을 지정합니다. 1에서 20 사이의 정수를 지정할 수 있습니다. 짧은 폴링은 기본값으로 사용되거나 이 속성에 대해 0을 지정할 때 사용됩니다. 자세한 내용은 _Amazon SQS 개발자 안내서의 긴 폴링을 사용하여 메시지 사용을 참조하세요_.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`RedriveAllowPolicy` 배달 못한 편지 대기열 재구동 권한에 대한 권한에 대한 파라미터와 배달 못한 편지 대기열을 JSON 객체로 지정할 수 있는 소스 대기열을 포함하는 문자열입니다. 매개변수는 다음과 같습니다.
+
+- `redrivePermission`: 현재 큐를 배달 못 한 편지 큐로 지정할 수 있는 원본 큐를 정의하는 권한 유형입니다. 유효한 값은 다음과 같습니다.
+  - `allowAll`: (기본값) 동일한 리전의 이 AWS 계정에 있는 모든 소스 대기열은 이 대기열을 배달 못한 편지 대기열로 지정할 수 있습니다.
+  - `denyAll`: 어떤 소스 큐도 이 큐를 배달 못한 편지 큐로 지정할 수 없습니다.
+  - `byQueue`: 매개 변수로 지정된 큐만 `sourceQueueArns` 이 큐를 배달 못 한 편지 큐로 지정할 수 있습니다.
+- `sourceQueueArns`: 이 대기열을 배달 못한 편지 대기열 및 리드라이브 메시지로 지정할 수 있는 소스 대기열의 Amazon 리소스 이름(ARN)입니다. 매개 변수가 로 설정된 경우에만 이 매개 변수를 지정할 수 있습니다 `redrivePermission` `byQueue`. 최대 10개의 소스 대기열 ARN을 지정할 수 있습니다. 10개 이상의 소스 대기열이 배달 못한 편지 대기열을 지정할 수 있도록 하려면 `redrivePermission` 매개 변수를 `allowAll`로 설정합니다.
+  *필수 항목 *여부: 아니요  
+  _형식_: Json  
+  _업데이트 필요 사항_: 중단 없음
+
+`RedrivePolicy` 소스 대기열의 배달 못한 편지 대기열 기능에 대한 파라미터를 JSON 객체로 포함하는 문자열입니다. 매개변수는 다음과 같습니다.
+
+- `deadLetterTargetArn`: 값을 초과한 후 Amazon SQS가 메시지를 이동하는 배달 못한 편지 대기열의 Amazon 리소스 이름(ARN)입니다 `maxReceiveCount` .
+- `maxReceiveCount`: 메시지가 배달 못 한 편지 큐로 이동하기 전에 원본 큐로 배달되는 횟수입니다. `ReceiveCount` for a message `maxReceiveCount` 가 for a queue를 초과하면 Amazon SQS는 메시지를 배달 못한 편지 대기열로 이동합니다.
+  FIFO 대기열의 배달 못한 편지 대기열도 FIFO 대기열이어야 합니다. 마찬가지로, 표준 큐의 배달 못 한 편지 큐도 표준 큐여야 합니다.
+  _JSON (영문_)  
+   `{ "deadLetterTargetArn" : String, "maxReceiveCount" : Integer }`
+
+*필수 항목 *여부: 아니요  
+_형식_: Json  
+_업데이트 필요 사항_: 중단 없음
+
+`SqsManagedSseEnabled`  
+SQS 소유 암호화 키를 사용하여 서버 측 대기열 암호화를 활성화합니다. 대기열당 하나의 서버 측 암호화 옵션(예: SSE-KMS 또는 SSE-SQS)만 지원됩니다. `SqsManagedSseEnabled` 정의되지 않은 `SSE-SQS` 경우 암호화가 기본적으로 활성화됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`Tags`  
+이 대기열에 연결하는 태그입니다. 자세한 내용은 _AWS CloudFormation 사용 설명서의 리소스 태그를 참조하세요_.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`VisibilityTimeout`  
+큐에서 메시지를 배달한 후 메시지를 사용할 수 없는 기간입니다. 이렇게 하면 다른 구성 요소가 동일한 메시지를 받지 못하도록 차단하고 초기 구성 요소가 큐에서 메시지를 처리하고 삭제할 수 있는 시간을 제공합니다.  
+값은 0초에서 43,200초(12시간) 사이여야 합니다. 값을 지정하지 않으면 AWS CloudFormation에서는 기본값인 30초를 사용합니다.  
+Amazon SQS 대기열 제한 시간 초과에 대한 자세한 내용은 _Amazon SQS 개발자 안내서의 제한 시간 초과를 참조하십시오_.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`큐 URL이 반환됩니다. 예를 들어:
+
+`{ "Ref": "some-address }`
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`Arn`  
+대기열의 Amazon 리소스 이름(ARN)을 반환합니다. 예를 들면 다음과 같습니다 `arn:aws:sqs:us-east-2:123456789012:mystack-myqueue-15PG5C2FC1CW8`.
+
+`QueueName`  
+큐 이름을 반환합니다. 예를 들면 다음과 같습니다 `mystack-myqueue-1VF9BKQH5BJVI`.
+
+`QueueUrl` 정책에서 대기열의 URL을 반환합니다.
+
+## 예제
+
+### CloudWatch 경보가 포함된 Amazon SQS 대기열
+
+#### JSON (영문)
+
+```
+{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+
+  "Description" : "This example template shows how to create an Amazon SQS queue with CloudWatch alarms on queue depth. This template creates an Amazon SQS queue and one or more CloudWatch alarms. You will be billed for the AWS resources used if you create a stack using this template.",
+
+  "Parameters" : {
+    "AlarmEmail": {
+      "Default": "jane.doe@example.com",
+      "Description": "Email address to notify of operational issues",
+      "Type": "String"
+    }
+  },
+
+  "Resources" : {
+    "MyQueue" : {
+      "Type" : "AWS::SQS::Queue",
+      "Properties" : {
+         "QueueName" : "SampleQueue"
+      }
+    },
+    "AlarmTopic": {
+      "Type": "AWS::SNS::Topic",
+      "Properties": {
+        "Subscription": [{
+          "Endpoint": { "Ref": "AlarmEmail" },
+          "Protocol": "email"
+        }]
+      }
+    },
+    "QueueDepthAlarm": {
+      "Type": "AWS::CloudWatch::Alarm",
+      "Properties": {
+        "AlarmDescription": "Alarm if queue depth increases to more than 10 messages",
+        "Namespace": "AWS/SQS",
+        "MetricName": "ApproximateNumberOfMessagesVisible",
+        "Dimensions": [{
+          "Name": "QueueName",
+          "Value" : { "Fn::GetAtt" : ["MyQueue", "QueueName"] }
+        }],
+        "Statistic": "Sum",
+        "Period": "300",
+        "EvaluationPeriods": "1",
+        "Threshold": "10",
+        "ComparisonOperator": "GreaterThanThreshold",
+        "AlarmActions": [{
+          "Ref": "AlarmTopic"
+        }],
+        "InsufficientDataActions": [{
+          "Ref": "AlarmTopic"
+        }]
+      }
+    }
+  },
+  "Outputs" : {
+    "QueueURL" : {
+      "Description" : "URL of new Amazon SQS Queue",
+      "Value" : { "Ref" : "MyQueue" }
+    },
+    "QueueARN" : {
+      "Description" : "ARN of new Amazon SQS Queue",
+      "Value" : { "Fn::GetAtt" : ["MyQueue", "Arn"]}
+    },
+    "QueueName" : {
+      "Description" : "Name new Amazon SQS Queue",
+      "Value" : { "Fn::GetAtt" : ["MyQueue", "QueueName"]}
+    }
+  }
+}
+```
+
+### 배달 못한 편지 대기열이 있는 Amazon SQS 대기열
+
+다음 예제 템플릿은 원본 큐와 배달 못 한 편지 큐를 만듭니다.
+
+**메모**  
+소스 대기열은 리드라이브 정책에서 배달 못한 편지 대기열을 지정하기 때문에 원본 대기열은 배달 못한 편지 대기열의 생성에 따라 달라집니다.
+
+#### JSON (영문)
+
+```
+{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+
+  "Resources" : {
+    "MySourceQueue" : {
+      "Type" : "AWS::SQS::Queue",
+      "Properties" : {
+        "RedrivePolicy": {
+          "deadLetterTargetArn" : {"Fn::GetAtt" : [ "MyDeadLetterQueue" , "Arn" ]},
+          "maxReceiveCount" : 5
+        }
+      }
+    },
+    "MyDeadLetterQueue" : {
+      "Type" : "AWS::SQS::Queue"
+    }
+  },
+
+  "Outputs" : {
+    "SourceQueueURL" : {
+      "Description" : "URL of the source queue",
+      "Value" : { "Ref" : "MySourceQueue" }
+    },
+    "SourceQueueARN" : {
+      "Description" : "ARN of source queue",
+      "Value" : { "Fn::GetAtt" : ["MySourceQueue", "Arn"]}
+    },
+    "DeadLetterQueueURL" : {
+      "Description" : "URL of dead-letter queue",
+      "Value" : { "Ref" : "MyDeadLetterQueue" }
+    },
+    "DeadLetterQueueARN" : {
+      "Description" : "ARN of dead-letter queue",
+      "Value" : { "Fn::GetAtt" : ["MyDeadLetterQueue", "Arn"]}
+    }
+  }
+}
+```
+
+## 참고 항목
+
+- 의Amazon SQS 개발자 안내서\* \*의 Amazon Simple Queue Service란 무엇입니까?
+- `CreateQueue` 의 _Amazon SQS API 참조_

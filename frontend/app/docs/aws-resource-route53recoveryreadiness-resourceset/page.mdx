@@ -1,0 +1,73 @@
+# AWS::Route53복구 준비::리소스 세트
+
+Amazon Route 53 Application Recovery Controller에서 리소스 세트를 생성합니다. 리소스 세트는 Network Load Balancer와 같이 여러 셀에 걸쳐 있는 한 가지 유형의 리소스 세트입니다. 리소스 세트를 준비 상태 확인과 연결하여 Route 53 ARC가 장애 조치 준비 상태를 위해 세트의 리소스를 지속적으로 모니터링하도록 할 수 있습니다.
+
+일반적으로 애플리케이션에서 지원되는 각 유형의 AWS 리소스에 대한 리소스 세트 및 준비 상태 확인을 생성합니다.
+
+자세한 내용은 Amazon Route 53 Application Recovery Controller 개발자 안내서의 준비 검사, 리소스 세트 및 준비 범위를 참조하세요.
+
+Route 53 ARC Readiness는 us-east-1 및 us-west-2 AWS 리전만 지원합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::Route53RecoveryReadiness::ResourceSet",
+  "Properties" : {
+      "Resources" : [ Resource, ... ],
+      "ResourceSetName" : String,
+      "ResourceSetType" : String,
+      "Tags" : [Tag, ... ]
+    }
+}
+```
+
+## 속성
+
+`Resources`  
+리소스 집합의 리소스 개체 목록입니다.  
+_필수 항목 여부_: 예  
+_유형_: 리소스 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`ResourceSetName`  
+만들려는 리소스 집합의 이름입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ResourceSetType`  
+리소스 집합에 있는 리소스의 리소스 종류입니다. 리소스 종류에 대해 다음 값 중 하나를 입력합니다.  
+ AWS::ApiGateway::스테이지, AWS::ApiGatewayV2::스테이지, AWS::AutoScaling::AutoScalingGroup, AWS::CloudWatch::Alarm, AWS::EC2::CustomerGateway, AWS::D ynamoDB::Table, AWS::EC2::볼륨, AWS::ElasticLoadBalancing::LoadBalancer, AWS::ElasticLoadBalancingV2::LoadBalancer, AWS::Lambda::함수, AWS::MSK::클러스터, AWS::RDS::D BCluster, AWS::Route53::HealthCheck, AWS::SQS::Queue, AWS::SNS::Topic, AWS::SNS::구독, AWS::EC2::VPC, AWS::EC2::VPNConnection, AWS::EC2:: VPNGateway, AWS::Route53RecoveryReadiness::D NSTargetResource입니다.  
+AWS::Route53RecoveryReadiness::D NSTargetResource는 이 설정에만 사용됩니다. 실제 AWS CloudFormation 리소스 유형이 아닙니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Tags`  
+리소스 집합에 대한 매개 변수와 연결할 태그입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref`개체 `Ref`가 반환됩니다 `ResourceSetName` .
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`ResourceSetArn` 리소스 세트의 Amazon 리소스 이름(ARN)입니다.

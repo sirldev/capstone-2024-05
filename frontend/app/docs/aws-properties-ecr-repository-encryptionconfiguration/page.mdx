@@ -1,0 +1,39 @@
+# AWS::ECR::리포지토리 암호화 구성
+
+저장소의 암호화 구성입니다. 이는 저장소의 내용이 미사용 시 암호화되는 방식을 결정합니다.
+
+기본적으로 암호화 구성이 설정되지 않았거나 `AES256` 암호화 유형을 사용하는 경우 Amazon ECR은 AES-256 암호화 알고리즘을 사용하여 저장 데이터를 암호화하는 Amazon S3 관리형 암호화 키와 함께 서버 측 암호화를 사용합니다. 이 경우 사용자가 취해야 할 조치는 없습니다.
+
+리포지토리 콘텐츠의 암호화를 보다 세밀하게 제어하기 위해 AWS Key Management Service(AWS KMS)에 저장된 AWS Key Management Service 키로 서버 측 암호화를 사용하여 이미지를 암호화할 수 있습니다. 자세한 내용은 _Amazon Elastic Container Registry 사용 설명서의 저장 중 Amazon ECR 암호화를 참조하세요_.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "EncryptionType" : String,
+  "KmsKey" : String
+}
+```
+
+## 속성
+
+`EncryptionType`  
+사용할 암호화 유형입니다.  
+암호화 유형을 사용하는 경우 `KMS` 리포지토리의 콘텐츠는 AWS KMS에 저장된 AWS Key Management Service 키를 사용한 서버 측 암호화를 사용하여 암호화됩니다. AWS KMS를 사용하여 데이터를 암호화하는 경우 Amazon ECR용 기본 AWS 관리형 AWS KMS 키를 사용하거나 이미 생성한 자체 AWS KMS 키를 지정할 수 있습니다. 자세한 내용은 Amazon Simple Storage Service 콘솔 개발자 가이드의 AWS Key Management Service(SSE-KMS)에 저장된 AWS KMS 키로 서버 측 암호화를 사용하여 데이터 보호를 참조하세요**.  
+암호화 유형을 사용하는 경우 `AES256` Amazon ECR은 AES-256 암호화 알고리즘을 사용하여 리포지토리의 이미지를 암호화하는 Amazon S3 관리형 암호화 키와 함께 서버 측 암호화를 사용합니다. 자세한 내용은 Amazon Simple Storage Service 콘솔 개발자 가이드의 Amazon S3 관리형 암호화 키(SSE-S3)를 사용하여 서버 측 암호화를 사용하여 데이터 보호를 참조하세요**.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_허용되는 값_: `AES256 | KMS`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`KmsKey`  
+암호화 유형을 사용하는 경우 `KMS` 암호화에 사용할 AWS KMS 키를 지정합니다. AWS KMS 키의 별칭, 키 ID 또는 전체 ARN을 지정할 수 있습니다. 키는 리포지토리와 동일한 리전에 있어야 합니다. 키를 지정하지 않으면 Amazon ECR용 기본 AWS 관리형 AWS KMS 키가 사용됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `2048`  
+_업데이트 필요 사항_: 바꿔 놓음

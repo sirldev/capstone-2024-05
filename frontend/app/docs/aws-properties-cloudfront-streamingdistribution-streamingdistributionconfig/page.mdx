@@ -1,0 +1,70 @@
+# AWS::CloudFront::StreamingDistribution StreamingDistributionConfig
+
+RTMP 배포의 구성 정보입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Aliases" : [ String, ... ],
+  "Comment" : String,
+  "Enabled" : Boolean,
+  "Logging" : Logging,
+  "PriceClass" : String,
+  "S3Origin" : S3Origin,
+  "TrustedSigners" : TrustedSigners
+}
+```
+
+## 속성
+
+`Aliases`  
+이 스트리밍 배포에 대한 CNAME(대체 도메인 이름)에 대한 정보를 포함하는 복합 형식입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`Comment`  
+스트리밍 배포에 대해 포함할 모든 설명입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Enabled`  
+스트리밍 배포가 콘텐츠에 대한 사용자 요청을 수락할 수 있는지 여부입니다.  
+_필수 항목 여부_: 예  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`Logging`  
+스트리밍 배포를 위해 액세스 로그를 기록할지 여부를 제어하는 복합 형식입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 로깅  
+_업데이트 필요 사항_: 중단 없음
+
+`PriceClass`  
+이 스트리밍 배포의 가격 등급에 대한 정보를 포함하는 복합 형식입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `PriceClass_100 | PriceClass_200 | PriceClass_All`  
+_업데이트 필요 사항_: 중단 없음
+
+`S3Origin`  
+CloudFront에서 배포할 미디어 파일을 가져올 Amazon S3 버킷에 대한 정보가 포함된 복합 유형입니다.  
+_필수 항목 여부_: 예  
+_유형_: S3Origin  
+_업데이트 필요 사항_: 중단 없음
+
+`TrustedSigners`  
+프라이빗 콘텐츠에 대해 서명된 URL을 생성하도록 허용할 AWS 계정을 지정하는 복합 유형입니다. 배포에서 서명된 URL을 사용하려면 이 요소를 포함합니다. 배포에서 공용 URL을 사용하려면 이 요소를 제거합니다. 자세한 내용은 Amazon CloudFront 개발자 안내서의 CloudFront를 통해 프라이빗 콘텐츠 제공을 참조하십시오\**.  
+*필수 항목 여부*: 예  
+*유형*: TrustedSigners  
+*업데이트 필요 사항\*: 중단 없음
+
+## 참고 항목
+
+- Amazon CloudFront API Reference\* \*의 StreamingDistributionConfig

@@ -1,0 +1,40 @@
+# AWS::CodeDeploy::D eploymentGroup 경보 구성
+
+`AlarmConfiguration` 속성 유형은 AWS CodeDeploy 배포 그룹에 대한 CloudWatch 경보를 구성합니다. `AlarmConfiguration` 은 DeploymentGroup 리소스의 속성입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Alarms" : [ Alarm, ... ],
+  "Enabled" : Boolean,
+  "IgnorePollAlarmFailure" : Boolean
+}
+```
+
+## 속성
+
+`Alarms`  
+배포 또는 배포 그룹에 대해 구성된 경보 목록입니다. 최대 10개의 알람을 추가할 수 있습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 알람 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`Enabled`  
+경보 구성이 활성화되었는지 여부를 나타냅니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`IgnorePollAlarmFailure`  
+Amazon CloudWatch에서 경보의 현재 상태에 대한 정보를 검색할 수 없는 경우 배포를 계속해야 하는지 여부를 나타냅니다. 기본값은 `false`입니다.
+
+- `true`: CloudWatch에서 경보 상태 정보를 검색할 수 없는 경우에도 배포가 진행됩니다.
+- `false`: CloudWatch에서 경보 상태 정보를 검색할 수 없는 경우 배포가 중지됩니다.
+  *필수 항목 *여부: 아니요  
+  _유형_: Boolean  
+  _업데이트 필요 사항_: 중단 없음

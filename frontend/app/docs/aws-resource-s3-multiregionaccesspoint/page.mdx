@@ -1,0 +1,61 @@
+# AWS::S3::MultiRegion액세스포인트
+
+리소스 `AWS::S3::MultiRegionAccessPoint` 는 Amazon S3 다중 리전 액세스 포인트를 생성합니다. 다중 리전 액세스 포인트에 대한 자세한 내용은 Amazon S3 사용 설명서의 Amazon S3의 다중 리전 액세스 포인트를 참조하세요\*\*.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::S3::MultiRegionAccessPoint",
+  "Properties" : {
+      "Name" : String,
+      "PublicAccessBlockConfiguration" : PublicAccessBlockConfiguration,
+      "Regions" : [ Region, ... ]
+    }
+}
+```
+
+## 속성
+
+`Name`  
+다중 리전 액세스 포인트의 이름입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`PublicAccessBlockConfiguration`  
+이 다중 리전 액세스 포인트에 적용할 PublicAccessBlock 구성입니다. 어떤 조합으로든 구성 옵션을 활성화할 수 있습니다. Amazon S3가 객체를 퍼블릭으로 간주하는 경우에 대한 자세한 내용은 _Amazon S3 사용 설명서의 "퍼블릭"의 의미를 참조하십시오_.  
+*필수 항목 *여부: 아니요  
+_형식_: PublicAccessBlockConfiguration  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Regions`  
+다중 리전 액세스 포인트와 연결된 리전 및 버킷의 모음입니다.  
+_필수 항목 여부_: 예  
+_유형_: 지역 목록  
+_업데이트 필요 사항_: 바꿔 놓음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`다중 리전 액세스 포인트의 이름을 반환합니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`Alias`  
+다중 리전 액세스 포인트의 별칭입니다. 다중 리전 액세스 포인트의 이름과 별칭 구분에 대한 자세한 내용은 _Amazon S3 사용 설명서의 다중 리전 액세스 포인트 관리를 참조하십시오_.
+
+`CreatedAt` 다중 리전 액세스 포인트가 생성된 시점의 타임스탬프입니다.

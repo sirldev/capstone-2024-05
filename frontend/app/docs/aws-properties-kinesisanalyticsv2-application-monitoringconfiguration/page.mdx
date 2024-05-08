@@ -1,0 +1,44 @@
+# AWS::KinesisAnalyticsV2::애플리케이션 모니터링구성
+
+Java 기반 Kinesis Data Analytics 애플리케이션에 대한 Amazon CloudWatch 로깅의 구성 파라미터에 대해 설명합니다. CloudWatch 로깅에 대한 자세한 내용은 모니터링 단원을 참조하십시오.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ConfigurationType" : String,
+  "LogLevel" : String,
+  "MetricsLevel" : String
+}
+```
+
+## 속성
+
+`ConfigurationType`  
+애플리케이션에 대해 기본 CloudWatch 로깅 구성을 사용할지 여부를 설명합니다. 또는 매개 변수를 설정하려면 이 속성을 로 설정해야 합니다 `CUSTOM` `LogLevel` `MetricsLevel` .  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_허용되는 값_: `CUSTOM | DEFAULT`  
+_업데이트 필요 사항_: 중단 없음
+
+`LogLevel`  
+애플리케이션에 대한 CloudWatch Logs의 자세한 정도를 설명합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `DEBUG | ERROR | INFO | WARN`  
+_업데이트 필요 사항_: 중단 없음
+
+`MetricsLevel`  
+애플리케이션에 대한 CloudWatch Logs의 세부 수준을 설명합니다. 이 `Parallelism` 수준은 과도한 비용으로 인해 Parallelism이 64 이상인 응용 프로그램에는 권장되지 않습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `APPLICATION | OPERATOR | PARALLELISM | TASK`  
+_업데이트 필요 사항_: 중단 없음
+
+## 참고 항목
+
+- Amazon Kinesis Data Analytics API 참조\* \*의 MonitoringConfiguration

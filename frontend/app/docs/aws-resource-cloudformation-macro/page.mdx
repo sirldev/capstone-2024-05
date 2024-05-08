@@ -1,0 +1,70 @@
+# AWS::CloudFormation::매크로
+
+리소스 `AWS::CloudFormation::Macro` 는 CloudFormation 템플릿에서 사용자 지정 처리를 수행하기 위해 CloudFormation 매크로를 생성하는 CloudFormation 리소스 유형입니다. 자세한 내용은 AWS CloudFormation 매크로를 사용하여 템플릿에 대한 사용자 지정 처리 수행을 참조하세요.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::CloudFormation::Macro",
+  "Properties" : {
+      "Description" : String,
+      "FunctionName" : String,
+      "LogGroupName" : String,
+      "LogRoleARN" : String,
+      "Name" : String
+    }
+}
+```
+
+## 속성
+
+`Description`  
+매크로에 대한 설명입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`FunctionName`  
+매크로가 실행될 때 AWS CloudFormation에서 호출할 기본 AWS Lambda 함수의 Amazon 리소스 이름(ARN)입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`LogGroupName`  
+매크로의 기본 AWS Lambda 함수를 호출할 때 AWS CloudFormation에서 오류 로깅 정보를 전송하는 CloudWatch Logs 그룹입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`LogRoleARN`  
+CloudWatch Logs에 로그 항목을 전송할 때 AWS CloudFormation에서 맡아야 하는 역할의 ARN입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Name`  
+매크로의 이름입니다. 매크로 이름은 계정의 모든 매크로에서 고유해야 합니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`리소스 이름이 반환됩니다. 예를 들어:
+
+`{ "Ref": "myMacro" }`
+
+매크로의 경우 `myMacro` `Ref` 매크로의 이름을 반환합니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+## 참고 항목
+
+- AWS CloudFormation 매크로를 사용하여 템플릿에 대한 사용자 지정 처리 수행

@@ -1,0 +1,26 @@
+# AWS::CloudTrail::Trail 인사이트 선택기
+
+추적에 로깅된 Insights 유형 목록이 포함된 JSON 문자열입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "InsightType" : String
+}
+```
+
+## 속성
+
+`InsightType`  
+추적에 기록할 Insights 이벤트의 유형입니다. `ApiCallRateInsight` 유효한 `ApiErrorRateInsight` 인사이트 유형입니다.  
+`ApiCallRateInsight` Insights 유형은 기준 API 호출 볼륨에 대해 분당 집계된 쓰기 전용 관리 API 호출을 분석합니다.  
+`ApiErrorRateInsight` Insights 유형은 오류 코드를 발생시키는 관리 API 호출을 분석합니다. API 호출이 실패하면 오류가 표시됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `ApiCallRateInsight | ApiErrorRateInsight`  
+_업데이트 필요 사항_: 중단 없음

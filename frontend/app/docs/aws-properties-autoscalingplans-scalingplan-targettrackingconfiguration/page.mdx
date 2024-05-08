@@ -1,0 +1,70 @@
+# AWS::AutoScalingPlans::ScalingPlan TargetTrackingConfiguration
+
+`TargetTrackingConfiguration` 는 AWS Auto Scaling(Auto Scaling 계획)과 함께 사용할 대상 추적 구성을 지정하는 ScalingInstruction의 하위 속성입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "CustomizedScalingMetricSpecification" : CustomizedScalingMetricSpecification,
+  "DisableScaleIn" : Boolean,
+  "EstimatedInstanceWarmup" : Integer,
+  "PredefinedScalingMetricSpecification" : PredefinedScalingMetricSpecification,
+  "ScaleInCooldown" : Integer,
+  "ScaleOutCooldown" : Integer,
+  "TargetValue" : Double
+}
+```
+
+## 속성
+
+`CustomizedScalingMetricSpecification`  
+사용자 지정 메트릭입니다. 사전 정의된 지표 또는 사용자 지정된 지표를 지정할 수 있습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: CustomizedScalingMetricSpecification  
+_업데이트 필요 사항_: 중단 없음
+
+`DisableScaleIn`  
+대상 추적 조정 정책에 의한 축소가 비활성화되었는지 여부를 나타냅니다. 값이 인 경우 `true`축소가 비활성화되고 대상 추적 조정 정책이 확장 가능한 리소스에서 용량을 제거하지 않습니다. 그렇지 않으면 축소가 활성화되고 대상 추적 조정 정책이 확장 가능한 리소스에서 용량을 제거할 수 있습니다.  
+기본값은 `false`입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`EstimatedInstanceWarmup`  
+새로 시작된 인스턴스가 CloudWatch 지표에 기여할 수 있을 때까지의 예상 시간(초)입니다. 이 값은 리소스가 Auto Scaling 그룹인 경우에만 사용됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`PredefinedScalingMetricSpecification`  
+미리 정의된 메트릭입니다. 사전 정의된 지표 또는 사용자 지정된 지표를 지정할 수 있습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: PredefinedScalingMetricSpecification  
+_업데이트 필요 사항_: 중단 없음
+
+`ScaleInCooldown`  
+축소 활동이 완료된 후 다른 축소 활동을 시작할 수 있을 때까지의 시간(초)입니다. 확장 가능한 리소스가 Auto Scaling 그룹인 경우에는 이 값이 사용되지 않습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`ScaleOutCooldown`  
+확장 활동이 완료된 후 다른 확장 활동을 시작할 수 있을 때까지의 시간(초)입니다. 확장 가능한 리소스가 Auto Scaling 그룹인 경우에는 이 값이 사용되지 않습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`TargetValue`  
+메트릭의 대상 값입니다. 이 속성은 Double 형식의 숫자를 허용하지만 너무 작거나 너무 큰 값은 허용하지 않습니다. 값의 범위는 -2^360에서 2^360 사이여야 합니다.  
+_필수 항목 여부_: 예  
+_유형_: 더블  
+_업데이트 필요 사항_: 중단 없음
+
+## 참고 항목
+
+- AWS Auto Scaling 사용 설명서

@@ -1,0 +1,36 @@
+# AWS::EC2::EC2Fleet CapacityRebalance
+
+Amazon EC2가 스팟 인스턴스가 중단될 위험이 높다는 리밸런싱 알림 신호를 보낼 때 사용할 스팟 인스턴스 교체 전략입니다. 자세한 내용은 _Amazon EC2 사용 설명서의 용량 리밸런싱을 참조하세요_.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ReplacementStrategy" : String,
+  "TerminationDelay" : Integer
+}
+```
+
+## 속성
+
+`ReplacementStrategy`  
+사용할 대체 전략입니다. 유형의 플릿에만 사용할 수 있습니다`maintain`.  
+ `launch` - EC2 집합은 집합의 기존 스팟 인스턴스에 대한 재분배 알림이 발생할 때 대체 스팟 인스턴스를 시작합니다. EC2 집합은 리밸런싱 알림을 받는 인스턴스를 종료하지 않습니다. 이전 인스턴스를 종료하거나 실행 상태로 둘 수 있습니다. 인스턴스가 실행되는 동안 모든 인스턴스에 대해 요금이 부과됩니다.  
+ `launch-before-terminate` - EC2 집합은 플릿의 기존 스팟 인스턴스에 대한 재분배 알림이 전송될 때 대체 스팟 인스턴스를 시작한 다음, (에서) 지정한 지연 시간 후에 `TerminationDelay`재분배 알림을 수신한 인스턴스를 종료합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `launch | launch-before-terminate`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`TerminationDelay`  
+Amazon EC2가 새 대체 스팟 인스턴스를 시작한 후 이전 스팟 인스턴스를 종료하기 전에 대기하는 시간(초)입니다.  
+`ReplacementStrategy` 로 설정된 경우 필수입니다`launch-before-terminate`.  
+가 로 설정된 경우에는 유효하지 않습니다 `ReplacementStrategy` `launch`.  
+유효한 값: 초의 최소값입니다 `120` . 최대값( `7200` 초)입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 바꿔 놓음

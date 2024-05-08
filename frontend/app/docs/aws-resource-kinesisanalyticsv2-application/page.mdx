@@ -1,0 +1,341 @@
+# AWS::KinesisAnalyticsV2::애플리케이션
+
+Amazon Kinesis Data Analytics 애플리케이션을 생성합니다. Kinesis Data Analytics 애플리케이션 생성에 대한 자세한 내용은 애플리케이션 생성 단원을 참조하십시오.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::KinesisAnalyticsV2::Application",
+  "Properties" : {
+      "ApplicationConfiguration" : ApplicationConfiguration,
+      "ApplicationDescription" : String,
+      "ApplicationMaintenanceConfiguration" : ApplicationMaintenanceConfiguration,
+      "ApplicationMode" : String,
+      "ApplicationName" : String,
+      "RunConfiguration" : RunConfiguration,
+      "RuntimeEnvironment" : String,
+      "ServiceExecutionRole" : String,
+      "Tags" : [Tag, ... ]
+    }
+}
+```
+
+## 속성
+
+`ApplicationConfiguration`  
+이 매개 변수를 사용하여 응용 프로그램을 구성합니다.  
+*필수 항목 *여부: 아니요  
+_형식_: ApplicationConfiguration  
+_업데이트 필요 사항_: 중단 없음
+
+`ApplicationDescription`  
+응용 프로그램에 대한 설명입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `0`  
+_최대_: `1024`  
+_업데이트 필요 사항_: 중단 없음
+
+`ApplicationMaintenanceConfiguration`  
+속성 설명을 사용할 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_형식_: ApplicationMaintenanceConfiguration  
+_업데이트 필요 사항_: 중단 없음
+
+`ApplicationMode`  
+Kinesis Data Analytics Studio 노트북을 생성하려면 모드를 로 설정해야 합니다`INTERACTIVE`. 그러나 Apache Flink용 Kinesis Data Analytics 애플리케이션의 경우 모드는 선택 사항입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `INTERACTIVE | STREAMING`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ApplicationName`  
+응용 프로그램의 이름입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `128`  
+_패턴_: `[a-zA-Z0-9_.-]+`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`RunConfiguration`  
+속성 설명을 사용할 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_형식_: RunConfiguration  
+_업데이트 필요 사항_: 중단 없음
+
+`RuntimeEnvironment`  
+응용 프로그램의 런타임 환경입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_허용되는 값_: `FLINK-1_11 | FLINK-1_13 | FLINK-1_15 | FLINK-1_6 | FLINK-1_8 | SQL-1_0 | ZEPPELIN-FLINK-1_0 | ZEPPELIN-FLINK-2_0`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ServiceExecutionRole`  
+애플리케이션이 외부 리소스에 액세스하는 데 사용하는 IAM 역할을 지정합니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `2048`  
+_패턴_: `arn:.*`  
+_업데이트 필요 사항_: 중단 없음
+
+`Tags`  
+응용 프로그램에 할당할 하나 이상의 태그 목록입니다. 태그는 애플리케이션을 식별하는 키-값 쌍입니다. 응용 프로그램 태그의 최대 개수에는 시스템 태그가 포함됩니다. 사용자 정의 응용 프로그램 태그의 최대 수는 50개입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 중단 없음
+
+## 예제
+
+### Apache Flink를 사용하여 Amazon Kinesis Data Analytics 애플리케이션 생성
+
+다음 예제에서는 Amazon S3의 배포 패키지를 사용하여 간단한 애플리케이션을 만드는 방법을 보여 줍니다. 코드에 필요한 모든 스트림에 액세스할 수 있는 권한을 IAM 역할에 추가해야 합니다.
+
+#### JSON (영문)
+
+```
+{
+    "Description": "Simple KDA Flink application",
+    "Parameters": {
+        "CodeBucketArn": {
+            "Type": "String"
+        },
+        "CodeKey": {
+            "Type": "String"
+        }
+    },
+    "Resources": {
+        "MyApplication": {
+            "Type": "AWS::KinesisAnalyticsV2::Application",
+            "Properties": {
+                "RuntimeEnvironment": "FLINK-1_15",
+                "ServiceExecutionRole": {
+                    "Fn::GetAtt": [
+                        "ServiceExecutionRole",
+                        "Arn"
+                    ]
+                },
+                "ApplicationConfiguration": {
+                    "ApplicationCodeConfiguration": {
+                        "CodeContent": {
+                            "S3ContentLocation": {
+                                "BucketARN": {
+                                    "Ref": "CodeBucketArn"
+                                },
+                                "FileKey": {
+                                    "Ref": "CodeKey"
+                                }
+                            }
+                        },
+                        "CodeContentType": "ZIPFILE"
+                    }
+                }
+            }
+        },
+        "ServiceExecutionRole": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+                "AssumeRolePolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Effect": "Allow",
+                            "Principal": {
+                                "Service": "kinesisanalytics.amazonaws.com"
+                            },
+                            "Action": "sts:AssumeRole"
+                        }
+                    ]
+                },
+                "Path": "/",
+                "Policies": [
+                    {
+                        "PolicyName": "s3-code-access",
+                        "PolicyDocument": {
+                            "Version": "2012-10-17",
+                            "Statement": [
+                                {
+                                    "Effect": "Allow",
+                                    "Action": [
+                                        "s3:GetObject"
+                                    ],
+                                    "Resource": [
+                                        {
+                                            "Fn::Sub": "${CodeBucketArn}/${CodeKey}"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}
+```
+
+### Amazon Kinesis Data Analytics Studio 애플리케이션 생성
+
+다음 예제에서는 Amazon Glue 데이터베이스를 사용하여 간단한 Studio 애플리케이션을 생성하는 방법을 보여줍니다. 필요한 스트림을 생성하거나 액세스하려면 IAM 역할에 권한을 추가해야 하며, 이미 존재하는 스트림은 Glue 데이터베이스에 추가해야 합니다.
+
+#### JSON (영문)
+
+```
+{
+    "Description": "KDA Studio application",
+    "Parameters": {
+        "GlueDatabaseName": {
+            "Type": "String"
+        }
+    },
+    "Resources": {
+        "MyApplication": {
+            "Type": "AWS::KinesisAnalyticsV2::Application",
+            "Properties": {
+                "ApplicationMode": "INTERACTIVE",
+                "RuntimeEnvironment": "ZEPPELIN-FLINK-3_0",
+                "ServiceExecutionRole": {
+                    "Fn::GetAtt": [
+                        "ServiceExecutionRole",
+                        "Arn"
+                    ]
+                },
+                "ApplicationConfiguration": {
+                    "FlinkApplicationConfiguration": {
+                        "ParallelismConfiguration": {
+                            "Parallelism": 4,
+                            "ConfigurationType": "CUSTOM"
+                        }
+                    },
+                    "ZeppelinApplicationConfiguration": {
+                        "CatalogConfiguration": {
+                            "GlueDataCatalogConfiguration": {
+                                "DatabaseARN": {
+                                    "Fn::Sub": "arn:aws:glue:${AWS::Region}:${AWS::AccountId}:database/${GlueDatabase}"
+                                }
+                            }
+                        },
+                        "CustomArtifactsConfiguration": [
+                            {
+                                "ArtifactType": "DEPENDENCY_JAR",
+                                "MavenReference": {
+                                    "GroupId": "org.apache.flink",
+                                    "ArtifactId": "flink-sql-connector-kinesis",
+                                    "Version": "1.15.4"
+                                }
+                            },
+                            {
+                                "ArtifactType": "DEPENDENCY_JAR",
+                                "MavenReference": {
+                                    "GroupId": "org.apache.flink",
+                                    "ArtifactId": "flink-connector-kafka",
+                                    "Version": "1.15.4"
+                                }
+                            },
+                            {
+                                "ArtifactType": "DEPENDENCY_JAR",
+                                "MavenReference": {
+                                    "GroupId": "software.amazon.msk",
+                                    "ArtifactId": "aws-msk-iam-auth",
+                                    "Version": "1.1.6"
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        },
+        "GlueDatabase": {
+            "Type": "AWS::Glue::Database",
+            "Properties": {
+                "CatalogId": {
+                    "Ref": "AWS::AccountId"
+                },
+                "DatabaseInput": {
+                    "Name": {
+                        "Ref": "GlueDatabaseName"
+                    },
+                    "Description": "My glue database"
+                }
+            }
+        },
+        "ServiceExecutionRole": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+                "AssumeRolePolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Effect": "Allow",
+                            "Principal": {
+                                "Service": "kinesisanalytics.amazonaws.com"
+                            },
+                            "Action": "sts:AssumeRole"
+                        }
+                    ]
+                },
+                "Path": "/",
+                "Policies": [
+                    {
+                        "PolicyName": "glue-access",
+                        "PolicyDocument": {
+                            "Version": "2012-10-17",
+                            "Statement": [
+                                {
+                                    "Effect": "Allow",
+                                    "Action": [
+                                        "glue:GetConnection",
+                                        "glue:GetTable",
+                                        "glue:GetTables",
+                                        "glue:CreateTable",
+                                        "glue:UpdateTable",
+                                        "glue:GetDatabases",
+                                        "glue:GetUserDefinedFunction"
+                                    ],
+                                    "Resource": [
+                                        {
+                                            "Fn::Sub": "arn:${AWS::Partition}:glue:${AWS::Region}:${AWS::AccountId}:connection/*"
+                                        },
+                                        {
+                                            "Fn::Sub": "arn:${AWS::Partition}:glue:${AWS::Region}:${AWS::AccountId}:table/*"
+                                        },
+                                        {
+                                            "Fn::Sub": "arn:${AWS::Partition}:glue:${AWS::Region}:${AWS::AccountId}:database/${GlueDatabase}/*"
+                                        },
+                                        {
+                                            "Fn::Sub": "arn:${AWS::Partition}:glue:${AWS::Region}:${AWS::AccountId}:catalog"
+                                        },
+                                        {
+                                            "Fn::Sub": "arn:${AWS::Partition}:glue:${AWS::Region}:${AWS::AccountId}:userDefinedFunction/*"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "Effect": "Allow",
+                                    "Action": [
+                                        "glue:GetDatabase"
+                                    ],
+                                    "Resource": [
+                                        "*"
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}
+```
+
+## 참고 항목
+
+- Amazon Kinesis Data Analytics API 참조\* \*의 CreateApplication

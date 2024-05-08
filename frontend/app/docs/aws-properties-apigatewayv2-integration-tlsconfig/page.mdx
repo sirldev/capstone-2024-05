@@ -1,0 +1,23 @@
+# AWS::ApiGatewayV2::통합 TlsConfig
+
+이 `TlsConfig` 특성은 개인용 통합에 대한 TLS 구성을 지정합니다. TLS 구성을 지정하는 경우 프라이빗 통합 트래픽은 HTTPS 프로토콜을 사용합니다. HTTP API에 대해서만 지원됩니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ServerNameToVerify" : String
+}
+```
+
+## 속성
+
+`ServerNameToVerify`  
+서버 이름을 지정하는 경우 API Gateway는 이 이름을 사용하여 통합 인증서의 호스트 이름을 확인합니다. 서버 이름은 SNI(서버 이름 표시) 또는 가상 호스팅을 지원하기 위해 TLS 핸드셰이크에도 포함됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음

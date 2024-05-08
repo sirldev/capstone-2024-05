@@ -1,0 +1,98 @@
+# AWS::SageMaker::ModelBiasJobDefinition 엔드포인트입력
+
+끝점에 대한 입력 개체
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "EndpointName" : String,
+  "EndTimeOffset" : String,
+  "FeaturesAttribute" : String,
+  "InferenceAttribute" : String,
+  "LocalPath" : String,
+  "ProbabilityAttribute" : String,
+  "ProbabilityThresholdAttribute" : Double,
+  "S3DataDistributionType" : String,
+  "S3InputMode" : String,
+  "StartTimeOffset" : String
+}
+```
+
+## 속성
+
+`EndpointName`  
+사용하도록 설정된 고객 계정의 엔드포인트입니다 `DataCaptureConfig` .  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최대_: `63`  
+_패턴_: `^a-zA-Z0-9{0,62}`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`EndTimeOffset`  
+지정된 경우 모니터링 작업은 종료 시간에서 이 시간을 뺍니다. 모니터링 작업을 예약하기 위해 오프셋을 사용하는 방법에 대한 자세한 내용은 모델 품질 모니터링 작업 예약을 참조하십시오.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `15`  
+_패턴_: `^.?P.*`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`FeaturesAttribute`  
+입력 기능인 입력 데이터의 속성입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`InferenceAttribute`  
+실측 자료 레이블을 나타내는 입력 데이터의 속성입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`LocalPath`  
+컨테이너에서 엔드포인트 데이터를 사용할 수 있는 파일 시스템의 경로입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최대_: `256`  
+_패턴_: `.*`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ProbabilityAttribute`  
+분류 문제에서 클래스 확률을 나타내는 특성입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ProbabilityThresholdAttribute`  
+양성 결과로 평가될 클래스 확률에 대한 임계값입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 더블  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`S3DataDistributionType`  
+Amazon S3에 배포된 입력 데이터가 S3 키에 의해 완전히 복제되는지 또는 샤딩되는지 여부입니다. 기본값 `FullyReplicated`  
+_필수_: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `FullyReplicated | ShardedByS3Key`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`S3InputMode`  
+`Pipe` 모니터링 `File` 작업을 위해 데이터를 전송하기 위한 입력 모드로 or이 사용되는지 여부입니다. `Pipe` mode는 큰 데이터 세트에 권장됩니다. `File` 모드는 메모리에 맞는 작은 파일에 유용합니다. 기본값은 `File`입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `File | Pipe`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`StartTimeOffset`  
+지정된 경우 모니터링 작업은 시작 시간에서 이 시간을 뺍니다. 모니터링 작업을 예약하기 위해 오프셋을 사용하는 방법에 대한 자세한 내용은 모델 품질 모니터링 작업 예약을 참조하십시오.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `15`  
+_패턴_: `^.?P.*`  
+_업데이트 필요 사항_: 바꿔 놓음

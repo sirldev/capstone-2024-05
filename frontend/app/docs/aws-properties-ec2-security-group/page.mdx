@@ -1,0 +1,180 @@
+# AWS::EC2::보안 그룹
+
+보안 그룹을 지정합니다. 보안 그룹을 생성하려면 VpcId 속성을 사용하여 보안 그룹을 생성할 VPC를 지정합니다.
+
+송신 규칙을 지정하지 않으면 모든 포트와 프로토콜에서 IPv4 및 IPv6 트래픽을 모든 대상에 허용하는 송신 규칙이 추가됩니다. 자체 송신 규칙을 지정하는 경우 이러한 규칙을 추가하지 않습니다. 나중에 송신 규칙을 제거하면 기본 송신 규칙이 복원됩니다.
+
+이 유형은 업데이트를 지원합니다. 스택 업데이트에 대한 자세한 내용은 AWS CloudFormation 스택 업데이트 단원을 참조하십시오.
+
+**중요하다**  
+해당 보안 그룹의 수신 및 송신 규칙에서 두 보안 그룹을 상호 참조하려면 AWS::EC2::SecurityGroupEgress 및 AWS::EC2::SecurityGroupIngress 리소스를 사용하여 규칙을 정의합니다. 에 포함된 수신 및 송신 규칙을 사용하지 마십시오 `AWS::EC2::SecurityGroup`. 이렇게 하면 AWS CloudFormation에서 허용하지 않는 순환 종속성이 생성됩니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::EC2::SecurityGroup",
+  "Properties" : {
+      "GroupDescription" : String,
+      "GroupName" : String,
+      "SecurityGroupEgress" : [ Egress, ... ],
+      "SecurityGroupIngress" : [ Ingress, ... ],
+      "Tags" : [Tag, ... ],
+      "VpcId" : String
+    }
+}
+```
+
+## 속성
+
+`GroupDescription`  
+보안 그룹에 대한 설명입니다.  
+제약 조건: 최대 255자  
+유효한 문자: a-z, A-Z, 0-9, 공백 및 .\_-:/()#,@[]+=&;{}! $\*  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`GroupName`  
+보안 그룹의 이름입니다.  
+제약 조건: 최대 255자까지 입력할 수 있습니다. 로 시작할 수 없습니다`sg-`.  
+유효한 문자: a-z, A-Z, 0-9, 공백 및 .\_-:/()#,@[]+=&;{}! $\*  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`SecurityGroupEgress`  
+보안 그룹과 연결된 아웃바운드 규칙입니다. 보안 그룹에 연결할 수 없는 짧은 중단이 있습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 송신 목록  
+_업데이트 필요 사항_: 일부 중단
+
+`SecurityGroupIngress`  
+보안 그룹과 연결된 인바운드 규칙입니다. 보안 그룹에 연결할 수 없는 짧은 중단이 있습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 수신 목록  
+_업데이트 필요 사항_: 일부 중단
+
+`Tags`  
+보안 그룹에 할당된 모든 태그입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`VpcId`  
+보안 그룹에 대한 VPC의 ID입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref`리소스 `Ref`ID가 반환됩니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`GroupId`  
+지정된 보안 그룹의 그룹 ID(예: `sg-94b3a1f6`.
+
+`VpcId`  
+VPC의 물리적 ID입니다. AWS::EC2::VPC에 대한 참조를 사용하여 물리적 ID를 얻을 수 있습니다 `{ "Ref" : "myVPC" }`.
+
+## 예제
+
+### 기본 수신 및 송신 규칙 정의Define basic ingress and egress rules
+
+다음 예제에서는 수신 및 송신 규칙이 있는 보안 그룹을 지정합니다.
+
+#### JSON (영문)
+
+```
+"InstanceSecurityGroup" : {
+    "Type" : "AWS::EC2::SecurityGroup",
+    "Properties" : {
+        "GroupDescription" : "Allow http to client host",
+        "VpcId" : {"Ref" : "myVPC"},
+        "SecurityGroupIngress" : [{
+            "IpProtocol" : "tcp",
+            "FromPort" : 80,
+            "ToPort" : 80,
+            "CidrIp" : "0.0.0.0/0"
+        }],
+        "SecurityGroupEgress" : [{
+            "IpProtocol" : "tcp",
+            "FromPort" : 80,
+            "ToPort" : 80,
+            "CidrIp" : "0.0.0.0/0"
+        }]
+    }
+}
+```
+
+### 기본 규칙 제거
+
+VPC 보안 그룹을 지정하면 Amazon EC2는 모든 포트 및 IP 프로토콜에서 모든 위치로 송신 트래픽을 허용하는 기본 송신 규칙을 생성합니다. 기본 규칙은 하나 이상의 송신 규칙을 지정하는 경우에만 제거됩니다. 기본 규칙을 제거하고 송신 트래픽을 localhost(127.0.0.1/32)로만 제한하려면 다음 예제를 사용합니다.
+
+#### JSON (영문)
+
+```
+"sgwithoutegress": {
+    "Type": "AWS::EC2::SecurityGroup",
+    "Properties": {
+        "GroupDescription": "Limits security group egress traffic",
+        "SecurityGroupEgress": [{
+            "CidrIp": "127.0.0.1/32",
+            "IpProtocol": "-1"
+        }],
+        "VpcId": { "Ref": "myVPC"}
+    }
+}
+```
+
+### ping 요청 허용
+
+ping 요청을 허용하려면 ICMP 프로토콜 유형을 추가하고 ICMP 유형에 8(에코 요청)을 지정하고 ICMP 코드에 0 또는 -1(모두)을 지정합니다.
+
+#### JSON (영문)
+
+```
+"SGPing" : {
+    "Type" : "AWS::EC2::SecurityGroup",
+    "DependsOn": "VPC",
+    "Properties" : {
+        "GroupDescription" : "SG to test ping",
+        "VpcId" : {"Ref" : "VPC"},
+        "SecurityGroupIngress" : [
+        {
+            "IpProtocol" : "tcp",
+            "FromPort" : 22,
+            "ToPort" : 22,
+            "CidrIp" : "10.0.0.0/24"
+        },
+        {
+            "IpProtocol" : "icmp",
+            "FromPort" : 8,
+            "ToPort" : -1,
+            "CidrIp" : "10.0.0.0/24"
+        }]
+    }
+}
+```
+
+## 참고 항목
+
+- Amazon VPC 사용 설명서*의 VPC에 대한 보안 그룹 *
+- Linux 인스턴스용 Amazon EC2 사용 설명서*의 Amazon EC2 보안 그룹 *
+- Windows 인스턴스용 Amazon EC2 사용 설명서*의 Amazon EC2 보안 그룹 *

@@ -1,0 +1,94 @@
+# AWS::S3::MultiRegionAccessPoint정책
+
+Amazon S3 다중 리전 액세스 포인트에 Amazon S3 액세스 정책을 적용합니다.
+
+CloudFormation 템플릿에서 다중 리전 액세스 포인트에 대한 액세스 정책을 삭제할 수 없습니다. 정책을 삭제하려고 하면 CloudFormation은 및 를 사용하여 정책을 업데이트 `DeletionPolicy:Retain` 합니다 `UpdateReplacePolicy:Retain`. CloudFormation은 버킷을 생성한 계정에 대한 액세스만 허용하도록 정책을 업데이트합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::S3::MultiRegionAccessPointPolicy",
+  "Properties" : {
+      "MrapName" : String,
+      "Policy" : Json
+    }
+}
+```
+
+## 속성
+
+`MrapName`  
+다중 리전 액세스 포인트의 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Policy`  
+다중 리전 액세스 포인트와 연결된 액세스 정책입니다.  
+_필수 항목 여부_: 예  
+_형식_: Json  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`다중 리전 액세스 포인트의 이름을 반환합니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+## 예제
+
+### 단순 다중 지역 액세스 포인트 정책
+
+다음 예제에서는 CloudWatch에 액세스 권한을 부여합니다.
+
+다중 리전 액세스 포인트의 이름과 별칭을 사용해야 하는 위치를 기록하는 것이 매우 중요합니다. 다음 예제에서 이름은 이고, `DOC-EXAMPLE-MULTI-REGION-ACCESS-POINT`다중 리전 액세스 포인트의 별칭은 이며, `mfzwi23gnjvgw.mrap`AWS 계정은 `123456789012`입니다. 다중 리전 액세스 포인트의 ARN 작동 방식에 대한 자세한 내용은 Amazon S3 사용 설명서의 다중 리전 액세스 포인트를 사용하여 요청 수행을 참조하세요\*\*.
+
+#### JSON (영문)
+
+```
+{
+   "SampleMultiRegionAccessPointPolicy":{
+      "Type":"AWS::S3::MultiRegionAccessPointPolicy",
+      "DeletionPolicy":"Retain",
+      "UpdateReplacePolicy":"Retain",
+      "Properties":{
+         "MrapName":{
+            "Ref":"DOC-EXAMPLE-MULTI-REGION-ACCESS-POINT"
+         },
+         "Policy":{
+            "Statement":[
+               {
+                  "Action":[
+                     "s3:GetObject"
+                  ],
+                  "Effect":"Allow",
+                  "Resource":{
+                     "Fn::Sub":[
+                        "arn:aws:s3::123456789012:accesspoint/mfzwi23gnjvgw.mrap/object/*",
+                        {
+                           "mrapalias":{
+                              "Fn::GetAtt":[
+                                 "mfzwi23gnjvgw.mrap",
+                                 "Alias"
+                              ]
+                           }
+                        }
+                     ]
+                  },
+                  "Principal":{
+                     "Service":"cloudwatch.amazonaws.com"
+                  }
+               }
+            ]
+         }
+      }
+   }
+}
+```

@@ -1,0 +1,35 @@
+# AWS::KinesisAnalyticsV2::애플리케이션 ApplicationCodeConfiguration
+
+응용 프로그램의 코드 구성에 대해 설명합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "CodeContent" : CodeContent,
+  "CodeContentType" : String
+}
+```
+
+## 속성
+
+`CodeContent`  
+응용 프로그램 코드의 위치 및 형식입니다.  
+_필수 항목 여부_: 예  
+_형식_: CodeContent  
+_업데이트 필요 사항_: 중단 없음
+
+`CodeContentType`  
+코드 내용이 텍스트 형식인지 zip 형식인지를 지정합니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_허용되는 값_: `PLAINTEXT | ZIPFILE`  
+_업데이트 필요 사항_: 중단 없음
+
+## 참고 항목
+
+- Amazon Kinesis Data Analytics API 참조\* \*의 ApplicationCodeConfiguration

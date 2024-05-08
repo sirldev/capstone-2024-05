@@ -1,0 +1,30 @@
+# AWS::Backup::BackupSelection 조건파라미터
+
+태그가 지정된 리소스를 백업 계획에 할당하기 위해 정의하는 태그에 대한 정보를 포함합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ConditionKey" : String,
+  "ConditionValue" : String
+}
+```
+
+## 속성
+
+`ConditionKey`  
+키-값 페어의 키입니다. 예를 들어, 태그에서 `Department: Accounting`는 `Department` 키입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ConditionValue`  
+키-값 페어의 값입니다. 예를 들어, 태그에서 `Department: Accounting`는 `Accounting` 값입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음

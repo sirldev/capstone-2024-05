@@ -1,0 +1,31 @@
+# AWS::ECS::태스크 정의 권한 부여 구성
+
+Amazon EFS 파일 시스템에 대한 권한 부여 구성 세부 정보입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "AccessPointId" : String,
+  "IAM" : String
+}
+```
+
+## 속성
+
+`AccessPointId`  
+사용할 Amazon EFS 액세스 포인트 ID입니다. 액세스 포인트가 지정된 경우 에 지정된 루트 디렉터리 값을 `EFSVolumeConfiguration` 생략하거나 `/` EFS 액세스 포인트에 설정된 경로를 적용하도록 설정해야 합니다. 액세스 포인트를 사용하는 경우 에서 전송 중 암호화가 켜져 있어야 합니다`EFSVolumeConfiguration`. 자세한 내용은 _Amazon Elastic File System 사용 설명서의 Amazon EFS 액세스 포인트 작업을 참조하세요_.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`IAM`  
+Amazon EFS 파일 시스템을 탑재할 때 작업 정의에 정의된 Amazon ECS 작업 역할을 사용할지 여부를 결정합니다. 켜져 있는 경우 에서 전송 중 암호화를 켜야 합니다`EFSVolumeConfiguration`. 이 매개 변수를 생략하면 기본값이 `DISABLED` 사용됩니다. 자세한 내용은 _Amazon Elastic Container Service 개발자 안내서의 Amazon EFS 액세스 포인트 사용을 참조하세요_.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `DISABLED | ENABLED`  
+_업데이트 필요 사항_: 바꿔 놓음

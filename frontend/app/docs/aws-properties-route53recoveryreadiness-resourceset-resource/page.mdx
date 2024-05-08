@@ -1,0 +1,44 @@
+# AWS::Route53RecoveryReadiness::ResourceSet 리소스
+
+리소스 집합의 resource 요소입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ComponentId" : String,
+  "DnsTargetResource" : DNSTargetResource,
+  "ReadinessScopes" : [ String, ... ],
+  "ResourceArn" : String
+}
+```
+
+## 속성
+
+`ComponentId`  
+DNS 대상 리소스를 사용할 때 생성되는 리소스의 구성 요소 식별자입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`DnsTargetResource`  
+DNS/라우팅 제어 준비 검사를 위한 구성 요소입니다. `ResourceSet` 로 설정된 `ResourceSetType` 경우 `AWS::Route53RecoveryReadiness::DNSTargetResource` 필수 설정입니다. 다른 설정에는 설정하지 마십시오 `ResourceSetType` .  
+_필수_: 조건부  
+_형식_: DNSTargetResource  
+_업데이트 필요 사항_: 중단 없음
+
+`ReadinessScopes`  
+이 리소스 세트에 대한 준비 상태 확인의 범위가 지정된 복구 그룹 Amazon 리소스 이름(ARN) 또는 셀 ARN입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`ResourceArn`  
+AWS 리소스의 Amazon 리소스 이름(ARN)입니다. 를 제외한 모든 `ResourceSet` `ResourceSetType` 설정에 필요한 설정입니다`AWS::Route53RecoveryReadiness::DNSTargetResource`. 로 설정된 경우 설정하지 마십시오 `ResourceSetType` `AWS::Route53RecoveryReadiness::DNSTargetResource`.  
+_필수_: 조건부  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음

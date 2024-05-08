@@ -1,0 +1,66 @@
+# AWS::KinesisVideo::시그널링 채널
+
+신호 채널을 지정합니다.
+
+`CreateSignalingChannel` 는 비동기 작업입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::KinesisVideo::SignalingChannel",
+  "Properties" : {
+      "MessageTtlSeconds" : Integer,
+      "Name" : String,
+      "Tags" : [Tag, ... ],
+      "Type" : String
+    }
+}
+```
+
+## 속성
+
+`MessageTtlSeconds`  
+신호 채널이 전달되지 않은 메시지를 삭제하기 전에 유지하는 기간입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_최소_: `5`  
+_최대_: `120`  
+_업데이트 필요 사항_: 중단 없음
+
+`Name`  
+생성 중인 시그널링 채널의 이름입니다. 각 AWS 계정 및 AWS 리전마다 고유해야 합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `256`  
+_패턴_: `[a-zA-Z0-9_.-]+`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Tags`  
+이 리소스에 적용할 키-값 쌍의 배열입니다.  
+자세한 내용은 태그를 참조하십시오.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`Type`  
+생성 중인 신호 채널의 유형입니다. 현재 `SINGLE_MASTER` 유일하게 지원되는 채널 유형입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `FULL_MESH | SINGLE_MASTER`  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+### Fn::GetAtt
+
+####
+
+`Arn` 신호 채널의 Amazon 리소스 이름(ARN)입니다.

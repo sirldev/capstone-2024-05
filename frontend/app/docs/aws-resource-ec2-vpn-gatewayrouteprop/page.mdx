@@ -1,0 +1,65 @@
+# AWS::EC2::VPNGateway경로 전파
+
+가상 프라이빗 게이트웨이(VGW)가 VPC의 지정된 라우팅 테이블로 경로를 전파할 수 있도록 합니다.
+
+VPN Gateway 경로 전파와 동일한 템플릿에 있는 VPN Gateway를 참조하는 경우 VPN Gateway 연결에 대한 종속성을 명시적으로 선언해야 합니다. 리소스는 `AWS::EC2::VPNGatewayRoutePropagation` VPC에 성공적으로 연결될 때까지 VPN 게이트웨이를 사용할 수 없습니다. 리소스에 DependsOn 특성을 추가하여 `AWS::EC2::VPNGatewayRoutePropagation` VPN 게이트웨이 연결에 대한 종속성을 명시적으로 선언합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::EC2::VPNGatewayRoutePropagation",
+  "Properties" : {
+      "RouteTableIds" : [ String, ... ],
+      "VpnGatewayId" : String
+    }
+}
+```
+
+## 속성
+
+`RouteTableIds`  
+경로 테이블의 ID입니다. 라우팅 테이블은 가상 프라이빗 게이트웨이가 연결된 VPC와 동일한 VPC와 연결되어야 합니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`VpnGatewayId`  
+VPC에 연결된 가상 프라이빗 게이트웨이의 ID입니다. 가상 프라이빗 게이트웨이는 라우팅 테이블이 연결된 동일한 VPC에 연결되어야 합니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`VPN 게이트웨이의 ID를 반환합니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+## 예제
+
+### VPN 게이트웨이 경로 전파
+
+다음 예제에서는 이름이 PrivateRouteTable 인 개인 라우팅 테이블에 대한 경로 전파를 활성화합니다.
+
+#### JSON (영문)
+
+```
+"myVPNGatewayRouteProp" : {
+   "Type" : "AWS::EC2::VPNGatewayRoutePropagation",
+   "Properties" : {
+      "RouteTableIds" : [{"Ref" : "PrivateRouteTable"}],
+      "VpnGatewayId" : {"Ref" : "VPNGateway"}
+   }
+}
+```
+
+## 참고 항목
+
+- Amazon EC2 API 참조*의 EnableVgwRoutePropagation *

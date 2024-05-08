@@ -1,0 +1,40 @@
+# AWS::인증서 관리자::계정
+
+이 `AWS::CertificateManager::Account` 리소스는 ACM이 EventBridge 이벤트 생성을 시작할 때 만료되기 전 일수를 결정하는 만료 이벤트 구성을 정의합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::CertificateManager::Account",
+  "Properties" : {
+      "ExpiryEventsConfiguration" : ExpiryEventsConfiguration
+    }
+}
+```
+
+## 속성
+
+`ExpiryEventsConfiguration`  
+AWS 계정과 연결된 만료 이벤트 옵션을 포함하는 객체입니다. 자세한 내용은 API 참조의 ExpiryEventsConfiguration을 참조하세요.  
+_필수 항목 여부_: 예  
+_유형_: ExpiryEventsConfiguration  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`인증서를 소유한 AWS 계정의 ID를 반환합니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+####
+
+`AccountId` 인증서를 소유하는 AWS 계정의 ID입니다.

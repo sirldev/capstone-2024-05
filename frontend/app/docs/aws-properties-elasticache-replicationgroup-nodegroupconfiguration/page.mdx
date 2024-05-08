@@ -1,0 +1,56 @@
+# AWS::ElastiCache::ReplicationGroup NodeGroup구성
+
+`NodeGroupConfiguration` 는 `AWS::ElastiCache::ReplicationGroup` Amazon ElastiCache(ElastiCache) Redis 클러스터 노드 그룹을 구성하는 리소스의 속성입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "NodeGroupId" : String,
+  "PrimaryAvailabilityZone" : String,
+  "ReplicaAvailabilityZones" : [ String, ... ],
+  "ReplicaCount" : Integer,
+  "Slots" : String
+}
+```
+
+## 속성
+
+`NodeGroupId`  
+Redis용 ElastiCache에서 제공한 4자리 ID 또는 이러한 구성 값이 적용되는 노드 그룹에 대한 사용자 제공 ID입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `4`  
+_패턴_: `d+`  
+_업데이트 필요 사항_: 일부 중단
+
+`PrimaryAvailabilityZone`  
+이 노드 그룹(샤드)의 기본 노드가 시작되는 가용 영역입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ReplicaAvailabilityZones`  
+읽기 전용 복제본에 사용할 가용 영역 목록입니다. 이 목록의 가용 영역 수는 값이 일치하거나 `ReplicaCount` `ReplicasPerNodeGroup` 지정되지 않은 경우 일치해야 합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ReplicaCount`  
+이 노드 그룹(샤드)에 있는 읽기 전용 복제본 노드의 수입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Slots`  
+쉼표로 구분된 값 문자열로, 첫 번째 값 집합은 슬롯 번호(0부터 시작)이고 두 번째 값 집합은 각 슬롯의 키스페이스입니다. 다음 예제에서는 세 개의 슬롯(번호 0, 1 및 2)을 지정합니다` 0,1,2,0-4999,5000-9999,10000-16,383`.  
+ 값을 지정하지 않으면 ElastiCache는 각 슬롯에 키를 균등하게 할당합니다.  
+`UseOnlineResharding` 업데이트 정책을 사용하여 중단 없이 노드 그룹 수를 업데이트하면 ElastiCache가 지정된 슬롯 수 간에 키스페이스를 균등하게 분배합니다. 나중에 업데이트할 수 없습니다. 따라서 이러한 방식으로 노드 그룹 수를 업데이트한 후에는 더 이상 각 노드 그룹의 실제 값을 반영하지 않으므로 스택 템플릿에서 `Slots` 각 노드의 속성 `NodeGroupConfiguration` 에 지정된 값을 제거해야 합니다. 자세한 내용은 UseOnlineResharding 정책 단원을 참조하십시오.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음

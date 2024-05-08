@@ -1,0 +1,83 @@
+# AWS::KinesisFirehose::D eliveryStream HttpEndpointDestinationConfiguration
+
+HTTP 끝점 대상의 구성에 대해 설명합니다. Kinesis Firehose는 Datadog, MongoDB 및 New Relic을 포함하여 지원되는 타사 서비스 공급자가 소유한 모든 사용자 지정 HTTP 엔드포인트 또는 HTTP 엔드포인트를 지원합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "BufferingHints" : BufferingHints,
+  "CloudWatchLoggingOptions" : CloudWatchLoggingOptions,
+  "EndpointConfiguration" : HttpEndpointConfiguration,
+  "ProcessingConfiguration" : ProcessingConfiguration,
+  "RequestConfiguration" : HttpEndpointRequestConfiguration,
+  "RetryOptions" : RetryOptions,
+  "RoleARN" : String,
+  "S3BackupMode" : String,
+  "S3Configuration" : S3DestinationConfiguration
+}
+```
+
+## 속성
+
+`BufferingHints`  
+데이터가 지정된 대상으로 전달되기 전에 사용할 수 있는 버퍼링 옵션입니다. Kinesis Data Firehose는 이러한 옵션을 힌트로 취급하며 더 최적의 값을 사용하도록 선택할 수 있습니다. SizeInMBs 및 IntervalInSeconds 매개 변수는 선택 사항입니다. 그러나 둘 중 하나에 대한 값을 지정하는 경우 다른 값도 제공해야 합니다.  
+*필수 항목 *여부: 아니요  
+_형식_: BufferingHints  
+_업데이트 필요 사항_: 중단 없음
+
+`CloudWatchLoggingOptions`  
+전송 스트림에 대한 Amazon CloudWatch 로깅 옵션을 설명합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: CloudWatchLoggingOptions  
+_업데이트 필요 사항_: 중단 없음
+
+`EndpointConfiguration`  
+대상으로 선택한 HTTP 끝점의 구성입니다.  
+_필수 항목 여부_: 예  
+_형식_: HttpEndpointConfiguration  
+_업데이트 필요 사항_: 중단 없음
+
+`ProcessingConfiguration`  
+데이터 처리 구성에 대해 설명합니다.  
+*필수 항목 *여부: 아니요  
+_형식_: ProcessingConfiguration  
+_업데이트 필요 사항_: 중단 없음
+
+`RequestConfiguration`  
+대상으로 지정된 HTTP 엔드포인트로 전송되는 요청의 구성입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: HttpEndpointRequestConfiguration  
+_업데이트 필요 사항_: 중단 없음
+
+`RetryOptions`  
+Kinesis Data Firehose가 지정된 HTTP 엔드포인트 대상으로 데이터를 전송할 수 없거나 지정된 HTTP 엔드포인트 대상으로부터 유효한 수신 확인을 받지 못한 경우의 재시도 동작에 대해 설명합니다.  
+*필수 항목 *여부: 아니요  
+_형식_: RetryOptions  
+_업데이트 필요 사항_: 중단 없음
+
+`RoleARN`  
+Kinesis Data Firehose는 전송 스트림에 필요한 모든 권한에 대해 이 IAM 역할을 사용합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `512`  
+_패턴_: `arn:.*`  
+_업데이트 필요 사항_: 중단 없음
+
+`S3BackupMode`  
+Kinesis Data Firehose가 HTTP 엔드포인트 대상으로 전송하는 데이터에 대한 S3 버킷 백업 옵션에 대해 설명합니다. 모든 문서(AllData)를 백업하거나 Kinesis Data Firehose가 지정된 HTTP 엔드포인트 대상(FailedDataOnly)으로 전송할 수 없는 문서만 백업할 수 있습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `AllData | FailedDataOnly`  
+_업데이트 필요 사항_: 중단 없음
+
+`S3Configuration`  
+Amazon S3의 대상 구성에 대해 설명합니다.  
+_필수 항목 여부_: 예  
+_유형_: S3DestinationConfiguration  
+_업데이트 필요 사항_: 중단 없음

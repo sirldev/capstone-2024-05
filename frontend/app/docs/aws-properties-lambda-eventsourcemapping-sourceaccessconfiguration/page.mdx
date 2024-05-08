@@ -1,0 +1,44 @@
+# AWS::Lambda::EventSourceMapping SourceAccessConfiguration
+
+인증 프로토콜, VPC 구성 요소 또는 이벤트 소스를 보호하고 정의하기 위한 가상 호스트의 배열입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : String,
+  "URI" : String
+}
+```
+
+## 속성
+
+`Type`  
+이벤트 소스에 대한 인증 프로토콜, VPC 구성 요소 또는 가상 호스트의 유형입니다. 예를 들면 다음과 같습니다 `"Type":"SASL_SCRAM_512_AUTH"`.
+
+- `BASIC_AUTH` — (Amazon MQ) 브로커 자격 증명을 저장하는 AWS Secrets Manager 암호입니다.
+- `BASIC_AUTH` — (자체 관리형 Apache Kafka) Apache Kafka 브로커의 SASL/PLAIN 인증에 사용되는 보안 키의 Secrets Manager ARN입니다.
+- `VPC_SUBNET` – (자체 관리형 Apache Kafka) VPC와 연결된 서브넷입니다. Lambda는 이러한 서브넷에 연결하여 자체 관리형 Apache Kafka 클러스터에서 데이터를 가져옵니다.
+- `VPC_SECURITY_GROUP` — (자체 관리형 Apache Kafka) 자체 관리형 Apache Kafka 브로커에 대한 액세스를 관리하는 데 사용되는 VPC 보안 그룹입니다.
+- `SASL_SCRAM_256_AUTH` — (자체 관리형 Apache Kafka) 자체 관리형 Apache Kafka 브로커의 SASL SCRAM-256 인증에 사용되는 보안 키의 Secrets Manager ARN입니다.
+- `SASL_SCRAM_512_AUTH` — (Amazon MSK, 자체 관리형 Apache Kafka) 자체 관리형 Apache Kafka 브로커의 SASL SCRAM-512 인증에 사용되는 보안 키의 Secrets Manager ARN입니다.
+- `VIRTUAL_HOST` –- (RabbitMQ) RabbitMQ 브로커의 가상 호스트 이름입니다. Lambda는 이 RabbitMQ 호스트를 이벤트 소스로 사용합니다. 이 속성은 UpdateEventSourceMapping API 호출에서 지정할 수 없습니다.
+- `CLIENT_CERTIFICATE_TLS_AUTH` – (Amazon MSK, 자체 관리형 Apache Kafka) MSK/Apache Kafka 브로커의 상호 TLS 인증에 사용되는 인증서 체인(X.509 PEM), 프라이빗 키(PKCS#8 PEM) 및 프라이빗 키 암호(선택 사항)를 포함하는 보안 키의 Secrets Manager ARN입니다.
+- `SERVER_ROOT_CA_CERTIFICATE` — (자체 관리형 Apache Kafka) Apache Kafka 브로커의 TLS 암호화에 사용되는 루트 CA 인증서(X.509 PEM)가 포함된 보안 키의 Secrets Manager ARN입니다.
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열  
+  _허용되는 값_: `BASIC_AUTH | CLIENT_CERTIFICATE_TLS_AUTH | SASL_SCRAM_256_AUTH | SASL_SCRAM_512_AUTH | SERVER_ROOT_CA_CERTIFICATE | VIRTUAL_HOST | VPC_SECURITY_GROUP | VPC_SUBNET`  
+  _업데이트 필요 사항_: 중단 없음
+
+`URI`  
+에서 선택한 구성의 값입니다`Type`. 예를 들면 다음과 같습니다`"URI": "arn:aws:secretsmanager:us-east-1:01234567890:secret:MyBrokerSecretName"`.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `200`  
+_패턴_: `[a-zA-Z0-9-/*:_+=.@-]*`  
+_업데이트 필요 사항_: 중단 없음

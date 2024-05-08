@@ -1,0 +1,326 @@
+# AWS::SageMaker::ModelQualityJobDefinition
+
+모델 품질 및 드리프트를 모니터링하는 작업에 대한 정의를 작성합니다. 모델 모니터에 대한 자세한 내용은 Amazon SageMaker 모델 모니터 단원을 참조하십시오.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::SageMaker::ModelQualityJobDefinition",
+  "Properties" : {
+      "EndpointName" : String,
+      "JobDefinitionName" : String,
+      "JobResources" : MonitoringResources,
+      "ModelQualityAppSpecification" : ModelQualityAppSpecification,
+      "ModelQualityBaselineConfig" : ModelQualityBaselineConfig,
+      "ModelQualityJobInput" : ModelQualityJobInput,
+      "ModelQualityJobOutputConfig" : MonitoringOutputConfig,
+      "NetworkConfig" : NetworkConfig,
+      "RoleArn" : String,
+      "StoppingCondition" : StoppingCondition,
+      "Tags" : [Tag, ... ]
+    }
+}
+```
+
+## 속성
+
+`EndpointName`  
+속성 설명을 사용할 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`JobDefinitionName`  
+모니터링 작업 정의의 이름입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`JobResources`  
+모니터링 작업을 위해 배포할 리소스를 식별합니다.  
+_필수 항목 여부_: 예  
+_형식_: MonitoringResources  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ModelQualityAppSpecification`  
+모니터링 작업에 대한 컨테이너 이미지 구성 개체입니다.  
+_필수 항목 여부_: 예  
+_형식_: ModelQualityAppSpecification  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ModelQualityBaselineConfig`  
+모니터링 작업에 대한 제약 조건 및 기준을 지정합니다.  
+*필수 항목 *여부: 아니요  
+_형식_: ModelQualityBaselineConfig  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ModelQualityJobInput`  
+모니터링되는 입력 목록입니다. 현재 엔드포인트가 지원됩니다.  
+_필수 항목 여부_: 예  
+_형식_: ModelQualityJobInput  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ModelQualityJobOutputConfig`  
+모니터링 작업을 위한 출력 구성입니다.  
+_필수 항목 여부_: 예  
+_형식_: MonitoringOutputConfig  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`NetworkConfig`  
+모니터링 작업에 대한 네트워크 구성을 지정합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: NetworkConfig  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`RoleArn`  
+Amazon SageMaker가 사용자를 대신하여 작업을 수행하기 위해 수임할 수 있는 IAM 역할의 Amazon 리소스 이름(ARN)입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`StoppingCondition`  
+중지하기 전에 모니터링 작업을 실행할 수 있는 기간에 대한 시간 제한입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: StoppingCondition  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Tags`  
+이 리소스에 적용할 키-값 쌍의 배열입니다.  
+자세한 내용은 태그를 참조하십시오.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 바꿔 놓음
+
+## 반환 값
+
+### 참고문헌
+
+### Fn::GetAtt
+
+####
+
+`CreationTime` 작업 정의가 생성된 시간입니다.
+
+`JobDefinitionArn` 작업 정의의 Amazon 리소스 이름(ARN)입니다.
+
+## 예제
+
+### SageMaker ModelQualityJobDefinition 예제
+
+다음 예제에서는 모델 품질 모니터링 작업 정의를 만듭니다.
+
+#### JSON (영문)
+
+```
+{
+   "AWSTemplateFormatVersion": "2010-09-09",
+   "Description": "Basic SageMaker Hosting entities to create a model quality job definition",
+   "Mappings": {
+      "RegionMap": {
+         "us-west-2": {
+            "MyModelImage": "123456789012.dkr.ecr.us-west-2.amazonaws.com/mymodel:latest"
+         },
+         "us-east-2": {
+            "MyModelImage": "123456789012.dkr.ecr.us-east-2.amazonaws.com/mymodel:latest"
+         },
+         "us-east-1": {
+            "MyModelImage": "123456789012.dkr.ecr.us-east-1.amazonaws.com/mymodel:latest"
+         },
+         "eu-west-1": {
+            "MyModelImage": "123456789012.dkr.ecr.eu-west-1.amazonaws.com/mymodel:latest"
+         },
+         "ap-northeast-1": {
+            "MyModelImage": "123456789012.dkr.ecr.ap-northeast-1.amazonaws.com/mymodel:latest"
+         },
+         "ap-northeast-2": {
+            "MyModelImage": "123456789012.dkr.ecr.ap-northeast-2.amazonaws.com/mymodel:latest"
+         },
+         "ap-southeast-2": {
+            "MyModelImage": "123456789012.dkr.ecr.ap-southeast-2.amazonaws.com/mymodel:latest"
+         },
+         "eu-central-1": {
+            "MyModelImage": "123456789012.dkr.ecr.eu-central-1.amazonaws.com/mymodel:latest"
+         }
+      }
+   },
+   "Resources": {
+      "Endpoint": {
+         "Type": "AWS::SageMaker::Endpoint",
+         "Properties": {
+            "EndpointConfigName": { "Fn::GetAtt" : ["EndpointConfigWithDataCapture", "EndpointConfigName"] }
+         }
+      },
+      "EndpointConfigWithDataCapture": {
+         "Type": "AWS::SageMaker::EndpointConfig",
+         "Properties": {
+            "ProductionVariants": [
+               {
+                  "InitialInstanceCount": 1,
+                  "InitialVariantWeight": 1,
+                  "InstanceType": "ml.t2.large",
+                  "ModelName": { "Fn::GetAtt" : ["Model", "ModelName"] },
+                  "VariantName": { "Fn::GetAtt" : ["Model", "ModelName"] }
+               }
+            ],
+            "DataCaptureConfig": {
+               "EnableCapture": true,
+               "InitialSamplingPercentage": 100,
+               "DestinationS3Uri": "s3://bucket/prefix",
+               "KmsKeyId": "kmskeyid",
+               "CaptureOptions": [
+                  {
+                     "CaptureMode": "Input"
+                  }
+               ],
+               "CaptureContentTypeHeader": {
+                  "CsvContentTypes": [
+                     "text/csv"
+                  ],
+                  "JsonContentTypes": [
+                     "application/json"
+                  ]
+               }
+            }
+         }
+      },
+      "Model": {
+         "Type": "AWS::SageMaker::Model",
+         "Properties": {
+            "PrimaryContainer": {
+               "Image": { "Fn::FindInMap": [
+                  "RegionMap",
+                  {"Ref": "AWS::Region"},
+                  "MyModelImage"
+                 ]
+               }
+            },
+            "ExecutionRoleArn": { "Fn::GetAtt" : ["ExecutionRole", "Arn"] }
+         }
+      },
+      "ExecutionRole": {
+         "Type": "AWS::IAM::Role",
+         "Properties": {
+            "AssumeRolePolicyDocument": {
+               "Version": "2012-10-17",
+               "Statement": [
+                  {
+                     "Effect": "Allow",
+                     "Principal": {
+                        "Service": [
+                           "sagemaker.amazonaws.com"
+                        ]
+                     },
+                     "Action": [
+                        "sts:AssumeRole"
+                     ]
+                  }
+               ]
+            },
+            "Path": "/",
+            "Policies": [
+               {
+                  "PolicyName": "root",
+                  "PolicyDocument": {
+                     "Version": "2012-10-17",
+                     "Statement": [
+                        {
+                           "Effect": "Allow",
+                           "Action": "*",
+                           "Resource": "*"
+                        }
+                     ]
+                  }
+               }
+            ]
+         }
+      },
+      "JobDefinitionExecutionRole": {
+         "Type": "AWS::IAM::Role",
+         "Properties": {
+            "AssumeRolePolicyDocument": {
+               "Version": "2012-10-17",
+               "Statement": [
+                  {
+                     "Effect": "Allow",
+                     "Principal": {
+                        "Service": [
+                           "sagemaker.amazonaws.com"
+                        ]
+                     },
+                     "Action": [
+                        "sts:AssumeRole"
+                     ]
+                  }
+               ]
+            },
+            "ManagedPolicyArns": [
+               {
+                  "Fn::Sub": "arn:${AWS::Partition}:iam::aws:policy/AmazonSageMakerFullAccess"
+               },
+               {
+                  "Fn::Sub": "arn:${AWS::Partition}:iam::aws:policy/AmazonS3FullAccess"
+               },
+               {
+                  "Fn::Sub": "arn:${AWS::Partition}:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+               }
+            ]
+         }
+      },
+      "JobDefinition": {
+         "Type": "AWS::SageMaker::ModelQualityJobDefinition",
+         "Properties": {
+            "ModelQualityAppSpecification": {
+               "ImageUri": {
+                  "Fn::Sub": "123456789012.dkr.ecr.${AWS::Partition}.amazonaws.com/sagemaker-model-monitor-analyzer:latest"
+               },
+               "ProblemType": "BinaryClassification"
+            },
+            "ModelQualityJobInput": {
+               "EndpointInput": {
+                  "EndpointName": { "Fn::GetAtt" : ["Endpoint", "EndpointName"] },
+                  "LocalPath": "/opt/ml/processing/endpointdata",
+                  "InferenceAttribute": "inference",
+                  "ProbabilityAttribute": "probability",
+                  "ProbabilityThresholdAttribute": 0.8,
+                  "StartTimeOffset": "-PT1H",
+                  "EndTimeOffset": "-P0D"
+               },
+               "GroundTruthS3Input": {
+                  "S3Uri": {
+                     "Fn::Sub": "s3://model-quality-job-definition-${AWS::AccountId}/groundtruth"
+                  }
+               }
+            },
+            "ModelQualityJobOutputConfig": {
+               "MonitoringOutputs": [
+                  {
+                     "S3Output": {
+                        "LocalPath": "/opt/ml/processing/localpath",
+                        "S3Uri": {
+                           "Fn::Sub": "s3://model-quality-job-definition-${AWS::AccountId}/output"
+                        }
+                     }
+                  }
+               ]
+            },
+            "JobResources": {
+               "ClusterConfig": {
+                  "InstanceCount": 1,
+                  "InstanceType": "ml.m5.large",
+                  "VolumeSizeInGB": 50
+               }
+            },
+            "RoleArn": { "Fn::GetAtt" : ["JobDefinitionExecutionRole", "Arn"] },
+            "StoppingCondition": {
+               "MaxRuntimeInSeconds": 2000
+            }
+         }
+      }
+   }
+}
+```

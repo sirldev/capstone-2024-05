@@ -1,0 +1,29 @@
+# AWS::ApiGateway::D omainName 엔드포인트 구성
+
+`EndpointConfiguration` 속성 유형은 Amazon API Gateway 도메인 이름의 엔드포인트 유형을 지정합니다.
+
+`EndpointConfiguration` 은 AWS::ApiGateway::D omainName 리소스의 속성입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Types" : [ String, ... ]
+}
+```
+
+## 속성
+
+`Types`  
+API(RestApi) 또는 사용자 지정 도메인 이름(DomainName)의 엔드포인트 유형 목록입니다. 엣지 최적화 API 및 사용자 지정 도메인 이름의 경우 엔드포인트 유형은 입니다`"EDGE"`. 리전 API 및 해당 사용자 지정 도메인 이름의 경우 엔드포인트 유형은 입니다`REGIONAL`. 프라이빗 API의 경우 엔드포인트 유형은 입니다`PRIVATE`.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+## 참고 항목
+
+- Amazon API Gateway REST API 참조*의 DomainName *

@@ -1,0 +1,69 @@
+# AWS::S3::버킷 버전 관리구성
+
+Amazon S3 버킷의 버전 관리 상태를 설명합니다. 자세한 내용은 _Amazon S3 API Reference의 PUT Bucket 버전 관리를 참조하세요_.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Status" : String
+}
+```
+
+## 속성
+
+`Status`  
+버킷의 버전 관리 상태입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_허용되는 값_: `Enabled | Suspended`  
+_업데이트 필요 사항_: 중단 없음
+
+## 예제
+
+### 버전 관리 사용 및 개체 복제Enable versioning and replicate objects
+
+다음 예제에서는 버전 관리와 두 개의 복제 규칙을 사용하도록 설정합니다. 규칙은 접두사 중 하나와 가 붙은 객체를 복사 `MyPrefix` `MyOtherPrefix` 하고 복사된 객체를 라는 버킷에 저장합니다 `my-replication-bucket`.
+
+#### JSON (영문)
+
+```
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Resources": {
+        "S3Bucket": {
+            "Type": "AWS::S3::Bucket",
+            "Properties": {
+                "VersioningConfiguration": {
+                    "Status": "Enabled"
+                },
+                "ReplicationConfiguration": {
+                    "Role": "arn:aws:iam::123456789012:role/replication_role",
+                    "Rules": [
+                        {
+                            "Id": "MyRule1",
+                            "Status": "Enabled",
+                            "Prefix": "MyPrefix",
+                            "Destination": {
+                                "Bucket": "arn:aws:s3:::my-replication-bucket",
+                                "StorageClass": "STANDARD"
+                            }
+                        },
+                        {
+                            "Status": "Enabled",
+                            "Prefix": "MyOtherPrefix",
+                            "Destination": {
+                                "Bucket": "arn:aws:s3:::my-replication-bucket"
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}
+```

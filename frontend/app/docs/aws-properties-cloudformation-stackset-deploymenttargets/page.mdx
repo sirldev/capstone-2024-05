@@ -1,0 +1,59 @@
+# AWS::CloudFormation::StackSet 배포 대상
+
+지정된 리전에서 스택 인스턴스를 생성할 AWS OrganizationalUnitIds 또는 계정입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "AccountFilterType" : String,
+  "Accounts" : [ String, ... ],
+  "AccountsUrl" : String,
+  "OrganizationalUnitIds" : [ String, ... ]
+}
+```
+
+## 속성
+
+`AccountFilterType`  
+배포 대상을 개별 계정으로 제한하거나 제공된 OU가 있는 추가 계정을 포함합니다.  
+다음은 작업에 사용할 수 있는 값 목록입니다 `AccountFilterType` .
+
+- `INTERSECTION`: StackSets는 파라미터에 지정된 계정에 배포됩니다 `Accounts` .
+- `DIFFERENCE`: StackSets는 파라미터에 지정된 계정을 제외합니다 `Accounts` . 이를 통해 사용자는 일시 중단된 계정과 같은 OU 내의 특정 계정을 피할 수 있습니다.
+- `UNION`: StackSets에는 추가 계정 배포 대상이 포함되어 있습니다.
+
+제공되지 않은 경우 기본값입니다 `AccountFilterType` . 이를 통해 사용자는 두 개의 개별 요청이었던 한 번의 요청으로 전체 OU와 다른 OU의 개별 계정을 업데이트할 수 있습니다.
+
+- `NONE`: 지정된 OU(조직 구성 단위)의 모든 계정에 배포합니다.
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열  
+  _허용되는 값_: `DIFFERENCE | INTERSECTION | NONE | UNION`  
+  _업데이트 필요 사항_: 중단 없음
+
+`Accounts`  
+스택 세트 업데이트를 배포하려는 하나 이상의 AWS 계정 이름입니다.  
+_패턴_: `^[0-9]{12}$`  
+_필수(Required_): 조건부(Conditional)  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`AccountsUrl`  
+속성 값을 반환합니다 `AccountsUrl` .  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `5120`  
+_패턴_: `(s3://|http(s?)://).+`  
+_업데이트 필요 사항_: 중단 없음
+
+`OrganizationalUnitIds`  
+StackSets가 배포되는 조직 루트 ID 또는 조직 단위(OU) ID입니다.  
+_패턴_: `^(ou-[a-z0-9]{4,32}-[a-z0-9]{8,32}|r-[a-z0-9]{4,32})$`  
+_필수(Required_): 조건부(Conditional)  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음

@@ -1,0 +1,37 @@
+# AWS::Redshift::ScheduledAction ScheduledActionType
+
+Amazon Redshift 스케줄러에서 지원하는 Amazon Redshift API 작업을 지정하는 작업 유형입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "PauseCluster" : PauseClusterMessage,
+  "ResizeCluster" : ResizeClusterMessage,
+  "ResumeCluster" : ResumeClusterMessage
+}
+```
+
+## 속성
+
+`PauseCluster`  
+API 작업을 실행하는 작업입니다 `PauseCluster` .  
+*필수 항목 *여부: 아니요  
+_유형_: PauseClusterMessage  
+_업데이트 필요 사항_: 중단 없음
+
+`ResizeCluster`  
+API 작업을 실행하는 작업입니다 `ResizeCluster` .  
+*필수 항목 *여부: 아니요  
+_형식_: ResizeClusterMessage  
+_업데이트 필요 사항_: 중단 없음
+
+`ResumeCluster`  
+API 작업을 실행하는 작업입니다 `ResumeCluster` .  
+*필수 항목 *여부: 아니요  
+_형식_: ResumeClusterMessage  
+_업데이트 필요 사항_: 중단 없음

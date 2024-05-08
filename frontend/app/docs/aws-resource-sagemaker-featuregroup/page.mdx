@@ -1,0 +1,120 @@
+# AWS::SageMaker::기능 그룹
+
+새 `FeatureGroup`. A `FeatureGroup` 는 를 설명하기 위해 `Features` 정의된 `FeatureStore` 그룹입니다`Record`.
+
+`FeatureGroup` FeatureGroup에 포함된 스키마와 기능을 정의합니다. `FeatureGroup` 정의는 `Features`, a`RecordIdentifierFeatureName`, 및 `EventTimeFeatureName` 및 및 `OnlineStore` 의 목록 `OfflineStore` 으로 구성됩니다. AWS 서비스 할당량을 확인하여 `FeatureGroup`AWS 계정에 대한 할당량을 확인합니다.
+
+**중요하다**  
+를 만들려면 and 중 하나 이상을 포함 `OnlineStoreConfig` `OfflineStoreConfig` 해야 합니다 `FeatureGroup`.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::SageMaker::FeatureGroup",
+  "Properties" : {
+      "Description" : String,
+      "EventTimeFeatureName" : String,
+      "FeatureDefinitions" : [ FeatureDefinition, ... ],
+      "FeatureGroupName" : String,
+      "OfflineStoreConfig" : OfflineStoreConfig,
+      "OnlineStoreConfig" : OnlineStoreConfig,
+      "RecordIdentifierFeatureName" : String,
+      "RoleArn" : String,
+      "Tags" : [Tag, ... ]
+    }
+}
+```
+
+## 속성
+
+`Description`  
+에 대한 자유 형식 설명입니다`FeatureGroup`.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최대_: `128`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`EventTimeFeatureName`  
+`EventTime` 레코드의 를 저장하는 기능의 이름입니다`FeatureGroup`.  
+A `EventTime` 는 의 생성 또는 업데이트에 해당하는 새 이벤트가 발생하는 시점입니다 `Record` `FeatureGroup`. 모든 `Records` 항목에는 `FeatureGroup` 해당 `EventTime`.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `64`  
+_패턴_: `^a-zA-Z0-9{0,63}`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`FeatureDefinitions`  
+s의 목록`Feature`입니다. 각각 `Feature` 에는 a `FeatureName` 와 a 가 포함되어야 합니다`FeatureType`.  
+유효한 `FeatureType`s는 `Integral`, `Fractional` 및 `String`입니다.  
+ `FeatureName` s는 , , `is_deleted`, `write_time` . 중 하나일 수 없습니다. `api_invocation_time`  
+당 최대 2,500초를 생성할 수 있습니다 `FeatureDefinition` `FeatureGroup`.  
+_필수 항목 여부_: 예  
+_유형_: FeatureDefinition 목록  
+_최대_: `2500`  
+_업데이트 필요 사항_: 중단 없음
+
+`FeatureGroupName`  
+의 이름입니다 `FeatureGroup`.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `64`  
+_패턴_: `^a-zA-Z0-9{0,63}`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`OfflineStoreConfig`  
+의 구성입니다`OfflineStore`.  
+*필수 항목 *여부: 아니요  
+_형식_: OfflineStoreConfig  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`OnlineStoreConfig`  
+의 구성입니다`OnlineStore`.  
+*필수 항목 *여부: 아니요  
+_유형_: OnlineStoreConfig  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`RecordIdentifierFeatureName`  
+ 해당 값이 에 `Feature` 정의된 `Record` `FeatureGroup` 를 고유하게 식별하는 `FeatureDefinitions` 의 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `64`  
+_패턴_: `^a-zA-Z0-9{0,63}`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`RoleArn`  
+기능 그룹을 생성하는 데 사용되는 IAM 실행 역할의 Amazon 리소스 이름(ARN)입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `20`  
+_최대_: `2048`  
+_패턴_: `^arn:aws[a-z-]*:iam::d{12}:role/?[a-zA-Z_0-9+=,.@-_/]+$`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Tags`  
+를 정의하는 데 사용되는 태그입니다`FeatureGroup`.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_최대_: `50`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref` `FeatureGroupName` 기능 그룹의
+
+### Fn::GetAtt
+
+####
+
+`CreationTime` 속성 설명을 사용할 수 없습니다.
+
+`FeatureGroupStatus` 속성 설명을 사용할 수 없습니다.

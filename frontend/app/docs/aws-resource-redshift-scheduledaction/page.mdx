@@ -1,0 +1,107 @@
+# AWS::Redshift::ScheduledAction
+
+예약된 작업을 만듭니다. 예약된 작업에는 일정과 Amazon Redshift API 작업이 포함됩니다. 예를 들어 API 작업을 실행할 시기의 일정을 만들 수 `ResizeCluster` 있습니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::Redshift::ScheduledAction",
+  "Properties" : {
+      "Enable" : Boolean,
+      "EndTime" : String,
+      "IamRole" : String,
+      "Schedule" : String,
+      "ScheduledActionDescription" : String,
+      "ScheduledActionName" : String,
+      "StartTime" : String,
+      "TargetAction" : ScheduledActionType
+    }
+}
+```
+
+## 속성
+
+`Enable`  
+true이면 일정을 사용할 수 있습니다. false이면 예약된 작업이 트리거되지 않습니다. `state` 예약된 작업에 대한 자세한 내용은 AWS::Redshift::ScheduledAction 단원을 참조하십시오.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`EndTime`  
+일정이 더 이상 활성화되지 않는 종료 시간(UTC)입니다. 이 시간이 지나면 예약된 작업이 트리거되지 않습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`IamRole`  
+예약된 작업을 실행하기 위해 수임할 IAM 역할입니다. 이 IAM 역할에는 예약된 작업에서 Amazon Redshift API 작업을 실행할 수 있는 권한이 있어야 합니다. 이 IAM 역할은 Amazon Redshift 스케줄러(보안 주체 scheduler.redshift.amazonaws.com)가 사용자를 대신하여 권한을 수임할 수 있도록 허용해야 합니다. Amazon Redshift 스케줄러와 함께 사용할 IAM 역할에 대한 자세한 내용은 _Amazon Redshift Cluster Management Guide의 Using Identity-Based Policies for Amazon Redshift를 참조하십시오_.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최대_: `2147483647`  
+_업데이트 필요 사항_: 중단 없음
+
+`Schedule`  
+일회성(at format) 또는 반복(cron 형식) 예약된 작업에 대한 일정입니다. 일정 호출은 최소 1시간 간격으로 해야 합니다.  
+at 식의 형식은 ""입니다`at(yyyy-mm-ddThh:mm:ss)`. 예를 들어 "`at(2016-03-04T17:27:00)`"입니다.  
+cron 표현식의 형식은 "`cron(Minutes Hours Day-of-month Month Day-of-week Year)`"입니다. 예를 들어 "`cron(0 10 ? * MON *)`"입니다. 자세한 내용은 _Amazon CloudWatch Events 사용 설명서의 Cron 표현식을 참조하십시오_.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최대_: `2147483647`  
+_업데이트 필요 사항_: 중단 없음
+
+`ScheduledActionDescription`  
+예약된 작업에 대한 설명입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최대_: `2147483647`  
+_업데이트 필요 사항_: 중단 없음
+
+`ScheduledActionName`  
+예약된 작업의 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최대_: `2147483647`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`StartTime`  
+일정이 활성 상태일 때의 시작 시간(UTC)입니다. 이 시간 전에는 예약된 작업이 트리거되지 않습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`TargetAction`  
+입력 파라미터가 있는 Amazon Redshift API 작업의 JSON 형식 문자열입니다.  
+"`{"ResizeCluster":{"NodeType":"ds2.8xlarge","ClusterIdentifier":"my-test-cluster","NumberOfNodes":3}}`"입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: ScheduledActionType  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`리소스 이름이 반환됩니다. 예를 들어:
+
+`{ "Ref": "myScheduledActionName" }`
+
+Amazon Redshift의 경우 `ScheduledActionName`Ref는 예약된 작업의 이름을 반환합니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`NextInvocations` 예약된 작업이 실행되는 시간 목록입니다.
+
+`State`  
+예약된 작업의 상태입니다. 예를 들어, `DISABLED`.

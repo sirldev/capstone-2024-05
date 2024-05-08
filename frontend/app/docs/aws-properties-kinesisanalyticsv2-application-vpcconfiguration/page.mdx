@@ -1,0 +1,32 @@
+# AWS::KinesisAnalyticsV2::애플리케이션 Vpc구성
+
+애플리케이션에서 사용하는 VPC의 파라미터를 설명합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "SecurityGroupIds" : [ String, ... ],
+  "SubnetIds" : [ String, ... ]
+}
+```
+
+## 속성
+
+`SecurityGroupIds`  
+VPC 구성에서 사용하는 SecurityGroup ID의 배열입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열 목록  
+_최대_: `5`  
+_업데이트 필요 사항_: 중단 없음
+
+`SubnetIds`  
+VPC 구성에서 사용하는 서브넷 ID의 배열입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열 목록  
+_최대_: `16`  
+_업데이트 필요 사항_: 중단 없음

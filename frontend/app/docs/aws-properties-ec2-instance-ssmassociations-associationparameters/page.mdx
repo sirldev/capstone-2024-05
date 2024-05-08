@@ -1,0 +1,32 @@
+# AWS::EC2::인스턴스 연결 매개 변수
+
+AWS Systems Manager에서 SSM 문서에 대한 입력 파라미터 값을 지정합니다.
+
+`AssociationParameter` 은 Amazon EC2 인스턴스 SsmAssociation 속성의 속성입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Key" : String,
+  "Value" : [ String, ... ]
+}
+```
+
+## 속성
+
+`Key`  
+연결된 SSM 문서에 있는 입력 파라미터의 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Value`  
+입력 매개 변수의 값입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음

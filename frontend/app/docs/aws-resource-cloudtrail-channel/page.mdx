@@ -1,0 +1,133 @@
+# AWS::CloudTrail::채널
+
+반환된 CloudTrail 채널에 대한 정보를 포함합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::CloudTrail::Channel",
+  "Properties" : {
+      "Destinations" : [ Destination, ... ],
+      "Name" : String,
+      "Source" : String,
+      "Tags" : [Tag, ... ]
+    }
+}
+```
+
+## 속성
+
+`Destinations`  
+채널을 통해 도착하는 이벤트가 기록될 하나 이상의 이벤트 데이터 저장소입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 대상 목록  
+_최대_: `200`  
+_업데이트 필요 사항_: 중단 없음
+
+`Name`  
+채널의 이름입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `3`  
+_최대_: `128`  
+_패턴_: `^[a-zA-Z0-9._-]+$`  
+_업데이트 필요 사항_: 중단 없음
+
+`Source`  
+파트너 또는 외부 이벤트 원본의 이름입니다. 채널을 만든 후에는 이 이름을 변경할 수 없습니다. 소스당 최대 하나의 채널이 허용됩니다.  
+ 소스는 `Custom` 모든 유효한 비 AWS 이벤트에 대한 것이거나 파트너 이벤트 소스의 이름일 수 있습니다. 사용 가능한 파트너의 소스 이름에 대한 자세한 내용은 CloudTrail 사용 설명서의 통합 파트너에 대한 추가 정보를 참조하세요.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `256`  
+_패턴_: `.*`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Tags`  
+태그 목록입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_최대_: `200`  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID가 Ref 내장 함수에 제공되면 `Ref` 리소스 이름을 반환합니다.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`ChannelArn`  
+ 이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`CloudTrail 채널의 ARN을 반환합니다 `arn:aws:cloudtrail:us-east-2:123456789012:channel/01234567890`.
+
+## 예제
+
+### 본보기
+
+다음 예제에서는 CloudTrail Lake와 AWS 외부의 이벤트 소스 통합을 위한 채널을 생성합니다. CloudTrail Lake 통합에 대한 자세한 내용은 AWS CloudTrail 사용 설명서의 AWS 외부 이벤트 소스와의 통합 생성을 참조하세요\*\*.
+
+#### JSON (영문)
+
+```
+{
+    "Parameters": {
+    	"Name" : String,
+      	"EventDataStoreArn" : String,
+      	"Source" : String
+    },
+    "Resources": {
+        "myChannel": {
+            "Type": "AWS::CloudTrail::Channel",
+            "Properties": {
+                "Name": {
+                    "Ref": "Name"
+                },
+                "Source": {
+                    "Ref": "Source"
+                },
+                "Destinations": [
+                    {
+                        "Type": "EVENT_DATA_STORE",
+                        "Location": "{
+                        	"Ref": "arn:aws:cloudtrail:us-east-1:12345678910:eventdatastore/EXAMPLE-f852-4e8f-8bd1-bcf6cEXAMPLE"
+                    	}
+                    }
+                ],
+                "Tags": [
+                    {
+                        "Key": "TagKeyIntTest",
+                        "Value": "TagValueIntTest"
+                    },
+                    {
+                        "Key": "TagKeyIntTest2",
+                        "Value": "TagValueIntTest2"
+                    }
+                ]
+            }
+        }
+    },
+    "Outputs": {
+        "myChannelArn": {
+            "Description": "The channel ARN",
+            "Value": {
+                "Fn::GetAtt": [
+                    "myChannel",
+                    "arn:aws:cloudtrail:us-east-1:01234567890:channel/EXAMPLE8-0558-4f7e-a06a-43969EXAMPLE"
+                ]
+            }
+        }
+    }
+}
+```

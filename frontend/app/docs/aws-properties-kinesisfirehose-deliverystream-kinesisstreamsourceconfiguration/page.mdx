@@ -1,0 +1,36 @@
+# AWS::KinesisFirehose::D eliveryStream KinesisStreamSource구성
+
+`KinesisStreamSourceConfiguration` 속성 유형은 전송 스트림의 소스로 사용되는 Kinesis 스트림의 스트림 및 역할 Amazon 리소스 이름(ARN)을 지정합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "KinesisStreamARN" : String,
+  "RoleARN" : String
+}
+```
+
+## 속성
+
+`KinesisStreamARN`  
+소스 Kinesis 데이터 스트림의 ARN입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `512`  
+_패턴_: `arn:.*`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`RoleARN`  
+소스 Kinesis 데이터 스트림에 대한 액세스를 제공하는 역할의 ARN입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `512`  
+_패턴_: `arn:.*`  
+_업데이트 필요 사항_: 바꿔 놓음

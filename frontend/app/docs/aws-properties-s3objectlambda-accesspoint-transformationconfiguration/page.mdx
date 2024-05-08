@@ -1,0 +1,30 @@
+# AWS::S3ObjectLambda::AccessPoint 변환구성
+
+객체 Lambda 액세스 포인트 변환을 생성할 때 사용되는 구성입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Actions" : [ String, ... ],
+  "ContentTransformation" : ContentTransformation
+}
+```
+
+## 속성
+
+`Actions`  
+객체 Lambda 액세스 포인트 구성의 작업을 위한 컨테이너입니다. 유효한 입력은 `GetObject`, `HeadObject`, 및 `ListObject` `ListObjectV2`입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`ContentTransformation`  
+객체 Lambda 액세스 포인트 구성의 콘텐츠 변환을 위한 컨테이너입니다. FunctionArn 및 FunctionPayload를 포함할 수 있습니다. 자세한 내용은 _Amazon S3 API Reference의 AwsLambdaTransformation을 참조하십시오_.  
+_필수 항목 여부_: 예  
+_형식_: ContentTransformation  
+_업데이트 필요 사항_: 중단 없음

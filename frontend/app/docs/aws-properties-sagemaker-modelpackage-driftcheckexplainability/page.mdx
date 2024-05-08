@@ -1,0 +1,30 @@
+# AWS::SageMaker::ModelPackage DriftCheck설명 가능성
+
+모델 패키지를 사용하여 모델 모니터를 설정할 때 사용할 수 있는 드리프트 검사 설명 가능성 기준을 나타냅니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ConfigFile" : FileSource,
+  "Constraints" : MetricsSource
+}
+```
+
+## 속성
+
+`ConfigFile`  
+모델에 대한 설명 가능성 구성 파일입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: FileSource  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Constraints`  
+드리프트 검사 설명 가능성 제약 조건입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: MetricsSource  
+_업데이트 필요 사항_: 바꿔 놓음

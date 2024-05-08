@@ -1,0 +1,47 @@
+# AWS::AutoScaling::ScalingPolicy TargetTrackingConfiguration
+
+`TargetTrackingConfiguration` 는 AWS::AutoScaling::ScalingPolicy 리소스의 속성으로, Amazon EC2 Auto Scaling에 대한 대상 추적 조정 정책 구성을 지정합니다.
+
+조정 정책에 대한 자세한 내용은 _Amazon EC2 Auto Scaling 사용 설명서의 동적 조정을 참조하세요_.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "CustomizedMetricSpecification" : CustomizedMetricSpecification,
+  "DisableScaleIn" : Boolean,
+  "PredefinedMetricSpecification" : PredefinedMetricSpecification,
+  "TargetValue" : Double
+}
+```
+
+## 속성
+
+`CustomizedMetricSpecification`  
+사용자 지정 메트릭입니다. 사전 정의된 지표 또는 사용자 지정된 지표를 지정해야 합니다.  
+_필수_: 조건부  
+_유형_: CustomizedMetricSpecification  
+_업데이트 필요 사항_: 중단 없음
+
+`DisableScaleIn`  
+대상 추적 조정 정책에 의한 축소가 비활성화되었는지 여부를 나타냅니다. 축소가 비활성화된 경우 대상 추적 조정 정책은 오토 스케일링에서 인스턴스를 제거하지 않습니다. 그렇지 않으면 대상 추적 조정 정책이 오토 스케일링에서 인스턴스를 제거할 수 있습니다. 기본값은 `false`입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`PredefinedMetricSpecification`  
+미리 정의된 메트릭입니다. 사전 정의된 지표 또는 사용자 지정된 지표를 지정해야 합니다.  
+_필수_: 조건부  
+_유형_: PredefinedMetricSpecification  
+_업데이트 필요 사항_: 중단 없음
+
+`TargetValue`  
+메트릭의 대상 값입니다.  
+일부 지표는 백분율이 아닌 개수를 기반으로 합니다(예: Application Load Balancer에 대한 요청 수 또는 SQS 대기열의 메시지 수). 조정 정책에서 이러한 지표 중 하나를 지정하는 경우 목표 사용률을 1분 간격 동안 인스턴스당 최적의 평균 요청 또는 메시지 수로 지정합니다.
+_필수 항목 여부_: 예  
+_유형_: 더블  
+_업데이트 필요 사항_: 중단 없음

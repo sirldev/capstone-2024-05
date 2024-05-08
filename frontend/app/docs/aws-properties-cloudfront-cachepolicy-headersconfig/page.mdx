@@ -1,0 +1,33 @@
+# AWS::CloudFront::CachePolicy 헤더 구성
+
+HTTP 헤더가 있는지(포함되어 있는 경우 어떤 헤더인지) 및 CloudFront에서 오리진에 보내는 요청과 캐시 키에 포함되어 있는지 여부를 결정하는 객체입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "HeaderBehavior" : String,
+  "Headers" : [ String, ... ]
+}
+```
+
+## 속성
+
+`HeaderBehavior` HTTP 헤더가 캐시 키 및 CloudFront에서 오리진으로 보내는 요청에 포함되어 있는지 여부를 결정합니다. 유효한 값은 다음과 같습니다.
+
+- `none` – 캐시 키 또는 CloudFront에서 오리진에 보내는 요청에는 HTTP 헤더가 포함되지 않습니다. 이 필드가 로 설정된 경우에도 에 `none` `OriginRequestPolicy`나열된 모든 헤더*는* 오리진 요청에 포함됩니다.
+- `whitelist` – 유형에 나열된 HTTP 헤더만 `Headers` 캐시 키 및 CloudFront에서 오리진에 보내는 요청에 포함됩니다.
+  _필수 항목 여부_: 예  
+  _유형_: 문자열  
+  _허용되는 값_: `none | whitelist`  
+  _업데이트 필요 사항_: 중단 없음
+
+`Headers`  
+HTTP 헤더 이름 목록을 포함합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음

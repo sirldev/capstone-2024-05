@@ -1,0 +1,90 @@
+# AWS::AutoScaling::LaunchConfiguration 블록 디바이스
+
+`BlockDevice` 은 `EBS` Amazon EBS 볼륨을 설명하는 AWS::AutoScaling::LaunchConfiguration BlockDeviceMapping 속성 유형의 속성 중 일부입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "DeleteOnTermination" : Boolean,
+  "Encrypted" : Boolean,
+  "Iops" : Integer,
+  "SnapshotId" : String,
+  "Throughput" : Integer,
+  "VolumeSize" : Integer,
+  "VolumeType" : String
+}
+```
+
+## 속성
+
+`DeleteOnTermination`  
+인스턴스 종료 시 볼륨이 삭제되는지 여부를 나타냅니다. Amazon EC2 Auto Scaling의 경우 기본값은 `true`입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Encrypted`  
+볼륨을 암호화해야 하는지 여부를 지정합니다. 암호화된 EBS 볼륨은 Amazon EBS 암호화를 지원하는 인스턴스에만 연결할 수 있습니다. 자세한 내용은 지원되는 인스턴스 유형을 참조하세요. AMI가 암호화된 볼륨을 사용하는 경우 지원되는 인스턴스 유형에서만 시작할 수도 있습니다.  
+스냅샷에서 볼륨을 생성하는 경우 암호화된 스냅샷에서 암호화되지 않은 볼륨을 생성할 수 없습니다. 또한 시작 구성을 사용할 때는 KMS 키 ID를 지정할 수 없습니다.  
+기본적으로 암호화를 활성화하면 스냅샷의 암호화 여부에 관계없이 생성하는 EBS 볼륨은 AWS 관리형 KMS 키 또는 고객 관리형 KMS 키를 사용하여 항상 암호화됩니다.  
+자세한 내용은 Amazon EC2 Auto Scaling 사용 설명서의 AWS KMS keys를 사용하여 Amazon EBS 볼륨 암호화를 참조하세요\**.
+*필수 항목 *여부: 아니요  
+*유형*: Boolean  
+*업데이트 필요 사항\*: 바꿔 놓음
+
+`Iops`  
+볼륨에 프로비저닝할 IOPS(초당 입출력) 작업 수입니다. `gp3` 및 `io1` 볼륨의 경우 볼륨에 대해 프로비저닝된 IOPS 수를 나타냅니다. `gp2` 볼륨의 경우 이는 볼륨의 기준 성능과 볼륨이 버스팅을 위해 I/O 크레딧을 누적하는 속도를 나타냅니다.  
+다음은 각 볼륨 유형에 대해 지원되는 값입니다.
+
+- `gp3`: 3,000-16,000 IOPS
+- `io1`: 100-64,000 초당 이력
+  볼륨의 경우 `io1` Nitro 시스템에 구축된 인스턴스에 대해서만 64,000 IOPS를 보장합니다. 다른 인스턴스 패밀리는 최대 32,000 IOPS의 성능을 보장합니다.  
+   `Iops` 볼륨 유형이 `gp3` OR `io1` 이고 볼륨 유형이 인 경우에만 필요할 때 지원됩니다`io1`. (함께 사용하지 않음 `standard`, `gp2`, `st1`또는 `sc1` 볼륨.)  
+  _필수_: 조건부  
+  _유형_: Integer  
+  _업데이트 필요 사항_: 바꿔 놓음
+
+`SnapshotId`  
+사용할 볼륨의 스냅샷 ID입니다.  
+a `VolumeSize` 또는 a 중 하나를 지정해야 합니다`SnapshotId`.  
+_필수_: 조건부  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Throughput`  
+볼륨을 프로비저닝할 처리량(MiBps)입니다 `gp3` .  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_최소_: `125`  
+_최대_: `1000`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`VolumeSize` 볼륨 크기(GiB)입니다. 다음은 각 볼륨 유형에 대해 지원되는 볼륨 크기입니다.
+
+- `gp2` 및 `gp3`: 1-16,384
+- `io1`: 4-16,384
+- `st1` 및 `sc1`: 125-16,384
+- `standard`: 1-1,024
+  a `SnapshotId` 또는 a `VolumeSize` 중 하나를 지정해야 합니다. 및 를 둘 다 지정하는 경우 `SnapshotId` `VolumeSize`볼륨 크기는 스냅샷 크기보다 크거나 같아야 합니다.  
+  _필수_: 조건부  
+  _유형_: Integer  
+  _최소_: `1`  
+  _최대_: `16384`  
+  _업데이트 필요 사항_: 바꿔 놓음
+
+`VolumeType`  
+볼륨 유형입니다. 자세한 내용은 _Linux 인스턴스용 Amazon EC2 사용 설명서의 Amazon EBS 볼륨 유형을 참조하세요_.  
+유효한 값: `standard` | `io1` | `gp2` | `st1` | `sc1` | `gp3`  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+## 참고 항목
+
+- Amazon EC2 Auto Scaling 사용 설명서*의 암호화된 볼륨에 사용하기 위한 필수 KMS 키 정책 *
+- Linux 인스턴스용 Amazon EC2 사용 설명서*의 EBS 지원 AMI에서 암호화 사용 *

@@ -1,0 +1,135 @@
+# AWS::EC2::NetworkInsights분석 경로 구성 요소
+
+경로 구성 요소에 대해 설명합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "AclRule" : AnalysisAclRule,
+  "AdditionalDetails" : [ AdditionalDetail, ... ],
+  "Component" : AnalysisComponent,
+  "DestinationVpc" : AnalysisComponent,
+  "ElasticLoadBalancerListener" : AnalysisComponent,
+  "Explanations" : [ Explanation, ... ],
+  "InboundHeader" : AnalysisPacketHeader,
+  "OutboundHeader" : AnalysisPacketHeader,
+  "RouteTableRoute" : AnalysisRouteTableRoute,
+  "SecurityGroupRule" : AnalysisSecurityGroupRule,
+  "SequenceNumber" : Integer,
+  "ServiceName" : String,
+  "SourceVpc" : AnalysisComponent,
+  "Subnet" : AnalysisComponent,
+  "TransitGateway" : AnalysisComponent,
+  "TransitGatewayRouteTableRoute" : TransitGatewayRouteTableRoute,
+  "Vpc" : AnalysisComponent
+}
+```
+
+## 속성
+
+`AclRule`  
+네트워크 ACL 규칙입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: AnalysisAclRule  
+_업데이트 필요 사항_: 중단 없음
+
+`AdditionalDetails`  
+추가 세부 정보.  
+*필수 항목 *여부: 아니요  
+_형식_: AdditionalDetail 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`Component`  
+구성 요소입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: AnalysisComponent  
+_업데이트 필요 사항_: 중단 없음
+
+`DestinationVpc`  
+대상 VPC입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: AnalysisComponent  
+_업데이트 필요 사항_: 중단 없음
+
+`ElasticLoadBalancerListener`  
+부하 분산 장치 수신기입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: AnalysisComponent  
+_업데이트 필요 사항_: 중단 없음
+
+`Explanations`  
+설명 코드입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 설명 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`InboundHeader`  
+인바운드 헤더입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: AnalysisPacketHeader  
+_업데이트 필요 사항_: 중단 없음
+
+`OutboundHeader`  
+아웃바운드 헤더입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: AnalysisPacketHeader  
+_업데이트 필요 사항_: 중단 없음
+
+`RouteTableRoute`  
+경로 테이블 경로입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: AnalysisRouteTableRoute  
+_업데이트 필요 사항_: 중단 없음
+
+`SecurityGroupRule`  
+보안 그룹 규칙입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: AnalysisSecurityGroupRule  
+_업데이트 필요 사항_: 중단 없음
+
+`SequenceNumber`  
+시퀀스 번호입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`ServiceName`  
+VPC 엔드포인트 서비스의 이름입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`SourceVpc`  
+소스 VPC입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: AnalysisComponent  
+_업데이트 필요 사항_: 중단 없음
+
+`Subnet`  
+서브넷입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: AnalysisComponent  
+_업데이트 필요 사항_: 중단 없음
+
+`TransitGateway`  
+Transit Gateway입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: AnalysisComponent  
+_업데이트 필요 사항_: 중단 없음
+
+`TransitGatewayRouteTableRoute`  
+transit gateway 라우팅 테이블의 라우팅입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: TransitGatewayRouteTableRoute  
+_업데이트 필요 사항_: 중단 없음
+
+`Vpc`  
+구성 요소 VPC입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: AnalysisComponent  
+_업데이트 필요 사항_: 중단 없음

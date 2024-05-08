@@ -1,0 +1,45 @@
+# AWS::D ynamoDB::테이블 LocalSecondaryIndex
+
+local secondary index의 속성을 나타냅니다. local secondary index는 상위 테이블이 생성될 때만 생성할 수 있습니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "IndexName" : String,
+  "KeySchema" : [ KeySchema, ... ],
+  "Projection" : Projection
+}
+```
+
+## 속성
+
+`IndexName`  
+local secondary index의 이름입니다. 이름은 이 테이블의 다른 모든 인덱스에서 고유해야 합니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 업데이트가 지원되지 않습니다.
+
+`KeySchema` local secondary index에 대한 전체 키 스키마로, 하나 이상의 속성 이름 및 키 유형 쌍으로 구성됩니다.
+
+- `HASH` - 파티션 키
+- `RANGE` - 정렬 키
+  항목의 파티션 키는 *해시 특성*이라고도 합니다. "해시 속성"이라는 용어는 DynamoDB가 내부 해시 함수를 사용하여 파티션 키 값을 기반으로 데이터 항목을 파티션 간에 균등하게 분산하는 데서 유래했습니다.  
+  항목의 정렬 키는 *range 속성*이라고도 합니다. "범위 속성"이라는 용어는 DynamoDB가 동일한 파티션 키를 가진 항목을 정렬 키 값을 기준으로 정렬된 순서로 물리적으로 서로 가깝게 저장하는 방식에서 파생됩니다.
+  _필수 항목 여부_: 예  
+  _유형_: KeySchema 목록  
+  _업데이트 필요 사항_: 업데이트가 지원되지 않습니다.
+
+`Projection`  
+테이블에서 local secondary index로 복사(프로젝션)되는 속성을 나타냅니다. 이는 자동으로 프로젝션되는 기본 키 속성 및 인덱스 키 속성에 추가됩니다.  
+_필수 항목 여부_: 예  
+_유형_: 프로젝션  
+_업데이트 필요 사항_: 업데이트가 지원되지 않습니다.
+
+## 참고 항목
+
+선언된 local secondary index의 예는 AWS::D ynamoDB::Table 단원을 참조하십시오.

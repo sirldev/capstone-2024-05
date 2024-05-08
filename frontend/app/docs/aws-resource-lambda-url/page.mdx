@@ -1,0 +1,84 @@
+# AWS::람다::URL
+
+리소스는 `AWS::Lambda::Url` 지정된 구성 매개 변수를 사용하여 함수 URL을 만듭니다. 함수 URL은 함수를 호출하는 데 사용할 수 있는 전용 HTTP(S) 엔드포인트입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::Lambda::Url",
+  "Properties" : {
+      "AuthType" : String,
+      "Cors" : Cors,
+      "InvokeMode" : String,
+      "Qualifier" : String,
+      "TargetFunctionArn" : String
+    }
+}
+```
+
+## 속성
+
+`AuthType`  
+함수 URL에서 사용하는 인증 유형입니다. `AWS_IAM` 인증된 사용자에게만 액세스를 제한하려면 로 설정합니다. `NONE` IAM 인증을 우회하여 퍼블릭 엔드포인트를 생성하려는 경우 로 설정합니다. 자세한 정보는 Lambda 함수 URL에 대한 보안 및 인증 모델을 참조하십시오.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_허용되는 값_: `AWS_IAM | NONE`  
+_업데이트 필요 사항_: 중단 없음
+
+`Cors`  
+함수 URL에 대한 CORS(Cross-Origin Resource Sharing) 설정입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Cors  
+_업데이트 필요 사항_: 중단 없음
+
+`InvokeMode` 다음 옵션 중 하나를 사용합니다.
+
+- `BUFFERED` – 이것이 기본 옵션입니다. Lambda는 API 작업을 사용하여 함수를 호출 `Invoke` 합니다. 호출 결과는 페이로드가 완료되면 사용할 수 있습니다. 최대 페이로드 크기는 6MB입니다.
+- `RESPONSE_STREAM` – 함수는 페이로드 결과를 사용할 수 있게 되면 스트리밍합니다. Lambda는 API 작업을 사용하여 함수를 호출 `InvokeWithResponseStream` 합니다. 최대 응답 페이로드 크기는 20MB이지만 할당량 증가를 요청할 수 있습니다.
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열  
+  _허용되는 값_: `BUFFERED | RESPONSE_STREAM`  
+  _업데이트 필요 사항_: 중단 없음
+
+`Qualifier`  
+별칭 이름입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`TargetFunctionArn` Lambda 함수의 이름입니다.
+
+**이름 형식**
+
+- **함수 이름** - `my-function`.
+- **함수 ARN** - `arn:aws:lambda:us-west-2:123456789012:function:my-function`.
+- **부분 ARN** - `123456789012:function:my-function`.
+  길이 제약은 전체 ARN에만 적용됩니다. 함수 이름만 지정하면 길이가 64자로 제한됩니다.  
+  _필수 항목 여부_: 예  
+  _유형_: 문자열  
+  _업데이트 필요 사항_: 바꿔 놓음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`리소스 이름이 반환됩니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`FunctionArn` 함수의 Amazon 리소스 이름(ARN)입니다.
+
+`FunctionUrl` 함수에 대한 HTTP URL 엔드포인트입니다.

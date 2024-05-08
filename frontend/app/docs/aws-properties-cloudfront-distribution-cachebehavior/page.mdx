@@ -1,0 +1,201 @@
+# AWS::CloudFront::D istribution CacheBehavior
+
+CloudFront에서 요청을 처리하는 방법을 설명하는 복합 유형입니다.
+
+CloudFront에서 모든 오리진의 객체를 제공하려면 최소한 오리진의 캐시 동작(기본 캐시 동작 포함)을 생성해야 합니다. 각 캐시 동작은 CloudFront에서 객체를 가져올 하나의 오리진을 지정합니다. 오리진이 두 개이고 기본 캐시 동작만 있는 경우, 기본 캐시 동작으로 인해 CloudFront는 오리진 중 하나에서 객체를 가져오지만 다른 오리진은 사용되지 않습니다.
+
+배포에 추가할 수 있는 캐시 동작 수에 대한 현재 할당량(이전에는 제한이라고 함) 은 _Amazon CloudFront 개발자 안내서의 할당량을 참조하십시오_.
+
+캐시 동작을 지정하지 않으려면 빈 요소만 포함합니다 `CacheBehaviors` . 빈 `CacheBehavior` 요소는 유효하지 않으므로 포함하지 마세요.
+
+기존 배포의 모든 캐시 동작을 삭제하려면 배포 구성을 업데이트하고 빈 요소만 포함합니다 `CacheBehaviors` .
+
+하나 이상의 캐시 동작을 추가, 변경 또는 제거하려면 배포 구성을 업데이트하고 업데이트된 배포에 포함할 모든 캐시 동작을 지정합니다.
+
+캐시 동작에 대한 자세한 내용은 _Amazon CloudFront 개발자 안내서의 캐시 동작 설정을 참조하십시오_.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "AllowedMethods" : [ String, ... ],
+  "CachedMethods" : [ String, ... ],
+  "CachePolicyId" : String,
+  "Compress" : Boolean,
+  "DefaultTTL" : Double,
+  "FieldLevelEncryptionId" : String,
+  "ForwardedValues" : ForwardedValues,
+  "FunctionAssociations" : [ FunctionAssociation, ... ],
+  "LambdaFunctionAssociations" : [ LambdaFunctionAssociation, ... ],
+  "MaxTTL" : Double,
+  "MinTTL" : Double,
+  "OriginRequestPolicyId" : String,
+  "PathPattern" : String,
+  "RealtimeLogConfigArn" : String,
+  "ResponseHeadersPolicyId" : String,
+  "SmoothStreaming" : Boolean,
+  "TargetOriginId" : String,
+  "TrustedKeyGroups" : [ String, ... ],
+  "TrustedSigners" : [ String, ... ],
+  "ViewerProtocolPolicy" : String
+}
+```
+
+## 속성
+
+`AllowedMethods` CloudFront에서 처리하여 Amazon S3 버킷 또는 사용자 지정 오리진에 전달하는 HTTP 메서드를 제어하는 복합 유형입니다. 다음 세 가지 중에서 선택할 수 있습니다.
+
+- CloudFront는 `GET` 및 `HEAD` 요청만 전달합니다.
+- CloudFront는 `GET`, `HEAD`, 및 `OPTIONS` 요청만 전달합니다.
+- CloudFront는 를 전달`GET, HEAD, OPTIONS, PUT, PATCH, POST`하고 `DELETE` 요청합니다.
+  세 번째 옵션을 선택하는 경우 사용자가 원하지 않는 작업을 수행할 수 없도록 Amazon S3 버킷 또는 사용자 지정 오리진에 대한 액세스를 제한해야 할 수 있습니다. 예를 들어 오리진에서 객체를 삭제할 수 있는 권한을 사용자에게 부여하지 않도록 할 수 있습니다.  
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열 목록  
+  _업데이트 필요 사항_: 중단 없음
+
+`CachedMethods` CloudFront에서 지정된 HTTP 메서드를 사용하여 요청에 대한 응답을 캐싱할지 여부를 제어하는 복합 유형입니다. 두 가지 선택 사항이 있습니다.
+
+- CloudFront는 응답 및 요청을 캐싱합니다 `GET` `HEAD` .
+- CloudFront는 , 및 요청에 대한 응답을 캐싱 `GET` `HEAD`합니다 `OPTIONS` .
+  Amazon S3 오리진에 대해 두 번째 선택 항목을 선택하는 경우 응답이 올바르게 캐시되도록 Access-Control-Request-Method, Access-Control-Request-Headers 및 Origin 헤더를 전달해야 할 수 있습니다.  
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열 목록  
+  _업데이트 필요 사항_: 중단 없음
+
+`CachePolicyId`  
+이 캐시 동작에 연결된 캐시 정책의 고유 식별자입니다. 자세한 내용은 Amazon CloudFront 개발자 안내서의 캐시 정책 생성 또는 관리 캐시 정책 사용을 참조하세요\**.  
+A 는 `CacheBehavior` a 또는 를 `CachePolicyId` 포함해야 합니다`ForwardedValues`. 를 사용하는 것이 좋습니다`CachePolicyId`.  
+*필수*: 조건부  
+*유형*: 문자열  
+*업데이트 필요 사항\*: 중단 없음
+
+`Compress`  
+CloudFront에서 이 캐시 동작에 대해 특정 파일을 자동으로 압축할지 여부입니다. 그렇다면 true를 지정합니다. 그렇지 않은 경우 false를 지정합니다. 자세한 내용은 _Amazon CloudFront 개발자 안내서의 압축 파일 제공을 참조하십시오_.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`DefaultTTL`  
+이 필드는 더 이상 사용되지 않습니다. `DefaultTTL` 캐시 정책에서 이 필드 대신 이 필드를 사용하는 것이 좋습니다. 자세한 내용은 Amazon CloudFront 개발자 안내서의 캐시 정책 생성 또는 관리 캐시 정책 사용을 참조하세요**.  
+객체가 업데이트되었는지 여부를 확인하기 위해 CloudFront에서 오리진에 다른 요청을 전달하기 전에 객체를 CloudFront 캐시에 유지하려는 기본 시간입니다. 지정하는 값은 오리진이 객체에 , 및 와 같은 HTTP 헤더를 추가하지 않는 경우에만 적용됩니다 `Cache-Control max-age` `Cache-Control s-maxage` `Expires` . 자세한 내용은 Amazon CloudFront 개발자 안내서의 콘텐츠가 엣지 캐시에 머무는 기간(만료) 관리를 참조하십시오**.  
+*필수 항목 *여부: 아니요  
+_유형_: 더블  
+_업데이트 필요 사항_: 중단 없음
+
+`FieldLevelEncryptionId`  
+CloudFront `ID` 에서 이 캐시 동작에 대한 특정 데이터 필드를 암호화하는 데 사용할 필드 수준 암호화 구성의 값입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`ForwardedValues`  
+이 필드는 더 이상 사용되지 않습니다. 이 필드 대신 캐시 정책 또는 오리진 요청 정책을 사용하는 것이 좋습니다. 자세한 내용은 *Amazon CloudFront 개발자 안내서*의 정책 작업을 참조하세요.  
+캐시 키에 값을 포함하려면 캐시 정책을 사용합니다. 자세한 내용은 Amazon CloudFront 개발자 안내서의 캐시 정책 생성 또는 관리 캐시 정책 사용을 참조하세요**.  
+오리진에 값을 전송하되 캐시 키에 포함하지 않으려면 오리진 요청 정책을 사용합니다. 자세한 내용은 Amazon CloudFront 개발자 안내서의 오리진 요청 정책 생성 또는 관리형 오리진 요청 정책 사용을 참조하세요**.  
+A 는 `CacheBehavior` a 또는 를 `CachePolicyId` 포함해야 합니다`ForwardedValues`. 를 사용하는 것이 좋습니다`CachePolicyId`.  
+CloudFront에서 쿼리 문자열, 쿠키 및 HTTP 헤더를 처리하는 방법을 지정하는 복합 형식입니다.  
+_필수_: 조건부  
+_형식_: ForwardedValues  
+_업데이트 필요 사항_: 중단 없음
+
+`FunctionAssociations`  
+이 캐시 동작과 연결된 CloudFront 함수 목록입니다. CloudFront 함수를 스테이지에 게시 `LIVE` 하여 캐시 동작과 연결해야 합니다.  
+*필수 항목 *여부: 아니요  
+_형식_: FunctionAssociation 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`LambdaFunctionAssociations`  
+캐시 동작에 대한 0개 이상의 Lambda@Edge 함수 연결을 포함하는 복합 형식입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: LambdaFunctionAssociation 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`MaxTTL`  
+이 필드는 더 이상 사용되지 않습니다. `MaxTTL` 캐시 정책에서 이 필드 대신 이 필드를 사용하는 것이 좋습니다. 자세한 내용은 Amazon CloudFront 개발자 안내서의 캐시 정책 생성 또는 관리 캐시 정책 사용을 참조하세요**.  
+객체가 업데이트되었는지 여부를 확인하기 위해 CloudFront에서 오리진에 다른 요청을 전달하기 전에 객체가 CloudFront 캐시에 유지되는 최대 시간입니다. 지정하는 값은 오리진이 객체에 , 및 와 같은 HTTP 헤더를 추가하는 경우에만 적용됩니다 `Cache-Control max-age` `Cache-Control s-maxage` `Expires` . 자세한 내용은 Amazon CloudFront 개발자 안내서의 콘텐츠가 엣지 캐시에 머무는 기간(만료) 관리를 참조하십시오**.  
+*필수 항목 *여부: 아니요  
+_유형_: 더블  
+_업데이트 필요 사항_: 중단 없음
+
+`MinTTL`  
+이 필드는 더 이상 사용되지 않습니다. `MinTTL` 캐시 정책에서 이 필드 대신 이 필드를 사용하는 것이 좋습니다. 자세한 내용은 Amazon CloudFront 개발자 안내서의 캐시 정책 생성 또는 관리 캐시 정책 사용을 참조하세요\*_.  
+객체가 업데이트되었는지 여부를 확인하기 위해 CloudFront에서 오리진에 다른 요청을 전달하기 전에 객체를 CloudFront 캐시에 유지하려는 최소 시간입니다. 자세한 내용은 _ Amazon CloudFront 개발자 안내서*의 콘텐츠가 엣지 캐시에 유지되는 기간(만료) 관리를 참조하십시오.  
+`0` 모든 헤더를 오리진에 전달하도록 CloudFront를 구성하는 경우 `MinTTL` for 를 지정해야 합니다(`Headers`for `1` 및 `Quantity` for `*`를 지정하는 경우 ,`Name`아래).  
+*필수 항목 *여부: 아니요  
+_유형_: 더블  
+_업데이트 필요 사항_: 중단 없음
+
+`OriginRequestPolicyId`  
+이 캐시 동작에 연결된 오리진 요청 정책의 고유 식별자입니다. 자세한 내용은 Amazon CloudFront 개발자 안내서의 오리진 요청 정책 생성 또는 관리형 오리진 요청 정책 사용을 참조하세요\**.  
+*필수 항목 *여부: 아니요  
+*유형*: 문자열  
+*업데이트 필요 사항\*: 중단 없음
+
+`PathPattern`  
+`images/*.jpg`동작을 적용할 요청을 지정하는 패턴(예: )입니다. CloudFront에서 최종 사용자 요청을 수신하면 요청된 경로가 배포에 캐시 동작이 나열된 순서대로 경로 패턴과 비교됩니다.  
+선택적으로 `/`경로 패턴의 시작 부분에 슬래시()를 포함할 수 있습니다. 예를 들어, `/images/*.jpg`. CloudFront 동작은 선행 `/`.
+기본 캐시 동작에 대한 경로 패턴은 `*` 변경할 수 없습니다. 객체에 대한 요청이 캐시 동작의 경로 패턴과 일치하지 않는 경우, CloudFront에서는 기본 캐시 동작의 동작을 적용합니다.  
+자세한 내용은 * Amazon CloudFront 개발자 안내서*의 경로 패턴을 참조하십시오.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`RealtimeLogConfigArn`  
+이 캐시 동작에 연결된 실시간 로그 구성의 Amazon 리소스 이름(ARN)입니다. 자세한 내용은 _Amazon CloudFront 개발자 안내서의 실시간 로그를 참조하세요_.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`ResponseHeadersPolicyId`  
+응답 헤더 정책의 식별자입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`SmoothStreaming`  
+이 캐시 동작과 연결된 원본을 사용하여 Microsoft Smooth Streaming 형식의 미디어 파일을 배포할지 여부를 나타냅니다. 이 경우 을 지정하고, `true`그렇지 않은 경우 을 지정합니다`false`. `true` 에 대해 `SmoothStreaming` 지정하는 경우 내용이 의 값과 일치하는 경우 이 캐시 비헤이비어를 사용하여 다른 콘텐츠를 배포할 수 있습니다`PathPattern`.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`TargetOriginId`  
+ `ID` CloudFront에서 요청이 이 캐시 동작과 일치할 때 요청을 라우팅할 오리진의 값입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`TrustedKeyGroups`  
+CloudFront에서 서명된 URL 또는 서명된 쿠키를 검증하는 데 사용할 수 있는 키 그룹 목록입니다.  
+캐시 동작에 신뢰할 수 있는 키 그룹이 포함된 경우, CloudFront에서는 캐시 동작과 일치하는 모든 요청에 대해 서명된 URL 또는 서명된 쿠키를 요구합니다. URL 또는 쿠키는 해당 공개 키가 키 그룹에 있는 개인 키로 서명되어야 합니다. 서명된 URL 또는 쿠키에는 CloudFront에서 서명을 확인하는 데 사용해야 하는 퍼블릭 키에 대한 정보가 포함되어 있습니다. 자세한 내용은 _Amazon CloudFront 개발자 안내서의 프라이빗 콘텐츠 제공을 참조하세요_.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`TrustedSigners`  
+대신 를 사용하는 것이 좋습니다 `TrustedKeyGroups` `TrustedSigners`.
+CloudFront에서 서명된 URL 또는 서명된 쿠키를 검증하는 데 퍼블릭 키를 사용할 수 있는 AWS 계정 ID 목록입니다.  
+캐시 동작에 신뢰할 수 있는 서명자가 포함된 경우, CloudFront에서는 캐시 동작과 일치하는 모든 요청에 대해 서명된 URL 또는 서명된 쿠키를 요구합니다. URL 또는 쿠키는 신뢰할 수 있는 서명자의 AWS 계정에 있는 CloudFront 키 페어의 프라이빗 키로 서명해야 합니다. 서명된 URL 또는 쿠키에는 CloudFront에서 서명을 확인하는 데 사용해야 하는 퍼블릭 키에 대한 정보가 포함되어 있습니다. 자세한 내용은 _Amazon CloudFront 개발자 안내서의 프라이빗 콘텐츠 제공을 참조하세요_.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`ViewerProtocolPolicy`  
+최종 사용자가 `TargetOriginId` 요청의 경로 패턴과 일치할 때 지정된 오리진의 파일에 액세스하는 데 사용할 수 있는 프로토콜입니다`PathPattern`. 다음 옵션을 지정할 수 있습니다.
+
+- `allow-all`: 뷰어는 HTTP 또는 HTTPS를 사용할 수 있습니다.
+- `redirect-to-https`: 최종 사용자가 HTTP 요청을 제출하는 경우, CloudFront는 HTTP 상태 코드 301(영구적으로 이동됨)을 HTTPS URL과 함께 최종 사용자에게 반환합니다. 그런 다음 최종 사용자는 새 URL을 사용하여 요청을 다시 제출합니다.
+- `https-only`: 최종 사용자가 HTTP 요청을 보내는 경우 CloudFront는 HTTP 상태 코드 403(금지됨)을 반환합니다.
+  HTTPS 프로토콜 요구 사항에 대한 자세한 내용은 Amazon CloudFront 개발자 안내서의 최종 사용자와 CloudFront 간 HTTPS 요구 단원을 참조하십시오\**.  
+  최종 사용자가 HTTPS를 사용하여 오리진에서 가져온 객체를 검색하도록 보장하는 유일한 방법은 다른 프로토콜을 사용하여 객체를 가져오지 않는 것입니다. 최근에 HTTP에서 HTTPS로 변경한 경우 캐시된 객체는 프로토콜에 구애받지 않으므로 객체의 캐시를 지우는 것이 좋습니다. 즉, 엣지 로케이션은 현재 요청 프로토콜이 이전에 사용된 프로토콜과 일치하는지 여부에 관계없이 캐시에서 객체를 반환합니다. 자세한 내용은 *Amazon CloudFront 개발자 안내서의 캐시 만료 관리를 참조하십시오*.
+  *필수 항목 여부*: 예  
+  *유형*: 문자열  
+  *허용되는 값*: `allow-all | https-only | redirect-to-https`  
+  *업데이트 필요 사항\*: 중단 없음
+
+## 참고 항목
+
+- Amazon CloudFront API Reference\* \*의 CacheBehavior

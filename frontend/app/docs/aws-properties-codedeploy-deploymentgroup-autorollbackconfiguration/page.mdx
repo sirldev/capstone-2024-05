@@ -1,0 +1,32 @@
+# AWS::CodeDeploy::D eploymentGroup AutoRollbackConfiguration
+
+`AutoRollbackConfiguration` 속성 유형은 배포가 성공적으로 완료되지 않은 경우 AWS CodeDeploy 배포 그룹에 대한 자동 롤백을 구성합니다. 자세한 내용은 _AWS CodeDeploy 사용 설명서의 자동 롤백을 참조하십시오_.
+
+`AutoRollbackConfiguration` 은 DeploymentGroup 리소스의 속성입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Enabled" : Boolean,
+  "Events" : [ String, ... ]
+}
+```
+
+## 속성
+
+`Enabled`  
+정의된 자동 롤백 구성이 현재 사용 가능한지 여부를 나타냅니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`Events`  
+ 롤백을 트리거하는 이벤트 유형입니다. 유효한 값은 `DEPLOYMENT_FAILURE`, `DEPLOYMENT_STOP_ON_ALARM`, 또는 `DEPLOYMENT_STOP_ON_REQUEST`입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음

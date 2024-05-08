@@ -1,0 +1,37 @@
+# AWS::SageMaker::엔드포인트 배포 구성
+
+끝점에 대한 배포 구성으로, 원하는 배포 전략과 롤백 구성이 포함되어 있습니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "AutoRollbackConfiguration" : AutoRollbackConfig,
+  "BlueGreenUpdatePolicy" : BlueGreenUpdatePolicy,
+  "RollingUpdatePolicy" : RollingUpdatePolicy
+}
+```
+
+## 속성
+
+`AutoRollbackConfiguration`  
+끝점 배포 실패 및 복구를 처리하기 위한 자동 롤백 구성입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: AutoRollbackConfig  
+_업데이트 필요 사항_: 중단 없음
+
+`BlueGreenUpdatePolicy`  
+블루/그린 배포에 대한 정책을 업데이트합니다. 이 업데이트 정책이 지정된 경우 SageMaker는 이전 플릿을 유지하면서 배포 중에 새 플릿을 생성합니다. SageMaker는 지정된 트래픽 라우팅 구성에 따라 트래픽을 새 플릿으로 전환합니다. 배포 구성에는 하나의 업데이트 정책만 사용해야 합니다. 업데이트 정책이 지정되지 않은 경우 SageMaker는 기본적으로 한 번에 트래픽이 이동하는 블루/그린 배포 전략을 사용합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: BlueGreenUpdatePolicy  
+_업데이트 필요 사항_: 중단 없음
+
+`RollingUpdatePolicy`  
+SageMaker 엔드포인트를 업데이트하기 위한 롤링 배포 전략을 지정합니다.  
+*필수 항목 *여부: 아니요  
+_형식_: RollingUpdatePolicy  
+_업데이트 필요 사항_: 중단 없음

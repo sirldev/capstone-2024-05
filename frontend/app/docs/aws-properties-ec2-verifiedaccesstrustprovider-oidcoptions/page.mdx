@@ -1,0 +1,65 @@
+# AWS::EC2::VerifiedAccessTrustProvider Oidc옵션
+
+OpenID Connect 호환 사용자 ID 신뢰 공급자에 대한 옵션을 설명합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "AuthorizationEndpoint" : String,
+  "ClientId" : String,
+  "ClientSecret" : String,
+  "Issuer" : String,
+  "Scope" : String,
+  "TokenEndpoint" : String,
+  "UserInfoEndpoint" : String
+}
+```
+
+## 속성
+
+`AuthorizationEndpoint`  
+OIDC 권한 부여 엔드포인트입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`ClientId`  
+클라이언트 식별자입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`ClientSecret`  
+클라이언트 암호입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Issuer`  
+OIDC 발급자입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Scope`  
+지정된 OIDC(OpenID Connect) 범위입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`TokenEndpoint`  
+OIDC 토큰 엔드포인트입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`UserInfoEndpoint`  
+OIDC 사용자 정보 엔드포인트입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음

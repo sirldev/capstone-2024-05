@@ -1,0 +1,35 @@
+# AWS::S3::버킷 지표
+
+복제 지표 및 이벤트를 활성화하는 복제 지표 관련 설정을 지정하는 컨테이너입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "EventThreshold" : ReplicationTimeValue,
+  "Status" : String
+}
+```
+
+## 속성
+
+`EventThreshold`  
+ 이벤트를 내보내기 위한 시간 임계값을 지정하는 컨테이너입니다 `s3:Replication:OperationMissedThreshold` .  
+*필수 항목 *여부: 아니요  
+_유형_: ReplicationTimeValue  
+_업데이트 필요 사항_: 중단 없음
+
+`Status`  
+ 복제 메트릭을 사용할 수 있는지 여부를 지정합니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_허용되는 값_: `Disabled | Enabled`  
+_업데이트 필요 사항_: 중단 없음
+
+## 참고 항목
+
+- AWS::S3::버킷 예제

@@ -1,0 +1,39 @@
+# AWS CloudFormation StackSets에서 대상 계정 게이트 구성
+
+계정 게이트는 AWS CloudFormation StackSets가 해당 계정에서 스택 작업을 시작하기 전에 대상 계정이 특정 요구 사항을 충족하는지 확인하기 위해 AWS Lambda 함수를 지정할 수 있는 선택적 기능입니다. 계정 게이트의 일반적인 예는 대상 계정에 활성 상태이거나 해결되지 않은 CloudWatch 경보가 없는지 확인하는 것입니다. StackSets는 대상 계정에서 스택 작업을 시작할 때마다 함수를 호출하고, 함수가 코드를 반환하는 경우에만 계속됩니다 `SUCCEEDED` . Lambda 함수가 상태를 반환하면 `FAILED`StackSets는 요청된 작업을 계속하지 않습니다. 계정 게이팅 Lambda 함수가 구성되지 않은 경우 StackSets는 확인을 건너뛰고 작업을 계속합니다.
+
+대상 계정이 계정 게이트 확인에 실패하는 경우, 실패한 작업은 지정된 내결함성 수 또는 스택 비율에 포함됩니다. 내결함성에 대한 자세한 내용은 스택 세트 작업 옵션 섹션을 참조하세요.
+
+계정 게이팅은 StackSets 작업에만 사용할 수 있습니다. StackSets 외부의 다른 AWS CloudFormation 작업에는 이 기능을 사용할 수 없습니다.
+
+## 설정 요구 사항
+
+다음 목록에서는 계정 제어에 대한 설정 요구 사항을 설명합니다.
+
+- StackSets 계정 게이팅 기능을 사용하려면 Lambda 함수의 이름을 **AWSCloudFormationStackSetAccountGate로 지정해야 합니다**.
+- AWSCloudFormationStackSetExecutionRole**에는 ** Lambda 함수를 호출할 수 있는 권한이 필요합니다. 이러한 권한이 없으면 StackSets는 계정 게이팅 검사를 건너뛰고 스택 작업을 계속합니다.
+- `InvokeFunction` 계정 게이팅이 작동하려면 대상 계정에 Lambda 권한을 추가해야 합니다. 대상 계정 신뢰 정책은 관리자 계정과 신뢰 관계가 있어야 합니다. 다음은 Lambda 권한을 부여하는 정책 설명의 예입니다 `invokefunction` .
+
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "lambda:InvokeFunction"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+```
+
+## 샘플 Lambda 계정 게이팅 함수
+
+다음 샘플 AWS CloudFormation 템플릿을 사용하여 Lambda **AWSCloudFormationStackSetAccountGate** 함수를 생성할 수 있습니다. 이러한 템플릿 중 하나를 사용하여 새 스택을 생성하는 방법에 대한 자세한 내용은 이 가이드의 스택 생성을 참조하세요.
+
+| 템플릿 위치 | 묘사                                                                              |
+| ----------- | --------------------------------------------------------------------------------- |
+| 일부 주소   | 상태를 반환하는 Lambda 계정 게이트 함수를 구현하는 스택을 생성합니다 `SUCCEEDED`. |
+| 일부 주소   | 상태를 반환하는 Lambda 계정 게이트 함수를 구현하는 스택을 생성합니다 `FAILED`.    |

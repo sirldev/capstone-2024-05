@@ -1,0 +1,144 @@
+# AWS::CloudFormation::후크 버전
+
+`HookVersion` 리소스는 새 후크 버전 또는 첫 번째 후크 버전을 AWS CloudFormation 레지스트리에 게시합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::CloudFormation::HookVersion",
+  "Properties" : {
+      "ExecutionRoleArn" : String,
+      "LoggingConfig" : LoggingConfig,
+      "SchemaHandlerPackage" : String,
+      "TypeName" : String
+    }
+}
+```
+
+## 속성
+
+`ExecutionRoleArn`  
+후크 권한을 부여하는 작업 실행 역할의 Amazon 리소스 이름(ARN)입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`LoggingConfig`  
+확장에 대한 로깅 구성 정보를 포함합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: LoggingConfig  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`SchemaHandlerPackage`  
+등록하려는 후크에 필요한 파일이 포함된 후크 프로젝트 패키지가 포함된 Amazon S3 버킷의 URL입니다.  
+등록하려는 리소스에 대한 스키마 핸들러 패키지 생성에 대한 자세한 내용은 *확장 개발을 위한 CloudFormation CLI 사용 설명서*의 제출을 참조하십시오.  
+리소스를 등록하는 사용자는 S3 버킷의 패키지에 액세스할 수 있어야 합니다. 즉, 사용자에게 스키마 처리기 패키지에 대한 GetObject 권한이 있어야 합니다. 자세한 내용은 AWS Identity and Access Management 사용 설명서의 Amazon S3에 사용되는 작업, 리소스 및 조건 키를 참조하십시오\**.
+*필수 항목 여부*: 예  
+*유형*: 문자열  
+*업데이트 필요 사항\*: 바꿔 놓음
+
+`TypeName`  
+후크의 고유한 이름입니다. 후크에 대한 세 부분으로 구성된 네임스페이스를 지정하며, 권장 패턴은 `Organization::Service::Hook`입니다.  
+다음 조직 네임스페이스는 예약되어 있으며 후크 유형 이름에 사용할 수 없습니다.
+
+- `Alexa`
+- `AMZN`
+- `Amazon`
+- `ASK`
+- `AWS`
+- `Custom`
+- `Dev`
+  _필수 항목 여부_: 예  
+  _유형_: 문자열  
+  _최소_: `10`  
+  _최대_: `196`  
+  _업데이트 필요 사항_: 바꿔 놓음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`리소스 버전의 ARN을 반환합니다. 예를 들어:
+
+`arn:aws:cloudformation:us-west-2:012345678901:type/hook/Sample-CloudFormation-Hook/00000001`
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`Arn` 후크의 Amazon 리소스 이름(ARN)입니다.
+
+`IsDefaultVersion` 지정된 후크 버전이 기본 버전으로 설정되는지 여부입니다.
+
+`TypeArn` 이 버전의 후크에 할당된 Amazon 리소스 번호(ARN)입니다.
+
+`VersionId` 이 후크 버전의 ID입니다.
+
+`Visibility` CloudFormation 작업에서 리소스를 표시하고 사용할 수 있는 범위입니다.  
+유효한 값은 다음과 같습니다.
+
+- `PRIVATE`: 리소스는 등록된 계정 내에서만 볼 수 있고 사용할 수 있습니다. CloudFormation은 등록한 모든 리소스를 `PRIVATE`로 표시합니다.
+- `PUBLIC`: 리소스는 공개적으로 표시되며 모든 Amazon 계정 내에서 사용할 수 있습니다.
+
+## 예제
+
+### 후크 버전 지정
+
+다음 예제에서는 새 후크 버전을 지정하는 방법을 보여 줍니다.
+
+#### JSON (영문)
+
+```
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Resources": {
+        "HookVersion": {
+            "Type": "AWS::CloudFormation::HookVersion",
+            "Properties": {
+                "TypeName": "My::Sample::Hook",
+                "SchemaHandlerPackage": "s3://my-sample-hookversion-bucket/my-sample-hook.zip"
+            }
+        }
+    }
+}
+```
+
+### 기본 후크 버전 지정
+
+다음 예제에서는 새 후크 버전을 지정하고 `Ref` 반환 값을 사용하여 해당 버전을 기본 버전으로 설정하는 방법을 보여 줍니다.
+
+#### JSON (영문)
+
+```
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Resources": {
+        "HookVersion": {
+            "Type": "AWS::CloudFormation::HookVersion",
+            "Properties": {
+                "TypeName": "My::Sample::Hook",
+                "SchemaHandlerPackage": "s3://my-sample-hookversion-bucket/my-sample-hook.zip"
+            }
+        },
+        "HookDefaultVersion": {
+            "Type": "AWS::CloudFormation::HookDefaultVersion",
+            "Properties": {
+                "TypeVersionArn": {
+                    "Ref": "HookVersion"
+                }
+            }
+        }
+    }
+}
+```

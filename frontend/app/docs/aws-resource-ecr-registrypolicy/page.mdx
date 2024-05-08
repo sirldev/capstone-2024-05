@@ -1,0 +1,69 @@
+# AWS::ECR::레지스트리 정책
+
+`AWS::ECR::RegistryPolicy` 리소스는 개인 레지스트리에 대한 권한 정책을 생성하거나 업데이트합니다.
+
+프라이빗 레지스트리 정책은 다른 AWS 계정에 대한 권한을 지정하는 데 사용되며 교차 계정 복제를 구성할 때 사용됩니다. 자세한 내용은 _Amazon Elastic Container Registry 사용 설명서의 레지스트리 권한을 참조하세요_.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::ECR::RegistryPolicy",
+  "Properties" : {
+      "PolicyText" : Json
+    }
+}
+```
+
+## 속성
+
+`PolicyText`  
+레지스트리에 대한 JSON 정책 텍스트입니다.  
+_필수 항목 여부_: 예  
+_형식_: Json  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### Fn::GetAtt
+
+####
+
+`RegistryId` 정책이 연결된 프라이빗 레지스트리의 계정 ID입니다.
+
+## 예제
+
+### 개인 레지스트리에 대한 레지스트리 정책 지정Specify a registry policy for a private registry
+
+다음 예제에서는 account에 `us-west-2` 리포지토리를 만들고 해당 콘텐츠를 개인 레지스트리에 복제할 수 있는`210987654321` 권한을 부여하는 개인 레지스트리 정책을 지정합니다.
+
+#### JSON (영문)
+
+```
+"TestRegistryPolicy": {
+   "Type": "AWS::ECR::RegistryPolicy",
+   "Properties": {
+      "PolicyText": {
+         "Version":"2012-10-17",
+         "Statement":[
+            {
+               "Sid":"ReplicationAccessCrossAccount",
+               "Effect":"Allow",
+               "Principal":{
+                  "AWS":"arn:aws:iam::210987654321:root"
+               },
+               "Action":[
+                  "ecr:CreateRepository",
+                  "ecr:ReplicateImage"
+               ],
+               "Resource": "arn:aws:ecr:us-west-2:123456789012:repository/*"
+             }
+          ]
+       }
+    }
+}
+```

@@ -1,0 +1,25 @@
+# AWS::CloudFront::ResponseHeadersPolicy AccessControlAllowHeaders
+
+CloudFront에서 HTTP 응답 헤더의 값으로 포함하는 HTTP 헤더 이름 목록 `Access-Control-Allow-Headers` 입니다.
+
+HTTP 응답 헤더에 대한 자세한 `Access-Control-Allow-Headers` 내용은 MDN Web Docs의 Access-Control-Allow-Headers를 참조하십시오.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Items" : [ String, ... ]
+}
+```
+
+## 속성
+
+`Items`  
+HTTP 헤더 이름 목록입니다. `*` 모든 헤더를 허용하도록 지정할 수 있습니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음

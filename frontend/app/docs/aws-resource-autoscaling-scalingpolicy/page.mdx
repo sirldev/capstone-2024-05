@@ -1,0 +1,424 @@
+# AWS::자동 크기 조정::크기 조정 정책
+
+`AWS::AutoScaling::ScalingPolicy` 리소스는 Auto Scaling 그룹이 애플리케이션에 사용할 수 있는 인스턴스 수를 조정할 수 있도록 Amazon EC2 Auto Scaling 조정 정책을 지정합니다.
+
+조정 정책을 사용하여 오토 스케일링을 자동으로 조정하는 방법에 대한 자세한 내용은 _Amazon EC2 Auto Scaling 사용 설명서의 동적 조정 및 예측 조정을 참조하세요_.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::AutoScaling::ScalingPolicy",
+  "Properties" : {
+      "AdjustmentType" : String,
+      "AutoScalingGroupName" : String,
+      "Cooldown" : String,
+      "EstimatedInstanceWarmup" : Integer,
+      "MetricAggregationType" : String,
+      "MinAdjustmentMagnitude" : Integer,
+      "PolicyType" : String,
+      "PredictiveScalingConfiguration" : PredictiveScalingConfiguration,
+      "ScalingAdjustment" : Integer,
+      "StepAdjustments" : [ StepAdjustment, ... ],
+      "TargetTrackingConfiguration" : TargetTrackingConfiguration
+    }
+}
+```
+
+## 속성
+
+`AdjustmentType`  
+배율 조정이 해석되는 방식(예: 절대 숫자 또는 백분율)을 지정합니다. 유효한 값은 `ChangeInCapacity`, `ExactCapacity`, 및 `PercentChangeInCapacity`입니다.  
+정책 유형이 또는 인 경우 필수입니다 `StepScaling` `SimpleScaling`. 자세한 내용은 _Amazon EC2 Auto Scaling 사용 설명서의 조정 유형을 참조하세요_.  
+_필수_: 조건부  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`AutoScalingGroupName`  
+오토 스케일링의 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Cooldown`  
+특정 단순 조정 정책에 적용되는 휴지 기간(초)입니다. 여기에 휴지 기간을 지정하면 기본 휴지 기간이 재정의됩니다.  
+정책 유형이 인 경우에만 유효합니다`SimpleScaling`. 자세한 내용은 Amazon EC2 Auto Scaling 사용 설명서의 Amazon EC2 Auto Scaling에 대한 조정 휴지를 참조하세요\**.  
+기본값 : 없음  
+*필수 항목 *여부: 아니요  
+*유형*: 문자열  
+*업데이트 필요 사항\*: 중단 없음
+
+`EstimatedInstanceWarmup`  
+ _그룹에 대해 기본 인스턴스 워밍업이 정의된 경우에는 필요하지 않습니다._  
+새로 시작된 인스턴스가 CloudWatch 지표에 기여할 수 있을 때까지의 예상 시간(초)입니다. 이 워밍업 기간은 특정 대상 추적 또는 단계 조정 정책으로 인해 시작된 인스턴스에 적용됩니다. 여기에 워밍업 기간을 지정하면 기본 인스턴스 워밍업을 재정의합니다.  
+정책 유형이 또는 인 경우에만 유효합니다 `TargetTrackingScaling` `StepScaling`.  
+기본값은 그룹에 대해 정의된 기본 인스턴스 워밍업 값을 사용하는 것입니다. default instance warmup이 null이면 `EstimatedInstanceWarmup` default cooldown 값으로 폴백합니다.
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`MetricAggregationType`  
+CloudWatch 지표에 대한 집계 유형입니다. 유효한 값은 `Minimum`, `Maximum`, 및 `Average`입니다. 집계 형식이 null이면 값은 로 처리됩니다`Average`.  
+정책 유형이 인 경우에만 유효합니다`StepScaling`.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`MinAdjustmentMagnitude`  
+조정 유형이 인 경우 배율을 조정할 최소값입니다`PercentChangeInCapacity`. 예를 들어, 오토 스케일링을 25% 확장하는 단계 조정 정책을 생성하고 a를 2로 지정한다고 가정해 보겠습니다 `MinAdjustmentMagnitude` . 그룹에 4개의 인스턴스가 있고 조정 정책이 수행되는 경우 4의 25%는 1입니다. 그러나 a를 2로 지정했기 때문에 `MinAdjustmentMagnitude` Amazon EC2 Auto Scaling은 그룹을 인스턴스 2개로 확장합니다.  
+정책 유형이 또는 인 경우에만 유효합니다 `StepScaling` `SimpleScaling`. 자세한 내용은 *Amazon EC2 Auto Scaling 사용 설명서*의 조정 유형을 참조하세요.  
+일부 Auto Scaling 그룹은 인스턴스 가중치를 사용합니다. 이 경우 `MinAdjustmentMagnitude` 최소한 가장 큰 인스턴스 가중치만큼 큰 값으로 설정합니다.
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`PolicyType` 다음 정책 유형 중 하나입니다.
+
+- `TargetTrackingScaling`
+- `StepScaling`
+- `SimpleScaling` (기본값)
+- `PredictiveScaling`
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열  
+  _업데이트 필요 사항_: 중단 없음
+
+`PredictiveScalingConfiguration`  
+예측 조정 정책. 사전 정의된 메트릭과 사용자 지정 메트릭에 대한 지원을 제공합니다.  
+사전 정의된 지표에는 CPU 사용률, 네트워크 입/출력 및 Application Load Balancer 요청 수가 포함됩니다.  
+정책 유형이 인 경우 필수입니다 `PredictiveScaling`.  
+_필수_: 조건부  
+_형식_: PredictiveScalingConfiguration  
+_업데이트 필요 사항_: 중단 없음
+
+`ScalingAdjustment`  
+지정된 조정 유형에 따라 크기를 조정할 양입니다. 양수 값은 현재 용량에 추가되고 음수는 현재 용량에서 제거됩니다. 정확한 용량의 경우 음수가 아닌 값을 지정해야 합니다.  
+정책 유형이 인 경우 필수입니다 `SimpleScaling`. (다른 정책 유형에는 사용되지 않습니다.)  
+_필수_: 조건부  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`StepAdjustments`  
+경보 위반의 크기에 따라 크기를 조정할 수 있는 조정 집합입니다.  
+정책 유형이 인 경우 필수입니다 `StepScaling`. (다른 정책 유형에는 사용되지 않습니다.)  
+_필수_: 조건부  
+_유형_: StepAdjustment 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`TargetTrackingConfiguration` 대상 추적 조정 정책입니다. 사전 정의된 메트릭 또는 사용자 지정 메트릭에 대한 지원을 제공합니다.  
+다음과 같은 사전 정의된 메트릭을 사용할 수 있습니다.
+
+- `ASGAverageCPUUtilization`
+- `ASGAverageNetworkIn`
+- `ASGAverageNetworkOut`
+- `ALBRequestCountPerTarget`
+  `ALBRequestCountPerTarget` 메트릭에 대해 지정하는 경우 `ResourceLabel` 를 사용하여 속성을 `PredefinedMetricSpecification` 지정해야 합니다.  
+  정책 유형이 인 경우 필수입니다`TargetTrackingScaling`.  
+  _필수_: 조건부  
+  _형식_: TargetTrackingConfiguration  
+  _업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+함수를 인수로 유형을 `AWS::AutoScaling::ScalingPolicy`지정하면 `Ref` CloudFormation은 정책 Amazon 리소스 이름(ARN)을 반환합니다. 예를 들면 다음과 같습니다`arn:aws:autoscaling:us-east-2:123456789012:scalingPolicy:ab12c4d5-a1b2-a1b2-a1b2-ab12c4d56789:autoScalingGroupName/myStack-AutoScalingGroup-AB12C4D5E6:policyName/myStack-myScalingPolicy-AB12C4D5E6`.
+
+함수 사용에 대한 자세한 `Ref` 내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`Arn` 속성 설명을 사용할 수 없습니다.
+
+`PolicyName` 조정 정책의 이름을 반환합니다.
+
+## 발언
+
+단계 또는 단순 조정 정책에 대한 AWS::CloudWatch::Alarm 리소스를 생성할 때 속성에 조정 정책의 이름을 지정합니다 `AlarmActions` . 예제 코드 조각은 Auto Scaling 템플릿 코드 조각 섹션을 참조하세요.
+
+## 예제
+
+다음 예제에서는 오토 스케일링에 대한 조정 정책을 지정합니다.
+
+템플릿 코드 조각에 대한 자세한 내용은 Auto Scaling 템플릿 코드 조각 섹션을 참조하세요.
+
+### 예측 조정 정책
+
+다음 템플릿 코드 조각은 목표 사용률이 70인 CPU 사용률 지표를 사용하는 예측 조정 정책 구성을 보여줍니다. `ForecastOnly` mode가 지정되었기 때문에 Amazon EC2 Auto Scaling은 향후 2일 동안의 트래픽 예측을 통해 예측을 생성하지만 그룹을 적극적으로 조정하지는 않습니다.
+
+#### JSON (영문)
+
+```
+{
+  "AWSTemplateFormatVersion":"2010-09-09",
+  "Resources":{
+    "myPredictiveScalingPolicy":{
+      "Type":"AWS::AutoScaling::ScalingPolicy",
+      "Properties":{
+        "AutoScalingGroupName":{
+          "Ref":"myASG"
+        },
+        "PolicyType":"PredictiveScaling",
+        "PredictiveScalingConfiguration":{
+          "MetricSpecifications":[
+            {
+              "TargetValue":70,
+              "PredefinedMetricPairSpecification":{
+                "PredefinedMetricType":"ASGCPUUtilization"
+              }
+            }
+          ],
+          "Mode":"ForecastOnly"
+        }
+      }
+    }
+  }
+}
+```
+
+### 대상 추적 조정 정책
+
+다음 예제에서는 및 지표를 `ASGAverageCPUUtilization`기반으로 하는 두 개의 대상 추적 조정 정책이 있는 오토 스케일링을 생성합니다 `ALBRequestCountPerTarget` . 이러한 각 정책의 속성에는 `TargetValue` 동일한 템플릿의 파라미터 값을 참조하는 속성이 포함됩니다.
+
+`Monitoring` 시작 템플릿에서 활성화되어 있기 때문에 EC2 지표 데이터는 CloudWatch를 통해 1분 간격(세부 모니터링이라고 함)으로 사용할 수 있습니다.
+
+이 `DefaultInstanceWarmup` 속성은 인스턴스가 상태에 도달한 후 리소스 소비가 안정되는 데 걸리는 시간을 나타내기 위해 30초로 설정됩니다 `InService` . 자세한 내용은 Amazon EC2 Auto Scaling 사용 설명서의 오토 스케일링에 대한 기본 인스턴스 워밍업 설정을 참조하세요\*\*.
+
+동일한 스택 템플릿에서 지표와 로드 밸런서에 대한 조정 정책을 생성하려면 DependsOn 속성을 사용하여 리소스에 대한 종속성을 선언해야 합니다 `ALBRequestCountPerTarget` . `AWS::ElasticLoadBalancingV2::Listener`
+
+#### JSON (영문)
+
+```
+{
+  "AWSTemplateFormatVersion":"2010-09-09",
+  "Parameters":{
+    "AmiId":{
+      "Type":"String"
+    },
+    "Subnets":{
+      "Type": "List<AWS::EC2::Subnet::Id>",
+      "Description": "At least two public subnets in different Availability Zones in the selected VPC"
+    },
+    "VPC":{
+      "Type": "AWS::EC2::VPC::Id",
+      "Description": "A VPC that allows the load balancer access to the Internet"
+    },
+    "InstanceSecurityGroup":{
+      "Type": "List<AWS::EC2::SecurityGroup::Id>",
+      "Description": "A security group in the selected VPC that allows HTTP access on the inbound port"
+    },
+    "CPUPolicyTargetValue":{
+      "Type":"String",
+      "Description": "The target utilization for the CPU metric"
+    },
+    "ALBRequestCountTargetValue":{
+      "Type":"String",
+      "Description": "The optimal average request count per instance during any one-minute interval"
+    }
+  },
+  "Resources":{
+    "myLoadBalancer":{
+      "Type":"AWS::ElasticLoadBalancingV2::LoadBalancer",
+      "Properties":{
+        "Subnets":{
+          "Ref":"Subnets"
+        }
+      }
+    },
+    "myLoadBalancerListener":{
+      "Type":"AWS::ElasticLoadBalancingV2::Listener",
+      "Properties":{
+        "DefaultActions":[
+          {
+            "TargetGroupArn":{
+              "Ref":"myTargetGroup"
+            },
+            "Type":"forward"
+          }
+        ],
+        "LoadBalancerArn":{
+          "Ref":"myLoadBalancer"
+        },
+        "Port":80,
+        "Protocol":"HTTP"
+      }
+    },
+    "myTargetGroup":{
+      "Type":"AWS::ElasticLoadBalancingV2::TargetGroup",
+      "Properties":{
+        "Name":"myTargetGroup",
+        "Port":80,
+        "Protocol":"HTTP",
+        "VpcId":{
+          "Ref":"VPC"
+        }
+      }
+    },
+    "myLaunchTemplate": {
+      "Type": "AWS::EC2::LaunchTemplate",
+      "Properties": {
+        "LaunchTemplateName": { "Fn::Sub": "${AWS::StackName}-launch-template" },
+        "LaunchTemplateData": {
+          "ImageId": { "Ref": "AmiId" },
+          "InstanceType": "t3.micro",
+          "SecurityGroupIds": [ { "Ref":"InstanceSecurityGroup" } ],
+          "Monitoring": { "Enabled": true }
+        }
+      }
+    },
+    "myASG":{
+      "Type":"AWS::AutoScaling::AutoScalingGroup",
+      "Properties":{
+        "LaunchTemplate": {
+          "LaunchTemplateId": { "Ref": "myLaunchTemplate" },
+          "Version": { "Fn::GetAtt": [ "myLaunchTemplate", "LatestVersionNumber" ] }
+        },
+        "MaxSize":"2",
+        "MinSize":"1",
+        "DefaultInstanceWarmup": 30,
+        "VPCZoneIdentifier": { "Ref":"Subnets" },
+        "TargetGroupARNs":[ { "Ref":"myTargetGroup" } ]
+      }
+    },
+    "myCPUPolicy":{
+      "Type":"AWS::AutoScaling::ScalingPolicy",
+      "Properties":{
+        "AutoScalingGroupName":{
+          "Ref":"myASG"
+        },
+        "PolicyType":"TargetTrackingScaling",
+        "TargetTrackingConfiguration":{
+          "PredefinedMetricSpecification":{
+            "PredefinedMetricType":"ASGAverageCPUUtilization"
+          },
+          "TargetValue":{
+            "Ref":"CPUPolicyTargetValue"
+          }
+        }
+      }
+    },
+    "myALBRequestCountPolicy":{
+      "Type":"AWS::AutoScaling::ScalingPolicy",
+      "DependsOn" : "myLoadBalancerListener",
+      "Properties":{
+        "AutoScalingGroupName":{
+          "Ref":"myASG"
+        },
+        "PolicyType":"TargetTrackingScaling",
+        "TargetTrackingConfiguration":{
+          "PredefinedMetricSpecification":{
+            "PredefinedMetricType":"ALBRequestCountPerTarget",
+            "ResourceLabel":{
+              "Fn::Join":[
+                "/",
+                [
+                  {
+                    "Fn::GetAtt":[
+                      "myLoadBalancer",
+                      "LoadBalancerFullName"
+                    ]
+                  },
+                  {
+                    "Fn::GetAtt":[
+                      "myTargetGroup",
+                      "TargetGroupFullName"
+                    ]
+                  }
+                ]
+              ]
+            }
+          },
+          "TargetValue":{
+            "Ref":"ALBRequestCountTargetValue"
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+### 단계 조정 정책
+
+다음 예제에서는 정책 유형과 조정 유형을 `StepScaling`사용하여 조정 정책을 생성합니다 `ChangeInCapacity` . 또한 오토 스케일링에 대한 CloudWatch 지표를 모니터링하는 CloudWatch 경보를 생성해야 합니다. CloudWatch 경보는 하나의 조정 정책에만 연결할 수 있습니다.
+
+연결된 경보가 트리거되면 정책은 다음 단계 조정에 따라 오토 스케일링의 용량을 늘립니다(CloudWatch 경보 임계값이 70%라고 가정).
+
+- 메트릭 값이 70%보다 크거나 같고 85%보다 작은 경우 용량을 1씩 늘립니다
+- 메트릭 값이 85%보다 크거나 같고 95%보다 작은 경우 용량을 2씩 늘립니다
+- 메트릭 값이 95%보다 크거나 같은 경우 용량을 3씩 늘립니다
+
+#### JSON (영문)
+
+```
+{
+  "Resources":{
+    "ASGScalingPolicyHigh":{
+      "Type":"AWS::AutoScaling::ScalingPolicy",
+      "Properties":{
+        "AutoScalingGroupName":{
+          "Ref":"myASG"
+        },
+        "PolicyType":"StepScaling",
+        "AdjustmentType":"ChangeInCapacity",
+        "MetricAggregationType":"Average",
+        "EstimatedInstanceWarmup":60,
+        "StepAdjustments":[
+          {
+            "MetricIntervalLowerBound":0,
+            "MetricIntervalUpperBound":15,
+            "ScalingAdjustment":1
+          },
+          {
+            "MetricIntervalLowerBound":15,
+            "MetricIntervalUpperBound":25,
+            "ScalingAdjustment":2
+          },
+          {
+            "MetricIntervalLowerBound":25,
+            "ScalingAdjustment":3
+          }
+        ]
+      }
+    }
+  }
+}
+```
+
+### 단순 조정 정책
+
+다음 예제에서는 정책 유형과 조정 유형을 `SimpleScaling`사용하여 조정 정책을 생성합니다 `ChangeInCapacity` . 정책은 트리거될 때 용량을 1씩 늘립니다. 또한 오토 스케일링에 대한 CloudWatch 지표를 모니터링하는 CloudWatch 경보를 생성해야 합니다. CloudWatch 경보는 하나의 조정 정책에만 연결할 수 있습니다.
+
+#### JSON (영문)
+
+```
+{
+  "Resources":{
+    "ASGScalingPolicyHigh":{
+      "Type":"AWS::AutoScaling::ScalingPolicy",
+      "Properties":{
+        "AutoScalingGroupName":{
+          "Ref":"myASG"
+        },
+        "PolicyType":"SimpleScaling",
+        "AdjustmentType":"ChangeInCapacity",
+        "ScalingAdjustment":1
+      }
+    }
+  }
+}
+```
+
+## 참고 항목
+
+- Auto Scaling 템플릿 스니펫
+- Amazon EC2 Auto Scaling API 참조*의 PutScalingPolicy *

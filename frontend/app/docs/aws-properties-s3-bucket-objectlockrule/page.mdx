@@ -1,0 +1,23 @@
+# AWS::S3::버킷 ObjectLockRule
+
+지정된 객체에 대한 객체 잠금 규칙을 지정합니다. 버킷에 적용할 때 this 규칙을 활성화 `ObjectLockConfiguration` 합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "DefaultRetention" : DefaultRetention
+}
+```
+
+## 속성
+
+`DefaultRetention`  
+지정된 버킷에 배치된 새 객체에 적용할 기본 객체 잠금 보존 모드 및 기간입니다. 객체 잠금이 켜져 있는 경우 버킷 설정에는 둘 다 필요 `Mode` 하고 기간은 둘 중 하나 `Days` 또는 `Years`이어야 합니다. `Days` 동시에 and를 `Years` 지정할 수 없습니다 . mode 및 period에 허용되는 값에 대한 자세한 내용은 DefaultRetention을 참조하세요.  
+_필수_: 조건부  
+_형식_: DefaultRetention  
+_업데이트 필요 사항_: 중단 없음

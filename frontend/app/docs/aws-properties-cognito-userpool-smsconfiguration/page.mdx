@@ -1,0 +1,43 @@
+# AWS::Cognito::UserPool Sms구성
+
+AWS 계정에서 SMS 메시지를 전송하기 위해 Amazon SNS 서비스에 대해 Cognito 사용자 풀이 호출해야 하는 설정을 포함하는 SMS 구성 유형입니다. Cognito 사용자 풀은 AWS 계정에 대해 제공하는 IAM 역할을 사용하여 Amazon SNS 서비스에 요청합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ExternalId" : String,
+  "SnsCallerArn" : String,
+  "SnsRegion" : String
+}
+```
+
+## 속성
+
+`ExternalId`  
+외부 ID는 값입니다. `ExternalId`Amazon SNS를 호출하여 사용자 풀에 대한 SMS 메시지를 전송하는 데 사용되는 IAM 역할에 보안을 추가하는 데 사용하는 것이 좋습니다. 를 제공하면 `ExternalId`Cognito 사용자 풀이 IAM 역할을 수임하려고 할 때 이를 사용합니다. 를 요구하도록 역할 신뢰 정책을 설정할 수도 있습니다`ExternalID`. Cognito Management Console을 사용하여 SMS MFA에 대한 역할을 생성하는 경우 Cognito는 필요한 권한과 를 사용하는 신뢰 정책이 있는 역할을 생성합니다`ExternalId`.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`SnsCallerArn`  
+Amazon SNS 호출자의 Amazon 리소스 이름(ARN)입니다. Amazon Cognito가 SMS 메시지를 전송하는 데 사용할 AWS 계정의 IAM 역할 ARN입니다. SMS 메시지에는 지출 한도가 적용됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `20`  
+_최대_: `2048`  
+_패턴_: `arn:[w+=/,.@-]+:[w+=/,.@-]+:([w+=/,.@-]*)?:[0-9]+:[w+=/,.@-]+(:[w+=/,.@-]+)?(:[w+=/,.@-]+)?`  
+_업데이트 필요 사항_: 중단 없음
+
+`SnsRegion`  
+Amazon SNS 통합과 함께 사용할 AWS 리전입니다. 사용자 풀과 동일한 리전 또는 지원되는 **레거시 Amazon SNS 대체 리전**을 선택할 수 있습니다.  
+ 아시아 태평양(서울) AWS 리전의 Amazon Cognito 리소스는 아시아 태평양(도쿄) 리전의 Amazon SNS 구성을 사용해야 합니다. 자세한 내용은 Amazon Cognito 사용자 풀에 대한 SMS 메시지 설정을 참조하세요.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `5`  
+_최대_: `32`  
+_업데이트 필요 사항_: 중단 없음

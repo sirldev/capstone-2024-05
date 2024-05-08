@@ -1,0 +1,299 @@
+# AWS::Lambda::EventSource매핑
+
+리소스 `AWS::Lambda::EventSourceMapping` 는 이벤트 소스와 AWS Lambda 함수 간의 매핑을 생성합니다. Lambda는 이벤트 소스에서 항목을 읽고 함수를 트리거합니다.
+
+각 이벤트 원본 유형에 대한 자세한 내용은 다음 항목을 참조하십시오. 특히 각 항목에서는 특정 이벤트 원본에 대한 필수 및 선택적 매개 변수에 대해 설명합니다.
+
+- Dynamo DB 스트림을 이벤트 소스로 구성
+- Kinesis 스트림을 이벤트 소스로 구성
+- SQS 대기열을 이벤트 소스로 구성
+- MQ 브로커를 이벤트 소스로 구성
+- MSK를 이벤트 소스로 구성
+- 자체 관리형 Apache Kafka를 이벤트 소스로 구성
+- Amazon DocumentDB를 이벤트 소스로 구성
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::Lambda::EventSourceMapping",
+  "Properties" : {
+      "AmazonManagedKafkaEventSourceConfig" : AmazonManagedKafkaEventSourceConfig,
+      "BatchSize" : Integer,
+      "BisectBatchOnFunctionError" : Boolean,
+      "DestinationConfig" : DestinationConfig,
+      "DocumentDBEventSourceConfig" : DocumentDBEventSourceConfig,
+      "Enabled" : Boolean,
+      "EventSourceArn" : String,
+      "FilterCriteria" : FilterCriteria,
+      "FunctionName" : String,
+      "FunctionResponseTypes" : [ String, ... ],
+      "MaximumBatchingWindowInSeconds" : Integer,
+      "MaximumRecordAgeInSeconds" : Integer,
+      "MaximumRetryAttempts" : Integer,
+      "ParallelizationFactor" : Integer,
+      "Queues" : [ String, ... ],
+      "ScalingConfig" : ScalingConfig,
+      "SelfManagedEventSource" : SelfManagedEventSource,
+      "SelfManagedKafkaEventSourceConfig" : SelfManagedKafkaEventSourceConfig,
+      "SourceAccessConfigurations" : [ SourceAccessConfiguration, ... ],
+      "StartingPosition" : String,
+      "StartingPositionTimestamp" : Double,
+      "Topics" : [ String, ... ],
+      "TumblingWindowInSeconds" : Integer
+    }
+}
+```
+
+## 속성
+
+`AmazonManagedKafkaEventSourceConfig`  
+Amazon Managed Streaming for Apache Kafka(Amazon MSK) 이벤트 소스에 대한 특정 구성 설정입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: AmazonManagedKafkaEventSourceConfig  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`BatchSize` Lambda가 스트림 또는 대기열에서 가져와 함수로 전송하는 각 배치의 최대 레코드 수입니다. Lambda는 동기식 호출에 대한 페이로드 제한(6MB)까지 단일 호출로 배치의 모든 레코드를 함수에 전달합니다.
+
+- **Amazon Kinesis** – 기본값 100. 최대 10,000개.
+- **Amazon DynamoDB Streams** – 기본값 100. 최대 10,000개.
+- **Amazon Simple Queue Service** – 기본값 10. 표준 대기열의 경우 최대값은 10,000입니다. FIFO 대기열의 경우 최대값은 10입니다.
+- **Amazon Managed Streaming for Apache Kafka** – 기본값 100. 최대 10,000개.
+- **자체 관리형 Apache Kafka** – 기본값 100. 최대 10,000개.
+- **Amazon MQ(ActiveMQ 및 RabbitMQ)** – 기본값 100. 최대 10,000개.
+- **DocumentDB** – 기본값 100입니다. 최대 10,000개.
+  *필수 항목 *여부: 아니요  
+  _유형_: Integer  
+  _최소_: `1`  
+  _최대_: `10000`  
+  _업데이트 필요 사항_: 중단 없음
+
+`BisectBatchOnFunctionError`  
+(Kinesis 및 DynamoDB Streams만 해당) 함수가 오류를 반환하면 일괄 처리를 둘로 분할하고 다시 시도합니다. 기본값은 false입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`DestinationConfig`  
+(Kinesis 및 DynamoDB Streams만 해당) 폐기된 레코드에 대한 Amazon SQS 대기열 또는 Amazon SNS 주제 대상.  
+*필수 항목 *여부: 아니요  
+_유형_: DestinationConfig  
+_업데이트 필요 사항_: 중단 없음
+
+`DocumentDBEventSourceConfig`  
+DocumentDB 이벤트 원본에 대한 특정 구성 설정입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: DocumentDBEventSourceConfig  
+_업데이트 필요 사항_: 중단 없음
+
+`Enabled`  
+true이면 이벤트 원본 매핑이 활성화됩니다. false인 경우 Lambda는 폴링 및 호출을 일시 중지합니다.  
+기본값 : True  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`EventSourceArn` 이벤트 소스의 Amazon 리소스 이름(ARN)입니다.
+
+- **Amazon Kinesis** – 데이터 스트림 또는 스트림 소비자의 ARN입니다.
+- **Amazon DynamoDB Streams** – 스트림의 ARN입니다.
+- **Amazon Simple Queue Service** – 대기열의 ARN입니다.
+- **Amazon Managed Streaming for Apache Kafka** — 클러스터의 ARN입니다.
+- **Amazon MQ** – 브로커의 ARN입니다.
+- **Amazon DocumentDB**— DocumentDB 변경 스트림의 ARN입니다.
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열  
+  _패턴_: `arn:(aws[a-zA-Z0-9-]*):([a-zA-Z0-9-])+:([a-z]{2}(-gov)?-[a-z]+-d{1})?:(d{12})?:(.*)`  
+  *업데이트 필요 *사항: 바꿔 놓음
+
+`FilterCriteria`  
+Lambda가 이벤트를 처리해야 하는지 여부를 결정하는 필터 기준을 정의하는 객체입니다. 자세한 내용은 Lambda 이벤트 필터링을 참조하세요.  
+*필수 항목 *여부: 아니요  
+_유형_: FilterCriteria  
+_업데이트 필요 사항_: 중단 없음
+
+`FunctionName` Lambda 함수의 이름입니다.
+
+**이름 형식**
+
+- **함수 이름** – `MyFunction`.
+- **함수 ARN** – `arn:aws:lambda:us-west-2:123456789012:function:MyFunction`.
+- **버전 또는 별칭 ARN** – `arn:aws:lambda:us-west-2:123456789012:function:MyFunction:PROD`.
+- **부분 ARN** – `123456789012:function:MyFunction`.
+  길이 제약은 전체 ARN에만 적용됩니다. 함수 이름만 지정하는 경우 길이가 64자로 제한됩니다.  
+  _필수 항목 여부_: 예  
+  _유형_: 문자열  
+  _최소_: `1`  
+  _최대_: `140`  
+  _패턴_: `(arn:(aws[a-zA-Z-]*)?:lambda:)?([a-z]{2}(-gov)?-[a-z]+-d{1}:)?(d{12}:)?(function:)?([a-zA-Z0-9-_]+)(:($LATEST|[a-zA-Z0-9-_]+))?`  
+  _업데이트 필요 사항_: 중단 없음
+
+`FunctionResponseTypes`  
+(스트림 및 SQS) 이벤트 원본 매핑에 적용된 현재 응답 형식 열거형의 목록입니다.  
+유효한 값 : `ReportBatchItemFailures`  
+*필수 항목 *여부 : 아니요  
+_유형_: 문자열 목록  
+_최대_: `1`  
+_업데이트 필요 사항_: 중단 없음
+
+`MaximumBatchingWindowInSeconds`  
+함수를 호출하기 전에 Lambda가 레코드를 수집하는 데 소비하는 최대 시간(초)입니다.  
+**기본값(Kinesis, DynamoDB, Amazon SQS 이벤트 소스): **0  
+**기본값(Amazon MSK, Kafka, Amazon MQ, Amazon DocumentDB 이벤트 소스):** 500ms  
+**관련 설정: ** Amazon SQS 이벤트 소스의 경우 `BatchSize` 10보다 큰 값으로 설정하는 경우 `MaximumBatchingWindowInSeconds` 1 이상으로 설정해야 합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_최소_: `0`  
+_최대_: `300`  
+_업데이트 필요 사항_: 중단 없음
+
+`MaximumRecordAgeInSeconds`  
+(Kinesis 및 DynamoDB Streams만 해당) 지정된 기간보다 오래된 레코드는 삭제합니다. 기본값은 -1이며, 최대 사용 기간을 무한대로 설정합니다. 값을 무한대로 설정하면 Lambda는 이전 레코드를 삭제하지 않습니다.  
+최대 레코드 사용 기간의 최소 유효 값은 60초입니다. 60보다 작고 -1보다 큰 값은 매개 변수의 절대 범위에 속하지만 허용되지 않습니다
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_최소_: `-1`  
+_최대_: `604800`  
+_업데이트 필요 사항_: 중단 없음
+
+`MaximumRetryAttempts`  
+(Kinesis 및 DynamoDB Streams만 해당) 지정된 재시도 횟수 후에 레코드를 삭제합니다. 기본값은 -1이며, 최대 재시도 횟수를 무한대로 설정합니다. MaximumRetryAttempts가 무한대인 경우 Lambda는 이벤트 소스에서 레코드가 만료될 때까지 실패한 레코드를 재시도합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_최소_: `-1`  
+_최대_: `10000`  
+_업데이트 필요 사항_: 중단 없음
+
+`ParallelizationFactor`  
+(Kinesis 및 DynamoDB Streams만 해당) 각 샤드에서 동시에 처리할 배치 수입니다. 기본값은 1입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_최소_: `1`  
+_최대_: `10`  
+_업데이트 필요 사항_: 중단 없음
+
+`Queues`  
+ (아마존 MQ) 사용할 Amazon MQ 브로커 대상 대기열의 이름입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_최대_: `1`  
+_업데이트 필요 사항_: 중단 없음
+
+`ScalingConfig`  
+(Amazon SQS만 해당) 이벤트 원본에 대한 크기 조정 구성입니다. 자세한 정보는 Amazon SQS 이벤트 소스에 대한 최대 동시성 구성을 참조하십시오.  
+*필수 항목 *여부: 아니요  
+_형식_: ScalingConfig  
+_업데이트 필요 사항_: 중단 없음
+
+`SelfManagedEventSource`  
+이벤트 원본에 대한 자체 관리형 Apache Kafka 클러스터입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: SelfManagedEventSource  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`SelfManagedKafkaEventSourceConfig`  
+자체 관리형 Apache Kafka 이벤트 소스에 대한 특정 구성 설정입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: SelfManagedKafkaEventSourceConfig  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`SourceAccessConfigurations`  
+인증 프로토콜, VPC 구성 요소 또는 이벤트 소스를 보호하고 정의하기 위한 가상 호스트의 배열입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: SourceAccessConfiguration 목록  
+_최대_: `22`  
+_업데이트 필요 사항_: 중단 없음
+
+`StartingPosition` 읽기를 시작할 스트림의 위치입니다. Amazon Kinesis 및 Amazon DynamoDB에 필요합니다.
+
+- **LATEST** - 새 레코드만 읽습니다.
+- **TRIM_HORIZON** - 사용 가능한 모든 레코드를 처리합니다.
+- **AT_TIMESTAMP** - 레코드 읽기를 시작할 시간을 지정합니다.
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열  
+  _업데이트 필요 사항_: 바꿔 놓음
+
+`StartingPositionTimestamp`  
+ 로 `StartingPosition` 설정하면 `AT_TIMESTAMP`읽기를 시작할 시간(Unix 시간(초)입니다. `StartingPositionTimestamp` 미래에있을 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 더블  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Topics`  
+Kafka 토픽의 이름입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_최대_: `1`  
+_업데이트 필요 사항_: 중단 없음
+
+`TumblingWindowInSeconds`  
+(Kinesis 및 DynamoDB Streams만 해당) DynamoDB 및 Kinesis Streams 이벤트 소스에 대한 처리 기간(초)입니다. 값이 0초이면 연속 창이 없음을 나타냅니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_최소_: `0`  
+_최대_: `900`  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref`매핑 `Ref`의 ID가 반환됩니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`Id` 이벤트 원본 매핑의 ID입니다.
+
+## 예제
+
+### 이벤트 원본 매핑
+
+Amazon Kinesis에서 이벤트를 읽고 동일한 템플릿에서 Lambda 함수를 호출하는 이벤트 소스 매핑을 생성합니다.
+
+#### JSON (영문)
+
+```
+"EventSourceMapping": {
+    "Type": "AWS::Lambda::EventSourceMapping",
+    "Properties": {
+        "EventSourceArn": {
+            "Fn::Join": [
+                "",
+                [
+                    "arn:aws:kinesis:",
+                    {
+                        "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                        "Ref": "AWS::AccountId"
+                    },
+                    ":stream/",
+                    {
+                        "Ref": "KinesisStream"
+                    }
+                ]
+            ]
+        },
+        "FunctionName": {
+            "Fn::GetAtt": [
+                "LambdaFunction",
+                "Arn"
+            ]
+        },
+        "StartingPosition": "TRIM_HORIZON"
+    }
+}
+```

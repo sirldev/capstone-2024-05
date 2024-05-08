@@ -1,0 +1,140 @@
+# AWS::SageMaker::P아이펠린
+
+리소스는 `AWS::SageMaker::Pipeline` SageMaker Pipeline을 생성 및/또는 시작할 때 실행되는 셸 스크립트를 생성합니다. SageMaker Pipelines에 대한 자세한 내용은 _Amazon SageMaker 개발자 안내서의 SageMaker Pipelines를 참조하세요_.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::SageMaker::Pipeline",
+  "Properties" : {
+      "ParallelismConfiguration" : ParallelismConfiguration,
+      "PipelineDefinition" : PipelineDefinition,
+      "PipelineDescription" : String,
+      "PipelineDisplayName" : String,
+      "PipelineName" : String,
+      "RoleArn" : String,
+      "Tags" : [Tag, ... ]
+    }
+}
+```
+
+## 속성
+
+`ParallelismConfiguration`  
+속성 설명을 사용할 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_형식_: ParallelismConfiguration  
+_업데이트 필요 사항_: 중단 없음
+
+`PipelineDefinition`  
+파이프라인의 정의입니다. JSON 문자열 또는 Amazon S3 위치일 수 있습니다.  
+_필수 항목 여부_: 예  
+_형식_: PipelineDefinition  
+_업데이트 필요 사항_: 중단 없음
+
+`PipelineDescription`  
+파이프라인에 대한 설명입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `0`  
+_최대_: `3072`  
+_패턴_: `.*`  
+_업데이트 필요 사항_: 중단 없음
+
+`PipelineDisplayName`  
+파이프라인의 표시 이름입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `256`  
+_패턴_: `^a-zA-Z0-9{0,255}`  
+_업데이트 필요 사항_: 중단 없음
+
+`PipelineName`  
+파이프라인의 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `256`  
+_패턴_: `^a-zA-Z0-9{0,255}`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`RoleArn`  
+파이프라인을 실행하는 데 사용되는 IAM 역할의 Amazon 리소스 이름(ARN)입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `20`  
+_최대_: `2048`  
+_패턴_: `^arn:aws[a-z-]*:iam::d{12}:role/?[a-zA-Z_0-9+=,.@-_/]+$`  
+_업데이트 필요 사항_: 중단 없음
+
+`Tags`  
+파이프라인의 태그입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_최대_: `50`  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`파이프라인의 PipelineName이 반환됩니다.
+
+## 예제
+
+### SageMaker 파이프라인 예제
+
+다음 예제에서는 연결된 수명 주기 구성이 있는 파이프라인을 생성합니다.
+
+#### JSON (영문)
+
+```
+# Pipeline definition given as a JSON string
+{
+  "Resources": {
+    "MyPipeline": {
+      "Type": "AWS::SageMaker::Pipeline",
+      "Properties": {
+        "PipelineName": "<pipeline-name>"
+        "PipelineDisplayName": "<pipeline-display-name>",
+        "PipelineDescription": "<pipeline-description>",
+        "PipelineDefinition": {
+          "PipelineDefinitionBody": "{\"Version\":\"2020-12-01\",\"Parameters\":[{\"Name\":\"InputDataSource\",\"DefaultValue\":\"\"},{\"Name\":\"InstanceCount\",\"Type\":\"Integer\",\"DefaultValue\":1}],\"Steps\":[{\"Name\":\"Training1\",\"Type\":\"Training\",\"Arguments\":{\"InputDataConfig\":[{\"DataSource\":{\"S3DataSource\":{\"S3Uri\":{\"Get\":\"Parameters.InputDataSource\"}}}}],\"OutputDataConfig\":{\"S3OutputPath\":\"s3://my-s3-bucket/\"},\"ResourceConfig\":{\"InstanceType\":\"ml.m5.large\",\"InstanceCount\":{\"Get\":\"Parameters.InstanceCount\"},\"VolumeSizeInGB\":1024}}}]}"
+        },
+        "RoleArn": "arn:aws:iam::<account-id>:root"
+      }
+    }
+  }
+}
+```
+
+#### JSON (영문)
+
+```
+# Pipeline definition given as an S3 string
+{
+  "Resources": {
+    "MyPipeline": {
+      "Type": "AWS::SageMaker::Pipeline",
+      "Properties": {
+        "PipelineName": "<pipeline-name>",
+        "PipelineDisplayName": "<pipeline-display-name>",
+        "PipelineDescription": "<pipeline-description>",
+        "PipelineDefinition": {
+          "PipelineDefinitionS3Location": {
+            "Bucket": "<S3-bucket-location>",
+            "Key": "<S3-bucket-key>"
+          }
+        },
+        "RoleArn": "arn:aws:iam::<account-id>:root"
+      }
+    }
+  }
+}
+```

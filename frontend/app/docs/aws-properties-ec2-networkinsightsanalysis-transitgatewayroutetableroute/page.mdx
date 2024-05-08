@@ -1,0 +1,67 @@
+# AWS::EC2::NetworkInsights분석 TransitGatewayRouteTableRoute
+
+transit gateway 라우팅 테이블의 라우팅을 설명합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "AttachmentId" : String,
+  "DestinationCidr" : String,
+  "PrefixListId" : String,
+  "ResourceId" : String,
+  "ResourceType" : String,
+  "RouteOrigin" : String,
+  "State" : String
+}
+```
+
+## 속성
+
+`AttachmentId`  
+경로 연결의 ID입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`DestinationCidr`  
+대상 일치에 사용되는 CIDR 블록입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`PrefixListId`  
+접두사 목록의 ID입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`ResourceId`  
+경로 연결에 대한 리소스의 ID입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`ResourceType`  
+경로 연결의 리소스 종류입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`RouteOrigin` 경로 원점입니다. 가능한 값은 다음과 같습니다.
+
+- 정적인
+- 전파
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열  
+  _업데이트 필요 사항_: 중단 없음
+
+`State`  
+경로의 상태입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음

@@ -1,0 +1,64 @@
+# AWS::CloudFront::ResponseHeadersPolicy 보안 HeadersConfig
+
+보안 관련 HTTP 응답 헤더 집합에 대한 구성입니다. CloudFront는 이 응답 헤더 정책과 연결된 캐시 동작과 일치하는 요청에 대해 전송하는 HTTP 응답에 이러한 헤더를 추가합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ContentSecurityPolicy" : ContentSecurityPolicy,
+  "ContentTypeOptions" : ContentTypeOptions,
+  "FrameOptions" : FrameOptions,
+  "ReferrerPolicy" : ReferrerPolicy,
+  "StrictTransportSecurity" : StrictTransportSecurity,
+  "XSSProtection" : XSSProtection
+}
+```
+
+## 속성
+
+`ContentSecurityPolicy`  
+CloudFront가 HTTP 응답 헤더에 대한 값으로 포함하는 정책 지시문 및 해당 값 `Content-Security-Policy` 입니다.  
+`Content-Security-Policy` HTTP 응답 헤더에 대한 자세한 내용은 MDN Web Docs의 Content-Security-Policy를 참조하십시오.  
+*필수 항목 *여부: 아니요  
+_형식_: ContentSecurityPolicy  
+_업데이트 필요 사항_: 중단 없음
+
+`ContentTypeOptions`  
+CloudFront에 `X-Content-Type-Options` 값이 로 설정된 HTTP 응답 헤더가 `nosniff` 포함되어 있는지 여부를 결정합니다.  
+`X-Content-Type-Options` HTTP 응답 헤더에 대한 자세한 내용은 MDN Web Docs의 X-Content-Type-Options를 참조하십시오.  
+*필수 항목 *여부: 아니요  
+_형식_: ContentTypeOptions  
+_업데이트 필요 사항_: 중단 없음
+
+`FrameOptions`  
+CloudFront에 `X-Frame-Options` HTTP 응답 헤더와 헤더의 값이 포함되어 있는지 여부를 결정합니다.  
+`X-Frame-Options` HTTP 응답 헤더에 대한 자세한 내용은 MDN Web Docs의 X-Frame-Options를 참조하십시오.  
+*필수 항목 *여부: 아니요  
+_형식_: FrameOptions  
+_업데이트 필요 사항_: 중단 없음
+
+`ReferrerPolicy`  
+CloudFront에 `Referrer-Policy` HTTP 응답 헤더와 헤더의 값이 포함되어 있는지 여부를 결정합니다.  
+`Referrer-Policy` HTTP 응답 헤더에 대한 자세한 내용은 MDN Web Docs의 Referrer-Policy를 참조하십시오.  
+*필수 항목 *여부: 아니요  
+_유형_: ReferrerPolicy  
+_업데이트 필요 사항_: 중단 없음
+
+`StrictTransportSecurity`  
+CloudFront에 `Strict-Transport-Security` HTTP 응답 헤더와 헤더의 값이 포함되어 있는지 여부를 결정합니다.  
+`Strict-Transport-Security` HTTP 응답 헤더에 대한 자세한 내용은 MDN Web Docs의 Strict-Transport-Security를 참조하십시오.  
+*필수 항목 *여부: 아니요  
+_형식_: StrictTransportSecurity  
+_업데이트 필요 사항_: 중단 없음
+
+`XSSProtection`  
+CloudFront에 `X-XSS-Protection` HTTP 응답 헤더와 헤더의 값이 포함되어 있는지 여부를 결정합니다.  
+`X-XSS-Protection` HTTP 응답 헤더에 대한 자세한 내용은 MDN Web Docs의 X-XSS-Protection을 참조하십시오.  
+*필수 항목 *여부: 아니요  
+_유형_: XSSProtection  
+_업데이트 필요 사항_: 중단 없음

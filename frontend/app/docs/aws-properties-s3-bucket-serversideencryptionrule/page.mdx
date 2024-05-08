@@ -1,0 +1,102 @@
+# AWS::S3::버킷 ServerSideEncryptionRule
+
+기본 서버 쪽 암호화 구성을 지정합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "BucketKeyEnabled" : Boolean,
+  "ServerSideEncryptionByDefault" : ServerSideEncryptionByDefault
+}
+```
+
+## 속성
+
+`BucketKeyEnabled`  
+Amazon S3가 버킷의 새 객체에 대해 KMS(SSE-KMS)를 사용하는 서버 측 암호화와 함께 S3 버킷 키를 사용해야 하는지 여부를 지정합니다. 기존 개체는 영향을 받지 않습니다. `BucketKeyEnabled` 요소를 다음으로 `true` 설정하면 Amazon S3가 S3 버킷 키를 사용합니다. 기본적으로 S3 버킷 키는 활성화되어 있지 않습니다.  
+자세한 내용은 _Amazon S3 사용 설명서의 Amazon S3 버킷 키를 참조하십시오_.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`ServerSideEncryptionByDefault`  
+버킷의 새 객체에 적용할 기본 서버 측 암호화를 지정합니다. PUT Object 요청에서 서버 측 암호화를 지정하지 않으면 이 기본 암호화가 적용됩니다.  
+*필수 항목 *여부: 아니요  
+_형식_: ServerSideEncryptionByDefault  
+_업데이트 필요 사항_: 중단 없음
+
+## 예제
+
+### 기본 암호화를 사용하여 버킷 만들기
+
+다음 예제에서는 서버 측 버킷 암호화가 구성된 버킷을 생성합니다. 이 예제에서는 KMS 키(SSE-KMS)를 사용한 암호화를 사용합니다. 를 지정하여 AWS KMS 키(DSSE-KMS)로 이중 계층 서버 측 암호화를 사용할 수 있습니다 `aws:kms:dsse` `SSEAlgorithm`. 또한 Amazon S3 버킷 ServerSideEncryptionByDefault 속성을 수정하여 S3 관리형 키(SSE-S3)를 사용한 서버 측 암호화를 사용할 수 있습니다 `AES256` `SSEAlgorithm`. 자세한 내용은 _Amazon S3 사용 설명서의 SSE-S3 사용을 참조하세요_.
+
+#### JSON (영문)
+
+```
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "S3 bucket with default encryption",
+    "Resources": {
+        "EncryptedS3Bucket": {
+            "Type": "AWS::S3::Bucket",
+            "Properties": {
+                "BucketName": {
+                    "Fn::Sub": "encryptedbucket-${AWS::Region}-${AWS::AccountId}"
+                },
+                "BucketEncryption": {
+                    "ServerSideEncryptionConfiguration": [
+                        {
+                            "ServerSideEncryptionByDefault": {
+                                "SSEAlgorithm": "aws:kms",
+                                "KMSMasterKeyID": "KMS-KEY-ARN"
+                            }
+                        }
+                    ]
+                }
+            },
+            "DeletionPolicy": "Delete"
+        }
+    }
+}
+```
+
+### S3 버킷 키와 함께 KMS 서버 측 암호화를 사용하여 버킷 생성
+
+다음 예제에서는 S3 버킷 키와 함께 AWS KMS 서버 측 암호화를 사용하여 기본 암호화를 지정하는 버킷을 생성합니다. 이 예제에서는 고객 관리형 AWS KMS key를 사용합니다.
+
+#### JSON (영문)
+
+```
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "S3 bucket with default encryption using SSE-KMS with an S3 Bucket Key",
+    "Resources": {
+        "EncryptedS3Bucket": {
+            "Type": "AWS::S3::Bucket",
+            "Properties": {
+                "BucketName": {
+                    "Fn::Sub": "encryptedbucket-${AWS::Region}-${AWS::AccountId}"
+                },
+                "BucketEncryption": {
+                    "ServerSideEncryptionConfiguration": [
+                        {
+                            "ServerSideEncryptionByDefault": {
+                                "SSEAlgorithm": "aws:kms",
+                                "KMSMasterKeyID": "KMS-KEY-ARN"
+                            },
+                            "BucketKeyEnabled": true
+                        }
+                    ]
+                }
+            },
+            "DeletionPolicy": "Delete"
+        }
+    }
+}
+```

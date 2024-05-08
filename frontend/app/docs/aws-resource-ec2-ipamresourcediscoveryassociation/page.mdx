@@ -1,0 +1,85 @@
+# AWS::EC2::IPAMResourceDiscoveryAssociation
+
+IPAM 리소스 검색 연결. 연결된 리소스 검색은 IPAM과 연결된 리소스 검색입니다. IPAM은 연결된 리소스 검색에서 검색된 리소스 CIDR을 집계합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::EC2::IPAMResourceDiscoveryAssociation",
+  "Properties" : {
+      "IpamId" : String,
+      "IpamResourceDiscoveryId" : String,
+      "Tags" : [Tag, ... ]
+    }
+}
+```
+
+## 속성
+
+`IpamId`  
+IPAM ID입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`IpamResourceDiscoveryId`  
+리소스 검색 ID입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Tags`  
+태그는 AWS 리소스에 할당하는 레이블입니다. 각 태그는 키와 선택적 값으로 구성됩니다. 태그를 사용하여 리소스를 검색 및 필터링하거나 AWS 비용을 추적할 수 있습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`리소스 검색 ID가 반환됩니다. 예를 들면 다음과 같습니다 `ipam-res-disco-111122223333`.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`IpamArn` IPAM ARN입니다.
+
+`IpamRegion` IPAM 홈 지역입니다.
+
+`IpamResourceDiscoveryAssociationArn` 리소스 검색 연결 ARN입니다.
+
+`IpamResourceDiscoveryAssociationId` 리소스 검색 연결 ID입니다.
+
+`IsDefault` 자원 검색이 기본값인지 여부를 정의합니다. IPAM을 생성하면 IPAM에 대한 기본 리소스 검색이 생성되고 IPAM과 연결됩니다.
+
+`OwnerId` 소유자 ID입니다.
+
+`ResourceDiscoveryStatus` 리소스 검색 상태입니다.
+
+- `active` - 리소스 검색 결과를 읽는 데 필요한 연결 또는 권한이 그대로 유지됩니다.
+- `not-found` - 리소스 검색 결과를 읽는 데 필요한 연결 또는 권한이 끊어졌습니다. 이 문제는 리소스 검색의 소유자가 공유를 중지하거나 리소스 검색을 삭제한 경우에 발생할 수 있습니다. 리소스 검색이 여전히 존재하고 AWS RAM 리소스 공유가 여전히 손상되지 않았는지 확인합니다.
+
+`State` 자원 발견을 연관시키거나 연관 해제할 때의 연관의 주기 상태입니다.
+
+- `associate-in-progress` - 리소스 검색이 연결되고 있습니다.
+- `associate-complete` - 리소스 검색 연결이 완료되었습니다.
+- `associate-failed` - 리소스 검색 연결이 실패했습니다.
+- `disassociate-in-progress` - 리소스 검색이 연결 해제되고 있습니다.
+- `disassociate-complete` - 리소스 검색 연결 해제가 완료되었습니다.
+- `disassociate-failed ` - 리소스 검색 연결 해제에 실패했습니다.
+- `isolate-in-progress` - 리소스 검색 연결을 생성한 AWS 계정이 제거되었으며 리소스 검색 연결이 격리되고 있습니다.
+- `isolate-complete` - 리소스 검색 격리가 완료되었습니다.
+- `restore-in-progress` - 리소스 검색이 복원되고 있습니다.

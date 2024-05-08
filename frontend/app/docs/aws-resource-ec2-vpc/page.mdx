@@ -1,0 +1,136 @@
+# AWS::EC2::VPC
+
+VPC(Virtual Private Cloud)를 지정합니다.
+
+선택적으로 VPC에 대한 IPv6 CIDR 블록을 요청할 수 있습니다. Amazon의 IPv6 주소 풀에서 Amazon에서 제공하는 IPv6 CIDR 블록을 요청하거나, 기존 보유 IP 주소 사용(BYOIP)을 통해 프로비저닝한 IPv6 주소 풀에서 IPv6 CIDR 블록을 요청할 수 있습니다.
+
+자세한 내용은 Amazon VPC 사용 설명서*의 Virtual Private Cloud(VPC)를 참조하세요*.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::EC2::VPC",
+  "Properties" : {
+      "CidrBlock" : String,
+      "EnableDnsHostnames" : Boolean,
+      "EnableDnsSupport" : Boolean,
+      "InstanceTenancy" : String,
+      "Ipv4IpamPoolId" : String,
+      "Ipv4NetmaskLength" : Integer,
+      "Tags" : [Tag, ... ]
+    }
+}
+```
+
+## 속성
+
+`CidrBlock`  
+VPC의 IPv4 네트워크 범위(CIDR 표기법)입니다. 예를 들어, `10.0.0.0/16`. 지정된 CIDR 블록을 표준 형식으로 수정합니다. 예를 들어, 를 지정`100.68.0.18/18`하면 로 수정됩니다`100.68.0.0/18`.  
+또는 를 지정해야 합니다`CidrBlock``Ipv4IpamPoolId`.  
+_필수_: 조건부  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`EnableDnsHostnames`  
+VPC에서 시작된 인스턴스가 DNS 호스트 이름을 가져올지 여부를 나타냅니다. 활성화된 경우 VPC의 인스턴스는 DNS 호스트 이름을 가져옵니다. 그렇지 않으면 그렇지 않습니다. 기본이 아닌 VPC에 대해서는 기본적으로 비활성화되어 있습니다. 자세한 내용은 VPC의 DNS 속성을 참조하세요.  
+DNS 지원을 활성화한 경우에만 DNS 호스트 이름을 활성화할 수 있습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`EnableDnsSupport`  
+VPC에 대해 DNS 확인이 지원되는지 여부를 나타냅니다. 활성화된 경우 169.254.169.253 IP 주소에서 Amazon에서 제공한 DNS 서버 또는 VPC 네트워크 범위 "더하기 2"의 기본에 있는 예약된 IP 주소에 대한 쿼리가 성공합니다. 비활성화된 경우 퍼블릭 DNS 호스트 이름을 IP 주소로 확인하는 VPC에서 Amazon이 제공한 DNS 서비스가 활성화되지 않습니다. 기본적으로 사용하도록 설정됩니다. 자세한 내용은 VPC의 DNS 속성을 참조하세요.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`InstanceTenancy` VPC로 시작된 인스턴스의 허용된 테넌시입니다.
+
+- `default`: VPC로 시작된 인스턴스는 인스턴스 시작 중에 다른 테넌시를 명시적으로 지정하지 않는 한 기본적으로 공유 하드웨어에서 실행됩니다.
+- `dedicated`: VPC로 시작된 인스턴스는 인스턴스 시작 중에 테넌시를 명시적으로 지정하지 않는 한 기본적으로 전용 하드웨어에서 실행됩니다 `host` . 인스턴스 시작 중 테넌시를 지정할 수 없습니다 `default` .
+  업데이트 `InstanceTenancy` 는 값을 에서 로 업데이트하는 경우에만 교체가 필요하지 않습니다 `dedicated` `default`. `InstanceTenancy` 에서 `default` 로 `dedicated` 업데이트하려면 교체가 필요합니다.  
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열  
+  _허용되는 값_: `dedicated | default | host`  
+  _업데이트 필요 사항_: 일부 중단
+
+`Ipv4IpamPoolId`  
+이 VPC의 CIDR을 할당하는 데 사용할 IPv4 IPAM 풀의 ID입니다. 자세한 내용은 IPAM이란?을 참조하세요. 의*Amazon VPC IPAM 사용 설명서*.  
+또는 를 지정해야 합니다`CidrBlock``Ipv4IpamPoolId`.  
+_필수_: 조건부  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Ipv4NetmaskLength`  
+Amazon VPC IP 주소 관리자(IPAM) 풀에서 이 VPC에 할당하려는 IPv4 CIDR의 넷마스크 길이입니다. IPAM에 대한 자세한 내용은 IPAM이란?을 참조하세요. 의*Amazon VPC IPAM 사용 설명서*.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Tags`  
+VPC의 태그입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`VPC의 ID가 반환됩니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`CidrBlock` VPC의 기본 IPv4 CIDR 블록입니다. 예: 10.0.0.0/16.
+
+`CidrBlockAssociations`  
+VPC에 대한 IPv4 CIDR 블록의 연결 ID입니다. 예를 들어, [ VPC-CIDR-ASSOC-0280AB6B ].
+
+`DefaultNetworkAcl` VPC에 대한 기본 네트워크 ACL의 ID입니다. 예: acl-814dafe3.
+
+`DefaultSecurityGroup` VPC에 대한 기본 보안 그룹의 ID입니다. 예: sg-b178e0d3.
+
+`Ipv6CidrBlocks`  
+VPC에 대한 IPv6 CIDR 블록입니다. 예를 들어, [ 2001:DB8:1234:1A00::/56 ].
+
+`VpcId` VPC의 ID입니다.
+
+## 예제
+
+### VPC
+
+다음 예제에서는 IPv4 주소가 있는 VPC를 지정합니다. IPv6가 활성화된 예제는 IPv6 활성화 VPC 생성 섹션을 참조하세요.
+
+#### JSON (영문)
+
+```
+"myVPC" : {
+   "Type" : "AWS::EC2::VPC",
+   "Properties" : {
+      "CidrBlock" : "10.0.0.0/16",
+      "EnableDnsSupport" : "true",
+      "EnableDnsHostnames" : "true",
+      "Tags" : [
+         {"Key" : "stack", "Value" : "production"}
+      ]
+   }
+}
+```
+
+## 참고 항목
+
+- Amazon EC2 API 참조*의 CreateVpc *
+- Amazon VPC 사용 설명서*의 VPC 및 서브넷 *

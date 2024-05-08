@@ -1,0 +1,30 @@
+# AWS::Rekognition::StreamProcessor S3대상
+
+Amazon Rekognition이 비디오 분석 작업의 세부 추론 결과를 게시하는 Amazon S3 버킷 위치입니다. 이러한 결과에는 스트림 프로세서 리소스의 이름, 스트림 처리 세션의 세션 ID, 감지된 레이블에 대한 레이블이 지정된 타임스탬프 및 경계 상자가 포함됩니다. 자세한 내용은 S3Destination을 참조하세요.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "BucketName" : String,
+  "ObjectKeyPrefix" : String
+}
+```
+
+## 속성
+
+`BucketName`  
+스트림 프로세서 내보내기의 대상 Amazon Simple Storage Service(Amazon S3) 버킷 이름을 설명합니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ObjectKeyPrefix`  
+스트림 프로세서 내보내기의 대상 Amazon Simple Storage Service(Amazon S3) 객체 키를 설명합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음

@@ -1,0 +1,35 @@
+# AWS::CodeDeploy::D eploymentGroup BlueInstanceTerminationOption
+
+블루/그린 배포가 성공할 때 원래 환경의 인스턴스가 종료되는지 여부에 대한 정보입니다. `BlueInstanceTerminationOption` Lambda 배포에는 적용되지 않습니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Action" : String,
+  "TerminationWaitTimeInMinutes" : Integer
+}
+```
+
+## 속성
+
+`Action` 블루/그린 배포에 성공한 후 원래 환경에서 인스턴스를 수행하는 작업입니다.
+
+- `TERMINATE`: 지정된 대기 시간 후에 인스턴스가 종료됩니다.
+- `KEEP_ALIVE`: 인스턴스는 로드 밸런서에서 등록 취소되고 배포 그룹에서 제거된 후에도 계속 실행됩니다.
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열  
+  _허용되는 값_: `KEEP_ALIVE | TERMINATE`  
+  _업데이트 필요 사항_: 중단 없음
+
+`TerminationWaitTimeInMinutes`  
+Amazon EC2 배포의 경우, 블루/그린 배포가 성공한 후 원래 환경에서 인스턴스를 종료하기 전에 대기하는 시간(분)입니다.  
+ Amazon ECS 배포의 경우 원래(파란색) 작업 세트를 삭제하기 전의 시간(분)입니다. Amazon ECS 배포 중에 CodeDeploy는 원래(파란색) 작업 세트에서 대체(녹색) 작업 세트로 트래픽을 이동합니다.  
+ 최대 설정은 2880분(2일)입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음

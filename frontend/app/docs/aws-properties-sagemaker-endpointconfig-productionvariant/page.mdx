@@ -1,0 +1,100 @@
+# AWS::SageMaker::EndpointConfig ProductionVariant
+
+호스팅할 모델과 이 모델을 호스팅하기 위해 배포할 리소스를 지정합니다. 여러 모델을 배포하는 경우 객체를 지정하여 모델 간에 트래픽을 분산하는 방법을 Amazon SageMaker에 지시합니다 `InitialVariantWeight` .
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "AcceleratorType" : String,
+  "ContainerStartupHealthCheckTimeoutInSeconds" : Integer,
+  "EnableSSMAccess" : Boolean,
+  "InitialInstanceCount" : Integer,
+  "InitialVariantWeight" : Double,
+  "InstanceType" : String,
+  "ModelDataDownloadTimeoutInSeconds" : Integer,
+  "ModelName" : String,
+  "ServerlessConfig" : ServerlessConfig,
+  "VariantName" : String,
+  "VolumeSizeInGB" : Integer
+}
+```
+
+## 속성
+
+`AcceleratorType`  
+프로덕션 변형에 사용할 Elastic Inference(EI) 인스턴스의 크기입니다. EI 인스턴스는 추론을 위한 온디맨드 GPU 컴퓨팅을 제공합니다. 자세한 내용은 Amazon SageMaker에서 Elastic Inference 사용 단원을 참조하십시오. 자세한 내용은 Amazon SageMaker에서 Elastic Inference 사용 단원을 참조하십시오.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `ml.eia1.large | ml.eia1.medium | ml.eia1.xlarge | ml.eia2.large | ml.eia2.medium | ml.eia2.xlarge`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ContainerStartupHealthCheckTimeoutInSeconds`  
+속성 설명을 사용할 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`EnableSSMAccess`  
+ 이 파라미터를 사용하여 엔드포인트 뒤의 프로덕션 변형에 대한 기본 AWS Systems Manager(SSM) 액세스를 켤 수 있습니다. 기본적으로 SSM 액세스는 엔드포인트 뒤에 있는 모든 프로덕션 변형에 대해 비활성화되어 있습니다. 새 엔드포인트 구성을 생성하고 를 호출하여 기존 엔드포인트 뒤에 있는 프로덕션 변형에 대한 SSM 액세스를 켜거나 끌 수 있습니다`UpdateEndpoint`.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`InitialInstanceCount`  
+처음에 시작할 인스턴스 수입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_최소_: `1`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`InitialVariantWeight`  
+엔드포인트 구성에서 지정하는 모든 모델 간의 초기 트래픽 분산을 결정합니다. 프로덕션 변형에 대한 트래픽은 모든 ProductionVariants에서 `VariantWeight` 모든 값의 합계에 대한 `VariantWeight` 비율에 따라 결정됩니다 . 지정하지 않으면 기본값은 1.0입니다.  
+_필수 항목 여부_: 예  
+_유형_: 더블  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`InstanceType`  
+ML 컴퓨팅 인스턴스 유형입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `ml.c4.2xlarge | ml.c4.4xlarge | ml.c4.8xlarge | ml.c4.large | ml.c4.xlarge | ml.c5.18xlarge | ml.c5.2xlarge | ml.c5.4xlarge | ml.c5.9xlarge | ml.c5.large | ml.c5.xlarge | ml.c5d.18xlarge | ml.c5d.2xlarge | ml.c5d.4xlarge | ml.c5d.9xlarge | ml.c5d.large | ml.c5d.xlarge | ml.c6g.12xlarge | ml.c6g.16xlarge | ml.c6g.2xlarge | ml.c6g.4xlarge | ml.c6g.8xlarge | ml.c6g.large | ml.c6g.xlarge | ml.c6gd.12xlarge | ml.c6gd.16xlarge | ml.c6gd.2xlarge | ml.c6gd.4xlarge | ml.c6gd.8xlarge | ml.c6gd.large | ml.c6gd.xlarge | ml.c6gn.12xlarge | ml.c6gn.16xlarge | ml.c6gn.2xlarge | ml.c6gn.4xlarge | ml.c6gn.8xlarge | ml.c6gn.large | ml.c6gn.xlarge | ml.c6i.12xlarge | ml.c6i.16xlarge | ml.c6i.24xlarge | ml.c6i.2xlarge | ml.c6i.32xlarge | ml.c6i.4xlarge | ml.c6i.8xlarge | ml.c6i.large | ml.c6i.xlarge | ml.c7g.12xlarge | ml.c7g.16xlarge | ml.c7g.2xlarge | ml.c7g.4xlarge | ml.c7g.8xlarge | ml.c7g.large | ml.c7g.xlarge | ml.g4dn.12xlarge | ml.g4dn.16xlarge | ml.g4dn.2xlarge | ml.g4dn.4xlarge | ml.g4dn.8xlarge | ml.g4dn.xlarge | ml.g5.12xlarge | ml.g5.16xlarge | ml.g5.24xlarge | ml.g5.2xlarge | ml.g5.48xlarge | ml.g5.4xlarge | ml.g5.8xlarge | ml.g5.xlarge | ml.inf1.24xlarge | ml.inf1.2xlarge | ml.inf1.6xlarge | ml.inf1.xlarge | ml.inf2.24xlarge | ml.inf2.48xlarge | ml.inf2.8xlarge | ml.inf2.xlarge | ml.m4.10xlarge | ml.m4.16xlarge | ml.m4.2xlarge | ml.m4.4xlarge | ml.m4.xlarge | ml.m5.12xlarge | ml.m5.24xlarge | ml.m5.2xlarge | ml.m5.4xlarge | ml.m5.large | ml.m5.xlarge | ml.m5d.12xlarge | ml.m5d.24xlarge | ml.m5d.2xlarge | ml.m5d.4xlarge | ml.m5d.large | ml.m5d.xlarge | ml.m6g.12xlarge | ml.m6g.16xlarge | ml.m6g.2xlarge | ml.m6g.4xlarge | ml.m6g.8xlarge | ml.m6g.large | ml.m6g.xlarge | ml.m6gd.12xlarge | ml.m6gd.16xlarge | ml.m6gd.2xlarge | ml.m6gd.4xlarge | ml.m6gd.8xlarge | ml.m6gd.large | ml.m6gd.xlarge | ml.p2.16xlarge | ml.p2.8xlarge | ml.p2.xlarge | ml.p3.16xlarge | ml.p3.2xlarge | ml.p3.8xlarge | ml.p4d.24xlarge | ml.p4de.24xlarge | ml.r5.12xlarge | ml.r5.24xlarge | ml.r5.2xlarge | ml.r5.4xlarge | ml.r5.large | ml.r5.xlarge | ml.r5d.12xlarge | ml.r5d.24xlarge | ml.r5d.2xlarge | ml.r5d.4xlarge | ml.r5d.large | ml.r5d.xlarge | ml.r6g.12xlarge | ml.r6g.16xlarge | ml.r6g.2xlarge | ml.r6g.4xlarge | ml.r6g.8xlarge | ml.r6g.large | ml.r6g.xlarge | ml.r6gd.12xlarge | ml.r6gd.16xlarge | ml.r6gd.2xlarge | ml.r6gd.4xlarge | ml.r6gd.8xlarge | ml.r6gd.large | ml.r6gd.xlarge | ml.t2.2xlarge | ml.t2.large | ml.t2.medium | ml.t2.xlarge | ml.trn1.2xlarge | ml.trn1.32xlarge`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ModelDataDownloadTimeoutInSeconds`  
+속성 설명을 사용할 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ModelName`  
+호스팅할 모델의 이름입니다. 이 이름은 모델을 만들 때 지정한 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최대_: `63`  
+_패턴_: `^a-zA-Z0-9*`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ServerlessConfig`  
+엔드포인트에 대한 서버리스 구성입니다. 인스턴스 기반 끝점 구성 대신 서버리스 끝점 구성을 지정합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: ServerlessConfig  
+_업데이트 필요 사항_: 중단 없음
+
+`VariantName`  
+프로덕션 변형의 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최대_: `63`  
+_패턴_: `^a-zA-Z0-9{0,62}`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`VolumeSizeInGB`  
+속성 설명을 사용할 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 바꿔 놓음

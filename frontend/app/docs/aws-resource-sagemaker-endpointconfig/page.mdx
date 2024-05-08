@@ -1,0 +1,232 @@
+# AWS::SageMaker::엔드포인트 구성
+
+리소스 `AWS::SageMaker::EndpointConfig` 는 Amazon SageMaker 엔드포인트에 대한 구성을 생성합니다. 자세한 내용은 _SageMaker 개발자 안내서의 CreateEndpointConfig를 참조하세요_.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::SageMaker::EndpointConfig",
+  "Properties" : {
+      "AsyncInferenceConfig" : AsyncInferenceConfig,
+      "DataCaptureConfig" : DataCaptureConfig,
+      "EndpointConfigName" : String,
+      "ExplainerConfig" : ExplainerConfig,
+      "KmsKeyId" : String,
+      "ProductionVariants" : [ ProductionVariant, ... ],
+      "ShadowProductionVariants" : [ ProductionVariant, ... ],
+      "Tags" : [Tag, ... ]
+    }
+}
+```
+
+## 속성
+
+`AsyncInferenceConfig`  
+끝점이 비동기 유추를 수행하는 방법에 대한 구성을 지정합니다.  
+*필수 항목 *여부: 아니요  
+_형식_: AsyncInferenceConfig  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`DataCaptureConfig`  
+모델 모니터에 대한 끝점 데이터를 캡처하는 방법을 지정합니다. 데이터 캡처 구성은 엔드포인트에서 호스팅되는 모든 프로덕션 변형에 적용됩니다.  
+*필수 항목 *여부: 아니요  
+_형식_: DataCaptureConfig  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`EndpointConfigName`  
+끝점 구성의 이름입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최대_: `63`  
+_패턴_: `^a-zA-Z0-9{0,62}`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ExplainerConfig`  
+속성 설명을 사용할 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: ExplainerConfig  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`KmsKeyId` Amazon SageMaker가 엔드포인트를 호스팅하는 ML 컴퓨팅 인스턴스에 연결된 스토리지 볼륨의 데이터를 암호화하는 데 사용하는 AWS Key Management Service 키의 Amazon 리소스 이름(ARN)입니다.
+
+- 키 ID: `1234abcd-12ab-34cd-56ef-1234567890ab`
+- 키 ARN: `arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab`
+- 별칭 이름: `alias/ExampleAlias`
+- 별칭 이름 ARN: `arn:aws:kms:us-west-2:111122223333:alias/ExampleAlias`
+  KMS 키 정책은 요청에서 지정한 IAM 역할에 권한을 부여해야 합니다 `CreateEndpoint` `UpdateEndpoint` . 자세한 내용은 AWS Key Management Service 단원 AWS KMS에서 키 정책 사용을 참조하십시오  
+  특정 Nitro 기반 인스턴스에는 인스턴스 유형에 따라 로컬 스토리지가 포함됩니다. 로컬 스토리지 볼륨은 인스턴스의 하드웨어 모듈을 사용하여 암호화됩니다. `KmsKeyId` 로컬 스토리지와 함께 인스턴스 유형을 사용하는 경우에는 요청할 수 없습니다. 파라미터에 지정한 모델이 `ProductionVariants` 로컬 스토리지와 함께 nitro 기반 인스턴스를 사용하는 경우 파라미터 값을 지정하지 마십시오 `KmsKeyId` . `KmsKeyId` 로컬 스토리지와 함께 nitro 기반 인스턴스를 사용할 때 `CreateEndpointConfig` 값을 지정하면 호출 이 실패합니다.  
+  로컬 인스턴스 스토리지를 지원하는 인스턴스 유형 목록은 인스턴스 스토어 볼륨 단원을 참조하십시오.  
+  로컬 인스턴스 스토리지 암호화에 대한 자세한 내용은 SSD 인스턴스 스토어 볼륨 단원을 참조하십시오.
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열  
+  _최대_: `2048`  
+  _패턴_: `.*`  
+  _업데이트 필요 사항_: 바꿔 놓음
+
+`ProductionVariants`  
+ `ProductionVariant` 이 끝점에서 호스팅하려는 각 모델에 대해 하나씩 개체 목록입니다.  
+_필수 항목 여부_: 예  
+_형식_: ProductionVariant 목록  
+_최대_: `10`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ShadowProductionVariants`  
+개체의 배열 `ProductionVariant` 입니다. 에 지정된 모델에서 복제된 프로덕션 트래픽을 사용하여 섀도우 모드에서 이 끝점에서 호스팅하려는 각 모델에 대해 하나씩 있습니다`ProductionVariants`. 이 필드를 사용하는 경우 에 대해 하나의 변형을 지정 `ProductionVariants` 하고 에 대해 하나의 변형 만 지정할 수 있습니다`ShadowProductionVariants`.  
+*필수 항목 *여부: 아니요  
+_형식_: ProductionVariant 목록  
+_최대_: `10`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Tags`  
+이 리소스에 적용할 키-값 쌍 목록입니다.  
+자세한 내용은 리소스 태그 및 비용 할당 태그 사용을 참조하십시오.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_최대_: `50`  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`다음과 같은 엔드포인트 구성의 Amazon 리소스 이름(ARN)을 반환합니다. `arn:aws:sagemaker:us-west-2:01234567>8901:endpoint-config/myendpointconfig`
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+`Fn::GetAtt` 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+####
+
+`EndpointConfigName`  
+끝점 구성의 이름(예: `MyEndpointConfiguration`.
+
+## 예제
+
+### SageMaker EndpointConfig 예제
+
+다음 예제에서는 학습된 모델에서 끝점 구성을 만든 다음, 끝점을 만듭니다.
+
+#### JSON (영문)
+
+```
+{
+  "Description": "Basic Hosting entities test.  We need models to create endpoint configs.",
+  "Mappings": {
+    "RegionMap": {
+      "us-west-2": {
+        "NullTransformer": "12345678901.dkr.ecr.us-west-2.amazonaws.com/mymodel:latest"
+      },
+      "us-east-2": {
+        "NullTransformer": "12345678901.dkr.ecr.us-east-2.amazonaws.com/mymodel:latest"
+      },
+      "us-east-1": {
+        "NullTransformer": "12345678901.dkr.ecr.us-east-1.amazonaws.com/mymodel:latest"
+      },
+      "eu-west-1": {
+        "NullTransformer": "12345678901.dkr.ecr.eu-west-1.amazonaws.com/mymodel:latest"
+      },
+      "ap-northeast-1": {
+        "NullTransformer": "12345678901.dkr.ecr.ap-northeast-1.amazonaws.com/mymodel:latest"
+      },
+      "ap-northeast-2": {
+        "NullTransformer": "12345678901.dkr.ecr.ap-northeast-2.amazonaws.com/mymodel:latest"
+      },
+      "ap-southeast-2": {
+        "NullTransformer": "12345678901.dkr.ecr.ap-southeast-2.amazonaws.com/mymodel:latest"
+      },
+      "eu-central-1": {
+        "NullTransformer": "12345678901.dkr.ecr.eu-central-1.amazonaws.com/mymodel:latest"
+      }
+    }
+  },
+  "Resources": {
+    "Endpoint": {
+      "Type": "AWS::SageMaker::Endpoint",
+      "Properties": {
+        "EndpointConfigName": { "Fn::GetAtt" : ["EndpointConfig", "EndpointConfigName" ] }
+      }
+    },
+    "EndpointConfig": {
+      "Type": "AWS::SageMaker::EndpointConfig",
+      "Properties": {
+        "ProductionVariants": [
+          {
+            "InitialInstanceCount": 1,
+            "InitialVariantWeight": 1,
+            "InstanceType": "ml.t2.large",
+            "ModelName": { "Fn::GetAtt" : ["Model", "ModelName" ] },
+            "VariantName": { "Fn::GetAtt" : ["Model", "ModelName" ] }
+          }
+        ]
+      }
+    },
+    "Model": {
+      "Type": "AWS::SageMaker::Model",
+      "Properties": {
+        "PrimaryContainer": {
+          "Image": { "Fn::FindInMap" : [ "AWS::Region", "NullTransformer"] }
+        },
+        "ExecutionRoleArn": { "Fn::GetAtt" : [ "ExecutionRole", "Arn" ] }
+      }
+    },
+    "ExecutionRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": [
+                  "sagemaker.amazonaws.com"
+                ]
+              },
+              "Action": [
+                "sts:AssumeRole"
+              ]
+            }
+          ]
+        },
+        "Path": "/",
+        "Policies": [
+          {
+            "PolicyName": "root",
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": "*",
+                  "Resource": "*"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  },
+  "Outputs": {
+    "EndpointId": {
+      "Value": { "Ref" : "Endpoint" }
+    },
+    "EndpointName": {
+      "Value": { "Fn::GetAtt" : [ "Endpoint", "EndpointName" ] }
+    }
+
+  }
+
+}
+```

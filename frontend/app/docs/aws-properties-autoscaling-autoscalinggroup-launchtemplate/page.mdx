@@ -1,0 +1,32 @@
+# AWS::AutoScaling::AutoScalingGroup LaunchTemplate
+
+이 구조를 사용하여 혼합 인스턴스 정책에 대한 시작 템플릿과 인스턴스 유형(재정의)을 지정합니다.
+
+`LaunchTemplate` 은 AWS::AutoScaling::AutoScalingGroup MixedInstancesPolicy 속성 유형의 속성입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "LaunchTemplateSpecification" : LaunchTemplateSpecification,
+  "Overrides" : [ LaunchTemplateOverrides, ... ]
+}
+```
+
+## 속성
+
+`LaunchTemplateSpecification`  
+시작 템플릿입니다.  
+_필수 항목 여부_: 예  
+_형식_: LaunchTemplateSpecification  
+_업데이트 필요 사항_: 중단 없음
+
+`Overrides`  
+지정하는 모든 속성은 시작 템플릿의 동일한 속성을 재정의합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: LaunchTemplateOverrides 목록  
+_업데이트 필요 사항_: 중단 없음

@@ -1,0 +1,73 @@
+# AWS::Lightsail::D atabase RelationalDatabaseParameter
+
+`RelationalDatabaseParameter` 은 AWS::Lightsail::D atabase 리소스의 속성입니다. 데이터베이스에 대한 매개 변수를 설명합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "AllowedValues" : String,
+  "ApplyMethod" : String,
+  "ApplyType" : String,
+  "DataType" : String,
+  "Description" : String,
+  "IsModifiable" : Boolean,
+  "ParameterName" : String,
+  "ParameterValue" : String
+}
+```
+
+## 속성
+
+`AllowedValues`  
+매개 변수의 유효한 값 범위입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`ApplyMethod`  
+매개 변수 업데이트가 적용되는 시기를 나타냅니다.  
+`immediate` 또는 `pending-reboot`일 수 있습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`ApplyType`  
+엔진별 매개 변수 유형을 지정합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`DataType`  
+매개 변수의 유효한 데이터 형식입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Description`  
+매개 변수에 대한 설명입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`IsModifiable`  
+매개 변수를 수정할 수 있는지 여부를 나타내는 부울 값입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`ParameterName`  
+매개 변수의 이름입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`ParameterValue`  
+매개 변수의 값입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음

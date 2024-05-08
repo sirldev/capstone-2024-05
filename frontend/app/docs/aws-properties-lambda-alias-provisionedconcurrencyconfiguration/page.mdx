@@ -1,0 +1,29 @@
+# AWS::Lambda::Alias ProvisionedConcurrencyConfiguration
+
+함수의 별칭에 대해 프로비저닝된 동시성 구성입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ProvisionedConcurrentExecutions" : Integer
+}
+```
+
+## 속성
+
+`ProvisionedConcurrentExecutions`  
+별칭에 할당할 프로비저닝된 동시성의 양입니다.  
+_필수 항목 여부_: 예  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+## 예제
+
+### 프로비저닝된 동시성
+
+20개의 프로비저닝된 동시성이 있는 별칭입니다.

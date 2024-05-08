@@ -1,0 +1,65 @@
+# AWS::SageMaker::ModelCard 콘텐츠
+
+모델 카드의 내용입니다. 모델 카드 json 스키마를 따릅니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "AdditionalInformation" : AdditionalInformation,
+  "BusinessDetails" : BusinessDetails,
+  "EvaluationDetails" : [ EvaluationDetail, ... ],
+  "IntendedUses" : IntendedUses,
+  "ModelOverview" : ModelOverview,
+  "ModelPackageDetails" : ModelPackageDetails,
+  "TrainingDetails" : TrainingDetails
+}
+```
+
+## 속성
+
+`AdditionalInformation`  
+모델에 대한 추가 정보입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: AdditionalInformation  
+_업데이트 필요 사항_: 중단 없음
+
+`BusinessDetails`  
+모델이 비즈니스 목표를 지원하는 방법에 대한 정보입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: BusinessDetails  
+_업데이트 필요 사항_: 중단 없음
+
+`EvaluationDetails`  
+모델 평가에 대한 개요입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: EvaluationDetail 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`IntendedUses`  
+모델의 의도된 용도입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: IntendedUses  
+_업데이트 필요 사항_: 중단 없음
+
+`ModelOverview`  
+모델에 대한 개요  
+*필수 항목 *여부: 아니요  
+_유형_: ModelOverview  
+_업데이트 필요 사항_: 중단 없음
+
+`ModelPackageDetails`  
+속성 설명을 사용할 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_형식_: ModelPackageDetails  
+_업데이트 필요 사항_: 중단 없음
+
+`TrainingDetails`  
+모델 학습에 대한 개요입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: TrainingDetails  
+_업데이트 필요 사항_: 중단 없음

@@ -1,0 +1,38 @@
+# AWS::CloudFront::ContinuousDeploymentPolicy 트래픽 구성
+
+지속적인 배포의 트래픽 구성입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "SingleHeaderConfig" : SingleHeaderConfig,
+  "SingleWeightConfig" : SingleWeightConfig,
+  "Type" : String
+}
+```
+
+## 속성
+
+`SingleHeaderConfig`  
+스테이징 배포로 전송되는 HTTP 요청을 결정합니다.  
+*필수 항목 *여부: 아니요  
+_형식_: SingleHeaderConfig  
+_업데이트 필요 사항_: 중단 없음
+
+`SingleWeightConfig`  
+스테이징 배포로 보낼 트래픽의 백분율을 포함합니다.  
+*필수 항목 *여부: 아니요  
+_형식_: SingleWeightConfig  
+_업데이트 필요 사항_: 중단 없음
+
+`Type`  
+트래픽 구성의 유형입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_허용되는 값_: `SingleHeader | SingleWeight`  
+_업데이트 필요 사항_: 중단 없음

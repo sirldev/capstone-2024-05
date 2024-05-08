@@ -1,0 +1,81 @@
+# AWS::SageMaker::Workteam
+
+데이터에 레이블을 지정하기 위한 새 작업 팀을 만듭니다. 작업 팀은 하나 이상의 Amazon Cognito 사용자 풀로 정의됩니다. 작업 팀을 생성하기 전에 먼저 사용자 풀을 생성해야 합니다.
+
+한 계정 및 리전에서 25개 이상의 작업 팀을 만들 수 없습니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::SageMaker::Workteam",
+  "Properties" : {
+      "Description" : String,
+      "MemberDefinitions" : [ MemberDefinition, ... ],
+      "NotificationConfiguration" : NotificationConfiguration,
+      "Tags" : [Tag, ... ],
+      "WorkforceName" : String,
+      "WorkteamName" : String
+    }
+}
+```
+
+## 속성
+
+`Description`  
+작업 팀에 대한 설명입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `200`  
+_패턴_: `.+`  
+_업데이트 필요 사항_: 중단 없음
+
+`MemberDefinitions`  
+`MemberDefinition` 작업 팀을 구성하는 작업자를 식별하는 개체가 포함된 개체 목록입니다.  
+Amazon Cognito 또는 자체 OIDC 자격 증명 공급자(IdP)를 사용하여 인력을 생성할 수 있습니다. Amazon Cognito를 사용하여 생성된 프라이빗 작업 인력의 경우 `CognitoMemberDefinition`. 자체 OIDC ID 공급자(IdP)를 사용하여 생성된 인력의 경우 를 사용합니다`OidcMemberDefinition`.  
+*필수 항목 *여부: 아니요  
+_형식_: MemberDefinition 목록  
+_최대_: `10`  
+_업데이트 필요 사항_: 중단 없음
+
+`NotificationConfiguration`  
+작업 팀에 대해 사용 가능하거나 만료되는 작업 항목에 대한 SNS 알림을 구성합니다.  
+*필수 항목 *여부: 아니요  
+_형식_: NotificationConfiguration  
+_업데이트 필요 사항_: 중단 없음
+
+`Tags`  
+키-값 쌍의 배열입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`WorkforceName`  
+속성 설명을 사용할 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`WorkteamName`  
+작업 팀의 이름입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `63`  
+_패턴_: `^a-zA-Z0-9{0,62}`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+## 반환 값
+
+### 참고문헌
+
+### Fn::GetAtt
+
+####
+
+`WorkteamName` 작업 팀의 이름입니다.

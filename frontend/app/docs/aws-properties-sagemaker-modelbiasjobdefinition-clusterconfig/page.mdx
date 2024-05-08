@@ -1,0 +1,44 @@
+# AWS::SageMaker::ModelBiasJobDefinition 클러스터 구성
+
+처리 작업을 실행하는 데 사용되는 클러스터 리소스에 대한 구성입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "InstanceCount" : Integer,
+  "InstanceType" : String,
+  "VolumeKmsKeyId" : String,
+  "VolumeSizeInGB" : Integer
+}
+```
+
+## 속성
+
+`InstanceCount`  
+모델 모니터링 작업에 사용할 ML 컴퓨팅 인스턴스의 수입니다. 분산 처리 작업의 경우 1보다 큰 값을 지정합니다. 기본값은 1입니다.  
+_필수 항목 여부_: 예  
+_유형_: Integer  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`InstanceType`  
+처리 작업에 대한 ML 컴퓨팅 인스턴스 유형입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`VolumeKmsKeyId`  
+Amazon SageMaker가 모델 모니터링 작업을 실행하는 ML 컴퓨팅 인스턴스에 연결된 스토리지 볼륨의 데이터를 암호화하는 데 사용하는 AWS Key Management Service(AWS KMS) 키입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`VolumeSizeInGB`  
+프로비저닝하려는 ML 스토리지 볼륨의 크기(GB)입니다. 시나리오에 충분한 ML 스토리지를 지정해야 합니다.  
+_필수 항목 여부_: 예  
+_유형_: Integer  
+_업데이트 필요 사항_: 바꿔 놓음

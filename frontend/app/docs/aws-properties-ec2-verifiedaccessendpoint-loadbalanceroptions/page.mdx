@@ -1,0 +1,47 @@
+# AWS::EC2::VerifiedAccessEndpoint LoadBalancer옵션
+
+유형을 사용하여 AWS Verified Access 엔드포인트를 생성할 때의 로드 밸런서 옵션을 설명합니다 `load-balancer` .
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "LoadBalancerArn" : String,
+  "Port" : Integer,
+  "Protocol" : String,
+  "SubnetIds" : [ String, ... ]
+}
+```
+
+## 속성
+
+`LoadBalancerArn`  
+로드 밸런서의 ARN입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Port`  
+IP 포트 번호입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_최소_: `1`  
+_최대_: `65535`  
+_업데이트 필요 사항_: 중단 없음
+
+`Protocol`  
+IP 프로토콜입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `http | https`  
+_업데이트 필요 사항_: 중단 없음
+
+`SubnetIds`  
+서브넷의 ID입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음

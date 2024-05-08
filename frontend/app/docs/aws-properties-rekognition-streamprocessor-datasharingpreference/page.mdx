@@ -1,0 +1,23 @@
+# AWS::Rekognition::StreamProcessor DataSharing기본 설정
+
+Rekognition과 데이터를 공유하도록 옵트인 또는 옵트아웃하여 모델 성능을 개선할 수 있습니다. 이 옵션은 계정 수준 또는 스트림별로 선택할 수 있습니다. 계정 수준에서 선택 해제하면 개별 스트림에서 이 설정이 무시됩니다. 자세한 내용은 StreamProcessorDataSharingPreference를 참조하세요.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "OptIn" : Boolean
+}
+```
+
+## 속성
+
+`OptIn`  
+스트림 프로세서의 데이터 공유 정책에 적용되는 옵트인 상태를 설명합니다.  
+_필수 항목 여부_: 예  
+_유형_: Boolean  
+_업데이트 필요 사항_: 바꿔 놓음

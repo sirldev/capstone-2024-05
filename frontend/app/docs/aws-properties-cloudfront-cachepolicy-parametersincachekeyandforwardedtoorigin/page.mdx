@@ -1,0 +1,69 @@
+# AWS::CloudFront::CachePolicy 파라미터InCacheKeyAndForwardedToOrigin
+
+이 객체는 CloudFront가 캐시 키에 포함하는 값을 결정합니다. 이러한 값에는 HTTP 헤더, 쿠키 및 URL 쿼리 문자열이 포함될 수 있습니다. CloudFront는 캐시 키를 사용하여 최종 사용자에게 반환할 수 있는 객체를 캐시에서 찾습니다.
+
+캐시 키에 포함된 헤더, 쿠키 및 쿼리 문자열은 CloudFront가 오리진에 보내는 요청에도 포함됩니다. CloudFront는 캐시에서 요청의 캐시 키와 일치하는 객체를 찾을 수 없을 때 요청을 보냅니다. 오리진에 값을 전송하되 * 캐시 키에 포함*하지 않으려면 `OriginRequestPolicy`.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "CookiesConfig" : CookiesConfig,
+  "EnableAcceptEncodingBrotli" : Boolean,
+  "EnableAcceptEncodingGzip" : Boolean,
+  "HeadersConfig" : HeadersConfig,
+  "QueryStringsConfig" : QueryStringsConfig
+}
+```
+
+## 속성
+
+`CookiesConfig`  
+최종 사용자 요청의 쿠키가 있는지(포함되어 있는 경우 어떤 쿠키인지) 캐시 키 및 CloudFront에서 오리진에 보내는 요청에 포함되어 있는지 여부를 결정하는 객체입니다.  
+_필수 항목 여부_: 예  
+_유형_: CookiesConfig  
+_업데이트 필요 사항_: 중단 없음
+
+`EnableAcceptEncodingBrotli`  
+`Accept-Encoding` HTTP 헤더가 캐시 키에 포함되는지 여부와 CloudFront가 오리진에 보내는 요청에 포함되는지 여부에 영향을 줄 수 있는 플래그입니다.  
+이 필드는 필드와 관련이 있습니다 `EnableAcceptEncodingGzip` . 이러한 필드 중 하나 또는 둘 다에 해당 `true` _하고_ 최종 사용자 요청에 헤더가 포함된 `Accept-Encoding` 경우 , CloudFront는 다음을 수행합니다.
+
+- 뷰어의 헤더 `Accept-Encoding`값을 정규화합니다.
+- 캐시 키에 정규화된 헤더를 포함합니다.
+- 요청이 필요한 경우 오리진에 대한 요청에 정규화된 헤더를 포함합니다
+  자세한 내용은 *Amazon CloudFront 개발자 안내서*의 압축 지원을 참조하세요.  
+  이 값을 로 설정하고 `true`이 캐시 동작에도 오리진 요청 정책이 연결되어 있는 경우 `Accept-Encoding` 오리진 요청 정책에 헤더를 포함하지 마십시오. CloudFront 는 `Accept-Encoding` 이 필드의 값이 인 경우 항상 오리진 요청에 헤더를 `true` 포함하므로, 오리진 요청 정책에 이 헤더를 포함해도 아무런 효과가 없습니다.  
+  이 두 필드가 모두 인 경우`false`, CloudFront에서는 헤더를 `Accept-Encoding` 최종 사용자 요청의 다른 HTTP 헤더와 동일하게 취급합니다. 기본적으로 캐시 키에 포함되지 않으며 오리진 요청에도 포함되지 않습니다. 이 경우 `Accept-Encoding` 다른 HTTP 헤더와 마찬가지로 헤더 허용 목록에 수동으로 추가할 수 있습니다.  
+  *필수 항목 *여부: 아니요  
+  _유형_: Boolean  
+  _업데이트 필요 사항_: 중단 없음
+
+`EnableAcceptEncodingGzip`  
+`Accept-Encoding` HTTP 헤더가 캐시 키에 포함되는지 여부와 CloudFront가 오리진에 보내는 요청에 포함되는지 여부에 영향을 줄 수 있는 플래그입니다.  
+이 필드는 필드와 관련이 있습니다 `EnableAcceptEncodingBrotli` . 이러한 필드 중 하나 또는 둘 다에 해당 `true` _하고_ 최종 사용자 요청에 헤더가 포함된 `Accept-Encoding` 경우 , CloudFront는 다음을 수행합니다.
+
+- 뷰어의 헤더 `Accept-Encoding`값을 정규화합니다.
+- 캐시 키에 정규화된 헤더를 포함합니다.
+- 요청이 필요한 경우 오리진에 대한 요청에 정규화된 헤더를 포함합니다
+  자세한 내용은 *Amazon CloudFront 개발자 안내서*의 압축 지원을 참조하세요.  
+  이 값을 로 설정하고 `true`이 캐시 동작에도 오리진 요청 정책이 연결되어 있는 경우 `Accept-Encoding` 오리진 요청 정책에 헤더를 포함하지 마십시오. CloudFront 는 `Accept-Encoding` 이 필드의 값이 인 경우 항상 오리진 요청에 헤더를 `true` 포함하므로, 오리진 요청 정책에 이 헤더를 포함해도 아무런 효과가 없습니다.  
+  이 두 필드가 모두 인 경우`false`, CloudFront에서는 헤더를 `Accept-Encoding` 최종 사용자 요청의 다른 HTTP 헤더와 동일하게 취급합니다. 기본적으로 캐시 키에 포함되지 않으며 오리진 요청에도 포함되지 않습니다. 이 경우 `Accept-Encoding` 다른 HTTP 헤더와 마찬가지로 헤더 허용 목록에 수동으로 추가할 수 있습니다.  
+  _필수 항목 여부_: 예  
+  _유형_: Boolean  
+  _업데이트 필요 사항_: 중단 없음
+
+`HeadersConfig`  
+HTTP 헤더가 있는지(포함되어 있는 경우 어떤 헤더인지) 및 CloudFront에서 오리진에 보내는 요청과 캐시 키에 포함되어 있는지 여부를 결정하는 객체입니다.  
+_필수 항목 여부_: 예  
+_유형_: HeadersConfig  
+_업데이트 필요 사항_: 중단 없음
+
+`QueryStringsConfig`  
+최종 사용자 요청의 URL 쿼리 문자열이 캐시 키 및 CloudFront에서 오리진에 보내는 요청에 포함되는지 여부를 결정하는 객체입니다.  
+_필수 항목 여부_: 예  
+_형식_: QueryStringsConfig  
+_업데이트 필요 사항_: 중단 없음

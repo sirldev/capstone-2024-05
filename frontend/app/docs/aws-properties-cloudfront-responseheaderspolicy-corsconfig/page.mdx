@@ -1,0 +1,73 @@
+# AWS::CloudFront::ResponseHeadersPolicy CorsConfig
+
+CORS(Cross-Origin Resource Sharing)에 사용되는 HTTP 응답 헤더 집합에 대한 구성입니다. CloudFront는 이 응답 헤더 정책과 연결된 캐시 동작과 일치하는 CORS 요청에 대해 전송하는 HTTP 응답에 이러한 헤더를 추가합니다.
+
+CORS에 대한 자세한 내용은 MDN Web Docs의 Cross-Origin Resource Sharing (CORS)을 참조하십시오.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "AccessControlAllowCredentials" : Boolean,
+  "AccessControlAllowHeaders" : AccessControlAllowHeaders,
+  "AccessControlAllowMethods" : AccessControlAllowMethods,
+  "AccessControlAllowOrigins" : AccessControlAllowOrigins,
+  "AccessControlExposeHeaders" : AccessControlExposeHeaders,
+  "AccessControlMaxAgeSec" : Integer,
+  "OriginOverride" : Boolean
+}
+```
+
+## 속성
+
+`AccessControlAllowCredentials`  
+CloudFront에서 HTTP 응답 헤더의 값으로 사용하는 부울입니다 `Access-Control-Allow-Credentials` .  
+ `Access-Control-Allow-Credentials` HTTP 응답 헤더에 대한 자세한 내용은 MDN Web Docs의 Access-Control-Allow-Credentials를 참조하세요.  
+_필수 항목 여부_: 예  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`AccessControlAllowHeaders`  
+CloudFront에서 HTTP 응답 헤더의 값으로 포함하는 HTTP 헤더 이름 목록 `Access-Control-Allow-Headers` 입니다.  
+ `Access-Control-Allow-Headers` HTTP 응답 헤더에 대한 자세한 내용은 MDN Web Docs의 Access-Control-Allow-Headers를 참조하십시오.  
+_필수 항목 여부_: 예  
+_형식_: AccessControlAllowHeaders  
+_업데이트 필요 사항_: 중단 없음
+
+`AccessControlAllowMethods`  
+CloudFront에서 HTTP 응답 헤더의 값으로 포함하는 HTTP 메서드 목록 `Access-Control-Allow-Methods` 입니다.  
+ `Access-Control-Allow-Methods` HTTP 응답 헤더에 대한 자세한 내용은 MDN Web Docs의 Access-Control-Allow-Methods를 참조하십시오.  
+_필수 항목 여부_: 예  
+_형식_: AccessControlAllowMethods  
+_업데이트 필요 사항_: 중단 없음
+
+`AccessControlAllowOrigins`  
+CloudFront에서 HTTP 응답 헤더의 값으로 사용할 수 있는 오리진(도메인 이름) 목록 `Access-Control-Allow-Origin` 입니다.  
+ `Access-Control-Allow-Origin` HTTP 응답 헤더에 대한 자세한 내용은 MDN Web Docs의 Access-Control-Allow-Origin을 참조하십시오.  
+_필수 항목 여부_: 예  
+_형식_: AccessControlAllowOrigins  
+_업데이트 필요 사항_: 중단 없음
+
+`AccessControlExposeHeaders`  
+CloudFront에서 HTTP 응답 헤더의 값으로 포함하는 HTTP 헤더 목록입니다 `Access-Control-Expose-Headers` .  
+`Access-Control-Expose-Headers` HTTP 응답 헤더에 대한 자세한 내용은 MDN Web Docs의 Access-Control-Expose-Headers를 참조하십시오.  
+*필수 항목 *여부: 아니요  
+_형식_: AccessControlExposeHeaders  
+_업데이트 필요 사항_: 중단 없음
+
+`AccessControlMaxAgeSec`  
+CloudFront에서 HTTP 응답 헤더의 값으로 사용하는 숫자입니다 `Access-Control-Max-Age` .  
+`Access-Control-Max-Age` HTTP 응답 헤더에 대한 자세한 내용은 MDN Web Docs의 Access-Control-Max-Age를 참조하십시오.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`OriginOverride`  
+CloudFront가 오리진에서 수신한 HTTP 응답 헤더를 이 응답 헤더 정책에 지정된 헤더로 재정의할지 여부를 결정하는 부울입니다.  
+_필수 항목 여부_: 예  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음

@@ -1,0 +1,23 @@
+# AWS::SageMaker::ModelPackage ModelPackageStatus세부 정보
+
+모델 패키지의 유효성 검사 및 이미지 스캔 상태를 지정합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ValidationStatuses" : [ ModelPackageStatusItem, ... ]
+}
+```
+
+## 속성
+
+`ValidationStatuses`  
+모델 패키지의 유효성 검사 상태입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: ModelPackageStatusItem 목록  
+_업데이트 필요 사항_: 중단 없음

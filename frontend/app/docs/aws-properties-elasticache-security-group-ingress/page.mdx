@@ -1,0 +1,51 @@
+# AWS::ElastiCache::SecurityGroupIngress
+
+AWS::ElastiCache::SecurityGroupIngress 유형은 지정된 Amazon EC2 보안 그룹의 호스트에서 캐시 보안 그룹에 대한 수신 권한을 부여합니다. ElastiCache 보안 그룹 수신에 대한 자세한 내용은 _Amazon ElastiCache API 참조 안내서의 AuthorizeCacheSecurityGroupIngress를 참조하십시오_.
+
+**메모**  
+업데이트는 지원되지 않습니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::ElastiCache::SecurityGroupIngress",
+  "Properties" : {
+      "CacheSecurityGroupName" : String,
+      "EC2SecurityGroupName" : String,
+      "EC2SecurityGroupOwnerId" : String
+    }
+}
+```
+
+## 속성
+
+`CacheSecurityGroupName`  
+권한을 부여할 캐시 보안 그룹의 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`EC2SecurityGroupName`  
+권한 부여에 포함할 EC2 보안 그룹의 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`EC2SecurityGroupOwnerId`  
+EC2SecurityGroupName 속성에 지정된 EC2 보안 그룹 소유자의 Amazon 계정 ID를 지정합니다. Amazon 액세스 키 ID는 허용되는 값이 아닙니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID가 `Ref` 내장 함수 에 제공되면 `Ref` 리소스 이름을 반환합니다.
+
+함수 사용에 대한 자세한 `Ref` 내용은 Ref를 참조하세요.

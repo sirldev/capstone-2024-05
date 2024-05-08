@@ -1,0 +1,23 @@
+# AWS::AutoScaling::ScalingPolicy PredictiveScalingCustomizedScalingMetric
+
+AWS::AutoScaling::ScalingPolicy PredictiveScalingMetricSpecification 속성 유형의 속성에`CustomizedScalingMetricSpecification` 대한 조정 지표 정보를 포함합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "MetricDataQueries" : [ MetricDataQuery, ... ]
+}
+```
+
+## 속성
+
+`MetricDataQueries`  
+조정 지표에 대한 데이터 포인트를 제공하기 위한 하나 이상의 지표 데이터 쿼리입니다. 반환된 데이터에 대해 수학 표현식을 수행하는 경우에만 여러 지표 데이터 쿼리를 사용합니다.  
+_필수 항목 여부_: 예  
+_유형_: MetricDataQuery 목록  
+_업데이트 필요 사항_: 중단 없음

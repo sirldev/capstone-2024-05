@@ -1,0 +1,45 @@
+# AWS::AutoScaling::ScalingPolicy 메트릭 통계
+
+`MetricStat` 은 AWS::AutoScaling::ScalingPolicy MetricDataQuery 속성 유형의 속성입니다.
+
+이 구조는 통계, 기간 및 단위와 함께 반환할 CloudWatch 지표를 정의합니다.
+
+아래의 CloudWatch 용어에 대한 자세한 내용은 _Amazon CloudWatch 사용 설명서의 Amazon CloudWatch 개념을 참조하십시오_.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Metric" : Metric,
+  "Stat" : String,
+  "Unit" : String
+}
+```
+
+## 속성
+
+`Metric`  
+지표 이름, 네임스페이스 및 차원을 포함하여 반환할 CloudWatch 지표입니다. 정확한 지표 이름, 네임스페이스 및 차원을 가져오려면 ListMetrics 호출에서 반환되는 Metric 객체를 검사합니다.  
+_필수 항목 여부_: 예  
+_유형_: 미터법  
+_업데이트 필요 사항_: 중단 없음
+
+`Stat`  
+반환할 통계입니다. 여기에는 CloudWatch 통계 또는 확장 통계가 포함될 수 있습니다. 유효한 값 목록은 *Amazon CloudWatch 사용 설명서*의 통계 표를 참조하십시오.  
+예측 조정에 가장 일반적으로 사용되는 지표는 `Average` 및 `Sum`입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `100`  
+_패턴_: `[u0020-uD7FFuE000-uFFFDuD800uDC00-uDBFFuDFFFrnt]*`  
+_업데이트 필요 사항_: 중단 없음
+
+`Unit`  
+반환된 데이터 포인트에 사용할 단위입니다. CloudWatch가 지원하는 단위의 전체 목록은 _Amazon CloudWatch API Reference의 MetricDatum 데이터 형식을 참조하십시오_.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음

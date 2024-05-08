@@ -1,0 +1,48 @@
+# AWS::Route53Resolver::ResolverEndpoint IpAddressRequest
+
+CreateResolverEndpoint 요청에서 DNS 쿼리가 시작되거나(아웃바운드 엔드포인트의 경우) DNS 쿼리를 전달하는(인바운드 엔드포인트의 경우) IP 주소입니다. `IpAddressRequest` IP 주소가 포함된 서브넷의 ID도 포함합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Ip" : String,
+  "Ipv6" : String,
+  "SubnetId" : String
+}
+```
+
+## 속성
+
+`Ip`  
+DNS 쿼리에 사용할 IPv4 주소입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `7`  
+_최대_: `36`  
+_업데이트 필요 사항_: 중단 없음
+
+`Ipv6`  
+ DNS 쿼리에 사용할 IPv6 주소입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `7`  
+_최대_: `39`  
+_업데이트 필요 사항_: 중단 없음
+
+`SubnetId`  
+IP 주소를 포함하는 서브넷의 ID입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `32`  
+_업데이트 필요 사항_: 중단 없음
+
+## 참고 항목
+
+- 주제 AWS::Route53Resolver::ResolverEndpoint 의 반환 값
+- Amazon Route 53 API 참조\* \*의 IpAddressRequest

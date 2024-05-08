@@ -1,0 +1,23 @@
+# AWS::ApiGatewayV2::통합 응답ParameterList
+
+HTTP API에 대한 응답 매개 변수 목록을 지정합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ResponseParameters" : [ ResponseParameter, ... ]
+}
+```
+
+## 속성
+
+`ResponseParameters`  
+HTTP API에 대해서만 지원됩니다. 응답 파라미터를 사용하여 클라이언트에 응답을 반환하기 전에 백엔드 통합에서 HTTP 응답을 변환합니다. 선택 키에서 응답 파라미터로의 키-값 맵을 지정합니다. 선택 키는 200-599 범위 내의 유효한 HTTP 상태 코드여야 합니다. 응답 매개 변수는 키-값 맵입니다. 키는 패턴 `<action>:<header>.<location>` 또는 `overwrite.statuscode`. 작업은 `append`, `overwrite` 또는 `remove` 일 수 있습니다. 이 값은 정적 값이거나 응답 데이터, 단계 변수 또는 런타임 시 평가되는 컨텍스트 변수에 매핑될 수 있습니다. 자세한 내용은 API 요청 및 응답 변환을 참조하세요.  
+*필수 항목 *여부: 아니요  
+_유형_: ResponseParameter 목록  
+_업데이트 필요 사항_: 중단 없음

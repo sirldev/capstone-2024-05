@@ -1,0 +1,30 @@
+# AWS::VpcLattice::규칙 작업
+
+규칙에 대한 작업을 설명합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "FixedResponse" : FixedResponse,
+  "Forward" : Forward
+}
+```
+
+## 속성
+
+`FixedResponse`  
+고정 응답 작업입니다. 이 규칙은 사용자 지정 HTTP 응답을 반환합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: FixedResponse  
+_업데이트 필요 사항_: 중단 없음
+
+`Forward`  
+순방향 동작입니다. 규칙과 일치하는 트래픽은 지정된 대상 그룹으로 전달됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 앞으로  
+_업데이트 필요 사항_: 중단 없음

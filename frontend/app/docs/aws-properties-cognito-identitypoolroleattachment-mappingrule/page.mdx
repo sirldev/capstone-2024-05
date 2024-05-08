@@ -1,0 +1,45 @@
+# AWS::Cognito::IdentityPoolRoleAttachment 매핑 규칙
+
+클레임을 역할 ARN에 매핑하는 방법을 정의합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Claim" : String,
+  "MatchType" : String,
+  "RoleARN" : String,
+  "Value" : String
+}
+```
+
+## 속성
+
+`Claim`  
+토큰에 있어야 하는 클레임 이름입니다. 예: "isAdmin" 또는 "paid".  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`MatchType`  
+IdP 토큰의 클레임 값이 얼마나 일치해야 하는지를 지정하는 일치 조건입니다 `Value`.  
+유효한 값은 `Equals`, `Contains`, `StartsWith`및 `NotEqual`입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`RoleARN`  
+역할의 Amazon 리소스 이름(ARN)입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Value`  
+클레임이 일치해야 하는 간단한 문자열입니다. 예를 들어 "지불됨" 또는 "예"입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음

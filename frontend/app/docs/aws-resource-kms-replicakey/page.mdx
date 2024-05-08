@@ -1,0 +1,212 @@
+# AWS::KMS::레플리카키
+
+리소스는 `AWS::KMS::ReplicaKey` 다중 리전 기본 키를 기반으로 하는 다중 리전 복제본 키를 지정합니다.
+
+_다중 리전 키는_ 서로 다른 AWS 리전에서 상호 운용 가능한 여러 KMS 키를 생성할 수 있는 AWS KMS 기능입니다. 이러한 KMS 키는 키 ID, 키 구성 요소 및 기타 메타데이터가 동일하기 때문에 교차 리전 호출을 수행하거나 일반 텍스트 데이터를 노출하지 않고도 한 AWS 리전에서 데이터를 암호화하고 다른 AWS 리전에서 해독하는 데 사용할 수 있습니다. 자세한 내용은 _AWS Key Management Service 개발자 안내서의 다중 리전 키를 참조하세요_.
+
+다중 리전 _기본 키는_ 완전한 기능을 갖춘 대칭 암호화 KMS 키, HMAC KMS 키 또는 비대칭 KMS 키이며 다른 AWS 리전의 복제본 키에 대한 모델이기도 합니다. 다중 리전 기본 키를 생성하려면 AWS::KMS::Key 리소스를 CloudFormation 스택에 추가합니다. 해당 `MultiRegion` 속성을 true로 설정합니다.
+
+다중 리전 _복제본 키는_ 다중 리전 기본 키와 동일한 키 ID 및 키 구성 요소를 갖지만 동일한 AWS 파티션의 다른 AWS 리전에 있는 완전한 기능을 갖춘 KMS 키입니다. 기본 키의 복제본이 여러 개 있을 수 있지만 각각 다른 AWS 리전에 있어야 합니다.
+
+AWS CloudFormation에서 복제본 키를 생성하면 요청에 사용하는 엔드포인트가 나타내는 AWS 리전에 복제본 키가 생성됩니다. 키 유형이 지원되지 않는 리전으로 다중 리전 키를 복제하려고 하면 요청이 실패합니다.
+
+기본 키와 해당 복제본은 동일한 키 ID와 키 구성 요소를 갖습니다. 또한 키 사양, 키 사용, 키 구성 요소 오리진 및 자동 키 교체 상태도 동일합니다. 이러한 속성을 *공유 속성*이라고 합니다. 변경 사항이 있는 경우 AWS KMS는 변경 사항을 관련된 모든 다중 리전 키와 동기화합니다. 복제본 키의 다른 모든 속성은 키 정책, 태그, 별칭 및 키 상태를 포함하여 다를 수 있습니다. AWS KMS는 이러한 속성을 동기화하지 않습니다.
+
+**지역**
+
+AWS KMS CloudFormation 리소스는 AWS KMS 및 AWS CloudFormation이 지원되는 모든 AWS 리전에서 사용할 수 있습니다. `AWS::KMS::ReplicaKey` 이 리소스를 사용하여 다중 리전 KMS 키를 지원하는 모든 리전에서 복제본 키를 생성할 수 있습니다. 자세한 내용은 _AWS Key Management Service 개발자 안내서의 AWS KMS의 다중 리전 키를 참조하세요_.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::KMS::ReplicaKey",
+  "Properties" : {
+      "Description" : String,
+      "Enabled" : Boolean,
+      "KeyPolicy" : Json,
+      "PendingWindowInDays" : Integer,
+      "PrimaryKeyArn" : String,
+      "Tags" : [Tag, ... ]
+    }
+}
+```
+
+## 속성
+
+`Description`  
+KMS 키에 대한 설명입니다.  
+기본값은 빈 문자열(설명 없음)입니다.  
+설명은 다중 리전 키의 공유 속성이 아닙니다. 관련된 다중 리전 키 집합의 각 키에 대해 동일한 설명 또는 다른 설명을 지정할 수 있습니다. AWS Key Management Service는 이 속성을 동기화하지 않습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `0`  
+_최대_: `8192`  
+_업데이트 필요 사항_: 중단 없음
+
+`Enabled`  
+복제본 키를 사용할 수 있는지 여부를 지정합니다. 비활성화된 KMS 키는 암호화 작업에 사용할 수 없습니다.  
+가 인 경우 `Enabled` `true` * KMS 키의 *키 상태는 `Enabled`입니다. 가 인 경우 `Enabled` `false`KMS 키의 키 상태는 `Disabled`입니다. 기본값은 `true`입니다.  
+복제본의 실제 키 상태는 EnableKey, DisableKey 또는 ScheduleKeyDeletion 작업 실행과 같이 CloudFormation 외부에서 수행된 작업의 영향을 받을 수 있습니다. 또한 복제본 키를 만드는 동안 키 상태는 `Creating`. 프로세스가 완료되면 복제본 키의 키 상태가 로 변경 `Enabled` 됩니다.  
+KMS 키의 키 상태에 대한 자세한 내용은 _AWS Key Management Service 개발자 안내서의 키 상태: KMS 키에 미치는 영향을 참조하세요_.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`KeyPolicy` 복제본 키의 사용 권한을 부여하는 키 정책입니다.  
+키 정책은 다중 리전 키의 공유 속성이 아닙니다. 관련된 다중 리전 키 세트의 각 키에 대해 동일한 키 정책 또는 다른 키 정책을 지정할 수 있습니다. AWS KMS는 이 속성을 동기화하지 않습니다.  
+키 정책은 다음 규칙을 준수해야 합니다.
+
+- 키 정책은 호출자에게 KMS 키에 대한 PutKeyPolicy 권한을 부여해야 합니다. 이렇게 하면 KMS 키를 관리할 수 없게 될 위험이 줄어듭니다. 자세한 내용은 \* _AWS Key Management Service 개발자 안내서_ \*의 기본 키 정책 섹션에 있는 시나리오를 참조하십시오.
+- 키 정책의 각 문에는 하나 이상의 보안 주체가 포함되어야 합니다. 키 정책의 보안 주체가 존재해야 하며 AWS KMS에 표시되어야 합니다. 새 AWS보안 주체(예: IAM 사용자 또는 역할)를 생성할 때 새 보안 주체가 AWS KMS에 즉시 표시되지 않을 수 있으므로 키 정책에 새 보안 주체를 포함하기 전에 지연을 적용해야 할 수 있습니다. 자세한 내용은 *AWS Identity and Access Management 사용 설명서*의 변경 사항이 항상 즉시 표시되는 것은 아닙니다.를 참조하세요.
+  키 정책 문서에는 다음 문자만 포함될 수 있습니다.
+- 공백 문자()부터 ASCII 문자 범위의 끝까지`u0020`를 인쇄 가능한 ASCII 문자입니다.
+- Basic Latin 및 Latin-1 Supplement 문자 집합의 인쇄 가능한 문자(를 통해 `u00FF`).
+- 탭(),`u0009` 줄 바꿈(`u000A`) 및 캐리지 리턴(`u000D`) 특수 문자
+  _최소_: `1`  
+  _최대_: `32768`  
+  _필수_: 예  
+  _형식_: Json  
+  _업데이트 필요 사항_: 중단 없음
+
+`PendingWindowInDays`  
+AWS KMS가 CloudFormation 스택에서 제거된 복제본 키를 삭제하기 전의 대기 기간(일)을 지정합니다. 7일에서 30일 사이의 값을 입력합니다. 기본값은 30일입니다.  
+CloudFormation 스택에서 복제본 키를 제거하면 AWS KMS가 복제본 키 삭제를 예약하고 필수 대기 기간을 시작합니다. `PendingWindowInDays` 속성은 대기 기간의 길이를 결정합니다. 대기 기간 동안 복제본 키의 키 상태는 `Pending Deletion`이며, 이 경우 암호화 작업에 사용할 수 없습니다. 대기 기간이 만료되면 AWS KMS는 복제본 키를 영구적으로 삭제합니다.  
+KMS 키가 복제본 키가 있는 다중 리전 기본 키인 경우 마지막 복제본 키가 삭제되면 대기 기간이 시작됩니다. 그렇지 않으면 대기 기간이 즉시 시작됩니다.  
+CloudFormation 템플릿을 사용하여 복제본을 스택에서 제거한 후에는 대기 기간에 관계없이 복제본 삭제를 취소할 수 없습니다. 그러나 템플릿에서 원본 복제본 키와 동일한 기본 키를 기반으로 하는 복제본 키를 지정하는 경우 CloudFormation은 원본 복제본 키와 동일한 키 ID, 키 구성 요소 및 기타 공유 속성을 사용하여 새 복제본 키를 생성합니다. 이 새로운 복제본 키는 원래 복제본 키 또는 관련 다중 리전 키로 암호화된 암호문을 해독할 수 있습니다.  
+다중 리전 키 삭제에 대한 자세한 내용은 *AWS Key Management Service 개발자 안내서*의 다중 리전 키 삭제를 참조하세요.  
+키 상태에 대한 자세한 `PendingDeletion` 내용은 AWS Key Management Service 개발자 안내서*의 키 상태: KMS 키에 미치는 영향을 참조하세요*. KMS 키 삭제에 대한 자세한 내용은 *AWS Key Management Service API Reference*의 ScheduleKeyDeletion 작업 및 AWS Key Management Service 개발자 안내서*의 KMS 키 삭제 를 참조하세요*.  
+*최소*값: 7  
+_최대_: 30  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`PrimaryKeyArn`  
+복제할 다중 리전 기본 키를 지정합니다. 기본 키는 동일한 AWS 파티션의 다른 AWS 리전에 있어야 합니다. 각 AWS 리전에서 지정된 기본 키의 복제본을 하나만 생성할 수 있습니다.  
+ `PrimaryKeyArn` 복제본 키의 값을 변경하면 기존 복제본 키의 삭제가 예약되고 지정된 기본 키를 기반으로 새 복제본 키가 생성됩니다. 삭제가 예약되어 있는 동안에는 기존 복제본 키를 사용할 수 없게 됩니다. CloudFormation 외부에서 예약된 키 삭제를 취소할 수 있습니다.  
+그러나 실수로 복제본 키를 삭제한 경우 관련 다중 리전 키를 사용하여 해당 복제본 키로 암호화된 암호문을 해독할 수 있습니다. 필요한 경우 이전 복제본이 완전히 삭제된 후 동일한 리전에서 복제본을 다시 생성할 수 있습니다. 자세한 내용은 *AWS Key Management Service 개발자 안내서*의 다중 리전 키 삭제를 참조하세요
+기존 다중 리전 기본 키의 키 ARN을 지정합니다. 예를 들어, `arn:aws:kms:us-east-2:111122223333:key/mrk-1234abcd12ab34cd56ef1234567890ab`.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `2048`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Tags`  
+복제본 키에 하나 이상의 태그를 할당합니다.  
+KMS 키에 태그를 지정하거나 태그를 해제하면 KMS 키에 대한 권한을 허용하거나 거부할 수 있습니다. 자세한 내용은 *AWS Key Management Service 개발자 안내서*의 AWS KMS용 ABAC를 참조하세요.
+태그는 다중 리전 키의 공유 속성이 아닙니다. 관련된 다중 리전 키 집합의 각 키에 대해 동일한 태그 또는 다른 태그를 지정할 수 있습니다. AWS KMS는 이 속성을 동기화하지 않습니다.  
+각 태그는 태그 키와 태그 값으로 구성됩니다. 태그 키와 태그 값이 모두 필요하지만 태그 값은 빈(null) 문자열일 수 있습니다. 동일한 태그 키를 가진 KMS 키에는 두 개 이상의 태그가 있을 수 없습니다. 기존 태그 키를 다른 태그 값으로 지정하면 AWS KMS가 현재 태그 값을 지정된 값으로 바꿉니다.  
+AWS 리소스에 태그를 할당하면 AWS는 태그별로 집계된 사용량 및 비용이 포함된 비용 할당 보고서를 생성합니다. 태그를 사용하여 KMS 키에 대한 액세스를 제어할 수도 있습니다. 자세한 내용은 키 태그 지정을 참조하세요.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref`와 `Ref`같은 키 ID를 반환합니다 `mrk-1234abcd12ab34cd56ef1234567890ab`.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`Arn`  
+복제본 키의 Amazon 리소스 이름(ARN)입니다`arn:aws:kms:us-west-2:111122223333:key/mrk-1234abcd12ab34cd56ef1234567890ab`.  
+관련 다중 리전 키의 키 ARN은 리전 값만 다릅니다. 다중 리전 키의 키 ARN에 대한 자세한 내용은 _AWS Key Management Service 개발자 안내서의 다중 리전 키 작동 방식을 참조하세요_.
+
+`KeyId`  
+복제본 키의 키 ID(예: `mrk-1234abcd12ab34cd56ef1234567890ab`.  
+관련 다중 리전 키는 동일한 키 ID를 갖습니다. 다중 리전 키의 키 ID에 대한 자세한 내용은 _AWS Key Management Service 개발자 안내서의 다중 리전 키 작동 방식을 참조하세요_.
+
+## 예제
+
+### 다중 리전 복제본 키 생성
+
+다음 예제에서는 미국 서부(오레곤)(us-west-2) 리전의 다중 리전 기본 키를 기반으로 로컬 리전에 다중 리전 복제본 키를 생성합니다.
+
+속성으로 지정된 키 ARN `PrimaryKeyArn` 이 다중 리전 기본 키를 식별하지 않거나 관련 다중 리전 키가 로컬 리전에 이미 존재하는 경우 작업이 실패합니다. 이 예제에서는 설명, 키 정책 및 키 삭제 대기 기간(PendingWindowInDays)을 지정합니다. 이러한 속성은 다른 AWS 리전의 기본 키 및 관련 복제본 키와 독립적입니다.
+
+#### JSON (영문)
+
+```
+"myReplicaKey": {
+        "Type": "AWS::KMS::ReplicaKey",
+        "Properties": {
+            "PrimaryKeyArn": "arn:aws:kms:us-west-2:111122223333:key/mrk-1234abcd12ab34cd56ef1234567890ab",
+            "Description": "Example replica key",
+            "PendingWindowInDays": 7,
+            "KeyPolicy": {
+                "Version": "2012-10-17",
+                "Id": "key-default-1",
+                "Statement": [
+                    {
+                        "Sid": "Enable IAM User Permissions",
+                        "Effect": "Allow",
+                        "Principal": {
+                            "AWS": "arn:aws:iam::111122223333:root"
+                        },
+                        "Action": "kms:*",
+                        "Resource": "*"
+                    },
+                    {
+                        "Sid": "Allow administration of the key",
+                        "Effect": "Allow",
+                        "Principal": {
+                            "AWS": "arn:aws:iam::111122223333:role/admin"
+                        },
+                        "Action": [
+                            "kms:Create*",
+                            "kms:Delete*",
+                            "kms:Disable*",
+                            "kms:Describe*",
+                            "kms:Enable*",
+                            "kms:Get*",
+                            "kms:List*",
+                            "kms:Put*",
+                            "kms:Revoke*",
+                            "kms:UpdateAlias",
+                            "kms:ScheduleKeyDeletion",
+                            "kms:CancelKeyDeletion"
+                        ],
+                        "Resource": "*"
+                    },
+                    {
+                        "Sid": "Allow use of the key",
+                        "Effect": "Allow",
+                        "Principal": {
+                            "AWS": "arn:aws:iam::111122223333:role/developer"
+                        },
+                        "Action": [
+                            "kms:DescribeKey",
+                            "kms:Encrypt",
+                            "kms:Decrypt",
+                            "kms:ReEncrypt*",
+                            "kms:GenerateDataKey",
+                            "kms:GenerateDataKeyWithoutPlaintext"
+                        ],
+                        "Resource": "*"
+                    }
+                ]
+            }
+        }
+    }
+```
+
+## 참고 항목
+
+- AWS Key Management Service API 참조*의 ReplicateKey*.
+- AWS Key Management Service 개발자 안내서*의 다중 리전 키*.
+- AWS Key Management Service 개발자 안내서*의 다중 리전 복제본 키 생성*.

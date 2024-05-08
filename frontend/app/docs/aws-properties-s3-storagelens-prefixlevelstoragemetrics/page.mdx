@@ -1,0 +1,30 @@
+# AWS::S3::StorageLens 접두사 레벨스토리지 메트릭
+
+이 리소스에는 Amazon S3 Storage Lens에 대한 접두사 수준 스토리지 지표의 세부 정보가 포함되어 있습니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "IsEnabled" : Boolean,
+  "SelectionCriteria" : SelectionCriteria
+}
+```
+
+## 속성
+
+`IsEnabled`  
+이 속성은 S3 Storage Lens에 대한 접두사 수준 스토리지 지표의 세부 정보가 활성화되어 있는지 여부를 식별합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`SelectionCriteria`  
+이 속성은 S3 Storage Lens에 대한 접두사 수준 스토리지 지표의 세부 정보가 활성화되어 있는지 여부를 식별합니다.  
+*필수 항목 *여부: 아니요  
+_형식_: SelectionCriteria  
+_업데이트 필요 사항_: 중단 없음

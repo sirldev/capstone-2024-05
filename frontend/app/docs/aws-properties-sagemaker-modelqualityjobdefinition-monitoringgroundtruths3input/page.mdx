@@ -1,0 +1,25 @@
+# AWS::SageMaker::ModelQualityJobDefinition 모니터링GroundTruthS3Input
+
+모니터링 작업에 사용되는 데이터 세트에 대한 지상 실측 레이블입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "S3Uri" : String
+}
+```
+
+## 속성
+
+`S3Uri`  
+지상 실측 레이블의 Amazon S3 위치 주소입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최대_: `512`  
+_패턴_: `^(https|s3)://([^/]+)/?(.*)$`  
+_업데이트 필요 사항_: 바꿔 놓음

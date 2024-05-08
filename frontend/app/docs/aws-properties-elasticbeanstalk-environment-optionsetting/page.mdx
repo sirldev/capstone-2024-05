@@ -1,0 +1,55 @@
+# AWS::ElasticBeanstalk::환경 옵션 설정
+
+`OptionSetting` 속성 유형은 AWS Elastic Beanstalk 환경에 대한 옵션을 지정합니다.
+
+AWS::ElasticBeanstalk::Environment 리소스의 속성`OptionSettings`에는 `OptionSetting` 속성 유형 목록이 포함되어 있습니다.
+
+가능한 네임스페이스 및 옵션 값 목록은 _AWS Elastic Beanstalk 개발자 안내서의 옵션 값을 참조하십시오_.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Namespace" : String,
+  "OptionName" : String,
+  "ResourceName" : String,
+  "Value" : String
+}
+```
+
+## 속성
+
+`Namespace`  
+옵션의 연결된 AWS 리소스를 식별하는 고유한 네임스페이스입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`OptionName`  
+구성 옵션의 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`ResourceName`  
+옵션 설정에 대한 고유한 리소스 이름입니다. 시간 기반 조정 구성 옵션에 사용합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `256`  
+_업데이트 필요 사항_: 중단 없음
+
+`Value`  
+구성 옵션의 현재 값입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+## 참고 항목
+
+- AWS Elastic Beanstalk API 참조\* \*의 ConfigurationOptionSetting
+- AWS Elastic Beanstalk 개발자 안내서\* \*의 구성 옵션

@@ -1,0 +1,26 @@
+# AWS::SageMaker::모델 리포지토리 인증 구성
+
+모델 이미지가 호스팅되는 개인 Docker 레지스트리에 대한 인증 구성을 지정합니다. `Vpc` 호출에 전달한 오브젝트 `RepositoryAccessMode` 의 필드 `ImageConfig` 값으로 `CreateModel` 지정 하고 모델 이미지가 호스팅되는 개인용 Docker 레지스트리에 인증이 필요한 경우에만 이 특성의 값을 지정하십시오.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "RepositoryCredentialsProviderArn" : String
+}
+```
+
+## 속성
+
+`RepositoryCredentialsProviderArn`  
+모델 이미지가 호스팅되는 프라이빗 Docker 레지스트리에 인증하기 위한 자격 증명을 제공하는 AWS Lambda 함수의 Amazon 리소스 이름(ARN)입니다. AWS Lambda 함수를 생성하는 방법에 대한 자세한 내용은 * AWS Lambda 개발자 안내서*의 콘솔을 사용하여 Lambda 함수 생성을 참조하세요.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `2048`  
+_패턴_: `.*`  
+_업데이트 필요 사항_: 바꿔 놓음

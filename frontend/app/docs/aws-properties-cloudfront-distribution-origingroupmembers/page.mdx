@@ -1,0 +1,31 @@
+# AWS::CloudFront::D istribution OriginGroupMembers
+
+원본 그룹에 포함된 원본에 대한 복합 데이터 형식입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Items" : [ OriginGroupMember, ... ],
+  "Quantity" : Integer
+}
+```
+
+## 속성
+
+`Items`  
+원본 그룹의 항목(원본)입니다.  
+_필수 항목 여부_: 예  
+_형식_: OriginGroupMember 목록  
+_최대_: `2`  
+_업데이트 필요 사항_: 중단 없음
+
+`Quantity`  
+원본 그룹의 원본 수입니다.  
+_필수 항목 여부_: 예  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음

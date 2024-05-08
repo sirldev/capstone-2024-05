@@ -1,0 +1,43 @@
+# AWS::AutoScaling::ScalingPolicy PredictiveScalingPredefinedMetricPair
+
+AWS::AutoScaling::ScalingPolicy PredictiveScalingMetricSpecification 속성 유형의 속성에`PredefinedMetricPairSpecification` 대한 지표 페어 정보를 포함합니다.
+
+자세한 내용은 Amazon EC2 Auto Scaling 사용 설명서*의 예측 조정을 참조하세요*.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "PredefinedMetricType" : String,
+  "ResourceLabel" : String
+}
+```
+
+## 속성
+
+`PredefinedMetricType`  
+사용할 메트릭을 나타냅니다. 각 지표 유형에는 두 가지 유형의 지표가 있는데, 하나는 로드 지표이고 다른 하나는 조정 지표입니다. 예를 들어 지표 유형이 인 경우 `ASGCPUUtilization`오토 스케일링의 총 CPU 지표가 로드 지표로 사용되고, 평균 CPU 지표가 조정 지표로 사용됩니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_허용되는 값_: `ALBRequestCount | ASGCPUUtilization | ASGNetworkIn | ASGNetworkOut`  
+_업데이트 필요 사항_: 중단 없음
+
+`ResourceLabel`  
+오토 스케일링에서 제공하는 총 및 평균 요청 수를 결정할 특정 Application Load Balancer 대상 그룹을 고유하게 식별하는 레이블입니다. 대상 그룹이 Auto Scaling 그룹에 연결되어 있지 않으면 리소스 레이블을 지정할 수 없습니다.  
+로드 밸런서 ARN의 마지막 부분과 대상 그룹 ARN의 마지막 부분을 슬래시(/)로 구분된 단일 값에 추가하여 리소스 레이블을 생성합니다. 리소스 레이블의 형식은 다음과 같습니다.  
+ `app/my-alb/778d41231b141a0f/targetgroup/my-alb-target-group/943f017f100becff`을 클릭합니다.  
+어디:
+
+- app/<load-balancer-name>/<load-balancer-id>는 로드 밸런서 ARN의 마지막 부분입니다.
+- targetgroup/<target-group-name>/<target-group-id>은 대상 그룹 ARN의 마지막 부분입니다.
+  Application Load Balancer의 ARN을 찾으려면 DescribeLoadBalancers API 작업을 사용합니다. 대상 그룹의 ARN을 찾으려면 DescribeTargetGroups API 작업을 사용합니다.  
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열  
+  _최소_: `1`  
+  _최대_: `1023`  
+  _패턴_: `[u0020-uD7FFuE000-uFFFDuD800uDC00-uDBFFuDFFFrnt]*`  
+  _업데이트 필요 사항_: 중단 없음

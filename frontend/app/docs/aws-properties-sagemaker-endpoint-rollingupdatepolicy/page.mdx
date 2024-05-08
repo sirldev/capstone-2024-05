@@ -1,0 +1,48 @@
+# AWS::SageMaker::엔드포인트 RollingUpdatePolicy
+
+SageMaker 엔드포인트를 업데이트하기 위한 롤링 배포 전략을 지정합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "MaximumBatchSize" : CapacitySize,
+  "MaximumExecutionTimeoutInSeconds" : Integer,
+  "RollbackMaximumBatchSize" : CapacitySize,
+  "WaitIntervalInSeconds" : Integer
+}
+```
+
+## 속성
+
+`MaximumBatchSize`  
+용량을 프로비저닝하고, 새 엔드포인트 집합에서 트래픽을 켜고, 이전 엔드포인트 집합에서 용량을 종료하기 위한 각 롤링 단계의 배치 크기입니다. 값은 변형 전체 인스턴스 수의 5%에서 50% 사이여야 합니다.  
+_필수 항목 여부_: 예  
+_형식_: CapacitySize  
+_업데이트 필요 사항_: 중단 없음
+
+`MaximumExecutionTimeoutInSeconds`  
+전체 배포에 대한 시간 제한입니다. 이 제한을 초과하면 시간 초과가 발생합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_최소_: `600`  
+_최대_: `28800`  
+_업데이트 필요 사항_: 중단 없음
+
+`RollbackMaximumBatchSize`  
+이전 엔드포인트 플릿으로 롤백하기 위한 배치 크기입니다. 각 롤링 단계는 용량을 프로비저닝하고, 이전 엔드포인트 집합에서 트래픽을 켜고, 새 엔드포인트 집합에서 용량을 종료합니다. 이 필드가 없으면 기본값은 총 용량의 100%로 설정되며, 이는 롤백 중에 이전 플릿의 전체 용량을 한 번에 불러온다는 것을 의미합니다.  
+*필수 항목 *여부: 아니요  
+_형식_: CapacitySize  
+_업데이트 필요 사항_: 중단 없음
+
+`WaitIntervalInSeconds`  
+SageMaker가 새 플릿의 각 배치에 대한 경보를 모니터링하는 베이킹 기간입니다.  
+_필수 항목 여부_: 예  
+_유형_: Integer  
+_최소_: `0`  
+_최대_: `3600`  
+_업데이트 필요 사항_: 중단 없음

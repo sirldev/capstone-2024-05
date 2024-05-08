@@ -1,0 +1,38 @@
+# AWS::KinesisAnalyticsV2::애플리케이션 사용자 지정 아티팩트 구성
+
+커넥터 및 사용자 정의 기능의 구성The configuration of connectors and user-defined functions.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ArtifactType" : String,
+  "MavenReference" : MavenReference,
+  "S3ContentLocation" : S3ContentLocation
+}
+```
+
+## 속성
+
+`ArtifactType`  
+ 이 값을 `UDF` 또는 `DEPENDENCY_JAR`로 설정합니다. `UDF` 는 사용자 정의 함수(User-Defined Functions)를 의미합니다. 이 유형의 아티팩트는 S3 버킷에 있어야 합니다. A는 `DEPENDENCY_JAR` Maven 또는 S3 버킷에 있을 수 있습니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_허용되는 값_: `DEPENDENCY_JAR | UDF`  
+_업데이트 필요 사항_: 중단 없음
+
+`MavenReference`  
+Maven 참조를 완전히 지정하는 데 필요한 매개 변수입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: MavenReference  
+_업데이트 필요 사항_: 중단 없음
+
+`S3ContentLocation`  
+사용자 지정 아티팩트의 위치입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: S3ContentLocation  
+_업데이트 필요 사항_: 중단 없음

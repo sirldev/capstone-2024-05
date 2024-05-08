@@ -1,0 +1,425 @@
+# AWS::EC2::인스턴스
+
+EC2 인스턴스를 지정합니다.
+
+탄력적 IP 주소가 인스턴스에 연결된 경우 AWS CloudFormation은 인스턴스를 업데이트한 후 탄력적 IP 주소를 다시 연결합니다. 스택 업데이트에 대한 자세한 내용은 AWS CloudFormation 스택 업데이트 단원을 참조하십시오.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::EC2::Instance",
+  "Properties" : {
+      "AdditionalInfo" : String,
+      "Affinity" : String,
+      "AvailabilityZone" : String,
+      "BlockDeviceMappings" : [ BlockDeviceMapping, ... ],
+      "CpuOptions" : CpuOptions,
+      "CreditSpecification" : CreditSpecification,
+      "DisableApiTermination" : Boolean,
+      "EbsOptimized" : Boolean,
+      "ElasticGpuSpecifications" : [ ElasticGpuSpecification, ... ],
+      "ElasticInferenceAccelerators" : [ ElasticInferenceAccelerator, ... ],
+      "EnclaveOptions" : EnclaveOptions,
+      "HibernationOptions" : HibernationOptions,
+      "HostId" : String,
+      "HostResourceGroupArn" : String,
+      "IamInstanceProfile" : String,
+      "ImageId" : String,
+      "InstanceInitiatedShutdownBehavior" : String,
+      "InstanceType" : String,
+      "Ipv6AddressCount" : Integer,
+      "Ipv6Addresses" : [ InstanceIpv6Address, ... ],
+      "KernelId" : String,
+      "KeyName" : String,
+      "LaunchTemplate" : LaunchTemplateSpecification,
+      "LicenseSpecifications" : [ LicenseSpecification, ... ],
+      "Monitoring" : Boolean,
+      "NetworkInterfaces" : [ NetworkInterface, ... ],
+      "PlacementGroupName" : String,
+      "PrivateDnsNameOptions" : PrivateDnsNameOptions,
+      "PrivateIpAddress" : String,
+      "PropagateTagsToVolumeOnCreation" : Boolean,
+      "RamdiskId" : String,
+      "SecurityGroupIds" : [ String, ... ],
+      "SecurityGroups" : [ String, ... ],
+      "SourceDestCheck" : Boolean,
+      "SsmAssociations" : [ SsmAssociation, ... ],
+      "SubnetId" : String,
+      "Tags" : [Tag, ... ],
+      "Tenancy" : String,
+      "UserData" : String,
+      "Volumes" : [ Volume, ... ]
+    }
+}
+```
+
+## 속성
+
+`AdditionalInfo`  
+이 속성은 내부용으로 예약되어 있습니다. 이 기능을 사용하면 스택이 다음 오류와 함께 실패합니다`Bad property set: [Testing this property] (Service: AmazonEC2; Status Code: 400; Error Code: InvalidParameterCombination; Request ID: 0XXXXXX-49c7-4b40-8bcc-76885dcXXXXX)`.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 일부 중단
+
+`Affinity`  
+인스턴스가 전용 호스트와 연결되어 있는지 여부를 나타냅니다. 인스턴스가 항상 시작된 호스트와 동일한 호스트에서 다시 시작되도록 하려면 를 지정합니다`host`. 사용 가능한 모든 호스트에서 인스턴스를 다시 시작하되 인스턴스가 실행된 마지막 호스트에서 시작하려고 하면(최선을 다해) 를 지정합니다`default`.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 일부 중단
+
+`AvailabilityZone`  
+인스턴스의 가용 영역입니다.  
+지정하지 않으면 가용 영역이 리전의 로드 밸런싱 기준에 따라 자동으로 선택됩니다.  
+이 파라미터는 DescribeImageAttribute에서 지원되지 않습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`BlockDeviceMappings`  
+시작 시 인스턴스에 연결할 블록 장치를 정의하는 블록 장치 매핑 항목입니다.  
+기본적으로 AMI에 대한 블록 장치 매핑에 지정된 블록 장치가 사용됩니다. 인스턴스 블록 디바이스 매핑을 사용하여 AMI 블록 디바이스 매핑을 재정의할 수 있습니다. 루트 볼륨의 경우 볼륨 크기, 볼륨 유형, 볼륨 암호화 설정 및 설정만 재정의할 수 있습니다 `DeleteOnTermination` .  
+인스턴스가 실행된 후에는 `DeleteOnTermination` 인스턴스를 중단하지 않고 연결된 볼륨에 대한 파라미터만 수정할 수 있습니다. 다른 매개 변수를 수정하면 인스턴스가 바뀝니다.
+*필수 항목 *여부: 아니요  
+_형식_: BlockDeviceMapping 목록  
+_업데이트 필요 사항_: 일부 중단
+
+`CpuOptions`  
+인스턴스의 CPU 옵션입니다. 자세한 내용은 _Amazon Elastic Compute Cloud 사용 설명서의 CPU 옵션 최적화를 참조하세요_.  
+*필수 항목 *여부: 아니요  
+_형식_: CpuOptions  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`CreditSpecification`  
+성능 순간 확장 가능 인스턴스의 CPU 사용량에 대한 크레딧 옵션입니다. 유효한 값은 `standard` 및 `unlimited`입니다. 시작 후 이 속성을 변경하려면 ModifyInstanceCreditSpecification을 사용합니다. 자세한 내용은 _Amazon EC2 사용 설명서의 버스트 가능한 성능 인스턴스를 참조하세요_.  
+기본값: `standard` (T2 인스턴스) 또는 `unlimited` (T3/T3a/T4g 인스턴스)  
+`host` 테넌시가 있는 T3 인스턴스의 경우에만 `standard` 지원됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: CreditSpecification  
+_업데이트 필요 사항_: 중단 없음
+
+`DisableApiTermination`  
+이 파라미터를 `true`로 설정하면 Amazon EC2 콘솔, CLI 또는 API를 사용하여 인스턴스를 종료할 수 없으며, 그렇지 않으면 종료할 수 있습니다. 시작 후 이 속성을 변경하려면 ModifyInstanceAttribute를 사용합니다. 또는 로 설정하면 `InstanceInitiatedShutdownBehavior` `terminate`인스턴스에서 shutdown 명령을 실행하여 인스턴스를 종료할 수 있습니다.  
+기본값: `false`  
+_필수_: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`EbsOptimized`  
+인스턴스가 Amazon EBS I/O에 최적화되어 있는지 여부를 나타냅니다. 이 최적화는 최적의 Amazon EBS I/O 성능을 제공하기 위해 Amazon EBS에 전용 처리량과 최적화된 구성 스택을 제공합니다. 이 최적화는 모든 인스턴스 유형에서 사용할 수 있는 것은 아닙니다. EBS 최적화 인스턴스를 사용하는 경우 추가 사용 요금이 적용됩니다.  
+기본값: `false`  
+_필수_: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 일부 중단
+
+`ElasticGpuSpecifications`  
+인스턴스와 연결할 탄력적 GPU입니다. Elastic GPU는 애플리케이션의 그래픽 성능을 가속화하기 위해 Windows 인스턴스에 연결할 수 있는 GPU 리소스입니다. 자세한 내용은 _Amazon EC2 사용 설명서의 Amazon EC2_ Elastic GPU를 참조하세요.  
+*필수 항목 *여부: 아니요  
+_유형_: ElasticGpuSpecification 목록  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ElasticInferenceAccelerators`  
+인스턴스와 연결할 탄력적 추론 액셀러레이터입니다. Elastic 추론 액셀러레이터는 딥 러닝(DL) 추론 워크로드를 가속화하기 위해 Amazon EC2 인스턴스에 연결할 수 있는 리소스입니다.  
+동일한 요청에서 서로 다른 세대의 액셀러레이터를 지정할 수 없습니다.  
+2023년 4월 15일부터 AWS는 신규 고객을 Amazon Elastic Inference(EI)에 온보딩하지 않으며, 기존 고객이 더 나은 가격과 성능을 제공하는 옵션으로 워크로드를 마이그레이션할 수 있도록 지원합니다. 2023년 4월 15일 이후에는 신규 고객이 Amazon SageMaker, Amazon ECS 또는 Amazon EC2에서 Amazon EI 액셀러레이터를 사용하여 인스턴스를 시작할 수 없습니다. 그러나 지난 30일 동안 Amazon EI를 한 번 이상 사용한 고객은 현재 고객으로 간주되며 서비스를 계속 사용할 수 있습니다.
+*필수 항목 *여부: 아니요  
+_유형_: ElasticInferenceAccelerator 목록  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`EnclaveOptions`  
+인스턴스가 AWS Nitro Enclaves에 대해 활성화되었는지 여부를 나타냅니다.  
+*필수 항목 *여부: 아니요  
+_형식_: EnclaveOptions  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`HibernationOptions`  
+인스턴스가 최대 절전 모드를 사용할 수 있는지 여부를 나타냅니다. 이 파라미터는 인스턴스가 최대 절전 모드 사전 요구 사항을 충족하는 경우에만 유효합니다. 자세한 내용은 *Amazon EC2 사용 설명서*의 인스턴스 하이버네이트를 참조하세요.  
+동일한 인스턴스에서 최대 절전 모드와 AWS Nitro Enclaves를 활성화할 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_형식_: HibernationOptions  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`HostId`  
+속성에 host를 지정하는 경우 `Affinity` 인스턴스가 연결된 전용 호스트의 ID입니다. ID를 지정하지 않으면 Amazon EC2는 계정에서 사용 가능하고 호환되는 전용 호스트에서 인스턴스를 시작합니다. 이러한 유형의 실행을 대상 지정되지 않은 실행이라고 합니다. 대상이 지정되지 않은 시작의 경우 인스턴스를 성공적으로 시작할 수 있는 호환 가능한 전용 호스트가 있어야 합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 일부 중단
+
+`HostResourceGroupArn`  
+인스턴스를 시작할 호스트 리소스 그룹의 ARN입니다. 호스트 리소스 그룹 ARN을 지정하는 경우 **Tenancy** 파라미터를 생략 하거나 로 설정합니다`host`.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`IamInstanceProfile`  
+IAM 인스턴스 프로파일의 이름입니다. 새 IAM 인스턴스 프로파일을 생성하려면 AWS::IAM::InstanceProfile 리소스를 사용합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`ImageId`  
+AMI의 ID입니다. 인스턴스를 시작하려면 AMI ID가 필요하며 여기 또는 시작 템플릿에 지정해야 합니다.  
+_필수_: 조건부  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`InstanceInitiatedShutdownBehavior`  
+인스턴스에서 종료를 시작할 때 인스턴스가 중지되는지 또는 종료되는지를 나타냅니다(시스템 종료를 위해 운영 체제 명령 사용).  
+기본값: `stop`  
+_필수_: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `stop | terminate`  
+_업데이트 필요 사항_: 중단 없음
+
+`InstanceType`  
+인스턴스 유형입니다. 자세한 내용은 *Amazon EC2 사용 설명서*의 인스턴스 유형을 참조하세요.  
+EBS 지원 인스턴스 유형을 변경할 때 인스턴스 재시작 또는 교체 동작은 이전 유형과 새 유형 간의 인스턴스 유형 호환성에 따라 달라집니다. 인스턴스 스토어 볼륨을 루트 볼륨으로 사용하는 인스턴스는 항상 교체됩니다. 자세한 내용은 _Amazon EC2 사용 설명서의 인스턴스 유형 변경을 참조하세요_.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `a1.2xlarge | a1.4xlarge | a1.large | a1.medium | a1.metal | a1.xlarge | c1.medium | c1.xlarge | c3.2xlarge | c3.4xlarge | c3.8xlarge | c3.large | c3.xlarge | c4.2xlarge | c4.4xlarge | c4.8xlarge | c4.large | c4.xlarge | c5.12xlarge | c5.18xlarge | c5.24xlarge | c5.2xlarge | c5.4xlarge | c5.9xlarge | c5.large | c5.metal | c5.xlarge | c5a.12xlarge | c5a.16xlarge | c5a.24xlarge | c5a.2xlarge | c5a.4xlarge | c5a.8xlarge | c5a.large | c5a.xlarge | c5ad.12xlarge | c5ad.16xlarge | c5ad.24xlarge | c5ad.2xlarge | c5ad.4xlarge | c5ad.8xlarge | c5ad.large | c5ad.xlarge | c5d.12xlarge | c5d.18xlarge | c5d.24xlarge | c5d.2xlarge | c5d.4xlarge | c5d.9xlarge | c5d.large | c5d.metal | c5d.xlarge | c5n.18xlarge | c5n.2xlarge | c5n.4xlarge | c5n.9xlarge | c5n.large | c5n.metal | c5n.xlarge | c6a.12xlarge | c6a.16xlarge | c6a.24xlarge | c6a.2xlarge | c6a.32xlarge | c6a.48xlarge | c6a.4xlarge | c6a.8xlarge | c6a.large | c6a.metal | c6a.xlarge | c6g.12xlarge | c6g.16xlarge | c6g.2xlarge | c6g.4xlarge | c6g.8xlarge | c6g.large | c6g.medium | c6g.metal | c6g.xlarge | c6gd.12xlarge | c6gd.16xlarge | c6gd.2xlarge | c6gd.4xlarge | c6gd.8xlarge | c6gd.large | c6gd.medium | c6gd.metal | c6gd.xlarge | c6gn.12xlarge | c6gn.16xlarge | c6gn.2xlarge | c6gn.4xlarge | c6gn.8xlarge | c6gn.large | c6gn.medium | c6gn.xlarge | c6i.12xlarge | c6i.16xlarge | c6i.24xlarge | c6i.2xlarge | c6i.32xlarge | c6i.4xlarge | c6i.8xlarge | c6i.large | c6i.metal | c6i.xlarge | c6id.12xlarge | c6id.16xlarge | c6id.24xlarge | c6id.2xlarge | c6id.32xlarge | c6id.4xlarge | c6id.8xlarge | c6id.large | c6id.metal | c6id.xlarge | c6in.12xlarge | c6in.16xlarge | c6in.24xlarge | c6in.2xlarge | c6in.32xlarge | c6in.4xlarge | c6in.8xlarge | c6in.large | c6in.metal | c6in.xlarge | c7g.12xlarge | c7g.16xlarge | c7g.2xlarge | c7g.4xlarge | c7g.8xlarge | c7g.large | c7g.medium | c7g.metal | c7g.xlarge | c7gd.12xlarge | c7gd.16xlarge | c7gd.2xlarge | c7gd.4xlarge | c7gd.8xlarge | c7gd.large | c7gd.medium | c7gd.xlarge | c7gn.12xlarge | c7gn.16xlarge | c7gn.2xlarge | c7gn.4xlarge | c7gn.8xlarge | c7gn.large | c7gn.medium | c7gn.xlarge | cc1.4xlarge | cc2.8xlarge | cg1.4xlarge | cr1.8xlarge | d2.2xlarge | d2.4xlarge | d2.8xlarge | d2.xlarge | d3.2xlarge | d3.4xlarge | d3.8xlarge | d3.xlarge | d3en.12xlarge | d3en.2xlarge | d3en.4xlarge | d3en.6xlarge | d3en.8xlarge | d3en.xlarge | dl1.24xlarge | f1.16xlarge | f1.2xlarge | f1.4xlarge | g2.2xlarge | g2.8xlarge | g3.16xlarge | g3.4xlarge | g3.8xlarge | g3s.xlarge | g4ad.16xlarge | g4ad.2xlarge | g4ad.4xlarge | g4ad.8xlarge | g4ad.xlarge | g4dn.12xlarge | g4dn.16xlarge | g4dn.2xlarge | g4dn.4xlarge | g4dn.8xlarge | g4dn.metal | g4dn.xlarge | g5.12xlarge | g5.16xlarge | g5.24xlarge | g5.2xlarge | g5.48xlarge | g5.4xlarge | g5.8xlarge | g5.xlarge | g5g.16xlarge | g5g.2xlarge | g5g.4xlarge | g5g.8xlarge | g5g.metal | g5g.xlarge | h1.16xlarge | h1.2xlarge | h1.4xlarge | h1.8xlarge | hi1.4xlarge | hpc6a.48xlarge | hpc6id.32xlarge | hpc7a.12xlarge | hpc7a.24xlarge | hpc7a.48xlarge | hpc7a.96xlarge | hpc7g.16xlarge | hpc7g.4xlarge | hpc7g.8xlarge | hs1.8xlarge | i2.2xlarge | i2.4xlarge | i2.8xlarge | i2.xlarge | i3.16xlarge | i3.2xlarge | i3.4xlarge | i3.8xlarge | i3.large | i3.metal | i3.xlarge | i3en.12xlarge | i3en.24xlarge | i3en.2xlarge | i3en.3xlarge | i3en.6xlarge | i3en.large | i3en.metal | i3en.xlarge | i4g.16xlarge | i4g.2xlarge | i4g.4xlarge | i4g.8xlarge | i4g.large | i4g.xlarge | i4i.16xlarge | i4i.2xlarge | i4i.32xlarge | i4i.4xlarge | i4i.8xlarge | i4i.large | i4i.metal | i4i.xlarge | im4gn.16xlarge | im4gn.2xlarge | im4gn.4xlarge | im4gn.8xlarge | im4gn.large | im4gn.xlarge | inf1.24xlarge | inf1.2xlarge | inf1.6xlarge | inf1.xlarge | inf2.24xlarge | inf2.48xlarge | inf2.8xlarge | inf2.xlarge | is4gen.2xlarge | is4gen.4xlarge | is4gen.8xlarge | is4gen.large | is4gen.medium | is4gen.xlarge | m1.large | m1.medium | m1.small | m1.xlarge | m2.2xlarge | m2.4xlarge | m2.xlarge | m3.2xlarge | m3.large | m3.medium | m3.xlarge | m4.10xlarge | m4.16xlarge | m4.2xlarge | m4.4xlarge | m4.large | m4.xlarge | m5.12xlarge | m5.16xlarge | m5.24xlarge | m5.2xlarge | m5.4xlarge | m5.8xlarge | m5.large | m5.metal | m5.xlarge | m5a.12xlarge | m5a.16xlarge | m5a.24xlarge | m5a.2xlarge | m5a.4xlarge | m5a.8xlarge | m5a.large | m5a.xlarge | m5ad.12xlarge | m5ad.16xlarge | m5ad.24xlarge | m5ad.2xlarge | m5ad.4xlarge | m5ad.8xlarge | m5ad.large | m5ad.xlarge | m5d.12xlarge | m5d.16xlarge | m5d.24xlarge | m5d.2xlarge | m5d.4xlarge | m5d.8xlarge | m5d.large | m5d.metal | m5d.xlarge | m5dn.12xlarge | m5dn.16xlarge | m5dn.24xlarge | m5dn.2xlarge | m5dn.4xlarge | m5dn.8xlarge | m5dn.large | m5dn.metal | m5dn.xlarge | m5n.12xlarge | m5n.16xlarge | m5n.24xlarge | m5n.2xlarge | m5n.4xlarge | m5n.8xlarge | m5n.large | m5n.metal | m5n.xlarge | m5zn.12xlarge | m5zn.2xlarge | m5zn.3xlarge | m5zn.6xlarge | m5zn.large | m5zn.metal | m5zn.xlarge | m6a.12xlarge | m6a.16xlarge | m6a.24xlarge | m6a.2xlarge | m6a.32xlarge | m6a.48xlarge | m6a.4xlarge | m6a.8xlarge | m6a.large | m6a.metal | m6a.xlarge | m6g.12xlarge | m6g.16xlarge | m6g.2xlarge | m6g.4xlarge | m6g.8xlarge | m6g.large | m6g.medium | m6g.metal | m6g.xlarge | m6gd.12xlarge | m6gd.16xlarge | m6gd.2xlarge | m6gd.4xlarge | m6gd.8xlarge | m6gd.large | m6gd.medium | m6gd.metal | m6gd.xlarge | m6i.12xlarge | m6i.16xlarge | m6i.24xlarge | m6i.2xlarge | m6i.32xlarge | m6i.4xlarge | m6i.8xlarge | m6i.large | m6i.metal | m6i.xlarge | m6id.12xlarge | m6id.16xlarge | m6id.24xlarge | m6id.2xlarge | m6id.32xlarge | m6id.4xlarge | m6id.8xlarge | m6id.large | m6id.metal | m6id.xlarge | m6idn.12xlarge | m6idn.16xlarge | m6idn.24xlarge | m6idn.2xlarge | m6idn.32xlarge | m6idn.4xlarge | m6idn.8xlarge | m6idn.large | m6idn.metal | m6idn.xlarge | m6in.12xlarge | m6in.16xlarge | m6in.24xlarge | m6in.2xlarge | m6in.32xlarge | m6in.4xlarge | m6in.8xlarge | m6in.large | m6in.metal | m6in.xlarge | m7a.12xlarge | m7a.16xlarge | m7a.24xlarge | m7a.2xlarge | m7a.32xlarge | m7a.48xlarge | m7a.4xlarge | m7a.8xlarge | m7a.large | m7a.medium | m7a.metal-48xl | m7a.xlarge | m7g.12xlarge | m7g.16xlarge | m7g.2xlarge | m7g.4xlarge | m7g.8xlarge | m7g.large | m7g.medium | m7g.metal | m7g.xlarge | m7gd.12xlarge | m7gd.16xlarge | m7gd.2xlarge | m7gd.4xlarge | m7gd.8xlarge | m7gd.large | m7gd.medium | m7gd.xlarge | m7i-flex.2xlarge | m7i-flex.4xlarge | m7i-flex.8xlarge | m7i-flex.large | m7i-flex.xlarge | m7i.12xlarge | m7i.16xlarge | m7i.24xlarge | m7i.2xlarge | m7i.48xlarge | m7i.4xlarge | m7i.8xlarge | m7i.large | m7i.xlarge | mac1.metal | mac2.metal | p2.16xlarge | p2.8xlarge | p2.xlarge | p3.16xlarge | p3.2xlarge | p3.8xlarge | p3dn.24xlarge | p4d.24xlarge | p4de.24xlarge | p5.48xlarge | r3.2xlarge | r3.4xlarge | r3.8xlarge | r3.large | r3.xlarge | r4.16xlarge | r4.2xlarge | r4.4xlarge | r4.8xlarge | r4.large | r4.xlarge | r5.12xlarge | r5.16xlarge | r5.24xlarge | r5.2xlarge | r5.4xlarge | r5.8xlarge | r5.large | r5.metal | r5.xlarge | r5a.12xlarge | r5a.16xlarge | r5a.24xlarge | r5a.2xlarge | r5a.4xlarge | r5a.8xlarge | r5a.large | r5a.xlarge | r5ad.12xlarge | r5ad.16xlarge | r5ad.24xlarge | r5ad.2xlarge | r5ad.4xlarge | r5ad.8xlarge | r5ad.large | r5ad.xlarge | r5b.12xlarge | r5b.16xlarge | r5b.24xlarge | r5b.2xlarge | r5b.4xlarge | r5b.8xlarge | r5b.large | r5b.metal | r5b.xlarge | r5d.12xlarge | r5d.16xlarge | r5d.24xlarge | r5d.2xlarge | r5d.4xlarge | r5d.8xlarge | r5d.large | r5d.metal | r5d.xlarge | r5dn.12xlarge | r5dn.16xlarge | r5dn.24xlarge | r5dn.2xlarge | r5dn.4xlarge | r5dn.8xlarge | r5dn.large | r5dn.metal | r5dn.xlarge | r5n.12xlarge | r5n.16xlarge | r5n.24xlarge | r5n.2xlarge | r5n.4xlarge | r5n.8xlarge | r5n.large | r5n.metal | r5n.xlarge | r6a.12xlarge | r6a.16xlarge | r6a.24xlarge | r6a.2xlarge | r6a.32xlarge | r6a.48xlarge | r6a.4xlarge | r6a.8xlarge | r6a.large | r6a.metal | r6a.xlarge | r6g.12xlarge | r6g.16xlarge | r6g.2xlarge | r6g.4xlarge | r6g.8xlarge | r6g.large | r6g.medium | r6g.metal | r6g.xlarge | r6gd.12xlarge | r6gd.16xlarge | r6gd.2xlarge | r6gd.4xlarge | r6gd.8xlarge | r6gd.large | r6gd.medium | r6gd.metal | r6gd.xlarge | r6i.12xlarge | r6i.16xlarge | r6i.24xlarge | r6i.2xlarge | r6i.32xlarge | r6i.4xlarge | r6i.8xlarge | r6i.large | r6i.metal | r6i.xlarge | r6id.12xlarge | r6id.16xlarge | r6id.24xlarge | r6id.2xlarge | r6id.32xlarge | r6id.4xlarge | r6id.8xlarge | r6id.large | r6id.metal | r6id.xlarge | r6idn.12xlarge | r6idn.16xlarge | r6idn.24xlarge | r6idn.2xlarge | r6idn.32xlarge | r6idn.4xlarge | r6idn.8xlarge | r6idn.large | r6idn.metal | r6idn.xlarge | r6in.12xlarge | r6in.16xlarge | r6in.24xlarge | r6in.2xlarge | r6in.32xlarge | r6in.4xlarge | r6in.8xlarge | r6in.large | r6in.metal | r6in.xlarge | r7g.12xlarge | r7g.16xlarge | r7g.2xlarge | r7g.4xlarge | r7g.8xlarge | r7g.large | r7g.medium | r7g.metal | r7g.xlarge | r7gd.12xlarge | r7gd.16xlarge | r7gd.2xlarge | r7gd.4xlarge | r7gd.8xlarge | r7gd.large | r7gd.medium | r7gd.xlarge | t1.micro | t2.2xlarge | t2.large | t2.medium | t2.micro | t2.nano | t2.small | t2.xlarge | t3.2xlarge | t3.large | t3.medium | t3.micro | t3.nano | t3.small | t3.xlarge | t3a.2xlarge | t3a.large | t3a.medium | t3a.micro | t3a.nano | t3a.small | t3a.xlarge | t4g.2xlarge | t4g.large | t4g.medium | t4g.micro | t4g.nano | t4g.small | t4g.xlarge | trn1.2xlarge | trn1.32xlarge | trn1n.32xlarge | u-12tb1.112xlarge | u-12tb1.metal | u-18tb1.112xlarge | u-18tb1.metal | u-24tb1.112xlarge | u-24tb1.metal | u-3tb1.56xlarge | u-6tb1.112xlarge | u-6tb1.56xlarge | u-6tb1.metal | u-9tb1.112xlarge | u-9tb1.metal | vt1.24xlarge | vt1.3xlarge | vt1.6xlarge | x1.16xlarge | x1.32xlarge | x1e.16xlarge | x1e.2xlarge | x1e.32xlarge | x1e.4xlarge | x1e.8xlarge | x1e.xlarge | x2gd.12xlarge | x2gd.16xlarge | x2gd.2xlarge | x2gd.4xlarge | x2gd.8xlarge | x2gd.large | x2gd.medium | x2gd.metal | x2gd.xlarge | x2idn.16xlarge | x2idn.24xlarge | x2idn.32xlarge | x2idn.metal | x2iedn.16xlarge | x2iedn.24xlarge | x2iedn.2xlarge | x2iedn.32xlarge | x2iedn.4xlarge | x2iedn.8xlarge | x2iedn.metal | x2iedn.xlarge | x2iezn.12xlarge | x2iezn.2xlarge | x2iezn.4xlarge | x2iezn.6xlarge | x2iezn.8xlarge | x2iezn.metal | z1d.12xlarge | z1d.2xlarge | z1d.3xlarge | z1d.6xlarge | z1d.large | z1d.metal | z1d.xlarge`  
+_업데이트 필요 사항_: 일부 중단
+
+`Ipv6AddressCount`  
+기본 네트워크 인터페이스와 연결할 IPv6 주소의 수입니다. Amazon EC2는 서브넷 범위에서 IPv6 주소를 선택합니다. 이 옵션과 동일한 요청에서 특정 IPv6 주소를 할당하는 옵션을 지정할 수 없습니다. 시작할 최소 인스턴스 수를 지정한 경우 이 옵션을 지정할 수 있습니다.  
+동일한 요청에서 이 옵션과 network interfaces 옵션을 지정할 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Ipv6Addresses`  
+기본 네트워크 인터페이스와 연결할 서브넷 범위의 IPv6 주소입니다. 이 옵션과 동일한 요청에서 여러 IPv6 주소를 할당하는 옵션을 지정할 수 없습니다. 시작할 최소 인스턴스 수를 지정한 경우 이 옵션을 지정할 수 없습니다.  
+동일한 요청에서 이 옵션과 network interfaces 옵션을 지정할 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: InstanceIpv6Address 목록  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`KernelId`  
+커널의 ID입니다.  
+커널 및 RAM 디스크 대신 PV-GRUB을 사용하는 것이 좋습니다. 자세한 내용은 _Amazon EC2 사용 설명서의 PV-GRUB을 참조하세요_.
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 일부 중단
+
+`KeyName`  
+키 페어의 이름입니다. CreateKeyPair 또는 ImportKeyPair를 사용하여 키 페어를 생성할 수 있습니다.  
+키 페어를 지정하지 않으면 사용자가 다른 방법으로 로그인할 수 있도록 구성된 AMI를 선택하지 않는 한 인스턴스에 연결할 수 없습니다.
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`LaunchTemplate`  
+인스턴스를 시작하는 데 사용할 시작 템플릿입니다. AWS CloudFormation 템플릿에서 지정하는 모든 파라미터는 시작 템플릿의 동일한 파라미터를 재정의합니다. 시작 템플릿의 이름 또는 ID를 지정할 수 있지만 둘 다 지정할 수는 없습니다.  
+*필수 항목 *여부: 아니요  
+_형식_: LaunchTemplateSpecification  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`LicenseSpecifications`  
+라이센스 구성.  
+*필수 항목 *여부: 아니요  
+_유형_: LicenseSpecification 목록  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Monitoring`  
+인스턴스에 대해 세부 모니터링을 사용할 수 있는지 여부를 지정합니다. `true` 자세한 모니터링을 사용하도록 지정합니다. 그렇지 않으면 기본 모니터링이 활성화됩니다. 세부 모니터링에 대한 자세한 내용은 Amazon EC2 사용 설명서의 인스턴스에 대한 세부 모니터링 활성화 또는 해제를 참조하세요\**.  
+*필수 항목 *여부: 아니요  
+*유형*: Boolean  
+*업데이트 필요 사항\*: 중단 없음
+
+`NetworkInterfaces`  
+인스턴스와 연결할 네트워크 인터페이스입니다.  
+이 속성을 사용하여 네트워크 인터페이스를 가리키는 경우 인스턴스 업데이트가 성공할 수 있도록 새 인터페이스를 연결하기 전에 원래 인터페이스를 종료해야 합니다.  
+이 리소스에 퍼블릭 IP 주소가 있고 동일한 템플릿에 정의된 VPC에도 있는 경우 DependsOn 속성을 사용하여 VPC 게이트웨이 연결에 대한 종속성을 선언해야 합니다.
+*필수 항목 *여부: 아니요  
+_유형_: NetworkInterface 목록  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`PlacementGroupName`  
+인스턴스를 시작하려는 기존 배치 그룹의 이름(cluster | partition | spread).  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`PrivateDnsNameOptions`  
+인스턴스 호스트 이름에 대한 옵션입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: PrivateDnsNameOptions  
+_업데이트 필요 사항_: 일부 중단
+
+`PrivateIpAddress`  
+기본 IPv4 주소입니다. 서브넷의 IPv4 주소 범위에서 값을 지정해야 합니다.  
+하나의 개인 IP 주소만 기본으로 지정할 수 있습니다. 네트워크 인터페이스 사양에서 개인 IP 주소를 기본 IP 주소로 지정하는 옵션을 지정한 경우 이 옵션을 지정할 수 없습니다. 요청에서 둘 이상의 인스턴스를 시작하는 경우 이 옵션을 지정할 수 없습니다.  
+동일한 요청에서 이 옵션과 network interfaces 옵션을 지정할 수 없습니다.  
+교체가 필요한 인스턴스를 업데이트하는 경우 새 프라이빗 IP 주소를 할당해야 합니다. 교체하는 동안 AWS CloudFormation은 새 인스턴스를 생성하지만 스택이 성공적으로 업데이트될 때까지 이전 인스턴스를 삭제하지 않습니다. 스택 업데이트가 실패하면 AWS CloudFormation에서는 이전 인스턴스를 사용하여 스택을 이전 작업 상태로 롤백합니다. 이전 인스턴스와 새 인스턴스는 동일한 프라이빗 IP 주소를 가질 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`PropagateTagsToVolumeOnCreation`  
+시작 시 인스턴스에 연결된 모든 볼륨에 인스턴스의 태그를 할당할지 여부를 나타냅니다. 태그를 지정 `true` 하고 인스턴스에 할당하면 해당 태그는 시작 시 인스턴스에 연결하는 모든 볼륨에 자동으로 할당됩니다. 를 지정하면 `false`해당 태그는 연결된 볼륨에 할당되지 않습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`RamdiskId`  
+선택할 RAM 디스크의 ID입니다. 일부 커널은 시작 시 추가 드라이버가 필요합니다. RAM 디스크를 지정해야 하는지 여부에 대한 정보는 커널 요구 사항을 확인하십시오. 커널 요구 사항을 찾으려면 AWS 리소스 센터로 이동하여 커널 ID를 검색하십시오.  
+커널 및 RAM 디스크 대신 PV-GRUB을 사용하는 것이 좋습니다. 자세한 내용은 _Amazon EC2 사용 설명서의 PV-GRUB을 참조하세요_.
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 일부 중단
+
+`SecurityGroupIds`  
+보안 그룹의 ID입니다. 기존 보안 그룹의 ID와 스택 템플릿에 의해 생성된 리소스에 대한 참조를 지정할 수 있습니다.  
+네트워크 인터페이스를 지정하는 경우 네트워크 인터페이스의 일부로 보안 그룹을 지정해야 합니다.  
+_필수_: 조건부  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 일부 중단
+
+`SecurityGroups`  
+[기본 VPC] 보안 그룹의 이름입니다. 기본이 아닌 VPC의 경우 보안 그룹 ID를 대신 사용해야 합니다.  
+동일한 요청에서 이 옵션과 network interfaces 옵션을 지정할 수 없습니다. 목록에는 기존 Amazon EC2 보안 그룹의 이름 또는 템플릿에서 생성된 AWS::EC2::SecurityGroup 리소스에 대한 참조가 모두 포함될 수 있습니다.  
+기본값: Amazon EC2는 기본 보안 그룹을 사용합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`SourceDestCheck`  
+소스/대상 검사를 활성화하거나 비활성화하여 인스턴스가 수신하는 모든 트래픽의 소스 또는 대상인지 확인합니다. 값이 `true`이면 소스/대상 확인이 활성화되고, 그렇지 않으면 비활성화됩니다. 기본값은 `true`입니다. 인스턴스가 네트워크 주소 변환, 라우팅 또는 방화벽과 같은 서비스를 실행하는 경우 소스/대상 확인을 비활성화해야 합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`SsmAssociations`  
+이 인스턴스와 연결할 AWS Systems Manager의 SSM 문서 및 파라미터 값입니다. 이 속성을 사용하려면 인스턴스에 대한 IAM 인스턴스 프로파일 역할을 지정해야 합니다. 자세한 내용은 AWS Systems Manager 사용 설명서의 Systems Manager에 대한 IAM 인스턴스 프로파일 생성을 참조하세요\**.  
+현재 하나의 문서만 인스턴스와 연결할 수 있습니다.
+*필수 항목 *여부: 아니요  
+*유형*: SsmAssociation 목록  
+*업데이트 필요 사항\*: 중단 없음
+
+`SubnetId`  
+인스턴스를 시작할 서브넷의 ID입니다.  
+네트워크 인터페이스를 지정하는 경우 네트워크 인터페이스의 일부로 서브넷을 지정해야 합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Tags`  
+인스턴스에 추가할 태그입니다. 이러한 태그는 루트 볼륨과 같은 EBS 볼륨에 적용되지 않습니다(PropagateTagsToVolumeOnCreation이 `true`.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`Tenancy`  
+인스턴스의 테넌시입니다. 테넌시가 있는 인스턴스는 `dedicated` 단일 테넌트 하드웨어에서 실행됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `dedicated | default | host`  
+_업데이트 필요 사항_: 일부 중단
+
+`UserData`  
+인스턴스에서 사용할 수 있는 사용자 데이터 스크립트입니다. 사용자 데이터는 16KB로 제한됩니다. base64로 인코딩된 텍스트를 제공해야 합니다. 자세한 내용은 Fn::Base64를 참조하십시오.  
+사용자 데이터는 인스턴스 시작 시에만 실행됩니다. 자세한 내용은 시작 시 Linux 인스턴스에서 명령 실행 및 시작 시 Windows 인스턴스에서 명령 실행을 참조하세요.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 일부 중단
+
+`Volumes`  
+인스턴스에 연결할 볼륨입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 볼륨 목록  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref`인스턴스 `Ref`ID가 반환됩니다. 예를 들면 다음과 같습니다 `i-1234567890abcdef0`.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`AvailabilityZone`  
+지정된 인스턴스가 시작되는 가용 영역입니다. 예를 들면 다음과 같습니다 `us-east-1b`.  
+Fn::GetAZs 내장 함수를 사용하여 리전의 모든 가용 영역 목록을 검색할 수 있습니다.
+
+`PrivateDnsName`  
+지정된 인스턴스의 프라이빗 DNS 이름입니다. 예를 들면 다음과 같습니다 `ip-10-24-34-0.ec2.internal`.
+
+`PrivateIp`  
+지정된 인스턴스의 개인 IP 주소입니다. 예를 들면 다음과 같습니다 `10.24.34.0`.
+
+`PublicDnsName`  
+지정된 인스턴스의 퍼블릭 DNS 이름입니다. 예를 들면 다음과 같습니다 `ec2-107-20-50-45.compute-1.amazonaws.com`.
+
+`PublicIp`  
+지정된 인스턴스의 퍼블릭 IP 주소입니다. 예를 들면 다음과 같습니다 `192.0.2.0`.
+
+## 예제
+
+### EBS 블록 디바이스 매핑이 있는 EC2 인스턴스
+
+다음 예제에서는 크기가 20GB인 io1 볼륨을 지정하는 항목과 NoDevice를 사용하여 AMI 블록 디바이스 매핑에 지정된 디바이스를 재정의하는 항목이 있는 블록 디바이스 매핑이 있는 EC2 인스턴스를 생성합니다.
+
+#### JSON (영문)
+
+```
+"MyEC2Instance" : {
+   "Type" : "AWS::EC2::Instance",
+   "Properties" : {
+      "ImageId" : "ami-79fd7eee",
+      "KeyName" : "testkey",
+      "BlockDeviceMappings" : [
+         {
+            "DeviceName" : "/dev/sdm",
+            "Ebs" : {
+              "VolumeType" : "io1",
+              "Iops" : "200",
+              "DeleteOnTermination" : "false",
+              "VolumeSize" : "20"
+            }
+          },
+          {
+            "DeviceName" : "/dev/sdk",
+            "NoDevice" : {}
+          }
+      ]
+   }
+}
+```
+
+### 공용 IP 주소 자동 할당
+
+공용 IP 주소가 기본 네트워크 인터페이스(디바이스 인덱스는 0)이고 기존 네트워크 인터페이스를 연결하지 않고 새 네트워크 인터페이스를 만드는 경우에만 공용 IP 주소를 네트워크 인터페이스와 연결할 수 있습니다.
+
+#### JSON (영문)
+
+```
+"Ec2Instance" : {
+  "Type" : "AWS::EC2::Instance",
+  "Properties" : {
+    "ImageId" : { "Fn::FindInMap" : [ "RegionMap", { "Ref" : "AWS::Region" }, "AMI" ]},
+    "KeyName" : { "Ref" : "KeyName" },
+    "NetworkInterfaces": [ {
+      "AssociatePublicIpAddress": "true",
+      "DeviceIndex": "0",
+      "GroupSet": [{ "Ref" : "myVPCEC2SecurityGroup" }],
+      "SubnetId": { "Ref" : "PublicSubnet" }
+    } ]
+  }
+}
+```
+
+## 참고 항목
+
+- Amazon EC2 API 참조\* \*의 RunInstances
+- Amazon EC2 사용 설명서\* \*의 Amazon EC2 인스턴스

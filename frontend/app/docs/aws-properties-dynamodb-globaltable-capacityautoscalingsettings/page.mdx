@@ -1,0 +1,46 @@
+# AWS::D ynamoDB::GlobalTable CapacityAutoScalingSettings
+
+확장 가능한 대상과 테이블 또는 global secondary index의 읽기 또는 쓰기 용량에 대한 자동 크기 조정 정책을 구성합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "MaxCapacity" : Integer,
+  "MinCapacity" : Integer,
+  "SeedCapacity" : Integer,
+  "TargetTrackingScalingPolicyConfiguration" : TargetTrackingScalingPolicyConfiguration
+}
+```
+
+## 속성
+
+`MaxCapacity`  
+전역 테이블에 대해 프로비저닝된 최대 용량 단위입니다.  
+_필수 항목 여부_: 예  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`MinCapacity`  
+전역 테이블의 최소 프로비저닝된 용량 단위입니다.  
+_필수 항목 여부_: 예  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`SeedCapacity`  
+결제 모드를 에서 로 전환할 때 `PAY_PER_REQUEST` `PROVISIONED`DynamoDB에서는 테이블 및 각 글로벌 보조 인덱스에 대해 읽기 및 쓰기 용량 단위 값을 지정해야 합니다. 이러한 값은 모든 복제본에 적용됩니다. 테이블은 CloudFormation이 템플릿에서 구성한 자동 크기 조정 정책을 생성할 때까지 이러한 프로비저닝된 값을 사용합니다. CloudFormation은 애플리케이션에 따라 다르기 때문에 이 기간 동안 테이블과 글로벌 보조 인덱스에 필요한 용량을 결정할 수 없습니다.  
+테이블의 청구 모드를 `PAY_PER_REQUEST` 에서 로 `PROVISIONED` 전환하려면 자동 크기 조정된 각 리소스에 대해 이 속성의 값을 지정해야 합니다. 다른 리전의 동일한 리소스에 대해 다른 값을 지정하는 경우 CloudFormation은 or 속성에서 찾은 가장 높은 값을 사용합니다 `SeedCapacity` `ReadCapacityUnits` . 예를 들어, 글로벌 보조 인덱스의 `myGSI` `SeedCapacity` us-east-1에서 10이 `ReadCapacityUnits` 있고 eu-west-1에서 20으로 고정되어 있는 경우 CloudFormation은 처음에 읽기 용량을 `myGSI` 20으로 설정합니다. `ScaleIn` `myGSI` us-east-1에서 for를 비활성화하면 읽기 용량 단위가 10으로 다시 설정되지 않을 수 있습니다.  
+또한 `SeedCapacity` 테이블의 결제 모드를 `PROVISIONED` 에서 로 `PAY_PER_REQUEST` 전환하려는 경우 CloudFormation에서 작업을 롤백(결제 모드 되돌리기) 해야 할 수 `PROVISIONED`있으며 에 대한 값을 지정하지 않고는 성공할 수 없기 때문에 값을 지정해야 합니다`SeedCapacity`.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`TargetTrackingScalingPolicyConfiguration`  
+대상 추적 조정 정책을 정의합니다.  
+_필수 항목 여부_: 예  
+_유형_: TargetTrackingScalingPolicyConfiguration  
+_업데이트 필요 사항_: 중단 없음

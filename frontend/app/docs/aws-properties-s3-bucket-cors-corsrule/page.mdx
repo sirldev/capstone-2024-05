@@ -1,0 +1,128 @@
+# AWS::S3::버킷 CorsRule
+
+Amazon S3 버킷에 대한 교차 오리진 액세스 규칙을 지정합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "AllowedHeaders" : [ String, ... ],
+  "AllowedMethods" : [ String, ... ],
+  "AllowedOrigins" : [ String, ... ],
+  "ExposedHeaders" : [ String, ... ],
+  "Id" : String,
+  "MaxAge" : Integer
+}
+```
+
+## 속성
+
+`AllowedHeaders`  
+헤더에 지정된 헤더입니다 `Access-Control-Request-Headers` . 이러한 헤더는 실행 전 OPTIONS 요청에서 허용됩니다. 실행 전 OPTIONS 요청에 대한 응답으로 Amazon S3는 허용된 요청된 헤더를 반환합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`AllowedMethods`  
+오리진의 실행을 허용하는 HTTP 메서드입니다.  
+_허용되는 값_: `GET` | `PUT` | `HEAD` | `POST` | `DELETE`  
+_필수 항목 여부_: 예  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`AllowedOrigins`  
+고객이 버킷에 액세스할 수 있도록 하려는 하나 이상의 오리진입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`ExposedHeaders`  
+고객이 애플리케이션(예: JavaScript 객체)에서 액세스할 수 있도록 하려는 응답의 하나 이상의 헤더 `XMLHttpRequest` 입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`Id`  
+이 규칙의 고유 식별자입니다. 값은 255자를 넘지 않아야 합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`MaxAge`  
+브라우저가 지정된 리소스에 대한 실행 전 응답을 캐시하는 시간(초)입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+## 예제
+
+### Cross-Origin 리소스 공유 사용
+
+다음 예제 템플릿은 두 개의 교차 오리진 리소스 공유 규칙이 있는 퍼블릭 S3 버킷을 보여줍니다.
+
+#### JSON (영문)
+
+```
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Resources": {
+        "S3Bucket": {
+            "Type": "AWS::S3::Bucket",
+            "Properties": {
+                "AccessControl": "PublicRead",
+                "CorsConfiguration": {
+                    "CorsRules": [
+                        {
+                            "AllowedHeaders": [
+                                "*"
+                            ],
+                            "AllowedMethods": [
+                                "GET"
+                            ],
+                            "AllowedOrigins": [
+                                "*"
+                            ],
+                            "ExposedHeaders": [
+                                "Date"
+                            ],
+                            "Id": "myCORSRuleId1",
+                            "MaxAge": 3600
+                        },
+                        {
+                            "AllowedHeaders": [
+                                "x-amz-*"
+                            ],
+                            "AllowedMethods": [
+                                "DELETE"
+                            ],
+                            "AllowedOrigins": [
+                                "http://www.example.com",
+                                "http://www.example.net"
+                            ],
+                            "ExposedHeaders": [
+                                "Connection",
+                                "Server",
+                                "Date"
+                            ],
+                            "Id": "myCORSRuleId2",
+                            "MaxAge": 1800
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "Outputs": {
+        "BucketName": {
+            "Value": {
+                "Ref": "S3Bucket"
+            },
+            "Description": "Name of the sample Amazon S3 bucket with CORS enabled."
+        }
+    }
+}
+```

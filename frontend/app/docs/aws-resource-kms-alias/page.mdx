@@ -1,0 +1,100 @@
+# AWS::KMS::별칭
+
+`AWS::KMS::Alias` 리소스는 KMS 키의 표시 이름을 지정합니다. 별칭을 사용하여 AWS KMS 콘솔, DescribeKey 작업, 암호화 작업(예: Decrypt 및 GenerateDataKey)에서 KMS 키를 식별할 수 있습니다.
+
+**메모**  
+별칭을 추가, 삭제 또는 업데이트하면 KMS 키에 대한 권한을 허용하거나 거부할 수 있습니다. 자세한 내용은 _AWS Key Management Service 개발자 안내서의 AWS KMS용 ABAC를 참조하세요_.
+
+별칭을 사용하여 KMS 키를 참조하면 키 관리를 간소화할 수 있습니다. 예를 들어, 코드의 별칭은 서로 다른 AWS 리전의 다른 KMS 키와 연결될 수 있습니다. 자세한 내용은 _AWS Key Management Service 개발자 안내서의 별칭 사용을 참조하세요_.
+
+별칭을 지정할 때 다음 규칙을 준수하십시오.
+
+- 각 별칭은 하나의 KMS 키와 연결되지만 여러 별칭을 동일한 KMS 키에 연결할 수 있습니다.
+- 별칭 및 연결된 KMS 키는 동일한 AWS 계정 및 리전에 있어야 합니다.
+- 별칭 이름은 AWS 계정 및 리전에서 고유해야 합니다. 그러나 다른 AWS 리전에서 동일한 이름의 별칭을 생성할 수 있습니다. 예를 들어, `alias/projectKey` 여러 리전에 있을 수 있으며, 각 리전은 해당 리전의 KMS 키와 연결되어 있습니다.
+- 각 별칭 이름은 로 시작하고 `alias/` 그 뒤에 이름(예: )이 와야 `alias/exampleKey` 합니다. 별칭 이름에는 영숫자, 슬래시(/), 밑줄(\_) 및 대시(-)만 사용할 수 있습니다. 별칭 이름은 로 시작할 수 없습니다`alias/aws/`. 이 별칭 이름 접두사는 AWS 관리형 키용으로 예약되어 있습니다.
+
+**지역**
+
+AWS KMS CloudFormation 리소스는 AWS KMS 및 AWS CloudFormation이 지원되는 모든 AWS 리전에서 사용할 수 있습니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::KMS::Alias",
+  "Properties" : {
+      "AliasName" : String,
+      "TargetKeyId" : String
+    }
+}
+```
+
+## 속성
+
+`AliasName`  
+별칭 이름을 지정합니다. 이 값은 로 시작하고 `alias/` 그 뒤에 이름(예: )을 붙여 `alias/ExampleAlias` 야 합니다.  
+속성 값을 변경 `AliasName` 하면 기존 별칭이 삭제되고 지정된 KMS 키에 대해 새 별칭이 생성됩니다. 이 변경으로 인해 별칭을 사용하는 응용 프로그램이 중단될 수 있습니다. 또한 속성 기반 액세스 제어(ABAC)의 영향을 받는 KMS 키에 대한 액세스를 허용하거나 거부할 수 있습니다.
+별칭은 1-256자의 문자열이어야 합니다. 영숫자, 슬래시(/), 밑줄(_) 및 대시(-)만 포함할 수 있습니다. 별칭 이름은 로 시작할 수 없습니다`alias/aws/`. `alias/aws/` 접두사는 AWS 관리형 키용으로 예약되어 있습니다.  
+*패턴*: `^alias/[a-zA-Z0-9/_-]+$` 
+*최소*:`1`  
+*최대*: 필수`256`: \*  
+*예  
+*유형*: 문자열  
+*업데이트 필요 사항\*: 바꿔 놓음
+
+`TargetKeyId`  
+별칭을 지정된 고객 관리형 키와 연결합니다. KMS 키는 동일한 AWS 계정 및 리전에 있어야 합니다.  
+유효한 키 ID가 필요합니다. null 또는 빈 문자열 값을 제공하면 이 작업은 오류를 반환합니다.  
+키 ID 및 ARN을 찾는 방법에 대한 도움말은 *AWS Key Management Service 개발자 안내서*의 키 ID 및 ARN 찾기를 참조하세요.  
+KMS 키의 키 ID 또는 키 ARN을 지정합니다.  
+예를 들어:
+
+- 키 ID: `1234abcd-12ab-34cd-56ef-1234567890ab`
+- 키 ARN: `arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab`
+  KMS 키의 키 ID 및 키 ARN을 가져오려면 ListKeys 또는 DescribeKey를 사용합니다.  
+  _필수 항목 여부_: 예  
+  _유형_: 문자열  
+  _최소_: `1`  
+  _최대_: `2048`  
+  _업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref`별칭 `Ref`이름(예: )을 반환합니다 `alias/exampleAlias`.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+## 예제
+
+### 별칭 만들기
+
+다음 예제에서는 `alias/exampleAlias` KMS 키에 대한 별칭을 생성합니다. KMS 키는 CloudFormation 리소스 이름에 대한 참조로 식별됩니다. 이러한 예제를 사용하기 전에 예제 대상 키 ID와 예제 별칭을 유효한 값으로 바꿉니다.
+
+#### JSON (영문)
+
+```
+{
+    "myAlias": {
+        "Type": "AWS::KMS::Alias",
+        "Properties": {
+            "AliasName": "alias/exampleAlias",
+            "TargetKeyId": {
+                "Ref": "myKey"
+            }
+        }
+    }
+}
+```
+
+## 참고 항목
+
+- CreateAliasAWS _Key Management Service API 참조_.
+- AWS Key Management Service 개발자 안내서*의 별칭 사용*.
+- AWS Key Management Service 개발자 안내서*의 AWS KMS용 ABAC*.

@@ -1,0 +1,41 @@
+# AWS::KinesisAnalyticsV2::애플리케이션 참조 데이터 소스 S3참조 데이터 소스
+
+SQL 기반 Amazon Kinesis Data Analytics 애플리케이션의 경우 참조 데이터가 포함된 Amazon S3 버킷 및 객체를 식별합니다.
+
+Kinesis Data Analytics 애플리케이션은 참조 데이터를 한 번만 로드합니다. 데이터가 변경되면 UpdateApplication 작업을 호출하여 애플리케이션으로 데이터를 다시 로드하도록 트리거합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "BucketARN" : String,
+  "FileKey" : String
+}
+```
+
+## 속성
+
+`BucketARN`  
+S3 버킷의 Amazon 리소스 이름(ARN)입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `2048`  
+_패턴_: `arn:.*`  
+_업데이트 필요 사항_: 중단 없음
+
+`FileKey`  
+참조 데이터를 포함하는 객체 키 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `1024`  
+_업데이트 필요 사항_: 중단 없음
+
+## 참고 항목
+
+- Amazon Kinesis Data Analytics API 참조\* \*의 S3ReferenceDataSource

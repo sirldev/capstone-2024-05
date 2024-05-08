@@ -1,0 +1,117 @@
+# AWS::Route53::레코드 세트 그룹
+
+선택적 설명, 변경하려는 호스팅 영역의 이름 및 ID, 생성하려는 레코드의 값이 포함된 복합 유형입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::Route53::RecordSetGroup",
+  "Properties" : {
+      "Comment" : String,
+      "HostedZoneId" : String,
+      "HostedZoneName" : String,
+      "RecordSets" : [ RecordSet, ... ]
+    }
+}
+```
+
+## 속성
+
+`Comment`  
+ _선택 사항:_ 일괄 변경 요청에 대해 포함할 주석입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최대_: `256`  
+_업데이트 필요 사항_: 중단 없음
+
+`HostedZoneId`  
+레코드를 생성하려는 호스팅 영역의 ID입니다.  
+또는 `HostedZoneName` `HostedZoneId`둘 중 하나만 지정합니다. 도메인 이름이 동일한 호스팅 영역이 여러 개 있는 경우 를 사용하여 호스팅 영역을 지정해야 합니다`HostedZoneId`.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최대_: `32`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`HostedZoneName`  
+레코드를 생성하려는 호스팅 영역의 이름입니다. 후행 점(예: `www.example.com.`) `HostedZoneName` 을 의 일부로 포함해야 합니다.  
+`AWS::Route53::RecordSet` 를 지정하는 `HostedZoneName` 를 사용하여 스택을 생성하면 AWS CloudFormation에서는 이름이 . `HostedZoneName` AWS CloudFormation에서 도메인 이름이 일치하는 호스팅 영역을 찾을 수 없거나 지정된 도메인 이름을 가진 호스팅 영역이 두 개 이상 있는 경우 AWS CloudFormation에서는 스택을 생성하지 않습니다.  
+또는 `HostedZoneName` `HostedZoneId`둘 중 하나만 지정합니다. 도메인 이름이 동일한 호스팅 영역이 여러 개 있는 경우 를 사용하여 호스팅 영역을 지정해야 합니다`HostedZoneId`.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최대_: `1024`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`RecordSets`  
+`RecordSet` 만들려는 각 레코드에 대해 하나의 요소를 포함하는 복합 형식입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: 레코드 집합 목록  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref`레코드 `Ref`세트 그룹의 이름(예: )이 반환됩니다 `MyRecordSetGroup`.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+## 예제
+
+더 많은 예제는 Route 53 템플릿 코드 조각 단원을 참조하십시오.
+
+### 메일 서버에 대한 레코드 작성
+
+다음 예에서는 메일 서버에 대해 세 개의 레코드를 만드는 방법을 보여 줍니다.
+
+- 메일 서버의 IP 주소를 지정하는 A 레코드입니다.
+- 전자 메일을 해당 서버로 라우팅하는 MX 레코드입니다.
+- 전자 메일 메시지의 보낸 사람을 식별하는 데 사용되는 SPF 문자열이 포함된 TXT 레코드입니다. SPF 레코드는 더 이상 권장되지 않습니다. 자세한 내용은 _Amazon Route 53 개발자 안내서의 SPF 레코드 유형을 참조하십시오_.
+
+#### JSON (영문)
+
+```
+{
+   "myExampleDotComEmailServer": {
+      "Type": "AWS::Route53::RecordSetGroup",
+      "Properties": {
+         "Comment": "Creating records for mail server",
+         "HostedZoneId": "Z1PA6795UKMFR9",
+         "RecordSets": [
+            {
+               "Name": "mail.example.com.",
+               "Type": "A",
+               "TTL": "900",
+               "ResourceRecords": [
+                  "192.0.2.44"
+               ]
+            },
+            {
+               "Name": "mail.example.com.",
+               "Type": "MX",
+               "TTL": "900",
+               "ResourceRecords": [
+                  "10 mail.example.com"
+               ]
+            },
+            {
+               "Name": "mail.example.com.",
+               "Type": "TXT",
+               "TTL": "900",
+               "ResourceRecords": [
+                  "\"v=spf1 ip4:203.0.113.0/30 -all\""
+               ]
+            }
+         ]
+      }
+   }
+}
+```
+
+## 참고 항목
+
+- 예제 는 `AWS::Route53::RecordSetGroup`Amazon Route 53 API Reference*의 ChangeResourceRecordSets를 참조하십시오 *

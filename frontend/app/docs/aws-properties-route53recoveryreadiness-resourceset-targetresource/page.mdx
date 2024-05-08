@@ -1,0 +1,30 @@
+# AWS::Route53RecoveryReadiness::ResourceSet TargetResource
+
+Route 53 레코드가 가리키는 대상 리소스입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "NLBResource" : NLBResource,
+  "R53Resource" : R53ResourceRecord
+}
+```
+
+## 속성
+
+`NLBResource`  
+DNS 대상 리소스가 가리키는 Network Load Balancer 리소스입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: NLBResource  
+_업데이트 필요 사항_: 중단 없음
+
+`R53Resource`  
+DNS 대상 리소스 레코드가 가리키는 Route 53 리소스입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: R53ResourceRecord  
+_업데이트 필요 사항_: 중단 없음

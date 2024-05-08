@@ -1,0 +1,58 @@
+# AWS::백업::백업 계획
+
+선택적 백업 계획 표시 이름과 `BackupRule` 각각 백업 규칙을 지정하는 개체 배열을 포함합니다. 백업 계획의 각 규칙은 별도의 예약된 작업이며 서로 다른 AWS 리소스를 백업할 수 있습니다.
+
+샘플 AWS CloudFormation 템플릿은 AWS Backup 개발자 안내서를 참조하십시오.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::Backup::BackupPlan",
+  "Properties" : {
+      "BackupPlan" : BackupPlanResourceType,
+      "BackupPlanTags" : {Key: Value, ...}
+    }
+}
+```
+
+## 속성
+
+`BackupPlan`  
+리소스 선택과 연결할 백업 계획을 고유하게 식별합니다.  
+_필수 항목 여부_: 예  
+_유형_: BackupPlanResourceType  
+_업데이트 필요 사항_: 중단 없음
+
+`BackupPlanTags`  
+리소스를 구성하는 데 도움이 되도록 만든 리소스에 고유한 메타데이터를 할당할 수 있습니다. 각 태그는 키-값 페어입니다. 지정된 태그는 이 계획으로 생성된 모든 백업에 할당됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 맵  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달 `Ref` 하면 `Ref`가 반환`BackupPlanId`됩니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`BackupPlanArn`  
+백업 계획을 고유하게 식별하는 Amazon 리소스 이름(ARN) 예를 들어, `arn:aws:backup:us-east-1:123456789012:plan:8F81F553-3A74-4A3F-B93D-B3360DC80C50`.
+
+`BackupPlanId` 백업 계획을 고유하게 식별합니다.
+
+`VersionId` 임의로 생성된 유니코드 UTF-8 인코딩 문자열로, 길이가 최대 1,024바이트입니다. 버전 ID는 편집할 수 없습니다.

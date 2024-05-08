@@ -1,0 +1,29 @@
+# AWS::EC2::LaunchTemplate ElasticGpu사양
+
+Amazon EC2 시작 템플릿의 Elastic GPU 사양을 지정합니다.
+
+`ElasticGpuSpecification` 은 AWS::EC2::LaunchTemplate LaunchTemplateData의 속성입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : String
+}
+```
+
+## 속성
+
+`Type`  
+Elastic Graphics 액셀러레이터의 유형입니다. 에 지정할 값에 대한 자세한 내용은 `Type`Windows 인스턴스용 Amazon Elastic Compute Cloud 사용 설명서*의 Elastic Graphics 기본 사항, 특히 Elastic Graphics 액셀러레이터 열을 참조하십시오*.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+## 참고 항목
+
+- Amazon EC2 API 참조\* \*의 ElasticGpu사양

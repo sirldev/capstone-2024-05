@@ -1,0 +1,42 @@
+# AWS::ECS::태스크 정의 제한
+
+`ulimit` 컨테이너에 전달할 설정입니다.
+
+AWS Fargate에서 호스팅되는 Amazon ECS 태스크는 AWS Fargate가 재정의하는 리소스 제한 파라미터를 제외하고 운영 체제에서 설정한 기본 리소스 제한 값을 사용합니다 `nofile` . `nofile` 리소스 제한은 컨테이너가 사용할 수 있는 열린 파일 수에 대한 제한을 설정합니다. 기본 `nofile` 소프트 한계는 이고 `1024` 기본 하드 한계는 `4096`입니다.
+
+작업 정의에서 컨테이너에 대한 설정을`ulimit` 지정할 수 있습니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "HardLimit" : Integer,
+  "Name" : String,
+  "SoftLimit" : Integer
+}
+```
+
+## 속성
+
+`HardLimit`  
+형식에 대한 하드 제한입니다 `ulimit` .  
+_필수 항목 여부_: 예  
+_유형_: Integer  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Name`  
+의 `type` `ulimit`.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_허용되는 값_: `core | cpu | data | fsize | locks | memlock | msgqueue | nice | nofile | nproc | rss | rtprio | rttime | sigpending | stack`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`SoftLimit`  
+유형에 대한 소프트 한계입니다 `ulimit` .  
+_필수 항목 여부_: 예  
+_유형_: Integer  
+_업데이트 필요 사항_: 바꿔 놓음

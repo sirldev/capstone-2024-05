@@ -1,0 +1,24 @@
+# AWS::SageMaker::Workteam 알림 구성
+
+작업 팀을 위해 사용 가능하거나 만료되는 작업 항목에 대한 Amazon SNS 알림을 구성합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "NotificationTopicArn" : String
+}
+```
+
+## 속성
+
+`NotificationTopicArn`  
+알림을 게시해야 하는 Amazon SNS 주제의 ARN입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_패턴_: `arn:aws[a-z-]*:sns:[a-z0-9-]*:[0-9]{12}:[a-zA-Z0-9_.-]*`  
+_업데이트 필요 사항_: 중단 없음

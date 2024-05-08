@@ -1,0 +1,37 @@
+# AWS::CloudFormation::StackSet 스택 인스턴스
+
+일부 특정 계정 및 리전의 스택 인스턴스.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "DeploymentTargets" : DeploymentTargets,
+  "ParameterOverrides" : [ Parameter, ... ],
+  "Regions" : [ String, ... ]
+}
+```
+
+## 속성
+
+`DeploymentTargets`  
+AWS `OrganizationalUnitIds` 또는 `Accounts` 지정된 리전에서 스택 인스턴스를 생성할 대상입니다.  
+_필수 항목 여부_: 예  
+_유형_: DeploymentTargets  
+_업데이트 필요 사항_: 중단 없음
+
+`ParameterOverrides`  
+선택한 스택 인스턴스에서 값을 재정의하려는 스택 세트 파라미터 목록입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 매개 변수 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`Regions`  
+지정된 AWS 계정을 사용하여 스택 인스턴스를 생성하려는 하나 이상의 리전 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음

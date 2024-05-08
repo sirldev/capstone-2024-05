@@ -1,0 +1,37 @@
+# AWS::SageMaker::ModelPackage 바이어스
+
+모델에 대한 바이어스 메트릭을 포함합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "PostTrainingReport" : MetricsSource,
+  "PreTrainingReport" : MetricsSource,
+  "Report" : MetricsSource
+}
+```
+
+## 속성
+
+`PostTrainingReport`  
+모델에 대한 학습 후 편향 보고서입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: MetricsSource  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`PreTrainingReport`  
+모델에 대한 사전 학습 편향 보고서입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: MetricsSource  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Report`  
+모델에 대한 편향 보고서  
+*필수 항목 *여부: 아니요  
+_유형_: MetricsSource  
+_업데이트 필요 사항_: 바꿔 놓음

@@ -1,0 +1,40 @@
+# AWS::KinesisAnalytics::애플리케이션 레코드열
+
+스트리밍 소스의 각 데이터 요소를 인애플리케이션 스트림의 해당 열에 매핑하는 방법을 설명합니다.
+
+참조 데이터 원본의 형식을 설명하는 데도 사용됩니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Mapping" : String,
+  "Name" : String,
+  "SqlType" : String
+}
+```
+
+## 속성
+
+`Mapping`  
+스트리밍 입력 또는 참조 데이터 원본의 데이터 요소에 대한 참조Reference to the data element in the streaming input or the reference data source. RecordFormatType이 인 경우 이 요소는 필수입니다`JSON`.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Name`  
+인애플리케이션 입력 스트림 또는 참조 테이블에서 작성된 컬럼의 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`SqlType`  
+응용 프로그램 내 입력 스트림 또는 참조 테이블에서 만든 열의 형식입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_업데이트 필요 사항_: 중단 없음

@@ -1,0 +1,107 @@
+# AWS::EFS::마운트 대상
+
+리소스 `AWS::EFS::MountTarget` 는 EFS 파일 시스템에 대한 탑재 대상을 생성하는 Amazon EFS 리소스입니다. 그런 다음 탑재 대상을 사용하여 Amazon EC2 인스턴스 또는 다른 리소스에 파일 시스템을 탑재할 수 있습니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::EFS::MountTarget",
+  "Properties" : {
+      "FileSystemId" : String,
+      "IpAddress" : String,
+      "SecurityGroups" : [ String, ... ],
+      "SubnetId" : String
+    }
+}
+```
+
+## 속성
+
+`FileSystemId`  
+탑재 대상을 만들 파일 시스템의 ID입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최대_: `128`  
+_패턴_: `^(arn:aws[-a-z]*:elasticfilesystem:[0-9a-z-:]+:file-system/fs-[0-9a-f]{8,40}|fs-[0-9a-f]{8,40})$`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`IpAddress`  
+지정된 서브넷의 주소 범위 내에 있는 유효한 IPv4 주소입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `7`  
+_최대_: `15`  
+_패턴_: `^[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}$`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`SecurityGroups`  
+최대 5개의 VPC 보안 그룹 ID( `sg-xxxxxxxx`. 지정된 서브넷과 동일한 VPC에 대한 것이어야 합니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열 목록  
+_최대_: `100`  
+_업데이트 필요 사항_: 중단 없음
+
+`SubnetId`  
+탑재 대상을 추가할 서브넷의 ID입니다. One Zone 스토리지 클래스를 사용하는 파일 시스템의 경우 파일 시스템의 가용 영역과 연결된 서브넷을 사용합니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `15`  
+_최대_: `47`  
+_패턴_: `^subnet-[0-9a-f]{8,40}$`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`MountTarget ID가 반환됩니다. 예를 들어:
+
+`{"Ref":"logical_mount_target_id"}` 반환
+
+`fsmt-0123456789abcdef8`.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`Id` 탑재 대상이 액세스를 제공하는 Amazon EFS 파일 시스템의 ID입니다.  
+본보기: `fs-0123456789111222a`
+
+`IpAddress` 탑재 대상의 IPv4 주소입니다.  
+예: 192.0.2.0
+
+## 예제
+
+### EFS 파일 시스템에 대한 탑재 대상 선언
+
+다음 예제에서는 파일 시스템, 서브넷 및 보안 그룹과 연결된 탑재 대상을 선언하며, 이 대상은 모두 동일한 템플릿에 선언되어 있습니다. 탑재 대상과 동일한 가용 영역(AZ)에 있는 EC2 인스턴스는 탑재 대상을 사용하여 연결된 파일 시스템에 연결할 수 있습니다. EC2 인스턴스에 파일 시스템을 탑재하는 방법에 대한 자세한 내용은 _EFS 사용 설명서의 파일 시스템 탑재를 참조하십시오_.
+
+#### JSON (영문)
+
+```
+"MountTarget": {
+  "Type": "AWS::EFS::MountTarget",
+  "Properties": {
+    "FileSystemId": { "Ref": "FileSystem" },
+    "SubnetId": { "Ref": "Subnet" },
+    "SecurityGroups": [ { "Ref": "MountTargetSecurityGroup" } ]
+  }
+}
+```
+
+## 참고 항목
+
+- Amazon EFS: 작동 방식
+- 탑재 대상 만들기
+- 연습: 온-프레미스에 파일 시스템 탑재

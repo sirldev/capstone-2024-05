@@ -1,0 +1,25 @@
+# AWS::Lambda::CodeSigningConfig 코드 서명 정책
+
+코드 서명 구성 정책은 서명 불일치 또는 만료에 대한 유효성 검사 실패 작업을 지정합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "UntrustedArtifactOnDeployment" : String
+}
+```
+
+## 속성
+
+`UntrustedArtifactOnDeployment`  
+배포 유효성 검사 실패에 대한 코드 서명 구성 정책입니다. 정책을 로 설정하면 `Enforce`Lambda는 서명 검증 확인에 실패할 경우 배포 요청을 차단합니다. 정책을 로 설정하면 `Warn`Lambda가 배포를 허용하고 CloudWatch 로그를 생성합니다.  
+기본값: `Warn`  
+_필수_: 예  
+_유형_: 문자열  
+_허용되는 값_: `Enforce | Warn`  
+_업데이트 필요 사항_: 중단 없음

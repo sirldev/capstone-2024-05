@@ -1,0 +1,134 @@
+# AWS::SageMaker::이미지 버전
+
+로 지정된 SageMaker 이미지의 버전을 생성합니다 `ImageName`. 버전은 로 지정된 Amazon Container Registry(ECR) 컨테이너 이미지를 나타냅니다 `BaseImage`.
+
+**메모**  
+ `DependsOn` 이 속성을 사용하여 특정 자원의 작성이 다른 자원의 작성 뒤에 오도록 지정할 수 있습니다. 다음과 같은 사용 사례에 사용할 수 있습니다. 자세한 내용은 attribute를 참조하세요 `DependsOn` .
+
+1. `DependsOn` `ImageVersion` 와 `Image` . `ImageVersion` `DependsOn` `Image`
+2. `DependsOn`동일한 네임스페이스 내에서 s `ImageVersion` 간의 순서를 설정하는 데 사용할 수 있습니다 `Image` . 예를 들어 ImageVersionB ImageVersionA `DependsOn` 와 둘 다 동일한 부모를 공유하는 경우 `Image`ImageVersionA는 버전 N이고 ImageVersionB는 N+1입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::SageMaker::ImageVersion",
+  "Properties" : {
+      "Alias" : String,
+      "Aliases" : [ String, ... ],
+      "BaseImage" : String,
+      "Horovod" : Boolean,
+      "ImageName" : String,
+      "JobType" : String,
+      "MLFramework" : String,
+      "Processor" : String,
+      "ProgrammingLang" : String,
+      "ReleaseNotes" : String,
+      "VendorGuidance" : String
+    }
+}
+```
+
+## 속성
+
+`Alias`  
+속성 설명을 사용할 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Aliases`  
+속성 설명을 사용할 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`BaseImage`  
+SageMaker 이미지 버전의 기반이 되는 컨테이너 이미지입니다.  
+_길이 제약_: 최소 길이는 1입니다. 최대 길이는 255입니다.  
+_패턴_: `.*`  
+*필수 항목 *여부: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Horovod`  
+속성 설명을 사용할 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`ImageName`  
+상위 이미지의 이름입니다.  
+_길이 제약_: 최소 길이는 1입니다. 최대 길이는 63입니다.  
+_패턴_: `^a-zA-Z0-9{0,62}$`  
+*필수 항목 *여부: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`JobType`  
+속성 설명을 사용할 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`MLFramework`  
+속성 설명을 사용할 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Processor`  
+속성 설명을 사용할 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`ProgrammingLang`  
+속성 설명을 사용할 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`ReleaseNotes`  
+속성 설명을 사용할 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`VendorGuidance`  
+속성 설명을 사용할 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`ImageVersionArn이 반환됩니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`ContainerImage` ImageVersion에서 참조하는 컨테이너 이미지 버전의 URI입니다.
+
+`ImageArn` 상위 이미지의 Amazon 리소스 이름(ARN)입니다.
+
+`ImageVersionArn`  
+이미지 버전의 Amazon 리소스 이름(ARN)입니다.  
+_유형_: 문자열  
+_길이 제약_: 최대 길이는 256입니다.  
+_패턴_: `^arn:aws(-[w]+)*:sagemaker:.+:[0-9]{12}:image-version/a-z0-9*/[0-9]+$`
+
+`Version` 이미지의 버전입니다.

@@ -1,0 +1,155 @@
+# AWS::EC2::NetworkAclEntry
+
+지정한 규칙 번호를 사용하여 네트워크 ACL에서 규칙이라고 하는 항목을 지정합니다. 각 네트워크 ACL에는 번호가 매겨진 수신 규칙 집합과 번호가 매겨진 별도의 송신 규칙 집합이 있습니다.
+
+프로토콜 값에 대한 자세한 내용은 IANA(Internet Assigned Numbers Authority) 웹 사이트의 프로토콜 번호를 참조하십시오.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::EC2::NetworkAclEntry",
+  "Properties" : {
+      "CidrBlock" : String,
+      "Egress" : Boolean,
+      "Icmp" : Icmp,
+      "Ipv6CidrBlock" : String,
+      "NetworkAclId" : String,
+      "PortRange" : PortRange,
+      "Protocol" : Integer,
+      "RuleAction" : String,
+      "RuleNumber" : Integer
+    }
+}
+```
+
+## 속성
+
+`CidrBlock`  
+허용하거나 거부할 IPv4 CIDR 범위(CIDR 표기법)입니다(예: 172.16.0.0/24). 요구 사항은 조건부: or 속성을 지정해야 합니다 `CidrBlock` `Ipv6CidrBlock` .  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Egress`  
+이 규칙이 서브넷()의 송신 트래픽에 적용되는지 또는 `true`서브넷()에 대한 수신 트래픽에 적용되는지 여부`false`입니다. 기본적으로 AWS CloudFormation에서는 `false`.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Icmp`  
+ICMP(Internet Control Message Protocol) 코드 및 유형입니다. 요구 사항은 조건부: 프로토콜 매개 변수에 1(ICMP)을 지정하는 경우 필수입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: ICMP  
+_업데이트 필요 사항_: 중단 없음
+
+`Ipv6CidrBlock`  
+허용하거나 거부할 IPv6 네트워크 범위(CIDR 표기법)입니다. 요구 사항은 조건부: or 속성을 지정해야 합니다 `CidrBlock` `Ipv6CidrBlock` .  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`NetworkAclId`  
+항목에 대한 ACL의 ID입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`PortRange`  
+UDP/TCP 프로토콜의 포트 번호 범위입니다. protocol 매개 변수에 6(TCP) 또는 17(UDP)을 지정하는 경우 조건부가 필요합니다.  
+*필수 항목 *여부: 아니요  
+_형식_: PortRange  
+_업데이트 필요 사항_: 중단 없음
+
+`Protocol`  
+규칙이 적용되는 IP 프로토콜입니다. -1 또는 프로토콜 번호를 지정해야 합니다. 모든 프로토콜에 대해 -1을 지정할 수 있습니다.  
+-1을 지정하면 모든 포트가 열리고 특성이 `PortRange` 무시됩니다.
+_필수 항목 여부_: 예  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`RuleAction`  
+규칙과 일치하는 트래픽을 허용할지 또는 거부할지 여부; 유효한 값은 "Allow" 또는 "Deny"입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_허용되는 값_: `allow | deny`  
+_업데이트 필요 사항_: 중단 없음
+
+`RuleNumber`  
+항목에 할당할 규칙 번호(예: 100)입니다. ACL 항목은 규칙 번호에 따라 오름차순으로 처리됩니다. 하나는 송신 규칙이고 다른 하나는 수신 규칙이 아닌 한 항목은 동일한 규칙 번호를 사용할 수 없습니다.  
+_필수 항목 여부_: 예  
+_유형_: Integer  
+_업데이트 필요 사항_: 바꿔 놓음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`네트워크 ACL 항목의 ID를 반환합니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+## 예제
+
+### 인바운드 및 아웃바운드 트래픽에 대한 네트워크 ACL 항목
+
+다음 예제에서는 네트워크 ACL을 만들고 NACL에 두 개의 항목을 만듭니다. 첫 번째 항목은 지정된 네트워크의 인바운드 SSH 트래픽을 허용합니다. 두 번째 항목은 모든 아웃바운드 IPv4 트래픽을 허용합니다.
+
+#### JSON (영문)
+
+```
+{
+    "Resources": {
+        "MyNACL": {
+            "Type": "AWS::EC2::NetworkAcl",
+            "Properties": {
+                "VpcId": "vpc-1122334455aabbccd",
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "NACLforSSHTraffic"
+                    }
+                ]
+            }
+        },
+        "InboundRule": {
+            "Type": "AWS::EC2::NetworkAclEntry",
+            "Properties": {
+                "NetworkAclId": {
+                    "Ref": "MyNACL"
+                },
+                "RuleNumber": 100,
+                "Protocol": 6,
+                "RuleAction": "allow",
+                "CidrBlock": "172.16.0.0/24",
+                "PortRange": {
+                    "From": 22,
+                    "To": 22
+                }
+            }
+        },
+        "OutboundRule": {
+            "Type": "AWS::EC2::NetworkAclEntry",
+            "Properties": {
+                "NetworkAclId": {
+                    "Ref": "MyNACL"
+                },
+                "RuleNumber": 100,
+                "Protocol": -1,
+                "Egress": true,
+                "RuleAction": "allow",
+                "CidrBlock": "0.0.0.0/0"
+            }
+        }
+    }
+}
+```
+
+## 참고 항목
+
+- Amazon EC2 API 참조*의 NetworkAclEntry *
+- Amazon VPC 사용 설명서*의 네트워크 ACL *

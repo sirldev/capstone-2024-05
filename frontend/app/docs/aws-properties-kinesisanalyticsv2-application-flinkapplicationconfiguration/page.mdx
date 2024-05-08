@@ -1,0 +1,41 @@
+# AWS::KinesisAnalyticsV2::애플리케이션 FlinkApplicationConfiguration
+
+Managed Service for Apache Flink 애플리케이션 또는 Studio 노트북의 구성 매개변수에 대해 설명합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "CheckpointConfiguration" : CheckpointConfiguration,
+  "MonitoringConfiguration" : MonitoringConfiguration,
+  "ParallelismConfiguration" : ParallelismConfiguration
+}
+```
+
+## 속성
+
+`CheckpointConfiguration`  
+응용 프로그램의 검사점 구성에 대해 설명합니다. 검사점은 내결함성을 위해 응용 프로그램 상태를 유지하는 프로세스입니다. 자세한 내용은 Apache Flink 설명서의 Checkpoints for Fault Tolerance를 참조하십시오.  
+*필수 항목 *여부: 아니요  
+_형식_: CheckpointConfiguration  
+_업데이트 필요 사항_: 중단 없음
+
+`MonitoringConfiguration`  
+애플리케이션에 대한 Amazon CloudWatch 로깅의 구성 파라미터에 대해 설명합니다.  
+*필수 항목 *여부: 아니요  
+_형식_: MonitoringConfiguration  
+_업데이트 필요 사항_: 중단 없음
+
+`ParallelismConfiguration`  
+응용 프로그램에서 여러 작업을 동시에 실행하는 방법에 대한 매개 변수에 대해 설명합니다.  
+*필수 항목 *여부: 아니요  
+_형식_: ParallelismConfiguration  
+_업데이트 필요 사항_: 중단 없음
+
+## 참고 항목
+
+- Amazon Kinesis Data Analytics API 참조\* \*의 FlinkApplicationConfiguration

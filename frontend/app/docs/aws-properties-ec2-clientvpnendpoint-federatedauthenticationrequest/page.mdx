@@ -1,0 +1,30 @@
+# AWS::EC2::ClientVpnEndpoint FederatedAuthenticationRequest
+
+연동 인증에 사용되는 IAM SAML 자격 증명 공급자입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "SAMLProviderArn" : String,
+  "SelfServiceSAMLProviderArn" : String
+}
+```
+
+## 속성
+
+`SAMLProviderArn`  
+IAM SAML 자격 증명 공급자의 Amazon 리소스 이름(ARN)입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`SelfServiceSAMLProviderArn`  
+셀프 서비스 포털용 IAM SAML 자격 증명 공급자의 Amazon 리소스 이름(ARN)입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음

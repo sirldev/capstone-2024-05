@@ -1,0 +1,68 @@
+# AWS::CloudFormation::P ublisher
+
+계정을 CloudFormation 레지스트리에 퍼블릭 확장의 게시자로 등록합니다. 퍼블릭 확장은 모든 CloudFormation 사용자가 사용할 수 있습니다.
+
+퍼블릭 익스텐션 게시자로 등록하기 위한 요구 사항에 대한 자세한 내용은 CloudFormation CLI 사용 설명서의 CloudFormation 익스텐션을 게시하기 위한 계정 등록을 참조하세요\*\*.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::CloudFormation::Publisher",
+  "Properties" : {
+      "AcceptTermsAndConditions" : Boolean,
+      "ConnectionArn" : String
+    }
+}
+```
+
+## 속성
+
+`AcceptTermsAndConditions`  
+CloudFormation 레지스트리에 확장 프로그램을 게시하기 위한 이용 약관에 동의하는지 여부. CloudFormation 레지스트리에 퍼블릭 확장을 게시하기 위해 등록하려면 이용 약관에 동의해야 합니다.  
+기본값은 `false`입니다.  
+_필수 항목 여부_: 예  
+_유형_: Boolean  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ConnectionArn`  
+자격 증명 확인을 위해 Bitbucket 또는 GitHub 계정을 사용하는 경우 해당 계정에 대한 연결에 대한 Amazon 리소스 이름(ARN)입니다.  
+자세한 내용은 CloudFormation CLI 사용 설명서의 CloudFormation 확장을 게시하기 위한 계정 등록을 참조하세요\**.  
+*필수 항목 *여부: 아니요  
+*유형*: 문자열  
+*최소*: `1`  
+*최대*: `256`  
+*패턴*: `arn:aws(-[w]+)*:.+:.+:[0-9]{12}:.+`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`게시자 ID가 반환됩니다. 예를 들어:
+
+`{ "Ref": "2a33349e7e606a8ad2e30e3c84521f012345678" }`
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`IdentityProvider`  
+이 게시자를 CloudFormation에 등록할 때 자격 증명 공급자로 사용되는 계정 유형입니다.  
+값은 다음과 같습니다. `AWS_Marketplace` `Bitbucket` | `GitHub`을 클릭합니다.
+
+`PublisherId` 확장 게시자의 ID입니다. 이 게시자 ID는 모든 AWS 리전의 계정에 적용됩니다.
+
+`PublisherProfile` ID 공급자가 있는 게시자 프로필의 URL입니다.
+
+`PublisherStatus` 게시자가 확인되었는지 여부입니다.

@@ -1,0 +1,40 @@
+# AWS::EC2::TransitGatewayAttachment 옵션
+
+VPC 연결 옵션에 대해 설명합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ApplianceModeSupport" : String,
+  "DnsSupport" : String,
+  "Ipv6Support" : String
+}
+```
+
+## 속성
+
+`ApplianceModeSupport`  
+기기 모드 지원을 사용하거나 사용하지 않도록 설정합니다. 기본값은 `disable`입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `disable | enable`  
+_업데이트 필요 사항_: 중단 없음
+
+`DnsSupport`  
+DNS 지원을 활성화하거나 비활성화합니다. 기본값은 `disable`입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `disable | enable`  
+_업데이트 필요 사항_: 중단 없음
+
+`Ipv6Support`  
+IPv6 지원을 활성화하거나 비활성화합니다. 기본값은 `disable`입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `disable | enable`  
+_업데이트 필요 사항_: 중단 없음

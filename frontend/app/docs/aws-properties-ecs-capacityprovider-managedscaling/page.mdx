@@ -1,0 +1,66 @@
+# AWS::ECS::CapacityProvider 관리형 스케일링
+
+오토 스케일링 용량 공급자에 대한 관리형 조정 설정입니다.
+
+관리형 조정이 켜져 있으면 Amazon ECS가 오토 스케일링의 축소 및 확장 작업을 관리합니다. Amazon ECS는 지정된 값을 지표의 대상 값으로 하는 Amazon ECS 관리형 CloudWatch 지표를 사용하여 대상 추적 조정 정책을 관리합니다 `targetCapacity` . 자세한 내용은 _Amazon Elastic Container Service 개발자 안내서의 관리형 조정 사용을 참조하세요_.
+
+관리형 조정이 꺼져 있는 경우 사용자가 오토 스케일링의 조정을 관리해야 합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "InstanceWarmupPeriod" : Integer,
+  "MaximumScalingStepSize" : Integer,
+  "MinimumScalingStepSize" : Integer,
+  "Status" : String,
+  "TargetCapacity" : Integer
+}
+```
+
+## 속성
+
+`InstanceWarmupPeriod`  
+새로 시작된 Amazon EC2 인스턴스가 Auto Scaling 그룹에 대한 CloudWatch 지표에 기여할 수 있는 후의 시간(초)입니다. 이 매개 변수를 생략하면 기본값인 `300` 초가 사용됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_최소_: `0`  
+_최대_: `10000`  
+_업데이트 필요 사항_: 중단 없음
+
+`MaximumScalingStepSize`  
+Amazon ECS가 한 번에 확장할 수 있는 최대 Amazon EC2 인스턴스 수입니다. 축소 프로세스는 이 매개변수의 영향을 받지 않습니다. 이 매개 변수를 생략하면 기본값이 `10000` 사용됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_최소_: `1`  
+_최대_: `10000`  
+_업데이트 필요 사항_: 중단 없음
+
+`MinimumScalingStepSize`  
+Amazon ECS가 한 번에 확장할 최소 Amazon EC2 인스턴스 수입니다. scale in process는 이 파라미터의 영향을 받지 않으며, 이 파라미터를 생략하면 기본값이 `1` 사용됩니다.  
+추가 용량이 필요한 경우 Amazon ECS는 실제 수요가 최소 조정 단계 크기보다 작더라도 최소 조정 단계 크기를 확장합니다.  
+둘 이상의 Amazon EC2 인스턴스 유형 또는 가용 영역으로 구성된 오토 스케일링이 있는 용량 공급자를 사용하는 경우 Amazon ECS는 정확한 최소 조정 단계 크기 값만큼 확장되고 최대 조정 단계 크기와 용량 수요를 모두 무시합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_최소_: `1`  
+_최대_: `10000`  
+_업데이트 필요 사항_: 중단 없음
+
+`Status`  
+용량 공급자에 관리형 크기 조정을 사용할지 여부를 결정합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `DISABLED | ENABLED`  
+_업데이트 필요 사항_: 중단 없음
+
+`TargetCapacity`  
+용량 공급자에 대한 백분율로 표시되는 목표 용량 사용률입니다. 지정된 값은 보다 크 `0` 거나 작거나 같아 `100` 야 합니다. 예를 들어 용량 공급자가 10%의 예비 용량을 유지하도록 하려면 사용률이 90%임을 의미하므로 `targetCapacity` 의 `90`. 기본값인 `100` percent를 사용하면 오토 스케일링의 Amazon EC2 인스턴스가 완전히 사용됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_최소_: `1`  
+_최대_: `100`  
+_업데이트 필요 사항_: 중단 없음

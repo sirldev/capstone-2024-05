@@ -1,0 +1,106 @@
+# AWS::KinesisFirehose::D eliveryStream RedshiftDestinationConfiguration
+
+`RedshiftDestinationConfiguration` 속성 유형은 Amazon Kinesis Data Firehose(Kinesis Data Firehose)가 데이터를 전송하는 Amazon Redshift 클러스터를 지정합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "CloudWatchLoggingOptions" : CloudWatchLoggingOptions,
+  "ClusterJDBCURL" : String,
+  "CopyCommand" : CopyCommand,
+  "Password" : String,
+  "ProcessingConfiguration" : ProcessingConfiguration,
+  "RetryOptions" : RedshiftRetryOptions,
+  "RoleARN" : String,
+  "S3BackupConfiguration" : S3DestinationConfiguration,
+  "S3BackupMode" : String,
+  "S3Configuration" : S3DestinationConfiguration,
+  "Username" : String
+}
+```
+
+## 속성
+
+`CloudWatchLoggingOptions`  
+전송 스트림에 대한 CloudWatch 로깅 옵션입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: CloudWatchLoggingOptions  
+_업데이트 필요 사항_: 중단 없음
+
+`ClusterJDBCURL`  
+Kinesis Data Firehose가 Amazon Redshift 클러스터에 연결하는 데 사용하는 연결 문자열입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `512`  
+_패턴_: `jdbc:(redshift|postgresql)://((?!-)[A-Za-z0-9-]{1,63}(?<!-).)+redshift.([a-zA-Z0-9.]+):d{1,5}/[a-zA-Z0-9_$-]+`  
+_업데이트 필요 사항_: 중단 없음
+
+`CopyCommand`  
+ `COPY` Kinesis Data Firehose가 Amazon S3 버킷에서 클러스터로 데이터를 로드하는 데 사용하는 Amazon Redshift 명령을 구성합니다.  
+_필수 항목 여부_: 예  
+_형식_: CopyCommand  
+_업데이트 필요 사항_: 중단 없음
+
+`Password`  
+속성에 지정한 Amazon Redshift 사용자의 암호입니다 `Username` .  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `6`  
+_최대_: `512`  
+_패턴_: `.*`  
+_업데이트 필요 사항_: 중단 없음
+
+`ProcessingConfiguration`  
+Kinesis Data Firehose 전송 스트림에 대한 데이터 처리 구성입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: ProcessingConfiguration  
+_업데이트 필요 사항_: 중단 없음
+
+`RetryOptions`  
+Kinesis Data Firehose가 Amazon Redshift로 문서를 전송할 수 없는 경우의 재시도 동작입니다. 기본값은 3600(60분)입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: RedshiftRetryOptions  
+_업데이트 필요 사항_: 중단 없음
+
+`RoleARN`  
+Kinesis Data Firehose에 Amazon S3 버킷 및 AWS KMS에 대한 액세스 권한을 부여하는 AWS Identity and Access Management(IAM) 역할의 ARN입니다(데이터 암호화를 활성화한 경우). 자세한 내용은 Amazon Kinesis Data Firehose 개발자 안내서의 Amazon Redshift 대상에 대한 Kinesis Data Firehose 액세스 권한 부여를 참조하십시오\**.  
+*필수 항목 여부*: 예  
+*유형*: 문자열  
+*최소*: `1`  
+*최대*: `512`  
+*패턴*: `arn:.*`  
+_업데이트 필요 사항_: 중단 없음
+
+`S3BackupConfiguration`  
+Amazon S3의 백업 구성입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: S3DestinationConfiguration  
+_업데이트 필요 사항_: 중단 없음
+
+`S3BackupMode`  
+Amazon S3 백업 모드입니다. 전송 스트림을 생성한 후 Amazon S3 백업이 비활성화된 경우 이를 업데이트하여 Amazon S3 백업을 활성화할 수 있습니다. 백업이 활성화된 경우 전송 스트림을 업데이트하여 비활성화할 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `Disabled | Enabled`  
+_업데이트 필요 사항_: 중단 없음
+
+`S3Configuration`  
+Kinesis Data Firehose가 처음으로 데이터를 전송하는 S3 버킷입니다. 데이터가 버킷에 있으면 Kinesis Data Firehose `COPY` 는 명령을 사용하여 데이터를 Amazon Redshift 클러스터로 로드합니다. Amazon S3 버킷의 압축 형식의 경우 `SNAPPY` Amazon `ZIP` Redshift `COPY` 명령이 지원하지 않으므로 or을 지정하지 마십시오.  
+_필수 항목 여부_: 예  
+_유형_: S3DestinationConfiguration  
+_업데이트 필요 사항_: 중단 없음
+
+`Username`  
+Amazon Redshift 클러스터에 액세스할 수 있는 권한이 있는 Amazon Redshift 사용자입니다. 이 사용자는 `INSERT` Amazon S3 버킷에서 클러스터로 데이터를 복사할 수 있는 권한이 있어야 합니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `512`  
+_패턴_: `.*`  
+_업데이트 필요 사항_: 중단 없음

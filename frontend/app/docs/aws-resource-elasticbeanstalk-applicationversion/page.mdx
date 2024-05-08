@@ -1,0 +1,86 @@
+# AWS::ElasticBeanstalk::애플리케이션 버전
+
+AWS::ElasticBeanstalk::ApplicationVersion 리소스는 Elastic Beanstalk 애플리케이션에 대한 배포 가능한 코드의 반복인 애플리케이션 버전을 지정하는 AWS Elastic Beanstalk 리소스 유형입니다.
+
+**메모**  
+지정된 Amazon S3 버킷 및 키 위치를 사용하여 애플리케이션 버전을 생성한 후에는 해당 Amazon S3 위치를 변경할 수 없습니다. Amazon S3 위치를 변경하면 애플리케이션 버전에서 환경을 시작하려는 시도가 실패합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::ElasticBeanstalk::ApplicationVersion",
+  "Properties" : {
+      "ApplicationName" : String,
+      "Description" : String,
+      "SourceBundle" : SourceBundle
+    }
+}
+```
+
+## 속성
+
+`ApplicationName`  
+이 애플리케이션 버전과 연결된 Elastic Beanstalk 애플리케이션의 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `100`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Description`  
+이 응용 프로그램 버전에 대한 설명입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최대_: `200`  
+_업데이트 필요 사항_: 중단 없음
+
+`SourceBundle`  
+이 버전에 대한 소스 번들의 위치를 식별하는 Amazon S3 버킷 및 키입니다.  
+Amazon S3 버킷은 환경과 동일한 리전에 있어야 합니다.
+_필수 항목 여부_: 예  
+_유형_: SourceBundle  
+_업데이트 필요 사항_: 바꿔 놓음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID가 `Ref`내장 함수 에 제공되면 `Ref`리소스 이름을 반환합니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+####
+
+`Id` 속성 설명을 사용할 수 없습니다.
+
+## 예제
+
+###
+
+#### JSON (영문)
+
+```
+"myAppVersion": {
+  "Type" : "AWS::ElasticBeanstalk::ApplicationVersion",
+  "Properties" : {
+    "ApplicationName" : {"Ref" : "myApp"},
+    "Description" : "my sample version",
+    "SourceBundle" : {
+      "S3Bucket" : { "Fn::Join" :
+        ["-", [ "elasticbeanstalk-samples", { "Ref" : "AWS::Region" } ] ] },
+      "S3Key" : "php-newsample-app.zip"
+    }
+  }
+}
+```
+
+## 참고 항목
+
+- 전체 Elastic Beanstalk 샘플 템플릿은 Elastic Beanstalk 템플릿 코드 조각 단원을 참조하십시오.

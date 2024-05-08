@@ -1,0 +1,66 @@
+# AWS::EC2::TransitGatewayMulticastDomainAssociation
+
+지정된 서브넷 및 Transit Gateway 연결을 지정된 Transit Gateway 멀티캐스트 도메인과 연결합니다.
+
+Transit Gateway 연결은 available 상태여야 리소스를 추가할 수 있습니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::EC2::TransitGatewayMulticastDomainAssociation",
+  "Properties" : {
+      "SubnetId" : String,
+      "TransitGatewayAttachmentId" : String,
+      "TransitGatewayMulticastDomainId" : String
+    }
+}
+```
+
+## 속성
+
+`SubnetId`  
+전송 게이트웨이 멀티캐스트 도메인과 연결할 서브넷의 ID입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`TransitGatewayAttachmentId`  
+Transit Gateway 연결의 ID입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`TransitGatewayMulticastDomainId`  
+전송 게이트웨이 멀티캐스트 도메인의 ID입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`transit gateway 멀티캐스트 도메인 ID를 반환합니다. 예를 들면 다음과 같습니다 `tgw-mcast-domain-000fb24d04EXAMPLE`.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`ResourceId` 리소스의 ID입니다.
+
+`ResourceType` 리소스 유형(예: VPC 연결)입니다.
+
+`State` 리소스의 상태입니다.
+
+## 참고 항목
+
+- Amazon EC2 API 참조*의 AssociateTransitGatewayMulticastDomain *

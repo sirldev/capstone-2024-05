@@ -1,0 +1,131 @@
+# AWS::KinesisFirehose::D eliveryStream AmazonopensearchserviceDestinationConfiguration
+
+Amazon OpenSearch Service의 대상 구성에 대해 설명합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "BufferingHints" : AmazonopensearchserviceBufferingHints,
+  "CloudWatchLoggingOptions" : CloudWatchLoggingOptions,
+  "ClusterEndpoint" : String,
+  "DocumentIdOptions" : DocumentIdOptions,
+  "DomainARN" : String,
+  "IndexName" : String,
+  "IndexRotationPeriod" : String,
+  "ProcessingConfiguration" : ProcessingConfiguration,
+  "RetryOptions" : AmazonopensearchserviceRetryOptions,
+  "RoleARN" : String,
+  "S3BackupMode" : String,
+  "S3Configuration" : S3DestinationConfiguration,
+  "TypeName" : String,
+  "VpcConfiguration" : VpcConfiguration
+}
+```
+
+## 속성
+
+`BufferingHints`  
+버퍼링 옵션. 값을 지정하지 않으면 AmazonopensearchserviceBufferingHints의 기본값이 사용됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: AmazonopensearchserviceBufferingHints  
+_업데이트 필요 사항_: 중단 없음
+
+`CloudWatchLoggingOptions`  
+전송 스트림에 대한 Amazon CloudWatch 로깅 옵션을 설명합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: CloudWatchLoggingOptions  
+_업데이트 필요 사항_: 중단 없음
+
+`ClusterEndpoint`  
+클러스터와 통신할 때 사용할 끝점입니다. 이 ClusterEndpoint 또는 DomainARN 필드를 지정합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `512`  
+_패턴_: `https:.*`  
+_업데이트 필요 사항_: 중단 없음
+
+`DocumentIdOptions`  
+속성 설명을 사용할 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_형식_: DocumentIdOptions  
+_업데이트 필요 사항_: 중단 없음
+
+`DomainARN`  
+Amazon OpenSearch Service 도메인의 ARN입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `512`  
+_패턴_: `arn:.*`  
+_업데이트 필요 사항_: 중단 없음
+
+`IndexName`  
+Amazon OpenSearch Service 인덱스 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `80`  
+_패턴_: `.*`  
+_업데이트 필요 사항_: 중단 없음
+
+`IndexRotationPeriod`  
+Amazon OpenSearch Service 인덱스 교체 기간입니다. 인덱스 교체는 이전 데이터의 만료를 용이하게 하기 위해 IndexName에 타임스탬프를 추가합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `NoRotation | OneDay | OneHour | OneMonth | OneWeek`  
+_업데이트 필요 사항_: 중단 없음
+
+`ProcessingConfiguration`  
+데이터 처리 구성에 대해 설명합니다.  
+*필수 항목 *여부: 아니요  
+_형식_: ProcessingConfiguration  
+_업데이트 필요 사항_: 중단 없음
+
+`RetryOptions`  
+Kinesis Data Firehose가 Amazon OpenSearch Service에 문서를 전송할 수 없는 경우의 재시도 동작입니다. 기본값은 300(5분)입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: AmazonopensearchserviceRetryOptions  
+_업데이트 필요 사항_: 중단 없음
+
+`RoleARN`  
+Amazon OpenSearch Service 구성 API를 호출하고 문서를 인덱싱하기 위해 Kinesis Data Firehose에서 수임할 IAM 역할의 Amazon 리소스 이름(ARN)입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `512`  
+_패턴_: `arn:.*`  
+_업데이트 필요 사항_: 중단 없음
+
+`S3BackupMode`  
+Amazon S3로 문서를 전송하는 방법을 정의합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `AllDocuments | FailedDocumentsOnly`  
+_업데이트 필요 사항_: 중단 없음
+
+`S3Configuration`  
+Amazon S3의 대상 구성에 대해 설명합니다.  
+_필수 항목 여부_: 예  
+_유형_: S3DestinationConfiguration  
+_업데이트 필요 사항_: 중단 없음
+
+`TypeName`  
+Amazon OpenSearch Service 유형 이름입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `0`  
+_최대_: `100`  
+_패턴_: `.*`  
+_업데이트 필요 사항_: 중단 없음
+
+`VpcConfiguration`  
+Amazon OpenSearch Service 대상의 VPC에 대한 세부 정보입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: VpcConfiguration  
+_업데이트 필요 사항_: 바꿔 놓음

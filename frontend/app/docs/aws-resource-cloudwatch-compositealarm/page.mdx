@@ -1,0 +1,195 @@
+# AWS::CloudWatch::컴포지트 알람
+
+이 `AWS::CloudWatch::CompositeAlarm` 유형은 복합 경보를 생성하거나 업데이트합니다. 복합 경보를 생성할 때 생성한 다른 경보의 경보 상태를 고려하는 경보에 대한 규칙 표현식을 지정합니다. 복합 경보는 규칙의 모든 조건이 충족되는 경우에만 ALARM 상태로 전환됩니다.
+
+복합 경보의 규칙 표현식에 지정된 경보에는 지표 경보 및 기타 복합 경보가 포함될 수 있습니다.
+
+복합 알람을 사용하면 알람 노이즈를 줄일 수 있습니다. 여러 지표 경보를 생성할 수 있으며, 복합 경보를 생성하고 복합 경보에 대해서만 알림을 설정할 수도 있습니다. 예를 들어, 기본 지표 경보 중 두 개 이상이 ALARM 상태인 경우에만 ALARM 상태로 전환되는 복합 경보를 생성할 수 있습니다.
+
+현재 복합 경보로 수행할 수 있는 유일한 경보 작업은 SNS 주제에 알리는 것입니다.
+
+이 작업이 경보를 생성하면 경보 상태가 즉시 INSUFFICIENT_DATA로 설정됩니다. 그런 다음 경보가 평가되고 상태가 적절하게 설정됩니다. 그런 다음 새 상태와 연결된 모든 작업이 실행됩니다. 복합 경보의 경우 생성 후 이 초기 시간만이 경보가 INSUFFICIENT_DATA 상태에 있을 수 있는 유일한 시간입니다.
+
+기존 경보를 업데이트하면 해당 상태는 변경되지 않은 상태로 유지되지만 업데이트는 경보의 이전 구성을 완전히 덮어씁니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::CloudWatch::CompositeAlarm",
+  "Properties" : {
+      "ActionsEnabled" : Boolean,
+      "ActionsSuppressor" : String,
+      "ActionsSuppressorExtensionPeriod" : Integer,
+      "ActionsSuppressorWaitPeriod" : Integer,
+      "AlarmActions" : [ String, ... ],
+      "AlarmDescription" : String,
+      "AlarmName" : String,
+      "AlarmRule" : String,
+      "InsufficientDataActions" : [ String, ... ],
+      "OKActions" : [ String, ... ]
+    }
+}
+```
+
+## 속성
+
+`ActionsEnabled`  
+복합 경보의 경보 상태를 변경하는 동안 작업을 실행해야 하는지 여부를 나타냅니다. 기본값은 TRUE입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`ActionsSuppressor`  
+ 억제 경보가 상태에 있는 경우 작업이 억제 됩니다 `ALARM` . `ActionsSuppressor` 는 기존 경보의 AlarmName 또는 Amazon 리소스 이름(ARN)일 수 있습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`ActionsSuppressorExtensionPeriod`  
+ 억제 경보가 상태를 벗어난 후 복합 경보가 대기하는 최대 시간(초)입니다 `ALARM` . 이 시간이 지나면 복합 경보가 작업을 수행합니다.  
+ `ExtensionPeriod` 가 지정된 경우에만 필요합니다 `ActionsSuppressor` .
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`ActionsSuppressorWaitPeriod`  
+복합 경보가 억제 경보가 상태로 전환될 때까지 대기하는 최대 시간(초)입니다 `ALARM` . 이 시간이 지나면 복합 경보가 작업을 수행합니다.  
+ `WaitPeriod` 가 지정된 경우에만 필요합니다 `ActionsSuppressor` .
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`AlarmActions`  
+이 경보가 다른 상태에서 ALARM 상태로 전환될 때 실행할 작업입니다. 각 작업은 Amazon 리소스 이름(ARN)으로 지정됩니다. 경보 생성 및 지정할 수 있는 작업에 대한 자세한 내용은 Amazon CloudWatch API Reference의 PutCompositeAlarm을 참조하십시오\**.  
+*필수 항목 *여부: 아니요  
+*유형*: 문자열 목록  
+*업데이트 필요 사항\*: 중단 없음
+
+`AlarmDescription`  
+복합 경보에 대한 설명입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`AlarmName`  
+복합 경보의 이름입니다. 이 이름은 AWS 계정 내에서 고유해야 합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`AlarmRule` 이 복합 경보의 상태를 확인하기 위해 평가할 다른 경보를 지정하는 표현식입니다. 참조하는 각 경보에 대해 해당 경보가 ALARM 상태, OK 상태 또는 INSUFFICIENT_DATA 상태여야 하는지 여부를 지정하는 함수를 지정합니다. 연산자(AND, OR 및 NOT)를 사용하여 여러 함수를 단일 식에 결합할 수 있습니다. 괄호를 사용하여 표현식의 함수를 논리적으로 그룹화할 수 있습니다.  
+경보 이름 또는 ARN을 사용하여 평가할 다른 경보를 참조할 수 있습니다.  
+함수에는 다음이 포함될 수 있습니다.
+
+- 명명된 경보가 ALARM 상태인 경우 ALARM("alarm-name or alarm-ARN")은 TRUE입니다.
+- OK("alarm-name or alarm-ARN")는 명명된 경보가 OK 상태인 경우 TRUE입니다.
+- INSUFFICIENT_DATA("alarm-name or alarm-ARN")은 명명된 경보가 INSUFFICIENT_DATA 상태인 경우 TRUE입니다.
+- TRUE는 항상 TRUE로 평가됩니다.
+- FALSE는 항상 FALSE로 평가됩니다.
+  TRUE 및 FALSE는 복잡한 AlarmRule 구조를 테스트하고 경보 작업을 테스트하는 데 유용합니다.  
+  구문에 대한 자세한 내용은 `AlarmRule`Amazon CloudWatch API Reference*의 PutCompositeAlarm을 참조하십시오*.  
+  _필수 항목 여부_: 예  
+  _유형_: 문자열  
+  _업데이트 필요 사항_: 중단 없음
+
+`InsufficientDataActions`  
+이 경보가 다른 상태에서 INSUFFICIENT_DATA 상태로 전환될 때 실행할 작업입니다. 각 작업은 Amazon 리소스 이름(ARN)으로 지정됩니다. 경보 생성 및 지정할 수 있는 작업에 대한 자세한 내용은 Amazon CloudWatch API Reference의 PutCompositeAlarm을 참조하십시오\**.  
+*필수 항목 *여부: 아니요  
+*유형*: 문자열 목록  
+*업데이트 필요 사항\*: 중단 없음
+
+`OKActions`  
+이 경보가 다른 상태에서 OK 상태로 전환될 때 실행할 작업입니다. 각 작업은 Amazon 리소스 이름(ARN)으로 지정됩니다. 경보 생성 및 지정할 수 있는 작업에 대한 자세한 내용은 Amazon CloudWatch API Reference의 PutCompositeAlarm을 참조하십시오\**.  
+*필수 항목 *여부: 아니요  
+*유형*: 문자열 목록  
+*업데이트 필요 사항\*: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref`경보 `Ref`이름(예: )을 반환합니다 `MyCompositeAlarm`.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`Arn`  
+복합 경보의 ARN(예: )입니다 `arn:aws:cloudwatch:us-west-2:123456789012:alarm/CompositeAlarmName`.
+
+## 예제
+
+### 두 개의 지표 경보와 다른 복합 경보를 기반으로 하는 복합 경보
+
+이 예제에서는 "HighResourceUsage" 및 "DeploymentInProgress"라는 복합 경보를 생성하고 "HighCPUUsage" 및 "HighMemoryUsage"라는 지표 경보도 생성합니다. "DeploymentInProgress"는 수동으로 TRUE 또는 FALSE로 설정해야 하는 경보입니다. "HighResourceUsage" 경보는 "HighCPUUsage"와 "HighMemoryUsage"가 모두 ALARM 상태이고 "DeploymentInProgress"가 FALSE인 경우에만 ALARM 상태로 전환됩니다. "HighResourceUsage"에만 SNS에 알리는 알람 작업이 있습니다. 이렇게 하면 경보 노이즈가 줄어들어 CPU 사용량과 메모리 사용량이 모두 높고 배포가 현재 진행 중이 아닌 경우에만 알림을 받을 수 있습니다.
+
+#### JSON (영문)
+
+```
+"Resources": {
+    "HighResourceUsage": {
+        "Type": "AWS::CloudWatch::CompositeAlarm",
+        "Properties": {
+            "AlarmName": "HighResourceUsage",
+            "AlarmRule": "(ALARM(HighCPUUsage) OR ALARM(HighMemoryUsage)) AND NOT ALARM(DeploymentInProgress)",
+            "AlarmActions": "arn:aws:sns:us-west-2:123456789012:my-sns-topic",
+            "AlarmDescription": "Indicates that the system resource usage is high while no known
+            deployment is in progress"
+        },
+        "DependsOn": [
+            "DeploymentInProgress",
+            "HighCPUUsage",
+            "HighMemoryUsage"
+        ]
+    },
+    "DeploymentInProgress": {
+        "Type": "AWS::CloudWatch::CompositeAlarm",
+        "Properties": {
+            "AlarmName": "DeploymentInProgress",
+            "AlarmRule": "FALSE",
+            "AlarmDescription": "Manually updated to TRUE/FALSE to disable other alarms"
+        }
+    },
+    "HighCPUUsage": {
+        "Type": "AWS::CloudWatch::Alarm",
+        "Properties": {
+            "AlarmDescription": "CPUusageishigh",
+            "AlarmName": "HighCPUUsage",
+            "ComparisonOperator": "GreaterThanThreshold",
+            "EvaluationPeriods": 1,
+            "MetricName": "CPUUsage",
+            "Namespace": "CustomNamespace",
+            "Period": 60,
+            "Statistic": "Average",
+            "Threshold": 70,
+            "TreatMissingData": "notBreaching"
+        }
+    },
+    "HighMemoryUsage": {
+        "Type": "AWS::CloudWatch::Alarm",
+        "Properties": {
+            "AlarmDescription": "Memoryusageishigh",
+            "AlarmName": "HighMemoryUsage",
+            "ComparisonOperator": "GreaterThanThreshold",
+            "EvaluationPeriods": 1,
+            "MetricName": "MemoryUsage",
+            "Namespace": "CustomNamespace",
+            "Period": 60,
+            "Statistic": "Average",
+            "Threshold": 65,
+            "TreatMissingData": "breaching"
+        }
+    }
+}
+```

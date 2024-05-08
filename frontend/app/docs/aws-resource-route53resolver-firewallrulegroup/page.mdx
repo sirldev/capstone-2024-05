@@ -1,0 +1,134 @@
+# AWS::Route53해석자::방화벽 규칙 그룹
+
+방화벽 규칙 그룹에 대한 개략적인 정보입니다. 방화벽 규칙 그룹은 DNS 방화벽이 VPC의 DNS 네트워크 트래픽을 필터링하는 데 사용하는 규칙 모음입니다. 규칙 그룹에 대한 규칙을 검색하려면 ListFirewallRules를 호출합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::Route53Resolver::FirewallRuleGroup",
+  "Properties" : {
+      "FirewallRules" : [ FirewallRule, ... ],
+      "Name" : String,
+      "Tags" : [Tag, ... ]
+    }
+}
+```
+
+## 속성
+
+`FirewallRules`  
+정의한 규칙의 목록입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: FirewallRule 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`Name`  
+규칙 그룹의 이름입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최대_: `64`  
+_패턴_: `(?!^[0-9]+$)([a-zA-Z0-9-_' ']+)`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Tags`  
+규칙 그룹과 연결하려는 태그 키 및 값의 목록입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_최대_: `200`  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달 `Ref` 하면 `Ref`를 반환합니다`FirewallRuleGroupId`.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`Arn` 규칙 그룹의 ARN(Amazon 리소스 이름)입니다.
+
+`CreationTime` 규칙 그룹이 생성된 날짜 및 시간(Unix 시간 형식 및 UTC(협정 세계시))입니다.
+
+`CreatorRequestId` 요청을 식별하기 위해 사용자가 정의한 고유한 문자열입니다. 이렇게 하면 작업을 두 번 실행할 위험 없이 실패한 요청을 다시 시도할 수 있습니다. 고유한 문자열(예: 타임스탬프)이 될 수 있습니다.
+
+`Id` 규칙 그룹의 ID입니다.
+
+`ModificationTime` 규칙 그룹이 마지막으로 수정된 날짜 및 시간(Unix 시간 형식 및 UTC(협정 세계시))입니다.
+
+`OwnerId` 규칙 그룹을 생성한 계정의 AWS 계정 ID입니다. 규칙 그룹이 사용자 계정과 공유되는 경우, 이 계정은 규칙 그룹을 사용자와 공유한 계정입니다.
+
+`RuleCount` 규칙 그룹의 규칙 수입니다.
+
+`ShareStatus` 규칙 그룹이 다른 AWS 계정과 공유되는지 또는 다른 AWS 계정에서 현재 계정과 공유되었는지 여부입니다. 공유는 AWS Resource Access Manager(AWS RAM)를 통해 구성됩니다.
+
+`Status` 도메인 목록의 상태입니다.
+
+`StatusMessage` 규칙 그룹의 상태에 대한 추가 정보(사용 가능한 경우).
+
+## 예제
+
+### 방화벽 규칙 그룹 생성
+
+다음 예에서는 , `ALLOW`, 및 `ALERT`에`BLOCK` 대한 연결된 규칙이 있는 DNS 방화벽 규칙 그룹을 만듭니다.
+
+#### JSON (영문)
+
+```
+{"Type": "AWS::Route53Resolver::FirewallRuleGroup",
+"Properties": {
+     "FirewallRules": [
+         {
+            "Action": "ALERT",
+            "FirewallDomainListId": "rslvr-fdl-sampleID1",
+            "Priority": 1
+         },
+         {
+            "Action": "BLOCK",
+            "BlockResponse": "NODATA",
+            "FirewallDomainListId": "rslvr-fdl-sampleID2",
+            "Priority": 2
+          },
+          {
+            "Action": "BLOCK",
+            "BlockResponse": "NXDOMAIN",
+            "FirewallDomainListId": "rslvr-fdl-sampleID3",
+            "Priority": 3
+          },
+          {
+            "Action": "BLOCK",
+            "BlockResponse": "OVERRIDE",
+            "BlockOverrideDnsType": "CNAME",
+            "BlockOverrideDomain": "www.example.com",
+            "BlockOverrideTtl": 300,
+            "FirewallDomainListId": "rslvr-fdl-sampleID4",
+            "Priority": 4
+          },
+          {
+            "Action": "ALLOW",
+            "FirewallDomainListId": "rslvr-fdl-sampleID5",
+            "Priority": 5
+          }
+        ],
+        "Name": "SampleFirewallRuleGroup",
+        "Tags": [
+          {
+            "Key": "LineOfBusiness",
+            "Value": "Engineering"
+          }
+      ]
+   }
+}
+```

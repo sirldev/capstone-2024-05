@@ -1,0 +1,98 @@
+# AWS::EC2::NetworkInsights분석 분석경로테이블경로
+
+경로 테이블 경로를 설명합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "destinationCidr" : String,
+  "destinationPrefixListId" : String,
+  "egressOnlyInternetGatewayId" : String,
+  "gatewayId" : String,
+  "instanceId" : String,
+  "NatGatewayId" : String,
+  "NetworkInterfaceId" : String,
+  "Origin" : String,
+  "State" : String,
+  "TransitGatewayId" : String,
+  "VpcPeeringConnectionId" : String
+}
+```
+
+## 속성
+
+`destinationCidr`  
+CIDR 표기법의 대상 IPv4 주소입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`destinationPrefixListId`  
+AWS 서비스의 접두사입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`egressOnlyInternetGatewayId`  
+외부 전용 인터넷 게이트웨이의 ID입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`gatewayId`  
+게이트웨이의 ID(예: 인터넷 게이트웨이 또는 가상 프라이빗 게이트웨이)입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`instanceId`  
+인스턴스의 ID(예: NAT 인스턴스)입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`NatGatewayId`  
+NAT 게이트웨이의 ID입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`NetworkInterfaceId`  
+네트워크 인터페이스의 ID입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Origin` 경로를 만든 방법을 설명합니다. 가능한 값은 다음과 같습니다.
+
+- CreateRouteTable - 경로 테이블을 만들 때 경로가 자동으로 만들어졌습니다.
+- CreateRoute - 경로가 경로 테이블에 수동으로 추가되었습니다.
+- EnableVgwRoutePropagation - 경로 전파에 의해 경로가 전파되었습니다.
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열  
+  _업데이트 필요 사항_: 중단 없음
+
+`State` 상태입니다. 가능한 값은 다음과 같습니다.
+
+- 활동적인
+- 블랙홀
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열  
+  _업데이트 필요 사항_: 중단 없음
+
+`TransitGatewayId`  
+Transit Gateway의 ID입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`VpcPeeringConnectionId`  
+VPC 피어링 연결의 ID입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음

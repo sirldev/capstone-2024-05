@@ -1,0 +1,23 @@
+# AWS::SageMaker::모델 카드 보안 구성
+
+모델 카드 데이터를 보호하는 데 사용되는 보안 구성입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "KmsKeyId" : String
+}
+```
+
+## 속성
+
+`KmsKeyId`  
+모델 카드를 암호화하는 데 사용되는 AWS Key Management Service 키 ID입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음

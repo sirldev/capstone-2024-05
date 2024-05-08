@@ -1,0 +1,65 @@
+# AWS::SageMaker::엔드포인트 구성 DataCaptureConfig
+
+모델 모니터 데이터 캡처를 위한 끝점의 구성을 지정합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "CaptureContentTypeHeader" : CaptureContentTypeHeader,
+  "CaptureOptions" : [ CaptureOption, ... ],
+  "DestinationS3Uri" : String,
+  "EnableCapture" : Boolean,
+  "InitialSamplingPercentage" : Integer,
+  "KmsKeyId" : String
+}
+```
+
+## 속성
+
+`CaptureContentTypeHeader`  
+엔드포인트가 캡처하는 JSON 및 CSV 콘텐츠 형식의 목록입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: CaptureContentTypeHeader  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`CaptureOptions`  
+끝점이 모델에 대한 입력 데이터를 캡처하는지, 모델에서 출력 데이터를 캡처하는지 또는 둘 다를 캡처하는지 여부를 지정합니다.  
+_필수 항목 여부_: 예  
+_유형_: CaptureOption 목록  
+_최대_: `2`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`DestinationS3Uri`  
+모델 모니터가 캡처된 데이터를 저장하는 S3 버킷입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최대_: `512`  
+_패턴_: `^(https|s3)://([^/])/?(.*)$`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`EnableCapture`  
+`True` 데이터 캡처를 사용하려면 로 설정합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`InitialSamplingPercentage`  
+캡처할 데이터의 백분율입니다.  
+_필수 항목 여부_: 예  
+_유형_: Integer  
+_최소_: `0`  
+_최대_: `100`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`KmsKeyId`  
+Amazon SageMaker가 Amazon S3 서버 측 암호화를 사용하여 캡처된 저장 데이터를 암호화하는 데 사용하는 AWS Key Management Service(AWS KMS) 키입니다. KmsKeyId는 다음 형식 중 하나일 수 있습니다. 키 ID: 1234abcd-12ab-34cd-56ef-1234567890ab 키 ARN: arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab 별칭 이름: alias/ExampleAlias 별칭 이름 ARN: arn:aws:kms:us-west-2:111122223333:alias/ExampleAlias KMS 키 ID를 제공하지 않으면 Amazon SageMaker는 역할 계정에 Amazon S3의 기본 KMS 키를 사용합니다. 자세한 내용은 Amazon Simple Storage Service 개발자 가이드의 KMS 관리형 암호화 키(some-address)를 참조하십시오. KMS 키 정책은 CreateModel(some-address 요청)에서 지정한 IAM 역할에 권한을 부여해야 합니다. 자세한 내용은 AWS Key Management Service 개발자 안내서의 AWS KMS에서 키 정책 사용(some-address)을 참조하세요.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최대_: `2048`  
+_패턴_: `.*`  
+_업데이트 필요 사항_: 바꿔 놓음

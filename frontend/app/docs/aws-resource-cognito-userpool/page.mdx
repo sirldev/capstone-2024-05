@@ -1,0 +1,248 @@
+# AWS::Cognito::사용자 풀
+
+리소스 `AWS::Cognito::UserPool` 는 Amazon Cognito 사용자 풀을 생성합니다. Amazon Cognito 사용자 풀 작업에 대한 자세한 내용은 Amazon Cognito 사용자 풀 및 CreateUserPool 단원을 참조하십시오.
+
+**메모**  
+파라미터 값을 지정하지 않으면 Amazon Cognito가 파라미터 값을 기본값으로 설정합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::Cognito::UserPool",
+  "Properties" : {
+      "AccountRecoverySetting" : AccountRecoverySetting,
+      "AdminCreateUserConfig" : AdminCreateUserConfig,
+      "AliasAttributes" : [ String, ... ],
+      "AutoVerifiedAttributes" : [ String, ... ],
+      "DeletionProtection" : String,
+      "DeviceConfiguration" : DeviceConfiguration,
+      "EmailConfiguration" : EmailConfiguration,
+      "EmailVerificationMessage" : String,
+      "EmailVerificationSubject" : String,
+      "EnabledMfas" : [ String, ... ],
+      "LambdaConfig" : LambdaConfig,
+      "MfaConfiguration" : String,
+      "Policies" : Policies,
+      "Schema" : [ SchemaAttribute, ... ],
+      "SmsAuthenticationMessage" : String,
+      "SmsConfiguration" : SmsConfiguration,
+      "SmsVerificationMessage" : String,
+      "UserAttributeUpdateSettings" : UserAttributeUpdateSettings,
+      "UsernameAttributes" : [ String, ... ],
+      "UsernameConfiguration" : UsernameConfiguration,
+      "UserPoolAddOns" : UserPoolAddOns,
+      "UserPoolName" : String,
+      "UserPoolTags" : Json,
+      "VerificationMessageTemplate" : VerificationMessageTemplate
+    }
+}
+```
+
+## 속성
+
+`AccountRecoverySetting`  
+이 설정을 사용하여 사용자가 를 호출할 때 암호를 복구하는 데 사용할 수 있는 사용 가능한 확인된 방법을 정의합니다`ForgotPassword`. 사용자가 둘 이상의 방법을 사용할 수 있는 경우 선호하는 방법을 정의할 수 있습니다. 이 설정을 사용하면 사용자가 SMS MFA도 사용하도록 설정한 경우 SMS는 유효한 암호 복구 메커니즘에 적합하지 않습니다. 이 설정이 없는 경우 Cognito는 레거시 동작을 사용하여 이메일보다 SMS가 선호되는 복구 방법을 결정합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: AccountRecoverySetting  
+_업데이트 필요 사항_: 중단 없음
+
+`AdminCreateUserConfig`  
+새 사용자 프로필을 만들기 위한 구성입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: AdminCreateUserConfig  
+_업데이트 필요 사항_: 중단 없음
+
+`AliasAttributes`  
+이 사용자 풀의 별칭으로 지원되는 속성입니다. 가능한 값은 **phone_number**, **email** 또는 **preferred_username**입니다.  
+이 사용자 풀 속성은 업데이트할 수 없습니다.
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`AutoVerifiedAttributes`  
+자동 검증할 속성입니다. 가능한 값은 **email**, **phone_number**.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`DeletionProtection`  
+활성화되면 `DeletionProtection` 사용자 풀이 실수로 삭제되는 것을 방지합니다. 삭제되지 않도록 보호한 사용자 풀을 삭제하려면 먼저 이 기능을 비활성화해야 합니다.  
+API 요청에서 보호된 사용자 풀을 삭제하려고 하면 `DeleteUserPool` Amazon Cognito에서 오류를 반환합니다 `InvalidParameterException` . 보호된 사용자 풀을 삭제하려면 API 요청 `DeleteUserPool` 에서 삭제 방지를 비활성화한 후 새 요청을 보냅니다 `UpdateUserPool` .  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `ACTIVE | INACTIVE`  
+_업데이트 필요 사항_: 중단 없음
+
+`DeviceConfiguration`  
+사용자 풀에 대한 디바이스 기억 구성입니다. null 값은 사용자 풀에서 디바이스 기억을 비활성화했음을 나타냅니다.  
+필드에 값을 제공 `DeviceConfiguration` 하면 Amazon Cognito 디바이스 기억 기능이 활성화됩니다.
+*필수 항목 *여부: 아니요  
+_형식_: DeviceConfiguration  
+_업데이트 필요 사항_: 중단 없음
+
+`EmailConfiguration`  
+사용자 풀의 이메일 구성입니다. 이메일 구성 유형은 선호하는 전송 방법, AWS 리전 및 사용자 풀의 메시지 발신자를 설정합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: EmailConfiguration  
+_업데이트 필요 사항_: 중단 없음
+
+`EmailVerificationMessage`  
+이 매개 변수는 더 이상 사용되지 않습니다. VerificationMessageTemplateType을 참조하세요.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `6`  
+_최대_: `20000`  
+_패턴_: `[p{L}p{M}p{S}p{N}p{P}s*]*{####}[p{L}p{M}p{S}p{N}p{P}s*]*`  
+_업데이트 필요 사항_: 중단 없음
+
+`EmailVerificationSubject`  
+이 매개 변수는 더 이상 사용되지 않습니다. VerificationMessageTemplateType을 참조하세요.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `140`  
+_패턴_: `[p{L}p{M}p{S}p{N}p{P}s]+`  
+_업데이트 필요 사항_: 중단 없음
+
+`EnabledMfas` 지정된 사용자 풀에서 MFA를 활성화합니다. 모든 MFA를 활성화한 후 비활성화하려면 MfaConfiguration을 "OFF"로 설정하고 EnabledMfas를 제거합니다. MFA는 MfaConfiguration이 OFF인 경우에만 모두 비활성화할 수 있습니다. SMS_MFA 활성화되면 MfaConfiguration을 "OFF"로 설정해야만 비활성화SMS_MFA 수 있습니다. 다음 값 중 하나일 수 있습니다.
+
+- `SMS_MFA` - 사용자 풀에 대해 SMS MFA를 활성화합니다. SMS 구성이 제공된 경우에만 SMS_MFA 활성화할 수 있습니다.
+- `SOFTWARE_TOKEN_MFA` - 사용자 풀에 대해 소프트웨어 토큰 MFA를 활성화합니다.
+  허용되는 값: `SMS_MFA` | `SOFTWARE_TOKEN_MFA`  
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열 목록  
+  _업데이트 필요 사항_: 중단 없음
+
+`LambdaConfig` 새 사용자 풀에 대한 Lambda 트리거 구성 정보입니다.  
+푸시 모델에서 이벤트 소스(예: Amazon S3 및 사용자 지정 애플리케이션)는 함수를 호출할 수 있는 권한이 필요합니다. 따라서 Lambda 함수를 호출하기 위해 이러한 이벤트 소스에 대한 권한을 추가하려면 추가 호출을 수행해야 합니다.
+
+Lambda API를 사용하여 권한을 추가하는 방법에 대한 자세한 내용은 AddPermission을 참조하세요.  
+AWS CLI를 사용하여 권한을 추가하려면 add-permission 단원을 참조하십시오.
+*필수 항목 *여부: 아니요  
+_유형_: LambdaConfig  
+_업데이트 필요 사항_: 중단 없음
+
+`MfaConfiguration` 다단계 인증(MFA) 구성입니다. 유효한 값은 다음과 같습니다.
+
+- `OFF` MFA는 어떤 사용자에게도 사용되지 않습니다.
+- `ON` MFA는 모든 사용자가 로그인하는 데 필요합니다.
+- `OPTIONAL` MFA는 MFA 팩터가 활성화된 개별 사용자에게만 필요합니다.
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열  
+  _허용되는 값_: `OFF | ON | OPTIONAL`  
+  _업데이트 필요 사항_: 중단 없음
+
+`Policies`  
+사용자 풀과 연결된 정책입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 정책  
+_업데이트 필요 사항_: 중단 없음
+
+`Schema`  
+새 사용자 풀의 스키마 속성입니다. 이러한 특성은 표준 또는 사용자 지정 특성일 수 있습니다.  
+ 사용자 풀 업데이트 중에 새 스키마 속성을 추가할 수 있지만 기존 스키마 속성을 수정하거나 삭제할 수는 없습니다.
+*필수 항목 *여부: 아니요  
+_형식_: SchemaAttribute 목록  
+_최대_: `50`  
+_업데이트 필요 사항_: 중단 없음
+
+`SmsAuthenticationMessage`  
+SMS 인증 메시지를 나타내는 문자열입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `6`  
+_최대_: `140`  
+_패턴_: `.*{####}.*`  
+_업데이트 필요 사항_: 중단 없음
+
+`SmsConfiguration`  
+Amazon Cognito 사용자 풀이 Amazon Simple Notification Service를 통해 AWS 계정에서 SMS 메시지를 전송하는 데 사용해야 하는 설정이 포함된 SMS 구성입니다. 원하는 AWS 리전에서 Amazon SNS를 통해 SMS 메시지를 전송하기 위해 Amazon Cognito 사용자 풀은 AWS 계정에서 AWS Identity and Access Management(IAM) 역할을 사용합니다.  
+*필수 항목 *여부: 아니요  
+_형식_: SmsConfiguration  
+_업데이트 필요 사항_: 중단 없음
+
+`SmsVerificationMessage`  
+이 매개 변수는 더 이상 사용되지 않습니다. VerificationMessageTemplateType을 참조하세요.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `6`  
+_최대_: `140`  
+_패턴_: `.*{####}.*`  
+_업데이트 필요 사항_: 중단 없음
+
+`UserAttributeUpdateSettings`  
+사용자 특성에 대한 업데이트 설정입니다. 이러한 설정에는 `AttributesRequireVerificationBeforeUpdate`Amazon Cognito에 사용자의 이메일 주소 및 전화번호 속성 값 변경을 처리하는 방법을 알려주는 사용자 풀 설정 속성이 포함됩니다. 자세한 내용은 이메일 주소 및 전화 번호에 대한 업데이트 확인을 참조하세요.  
+*필수 항목 *여부: 아니요  
+_유형_: UserAttributeUpdateSettings  
+_업데이트 필요 사항_: 중단 없음
+
+`UsernameAttributes`  
+사용자가 등록할 때 전자 메일 주소 또는 전화 번호를 사용자 이름으로 지정할 수 있는지 여부를 결정합니다. 가능한 값: `phone_number` 또는 `email`.  
+이 사용자 풀 속성은 업데이트할 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`UsernameConfiguration`  
+선택한 로그인 옵션에 대한 사용자 이름 입력에서 대/소문자 구분을 설정하도록 선택할 수 있습니다. 예를 들어 `False`로 설정하면 사용자는 "사용자 이름" 또는 "사용자 이름"을 사용하여 로그인할 수 있습니다. 이 구성은 한 번 설정되면 변경할 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: UsernameConfiguration  
+_업데이트 필요 사항_: 중단 없음
+
+`UserPoolAddOns`  
+사용자 풀 추가 기능. 고급 보안 기능을 활성화하기 위한 설정이 포함되어 있습니다. 사용자 보안 정보를 기록하되 아무 조치도 취하지 않으려면 로 설정합니다`AUDIT`. 사용자 풀에 대한 위험한 트래픽에 대한 자동 보안 응답을 구성하려면 로 설정합니다`ENFORCED`.  
+자세한 내용은 사용자 풀에 고급 보안 추가를 참조하세요.  
+*필수 항목 *여부: 아니요  
+_형식_: UserPoolAddOns  
+_업데이트 필요 사항_: 중단 없음
+
+`UserPoolName`  
+사용자 풀의 이름을 지정하는 데 사용되는 문자열입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `128`  
+_패턴_: `[ws+=,.@-]+`  
+_업데이트 필요 사항_: 중단 없음
+
+`UserPoolTags`  
+사용자 풀에 할당할 태그 키와 값입니다. 태그는 목적, 소유자, 환경 또는 기타 기준과 같은 다양한 방식으로 사용자 풀을 분류하고 관리하는 데 사용할 수 있는 레이블입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: Json  
+_업데이트 필요 사항_: 중단 없음
+
+`VerificationMessageTemplate`  
+앱이 사용자 정보에 액세스할 수 있는 권한을 요청할 때 사용자에게 표시되는 확인 메시지의 템플릿입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: VerificationMessageTemplate  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref`는 `Ref`생성된 ID(예: )를 반환합니다 `us-east-2_zgaEXAMPLE`.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`Arn`  
+사용자 풀의 Amazon 리소스 이름(ARN)입니다 `arn:aws:cognito-idp:us-east-1:123412341234:userpool/us-east-1_123412341`.
+
+`ProviderName`  
+Amazon Cognito 사용자 풀의 공급자 이름으로, 로 지정됩니다 `String`.
+
+`ProviderURL`  
+Amazon Cognito 사용자 풀 공급자의 URL로, 로 지정됩니다 `String`.

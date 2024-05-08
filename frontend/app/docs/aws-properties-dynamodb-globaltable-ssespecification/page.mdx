@@ -1,0 +1,31 @@
+# AWS::D ynamoDB::GlobalTable SSES사양
+
+서버 쪽 암호화를 사용하도록 설정하는 데 사용되는 설정을 나타냅니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "SSEEnabled" : Boolean,
+  "SSEType" : String
+}
+```
+
+## 속성
+
+`SSEEnabled`  
+서버 측 암호화가 AWS 관리형 키 또는 AWS 소유 키를 사용하여 수행되는지 여부를 나타냅니다. 활성화되면(true) 서버 측 암호화 유형이 KMS로 설정되고 AWS 관리형 키가 사용됩니다(AWS KMS 요금 적용). 비활성화(false)되거나 지정되지 않은 경우 서버 측 암호화가 AWS 소유 키로 설정됩니다. KMS 암호화를 사용하기로 선택한 경우 객체에 고객 관리형 KMS 키를 지정하여 사용할 수도 있습니다 `ReplicaSpecification.SSESpecification` . AWS 관리형 및 고객 관리형 KMS 키를 혼합할 수 없습니다.  
+_필수 항목 여부_: 예  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`SSEType` 서버 쪽 암호화 유형입니다. 유일하게 지원되는 값은 다음과 같습니다.
+
+- `KMS` - AWS Key Management Service를 사용하는 서버 측 암호화. 키는 계정에 저장되고 AWS KMS에서 관리합니다(AWS KMS 요금 적용).
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열  
+  _업데이트 필요 사항_: 중단 없음

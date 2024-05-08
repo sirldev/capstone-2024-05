@@ -1,0 +1,39 @@
+# AWS::SageMaker::P roject ServiceCatalogProvisionedProductDetails
+
+프로비저닝된 서비스 카탈로그 제품의 세부 정보입니다. Service Catalog에 대한 자세한 내용은 AWS Service Catalog란 무엇인가를 참조하십시오.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ProvisionedProductId" : String,
+  "ProvisionedProductStatusMessage" : String
+}
+```
+
+## 속성
+
+`ProvisionedProductId`  
+프로비저닝된 제품의 ID입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `100`  
+_패턴_: `^[a-zA-Z0-9_-]*`  
+_업데이트 필요 사항_: 중단 없음
+
+`ProvisionedProductStatusMessage` 제품의 현재 상태입니다.
+
+- `AVAILABLE` - 모든 작업을 수행할 준비가 된 안정적인 상태. 가장 최근 작업이 성공하고 완료되었습니다.
+- `UNDER_CHANGE` - 전이적 상태. 수행된 작업의 결과가 유효하지 않을 수 있습니다. 작업을 수행하기 전에 AVAILABLE 상태가 될 때까지 기다리십시오.
+- `TAINTED` - 모든 작업을 수행할 준비가 된 안정적인 상태. 스택이 요청된 작업을 완료했지만 요청된 것과 정확히 일치하지 않습니다. 예를 들어, 새 버전으로 업데이트하려는 요청이 실패하고 스택이 현재 버전으로 롤백되었습니다.
+- `ERROR` - 예기치 않은 오류가 발생했습니다. 프로비저닝된 제품이 있지만 스택이 실행되고 있지 않습니다. 예를 들어, CloudFormation에서 유효하지 않은 파라미터 값을 수신하여 스택을 시작할 수 없습니다.
+- `PLAN_IN_PROGRESS` - 전이적 상태. 새 제품을 프로비전하기 위해 계획 작업이 수행되었지만 리소스가 아직 만들어지지 않았습니다. 생성할 리소스 목록을 검토한 후 계획을 실행합니다. 작업을 수행하기 전에 AVAILABLE 상태가 될 때까지 기다리십시오.
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열  
+  _패턴_: `.*`  
+  _업데이트 필요 사항_: 중단 없음

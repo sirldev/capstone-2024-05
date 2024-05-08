@@ -1,0 +1,39 @@
+# AWS::Cognito::IdentityPool CognitoIdentityProvider
+
+`CognitoIdentityProvider` 는 AWS::Cognito::IdentityPool 리소스의 속성으로, Amazon Cognito 사용자 풀과 해당 클라이언트 ID를 나타냅니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ClientId" : String,
+  "ProviderName" : String,
+  "ServerSideTokenCheck" : Boolean
+}
+```
+
+## 속성
+
+`ClientId`  
+Amazon Cognito 사용자 풀의 클라이언트 ID입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`ProviderName`  
+Amazon Cognito 사용자 풀의 공급자 이름입니다. 예를 들면 다음과 같습니다`cognito-idp.us-east-2.amazonaws.com/us-east-2_123456789`.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`ServerSideTokenCheck`  
+ID 공급자의 토큰에 대해 서버 쪽 토큰 유효성 검사를 사용하는 경우 TRUE입니다.  
+`ServerSideTokenCheck` 자격 증명 풀에 대해 를 TRUE로 설정한 후 해당 자격 증명 풀은 통합 사용자 풀을 통해 자격 증명 풀이 사용자에 대한 OIDC 토큰 또는 AWS 자격 증명을 제공하기 전에 사용자가 전역적으로 로그아웃 또는 삭제되지 않았는지 확인합니다.  
+사용자가 로그아웃되거나 삭제된 경우 자격 증명 풀은 400 권한 없음 오류를 반환합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음

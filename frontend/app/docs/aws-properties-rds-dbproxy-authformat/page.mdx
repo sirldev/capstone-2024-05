@@ -1,0 +1,53 @@
+# AWS::RDS::D BProxy 인증 형식
+
+프록시가 특정 데이터베이스 사용자로 로그인하기 위해 사용하는 인증의 세부 정보를 지정합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "AuthScheme" : String,
+  "ClientPasswordAuthType" : String,
+  "Description" : String,
+  "IAMAuth" : String,
+  "SecretArn" : String
+}
+```
+
+## 속성
+
+`AuthScheme`  
+프록시에서 기본 데이터베이스로의 연결에 프록시가 사용하는 인증 유형입니다.  
+유효한 값 : `SECRETS`  
+*필수 항목 *여부 : 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`ClientPasswordAuthType`  
+프록시가 특정 데이터베이스 사용자로 로그인하기 위해 사용하는 인증의 세부 정보를 지정합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Description`  
+프록시가 특정 데이터베이스 사용자로 로그인하기 위해 사용하는 인증에 대한 사용자 지정 설명입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`IAMAuth`  
+프록시 연결에 AWS Identity and Access Management(IAM) 인증을 요구할지 또는 허용하지 않을지 여부입니다. 이 `ENABLED` 값은 RDS for Microsoft SQL Server를 사용하는 프록시에만 유효합니다.  
+유효한 값 : `ENABLED | DISABLED | REQUIRED`  
+*필수 항목 *여부 : 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`SecretArn`  
+프록시가 RDS DB 인스턴스 또는 Aurora DB 클러스터에 인증하는 데 사용하는 암호를 나타내는 Amazon 리소스 이름(ARN)입니다. 이러한 보안 암호는 Amazon Secrets Manager에 저장됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음

@@ -1,0 +1,51 @@
+# AWS::ECR::P ublicRepository 리포지토리카탈로그데이터
+
+Amazon ECR Public Gallery에서 공개적으로 볼 수 있는 리포지토리에 대한 세부 정보입니다. 자세한 내용은 _Amazon ECR Public 사용 설명서의 Amazon ECR Public 리포지토리 카탈로그 데이터를 참조하세요_.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "AboutText" : String,
+  "Architectures" : [ String, ... ],
+  "OperatingSystems" : [ String, ... ],
+  "RepositoryDescription" : String,
+  "UsageText" : String
+}
+```
+
+## 속성
+
+`AboutText`  
+저장소의 내용에 대한 긴 형식의 설명입니다. 이 텍스트는 Amazon ECR Public Gallery의 리포지토리 세부 정보에 표시됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Architectures`  
+저장소와 연결된 아키텍처 태그입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`OperatingSystems`  
+저장소와 연결된 운영 체제 태그입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`RepositoryDescription`  
+리포지토리에 대한 간단한 설명입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`UsageText`  
+리포지토리 컨텐츠의 긴 형식 사용 세부 정보입니다. 사용법 텍스트는 저장소 사용자에게 컨텍스트를 제공합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음

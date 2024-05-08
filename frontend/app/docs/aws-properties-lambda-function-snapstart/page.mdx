@@ -1,0 +1,24 @@
+# AWS::Lambda::함수 스냅스타트
+
+함수의 AWS Lambda SnapStart 설정입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ApplyOn" : String
+}
+```
+
+## 속성
+
+`ApplyOn`  
+ `ApplyOn` `PublishedVersions` 함수 버전을 게시할 때 초기화된 실행 환경의 스냅샷을 생성하려면 로 설정합니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_허용되는 값_: `None | PublishedVersions`  
+_업데이트 필요 사항_: 중단 없음

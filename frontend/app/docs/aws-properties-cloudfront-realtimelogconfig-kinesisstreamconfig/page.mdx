@@ -1,0 +1,31 @@
+# AWS::CloudFront::RealtimeLogConfig KinesisStreamConfig
+
+실시간 로그 데이터를 전송하는 Amazon Kinesis 데이터 스트림에 대한 정보가 포함되어 있습니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "RoleArn" : String,
+  "StreamArn" : String
+}
+```
+
+## 속성
+
+`RoleArn`  
+CloudFront에서 Kinesis 데이터 스트림으로 실시간 로그 데이터를 전송하는 데 사용할 수 있는 AWS Identity and Access Management(IAM) 역할의 Amazon 리소스 이름(ARN)입니다.  
+IAM 역할에 대한 자세한 내용은 _Amazon CloudFront 개발자 안내서의 실시간 로그 구성 IAM 역할을 참조하세요_.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`StreamArn`  
+실시간 로그 데이터를 전송하는 Kinesis 데이터 스트림의 Amazon 리소스 이름(ARN)입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음

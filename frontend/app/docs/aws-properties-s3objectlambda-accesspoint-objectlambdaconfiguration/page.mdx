@@ -1,0 +1,44 @@
+# AWS::S3ObjectLambda::AccessPoint ObjectLambda구성
+
+객체 Lambda 액세스 포인트를 생성할 때 사용되는 구성입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "AllowedFeatures" : [ String, ... ],
+  "CloudWatchMetricsEnabled" : Boolean,
+  "SupportingAccessPoint" : String,
+  "TransformationConfigurations" : [ TransformationConfiguration, ... ]
+}
+```
+
+## 속성
+
+`AllowedFeatures`  
+허용되는 기능에 대한 컨테이너입니다. 유효한 입력은 `GetObject-Range`, `GetObject-PartNumber`, 및 `HeadObject-Range` `HeadObject-PartNumber`입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`CloudWatchMetricsEnabled`  
+CloudWatch 지표 구성이 활성화되었는지 여부에 대한 컨테이너입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`SupportingAccessPoint`  
+객체 Lambda 액세스 포인트와 연결된 표준 액세스 포인트입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`TransformationConfigurations`  
+객체 Lambda 액세스 포인트에 대한 변환 구성을 위한 컨테이너입니다.  
+_필수 항목 여부_: 예  
+_유형_: TransformationConfiguration 목록  
+_업데이트 필요 사항_: 중단 없음

@@ -1,0 +1,31 @@
+# AWS::EC2::EC2Fleet CapacityReservationOptionsRequest
+
+온디맨드 용량을 채우기 위해 사용되지 않은 용량 예약을 사용하는 전략을 설명합니다.
+
+**메모**  
+이 전략은 EC2 집합이 `instant`.
+
+용량 예약에 대한 자세한 내용은 Amazon EC2 사용 설명서*의 온디맨드 용량 예약을 참조하십시오*. EC2 집합에서 용량 예약을 사용하는 예제 는 _Amazon EC2 사용 설명서의 EC2 집합 구성 예제를 참조하세요_.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "UsageStrategy" : String
+}
+```
+
+## 속성
+
+`UsageStrategy`  
+온디맨드 용량을 이행하기 위해 미사용 용량 예약을 사용할지 여부를 나타냅니다.  
+를 지정하면 `use-capacity-reservations-first`플릿은 미사용 용량 예약을 사용하여 목표 온디맨드 용량까지 온디맨드 용량을 충족합니다. 여러 인스턴스 풀에 사용되지 않은 용량 예약이 있는 경우 온디맨드 할당 전략(`lowest-price` 또는 `prioritized`)이 적용됩니다. 미사용 용량 예약 수가 온디맨드 목표 용량보다 적으면 온디맨드 할당 전략( 또는 )에 따라 나머지 온디맨드 목표 용량이 시작됩니다`lowest-price``prioritized`.  
+값을 지정하지 않으면 플릿은 선택한 온디맨드 할당 전략에 따라 온디맨드 용량을 충족합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `use-capacity-reservations-first`  
+_업데이트 필요 사항_: 바꿔 놓음

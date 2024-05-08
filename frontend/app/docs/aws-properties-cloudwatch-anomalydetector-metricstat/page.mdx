@@ -1,0 +1,52 @@
+# AWS::CloudWatch::AnomalyDetector 지표 통계
+
+이 구조는 통계, 기간 및 단위와 함께 반환할 메트릭을 정의합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Metric" : Metric,
+  "Period" : Integer,
+  "Stat" : String,
+  "Unit" : String
+}
+```
+
+## 속성
+
+`Metric`  
+지표 이름, 네임스페이스 및 차원을 포함하여 반환할 지표입니다.  
+_필수 항목 여부_: 예  
+_유형_: 미터법  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Period`  
+반환된 데이터 요소의 세분성(초)입니다. 일반 해상도를 사용하는 지표의 경우 기간은 1분(60초)만큼 짧을 수 있으며 60의 배수여야 합니다. 1분 미만의 간격으로 수집되는 고해상도 지표의 경우 기간은 1, 5, 10, 30, 60 또는 60의 배수일 수 있습니다. 고분해능 지표는 1초를 포함하는 호출에 의해 저장되는 지표입니다 `PutMetricData` `StorageResolution` .  
+ `StartTime` 매개 변수가 3시간보다 큰 타임스탬프를 지정하는 경우 다음과 같이 기간을 지정해야 하며, 그렇지 않으면 해당 시간 범위의 데이터 포인트가 반환되지 않습니다.
+
+- 3시간에서 15일 전 사이의 시작 시간 - 60초(1분)의 배수를 사용합니다.
+- 15일에서 63일 전 사이의 시작 시간 - 300초(5분)의 배수를 사용합니다.
+- 시작 시간이 63일 전보다 큼 - 3600초(1시간)의 배수를 사용합니다.
+  _필수 항목 여부_: 예  
+  _유형_: Integer  
+  _최소_: `1`  
+  _업데이트 필요 사항_: 바꿔 놓음
+
+`Stat`  
+반환할 통계입니다. 여기에는 CloudWatch 통계 또는 확장 통계가 포함될 수 있습니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Unit`  
+작업을 사용하는 경우 `Put` 메트릭을 저장할 때 사용할 단위를 정의합니다.  
+작업에서 `Get` 생략 `Unit` 하면 데이터가 CloudWatch에 보고될 때 지정된 해당 단위와 함께 모든 단위로 수집된 모든 데이터가 반환됩니다. 단위를 지정하면 조작은 지정된 해당 단위로 수집된 데이터만 반환합니다. 수집된 데이터와 일치하지 않는 단위를 지정하면 작업 결과는 null입니다. CloudWatch는 단위 변환을 수행하지 않습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `Bits | Bits/Second | Bytes | Bytes/Second | Count | Count/Second | Gigabits | Gigabits/Second | Gigabytes | Gigabytes/Second | Kilobits | Kilobits/Second | Kilobytes | Kilobytes/Second | Megabits | Megabits/Second | Megabytes | Megabytes/Second | Microseconds | Milliseconds | None | Percent | Seconds | Terabits | Terabits/Second | Terabytes | Terabytes/Second`  
+_업데이트 필요 사항_: 바꿔 놓음

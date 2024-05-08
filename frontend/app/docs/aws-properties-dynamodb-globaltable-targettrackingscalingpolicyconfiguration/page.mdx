@@ -1,0 +1,44 @@
+# AWS::D ynamoDB::GlobalTable TargetTrackingScalingPolicyConfiguration
+
+대상 추적 조정 정책을 정의합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "DisableScaleIn" : Boolean,
+  "ScaleInCooldown" : Integer,
+  "ScaleOutCooldown" : Integer,
+  "TargetValue" : Double
+}
+```
+
+## 속성
+
+`DisableScaleIn`  
+대상 추적 조정 정책에 의한 축소가 비활성화되었는지 여부를 나타냅니다. 기본값은 `false`입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`ScaleInCooldown`  
+축소 활동이 완료된 후 다른 축소 활동이 시작될 수 있을 때까지의 시간(초)입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`ScaleOutCooldown`  
+확장 활동이 완료된 후 다른 확장 활동을 시작할 수 있을 때까지의 시간(초)입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`TargetValue`  
+조정 정책의 대상 값을 정의합니다.  
+_필수 항목 여부_: 예  
+_유형_: 더블  
+_업데이트 필요 사항_: 중단 없음

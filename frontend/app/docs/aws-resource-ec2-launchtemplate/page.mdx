@@ -1,0 +1,221 @@
+# AWS::EC2::Launch템플릿
+
+시작 템플릿을 만들기 위한 속성을 지정합니다.
+
+시작 템플릿을 지정하는 데 필요한 최소 속성은 다음과 같습니다.
+
+- 시작 템플릿 데이터에 대해 하나 이상의 속성을 지정해야 합니다.
+- 시작 템플릿의 이름을 지정할 필요가 없습니다. 이름을 지정하지 않으면 AWS CloudFormation에서 자동으로 이름을 생성합니다.
+
+시작 템플릿에는 인스턴스를 시작하기 위한 구성 정보의 일부 또는 전부가 포함될 수 있습니다. 시작 템플릿을 사용하여 인스턴스를 시작할 때 시작 템플릿에 지정되지 않은 인스턴스 속성은 기본값이 없는 속성을 제외하고 기본값을 사용합니다 `ImageId` . 시작 템플릿 속성에 대해 AMI ID를 지정하지 않은 경우 `ImageId` 인스턴스 속성에 대해 AMI ID를 지정해야 합니다 `ImageId` .
+
+자세한 내용은 Amazon EC2 사용 설명서*의 시작 템플릿에서 인스턴스 시작을 참조하세요*.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::EC2::LaunchTemplate",
+  "Properties" : {
+      "LaunchTemplateData" : LaunchTemplateData,
+      "LaunchTemplateName" : String,
+      "TagSpecifications" : [ LaunchTemplateTagSpecification, ... ],
+      "VersionDescription" : String
+    }
+}
+```
+
+## 속성
+
+`LaunchTemplateData`  
+시작 템플릿에 대한 정보입니다.  
+_필수 항목 여부_: 예  
+_형식_: LaunchTemplateData  
+_업데이트 필요 사항_: 중단 없음
+
+`LaunchTemplateName`  
+시작 템플릿의 이름입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `3`  
+_최대_: `128`  
+_패턴_: `[a-zA-Z0-9().-/_]+`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`TagSpecifications`  
+생성 시 시작 템플릿에 적용할 태그입니다. 시작 템플릿에 태그를 지정하려면 리소스 유형이 이어야 합니다`launch-template`.  
+인스턴스가 시작될 때 생성되는 리소스에 대한 태그를 지정하려면 `TagSpecifications` 시작 템플릿 데이터 구조에서 파라미터를 사용해야 합니다.
+*필수 항목 *여부: 아니요  
+_유형_: LaunchTemplateTagSpecification 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`VersionDescription`  
+시작 템플릿의 첫 번째 버전에 대한 설명입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `0`  
+_최대_: `255`  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref`시작 `Ref`템플릿의 ID를 반환합니다(예: `lt-01238c059e3466abc`).
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`DefaultVersionNumber`  
+시작 템플릿의 기본 버전(예: 2)입니다.  
+시작 템플릿의 기본 버전은 AWS CloudFormation에서 지정할 수 없습니다. 기본 버전은 Amazon EC2 콘솔에서 설정하거나 `modify-launch-template` AWS CLI 명령을 사용하여 설정할 수 있습니다.
+
+`LatestVersionNumber`  
+시작 템플릿의 최신 버전(예: `5`.
+
+`LaunchTemplateId` 시작 템플릿의 ID입니다.
+
+## 예제
+
+### IAM 인스턴스 프로파일이 있는 시작 템플릿
+
+다음 예제에서는 시작 템플릿과 인스턴스 프로파일을 생성합니다. 인스턴스 프로파일에는 이름이 지정된 IAM 역할이 포함되어 `MyAdminRole` 있으며, 이 시작 템플릿으로 생성된 인스턴스에서 실행되는 애플리케이션에 역할의 임시 자격 증명을 제공할 수 있습니다.
+
+또한 시작 템플릿은 Amazon EC2 콘솔, CLI 또는 API를 사용할 때 속성을 지정하여 실수로 인스턴스가 종료 `true` 되는 `DisableApiTermination` 것을 방지합니다 . 이 시작 템플릿으로 생성된 인스턴스가 기본 VPC에서 시작되는 경우 기본적으로 퍼블릭 IP 주소를 수신합니다. 인스턴스가 기본이 아닌 VPC에서 시작되는 경우 기본적으로 퍼블릭 IP 주소를 수신하지 않습니다.
+
+#### JSON (영문)
+
+```
+{
+  "AWSTemplateFormatVersion":"2010-09-09",
+  "Resources":{
+    "MyIamInstanceProfile":{
+      "Type":"AWS::IAM::InstanceProfile",
+      "Properties":{
+        "InstanceProfileName":"MyIamInstanceProfile",
+        "Path":"/",
+        "Roles":["MyAdminRole"]
+      }
+    },
+    "MyLaunchTemplate":{
+      "Type":"AWS::EC2::LaunchTemplate",
+      "Properties":{
+        "LaunchTemplateName":"MyLaunchTemplate",
+        "LaunchTemplateData":{
+          "IamInstanceProfile":{
+          "Arn":{"Fn::GetAtt": ["MyIamInstanceProfile", "Arn"]}
+          },
+          "DisableApiTermination":"true",
+          "ImageId":"ami-04d5cc9b88example",
+          "InstanceType":"t2.micro",
+          "KeyName":"MyKeyPair",
+          "SecurityGroupIds":[
+            "sg-083cd3bfb8example"
+          ]
+        }
+      }
+    }
+  }
+}
+```
+
+### 정의된 블록 장치 매핑이 있는 시작 템플릿
+
+다음 예제에서는 블록 디바이스 매핑(/dev/xvdcz에 매핑된 암호화된 22GB EBS 볼륨)을 사용하여 시작 템플릿을 생성합니다. /dev/xvdcz 볼륨은 범용 SSD(gp2) 볼륨 유형을 사용하며 연결된 인스턴스를 종료할 때 삭제됩니다. 이 예제에서는 Fn::Sub 함수를 사용하여 스택 이름을 포함하도록 시작 템플릿의 이름을 사용자 지정합니다.
+
+또한 시작 템플릿은 속성 값을 지정하여 무제한 모드에서 T2 인스턴스를 프로비저닝 `unlimited` 합니다 `CPUCredits` . 활성화되어 있기 때문에 `Monitoring` EC2 지표 데이터는 CloudWatch를 통해 1분 간격(세부 모니터링이라고 함)으로 사용할 수 있습니다.
+
+#### JSON (영문)
+
+```
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Resources":{
+    "myLaunchTemplate":{
+      "Type":"AWS::EC2::LaunchTemplate",
+      "Properties":{
+        "LaunchTemplateName":{"Fn::Sub":"${AWS::StackName}-launch-template"},
+        "LaunchTemplateData":{
+          "BlockDeviceMappings":[{
+            "Ebs":{
+              "VolumeSize":"22",
+              "VolumeType":"gp2",
+              "DeleteOnTermination": true,
+              "Encrypted": true
+            },
+            "DeviceName":"/dev/xvdcz"
+          }],
+          "CreditSpecification":{
+            "CpuCredits":"unlimited"
+          },
+          "Monitoring":{"Enabled":true},
+          "ImageId":"ami-04d5cc9b88example",
+          "InstanceType":"t2.micro",
+          "KeyName":"MyKeyPair",
+          "SecurityGroupIds":["sg-7c2270198example", "sg-903004f88example"]
+        }
+      }
+    }
+  }
+}
+```
+
+### Amazon EC2 Auto Scaling에 대한 퍼블릭 IP 주소가 있는 시작 템플릿
+
+다음 예제에서는 기본이 아닌 VPC에서 시작된 인스턴스에 퍼블릭 IP 주소를 할당하도록 시작 템플릿을 생성하고 구성합니다. Amazon EC2 Auto Scaling에 대한 네트워크 인터페이스를 지정할 때 VPC 서브넷을 시작 템플릿이 아닌 Auto Scaling 그룹의 속성으로 지정합니다(무시되기 때문).
+
+또한 이 예제 시작 템플릿은 인스턴스 배치 테넌시를 로 설정합니다 `dedicated`.
+
+Amazon EC2 Auto Scaling용 시작 템플릿 생성에 대한 자세한 내용은 Amazon EC2 Auto Scaling 사용 설명서의 오토 스케일링에 대한 시작 템플릿 생성을 참조하세요\*\*.
+
+#### JSON (영문)
+
+```
+{
+  "AWSTemplateFormatVersion":"2010-09-09",
+  "Resources":{
+    "myLaunchTemplate":{
+      "Type":"AWS::EC2::LaunchTemplate",
+      "Properties":{
+        "LaunchTemplateName":{
+          "Fn::Sub":"${AWS::StackName}-launch-template-for-auto-scaling"
+        },
+        "LaunchTemplateData":{
+          "NetworkInterfaces":[
+            {
+              "DeviceIndex":0,
+              "AssociatePublicIpAddress":true,
+              "Groups":[
+                "sg-7c2270198example",
+                "sg-903004f88example"
+              ],
+              "DeleteOnTermination":true
+            }
+          ],
+          "Placement":{
+            "Tenancy": "dedicated"
+          },
+          "ImageId":"ami-04d5cc9b88example",
+          "InstanceType":"t2.micro",
+          "KeyName":"MyKeyPair"
+        }
+      }
+    }
+  }
+}
+```
+
+## 참고 항목
+
+- Amazon EC2 API 참조\* \*의 CreateLaunchTemplate

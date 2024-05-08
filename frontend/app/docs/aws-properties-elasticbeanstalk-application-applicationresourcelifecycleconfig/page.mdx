@@ -1,0 +1,33 @@
+# AWS::ElasticBeanstalk::애플리케이션 애플리케이션ResourceLifecycleConfig
+
+응용 프로그램에 대한 리소스 수명 주기 구성입니다. 애플리케이션에 속한 리소스에 대한 수명 주기 설정과 Elastic Beanstalk가 수명 주기 설정을 적용하기 위해 수임하는 서비스 역할을 정의합니다. 버전 수명 주기 구성은 응용 프로그램 버전에 대한 수명 주기 설정을 정의합니다.
+
+`ApplicationResourceLifecycleConfig` 는 AWS::ElasticBeanstalk::Application 리소스의 속성입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ServiceRole" : String,
+  "VersionLifecycleConfig" : ApplicationVersionLifecycleConfig
+}
+```
+
+## 속성
+
+`ServiceRole`  
+Elastic Beanstalk가 수임할 수 있는 권한이 있는 IAM 서비스 역할의 ARN입니다.  
+이 `ServiceRole` 속성은 응용 프로그램에 대해 처음 제공할 때 필요합니다 `ResourceLifecycleConfig` . 서비스 역할을 한 번 제공하면 Elastic Beanstalk는 애플리케이션과 함께 서비스 역할을 유지하므로 다시 지정할 필요가 없습니다. 그러나 후속 업데이트에서 이를 지정하여 서비스 역할을 다른 값으로 변경할 수 있습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`VersionLifecycleConfig`  
+응용 프로그램 버전에 대한 주기 설정을 정의합니다.  
+*필수 항목 *여부: 아니요  
+_형식_: ApplicationVersionLifecycleConfig  
+_업데이트 필요 사항_: 중단 없음

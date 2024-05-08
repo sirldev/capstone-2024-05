@@ -1,0 +1,37 @@
+# AWS::CodeDeploy::D eploymentGroup BlueGreenDeploymentConfiguration
+
+배포 그룹에 대한 블루/그린 배포 옵션에 대한 정보입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "DeploymentReadyOption" : DeploymentReadyOption,
+  "GreenFleetProvisioningOption" : GreenFleetProvisioningOption,
+  "TerminateBlueInstancesOnDeploymentSuccess" : BlueInstanceTerminationOption
+}
+```
+
+## 속성
+
+`DeploymentReadyOption`  
+새로 프로비저닝된 인스턴스가 블루/그린 배포에서 트래픽을 수신할 준비가 되었을 때 수행할 작업에 대한 정보입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: DeploymentReadyOption  
+_업데이트 필요 사항_: 중단 없음
+
+`GreenFleetProvisioningOption`  
+블루/그린 배포에서 대체 환경을 위해 인스턴스가 프로비저닝되는 방법에 대한 정보입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: GreenFleetProvisioningOption  
+_업데이트 필요 사항_: 중단 없음
+
+`TerminateBlueInstancesOnDeploymentSuccess`  
+블루/그린 배포 중에 원래 플릿의 인스턴스를 종료할지 여부에 대한 정보입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: BlueInstanceTerminationOption  
+_업데이트 필요 사항_: 중단 없음

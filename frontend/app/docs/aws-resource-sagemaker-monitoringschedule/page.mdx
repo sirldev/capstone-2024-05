@@ -1,0 +1,282 @@
+# AWS::SageMaker::모니터링 일정
+
+리소스 `AWS::SageMaker::MonitoringSchedule` 는 SageMaker 엔드포인트에 대해 캡처된 데이터를 모니터링하기 위해 SageMaker 처리 작업을 정기적으로 시작하는 Amazon SageMaker 리소스 유형입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::SageMaker::MonitoringSchedule",
+  "Properties" : {
+      "EndpointName" : String,
+      "FailureReason" : String,
+      "LastMonitoringExecutionSummary" : MonitoringExecutionSummary,
+      "MonitoringScheduleConfig" : MonitoringScheduleConfig,
+      "MonitoringScheduleName" : String,
+      "MonitoringScheduleStatus" : String,
+      "Tags" : [Tag, ... ]
+    }
+}
+```
+
+## 속성
+
+`EndpointName`  
+모니터링 일정을 사용하는 끝점의 이름입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최대_: `63`  
+_패턴_: `^a-zA-Z0-9{0,62}`  
+_업데이트 필요 사항_: 중단 없음
+
+`FailureReason`  
+모니터링 작업이 실패한 경우 실패한 이유를 포함합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`LastMonitoringExecutionSummary`  
+마지막으로 실행할 실행에 대한 메타데이터(있는 경우)에 대해 설명합니다.  
+*필수 항목 *여부: 아니요  
+_형식_: MonitoringExecutionSummary  
+_업데이트 필요 사항_: 중단 없음
+
+`MonitoringScheduleConfig`  
+모니터링 일정을 지정하고 모니터링 작업을 정의하는 구성 개체입니다.  
+_필수 항목 여부_: 예  
+_형식_: MonitoringScheduleConfig  
+_업데이트 필요 사항_: 중단 없음
+
+`MonitoringScheduleName`  
+모니터링 일정의 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `63`  
+_패턴_: `^a-zA-Z0-9{0,62}$`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`MonitoringScheduleStatus`  
+모니터링 일정의 상태입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `Failed | Pending | Scheduled | Stopped`  
+_업데이트 필요 사항_: 중단 없음
+
+`Tags`  
+이 리소스에 적용할 키-값 쌍의 배열입니다.  
+자세한 내용은 태그를 참조하십시오.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`모니터링 일정의 Amazon 리소스 이름(ARN)을 반환합니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+####
+
+`CreationTime` 모니터링 일정을 만든 시간입니다.
+
+`LastModifiedTime` 모니터링 일정을 마지막으로 수정한 시간입니다.
+
+`MonitoringScheduleArn` 모니터링 일정의 Amazon 리소스 이름(ARN)입니다.
+
+## 예제
+
+### SageMaker MonitoringSchedule 예제
+
+다음 예제에서는 SageMaker 엔드포인트에 대한 모니터링 일정을 생성합니다.
+
+#### JSON (영문)
+
+```
+{
+   "AWSTemplateFormatVersion": "2010-09-09",
+   "Description": "Basic SageMaker Hosting entities to create a monitoring schedule",
+   "Mappings": {
+      "RegionMap": {
+         "us-west-2": {
+            "NullTransformer": "123456789012.dkr.ecr.us-west-2.amazonaws.com/mymodel:latest"
+         },
+         "us-east-2": {
+            "NullTransformer": "123456789012.dkr.ecr.us-east-2.amazonaws.com/mymodel:latest"
+         },
+         "us-east-1": {
+            "NullTransformer": "123456789012.dkr.ecr.us-east-1.amazonaws.com/mymodel:latest"
+         },
+         "eu-west-1": {
+            "NullTransformer": "123456789012.dkr.ecr.eu-west-1.amazonaws.com/mymodel:latest"
+         },
+         "ap-northeast-1": {
+            "NullTransformer": "123456789012.dkr.ecr.ap-northeast-1.amazonaws.com/mymodel:latest"
+         },
+         "ap-northeast-2": {
+            "NullTransformer": "123456789012.dkr.ecr.ap-northeast-2.amazonaws.com/mymodel:latest"
+         },
+         "ap-southeast-2": {
+            "NullTransformer": "123456789012.dkr.ecr.ap-southeast-2.amazonaws.com/mymodel:latest"
+         },
+         "eu-central-1": {
+            "NullTransformer": "123456789012.dkr.ecr.eu-central-1.amazonaws.com/mymodel:latest"
+         }
+      }
+   },
+   "Resources": {
+      "Endpoint": {
+         "Type": "AWS::SageMaker::Endpoint",
+         "Properties": {
+            "EndpointConfigName": null
+         }
+      },
+      "EndpointConfig": {
+         "Type": "AWS::SageMaker::EndpointConfig",
+         "Properties": {
+            "ProductionVariants": [
+               {
+                  "InitialInstanceCount": 1,
+                  "InitialVariantWeight": 1,
+                  "InstanceType": "ml.t2.large",
+                  "ModelName": null,
+                  "VariantName": null
+               }
+            ]
+         }
+      },
+      "Model": {
+         "Type": "AWS::SageMaker::Model",
+         "Properties": {
+            "PrimaryContainer": {
+               "Image": null
+            },
+            "ExecutionRoleArn": null
+         }
+      },
+      "ExecutionRole": {
+         "Type": "AWS::IAM::Role",
+         "Properties": {
+            "AssumeRolePolicyDocument": {
+               "Version": "2012-10-17",
+               "Statement": [
+                  {
+                     "Effect": "Allow",
+                     "Principal": {
+                        "Service": [
+                           "sagemaker.amazonaws.com"
+                        ]
+                     },
+                     "Action": [
+                        "sts:AssumeRole"
+                     ]
+                  }
+               ]
+            },
+            "Path": "/",
+            "Policies": [
+               {
+                  "PolicyName": "root",
+                  "PolicyDocument": {
+                     "Version": "2012-10-17",
+                     "Statement": [
+                        {
+                           "Effect": "Allow",
+                           "Action": "*",
+                           "Resource": "*"
+                        }
+                     ]
+                  }
+               }
+            ]
+         }
+      },
+      "MonitoringScheduleExecutionRole": {
+         "Type": "AWS::IAM::Role",
+         "Properties": {
+            "AssumeRolePolicyDocument": {
+               "Version": "2012-10-17",
+               "Statement": [
+                  {
+                     "Effect": "Allow",
+                     "Principal": {
+                        "Service": [
+                           "sagemaker.amazonaws.com"
+                        ]
+                     },
+                     "Action": [
+                        "sts:AssumeRole"
+                     ]
+                  }
+               ]
+            },
+            "ManagedPolicyArns": [
+               {
+                  "Fn::Sub": "arn:${AWS::Partition}:iam::aws:policy/AmazonSageMakerFullAccess"
+               },
+               {
+                  "Fn::Sub": "arn:${AWS::Partition}:iam::aws:policy/AmazonS3FullAccess"
+               },
+               {
+                  "Fn::Sub": "arn:${AWS::Partition}:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+               }
+            ]
+         }
+      },
+      "MonitoringSchedule": {
+         "Type": "AWS::SageMaker::MonitoringSchedule",
+         "Properties": {
+            "MonitoringScheduleConfig": {
+               "MonitoringJobDefinition": {
+                  "MonitoringAppSpecification": {
+                     "ImageUri": {
+                        "Fn::Sub": "123456789012.dkr.ecr.${AWS::Partition}.amazonaws.com/sagemaker-model-monitor-analyzer:latest"
+                     }
+                  },
+                  "MonitoringInputs": [
+                     {
+                        "EndpointInput": {
+                           "EndpointName": {
+                              "Fn::ImportValue": "CanaryEndpointName"
+                           },
+                           "LocalPath": "/opt/ml/processing/endpointdata"
+                        }
+                     }
+                  ],
+                  "MonitoringOutputConfig": {
+                     "MonitoringOutputs": [
+                        {
+                           "S3Output": {
+                              "LocalPath": "/opt/ml/processing/localpath",
+                              "S3Uri": "s3://endpoint-data-capture/myEndpoint"
+                           }
+                        }
+                     ]
+                  },
+                  "MonitoringResources": {
+                     "ClusterConfig": {
+                        "InstanceCount": 1,
+                        "InstanceType": "ml.m5.large",
+                        "VolumeSizeInGB": 50
+                     }
+                  },
+                  "RoleArn": null
+               },
+               "ScheduleConfig": {
+                  "ScheduleExpression": "cron(0 * ? * * *)"
+               }
+            },
+            "MonitoringScheduleName": "BasicMonitoringSchedule"
+         }
+      }
+   }
+}
+```

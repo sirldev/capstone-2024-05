@@ -1,0 +1,55 @@
+# AWS::SageMaker::모델 카드 용도
+
+모델의 의도된 용도입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ExplanationsForRiskRating" : String,
+  "FactorsAffectingModelEfficiency" : String,
+  "IntendedUses" : String,
+  "PurposeOfModel" : String,
+  "RiskRating" : String
+}
+```
+
+## 속성
+
+`ExplanationsForRiskRating`  
+조직에서 위험 등급으로 모델을 분류하는 이유에 대한 설명입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`FactorsAffectingModelEfficiency`  
+모델 효율성에 영향을 미치는 요인.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`IntendedUses`  
+모델의 의도된 사용 사례입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`PurposeOfModel`  
+모델의 일반적인 용도입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`RiskRating` 조직의 위험 등급입니다. 다음 값 중 하나를 위험 등급으로 지정할 수 있습니다.
+
+- 높다
+- 보통
+- 낮다
+- 알려지지 않은
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열  
+  _업데이트 필요 사항_: 중단 없음

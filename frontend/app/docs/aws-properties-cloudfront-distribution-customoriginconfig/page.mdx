@@ -1,0 +1,69 @@
+# AWS::CloudFront::D istribution CustomOriginConfig
+
+사용자 지정 원본입니다. 사용자 지정 오리진은 \** 한 가지 예외를 제외하고 Amazon S3 버킷이 아닌 모든 오리진입니다. 정적 웹 사이트 호스팅으로 구성된 Amazon S3 버킷*은\* 사용자 지정 오리진입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "HTTPPort" : Integer,
+  "HTTPSPort" : Integer,
+  "OriginKeepaliveTimeout" : Integer,
+  "OriginProtocolPolicy" : String,
+  "OriginReadTimeout" : Integer,
+  "OriginSSLProtocols" : [ String, ... ]
+}
+```
+
+## 속성
+
+`HTTPPort`  
+CloudFront에서 오리진에 연결하는 데 사용하는 HTTP 포트입니다. 오리진이 수신 대기하는 HTTP 포트를 지정합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`HTTPSPort`  
+CloudFront에서 오리진에 연결하는 데 사용하는 HTTPS 포트입니다. 오리진이 수신 대기하는 HTTPS 포트를 지정합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`OriginKeepaliveTimeout`  
+CloudFront가 오리진에 대한 연결을 유지하는 시간(초)을 지정합니다. 최소 제한 시간은 1초이고, 최대 제한 시간은 60초이며, 기본값(달리 지정하지 않은 경우)은 5초입니다.  
+자세한 내용은 _Amazon CloudFront 개발자 안내서의 Origin Keep-alive 제한 시간을 참조하십시오_.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`OriginProtocolPolicy` CloudFront에서 오리진에 연결하는 데 사용하는 프로토콜(HTTP 또는 HTTPS)을 지정합니다. 유효한 값은 다음과 같습니다.
+
+- `http-only` – CloudFront는 항상 HTTP를 사용하여 오리진에 연결합니다.
+- `match-viewer` – CloudFront는 최종 사용자가 CloudFront에 연결하는 데 사용한 것과 동일한 프로토콜을 사용하여 오리진에 연결합니다.
+- `https-only` – CloudFront는 항상 HTTPS를 사용하여 오리진에 연결합니다.
+  _필수 항목 여부_: 예  
+  _유형_: 문자열  
+  _허용되는 값_: `http-only | https-only | match-viewer`  
+  _업데이트 필요 사항_: 중단 없음
+
+`OriginReadTimeout`  
+CloudFront가 오리진의 응답을 기다리는 시간(초)을 지정합니다. 이를 *오리진 응답 제한 시간*이라고도 합니다. 최소 제한 시간은 1초이고, 최대 제한 시간은 60초이며, 기본값(달리 지정하지 않은 경우)은 30초입니다.  
+자세한 내용은 _Amazon CloudFront 개발자 안내서의 오리진 응답 제한 시간을 참조하십시오_.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`OriginSSLProtocols`  
+HTTPS를 통해 오리진에 연결할 때 CloudFront에서 사용하는 최소 SSL/TLS 프로토콜을 지정합니다. 유효한 값은 `SSLv3`, `TLSv1`, `TLSv1.1`및 `TLSv1.2`입니다.  
+자세한 내용은 _Amazon CloudFront 개발자 안내서의 최소 오리진 SSL 프로토콜을 참조하십시오_.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+## 참고 항목
+
+- Amazon CloudFront API 참조\* \*의 CustomOriginConfig

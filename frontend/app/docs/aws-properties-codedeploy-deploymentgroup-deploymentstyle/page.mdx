@@ -1,0 +1,37 @@
+# AWS::CodeDeploy::D eploymentGroup 배포 스타일
+
+실행하려는 배포 유형(현재 위치 또는 파란색/녹색)과 부하 분산 장치 뒤에서 배포 트래픽을 라우팅할지 여부에 대한 정보입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "DeploymentOption" : String,
+  "DeploymentType" : String
+}
+```
+
+## 속성
+
+`DeploymentOption`  
+배포 트래픽을 부하 분산 장치 뒤로 라우팅할지 여부를 나타냅니다.  
+ Amazon ECS 배포에는 Amazon EC2 Application Load Balancer 또는 Network Load Balancer가 필요합니다.
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `WITH_TRAFFIC_CONTROL | WITHOUT_TRAFFIC_CONTROL`  
+_업데이트 필요 사항_: 중단 없음
+
+`DeploymentType`  
+현재 위치 또는 파란색/녹색 배포를 실행할지 여부를 나타냅니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `BLUE_GREEN | IN_PLACE`  
+_업데이트 필요 사항_: 중단 없음
+
+## 참고 항목
+
+- EC2TagFilter를 참조하십시오\*\*.

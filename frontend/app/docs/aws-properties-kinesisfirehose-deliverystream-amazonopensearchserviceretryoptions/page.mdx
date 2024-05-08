@@ -1,0 +1,25 @@
+# AWS::KinesisFirehose::D eliveryStream AmazonopensearchserviceRetryOptions
+
+Kinesis Data Firehose가 Amazon OpenSearch Service로 문서를 전송할 수 없는 경우 재시도 동작을 구성합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "DurationInSeconds" : Integer
+}
+```
+
+## 속성
+
+`DurationInSeconds`  
+Amazon OpenSearch Service로 전송에 처음 실패한 후 Kinesis Data Firehose가 전송을 재시도하는 총 시간(첫 번째 시도 포함)입니다. 이 시간이 경과하면 실패한 문서가 Amazon S3에 기록됩니다. 기본값은 300초(5분)입니다. 값이 0이면 재시도가 없습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_최소_: `0`  
+_최대_: `7200`  
+_업데이트 필요 사항_: 중단 없음

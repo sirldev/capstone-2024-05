@@ -1,0 +1,30 @@
+# AWS::ApiGatewayV2::ApiGatewayManagedOverrides AccessLogSettings
+
+이 `AccessLogSettings` 속성은 API Gateway 관리형 단계에 대한 액세스 로그 설정을 재정의합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "DestinationArn" : String,
+  "Format" : String
+}
+```
+
+## 속성
+
+`DestinationArn`  
+액세스 로그를 수신할 CloudWatch Logs 로그 그룹의 ARN입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Format`  
+선택한 $context 변수에 의해 지정된 데이터 액세스 로그의 한 줄 형식입니다. 형식에는 $context.requestId 이상이 포함되어야 합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음

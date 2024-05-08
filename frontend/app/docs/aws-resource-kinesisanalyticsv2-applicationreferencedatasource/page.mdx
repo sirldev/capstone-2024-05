@@ -1,0 +1,90 @@
+# AWS::KinesisAnalyticsV2::애플리케이션 참조 데이터 소스
+
+기존 SQL 기반 Managed Service for Apache Flink 애플리케이션에 참조 데이터 소스를 추가합니다.
+
+Managed Service for Apache Flink는 참조 데이터(즉, Amazon S3 객체)를 읽고 애플리케이션 내에 인애플리케이션 테이블을 생성합니다. 요청에서 소스(S3 버킷 이름 및 객체 키 이름), 생성할 인애플리케이션 테이블의 이름, Amazon S3 객체의 데이터가 결과 인애플리케이션 테이블의 열에 매핑되는 방법을 설명하는 데 필요한 매핑 정보를 제공합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::KinesisAnalyticsV2::ApplicationReferenceDataSource",
+  "Properties" : {
+      "ApplicationName" : String,
+      "ReferenceDataSource" : ReferenceDataSource
+    }
+}
+```
+
+## 속성
+
+`ApplicationName`  
+응용 프로그램의 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `128`  
+_패턴_: `[a-zA-Z0-9_.-]+`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ReferenceDataSource`  
+SQL 기반 Managed Service for Apache Flink 애플리케이션의 경우 소스 정보(Amazon S3 버킷 이름 및 객체 키 이름), 생성된 결과 인애플리케이션 테이블 이름 및 Amazon S3 객체의 데이터 요소를 인애플리케이션 테이블에 매핑하는 데 필요한 스키마를 제공하여 참조 데이터 소스를 설명합니다.  
+_필수 항목 여부_: 예  
+_형식_: ReferenceDataSource  
+_업데이트 필요 사항_: 중단 없음
+
+## 예제
+
+### ApplicationReferenceDataSource 리소스 만들기
+
+#### JSON (영문)
+
+```
+{
+    "ApplicationReferenceDataSource": {
+        "Type": "AWS::KinesisAnalyticsV2::ApplicationReferenceDataSource",
+        "Properties": {
+            "ApplicationName": {
+                "Ref": "BasicApplication"
+            },
+            "ReferenceDataSource": {
+                "TableName": "exampleTable",
+                "ReferenceSchema": {
+                    "RecordColumns": [
+                        {
+                            "Name": "example",
+                            "SqlType": "VARCHAR(16)",
+                            "Mapping": "$.example"
+                        }
+                    ],
+                    "RecordFormat": {
+                        "RecordFormatType": "JSON",
+                        "MappingParameters": {
+                            "JSONMappingParameters": {
+                                "RecordRowPath": "$"
+                            }
+                        }
+                    }
+                },
+                "S3ReferenceDataSource": {
+                    "BucketARN": {
+                        "Fn::GetAtt": [
+                            "S3Bucket",
+                            "Arn"
+                        ]
+                    },
+                    "FileKey": "fakeKey"
+                }
+            }
+        }
+    }
+}
+```
+
+## 참고 항목
+
+- Amazon Kinesis Data Analytics API 참조\* \*의 AddApplicationReferenceDataSource

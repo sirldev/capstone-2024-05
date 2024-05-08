@@ -1,0 +1,60 @@
+# AWS::ECS::서비스 서비스 연결 구성
+
+Amazon ECS 서비스의 Service Connect 구성입니다. 이 서비스가 서비스를 검색 및 연결하고, 네임스페이스 내의 다른 서비스에 의해 검색되고 연결되도록 하는 구성입니다.
+
+네임스페이스에서 실행되는 작업은 짧은 이름을 사용하여 네임스페이스의 서비스에 연결할 수 있습니다. 태스크는 네임스페이스의 모든 클러스터에서 서비스에 연결할 수 있습니다. 작업은 가시성을 높이기 위해 로그와 메트릭을 수집하는 관리형 프록시 컨테이너를 통해 연결됩니다. Amazon ECS 서비스가 생성하는 작업만 Service Connect에서 지원됩니다. 자세한 내용은 _Amazon Elastic Container Service 개발자 안내서의 Service Connect를 참조하십시오_.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Enabled" : Boolean,
+  "LogConfiguration" : LogConfiguration,
+  "Namespace" : String,
+  "Services" : [ ServiceConnectService, ... ]
+}
+```
+
+## 속성
+
+`Enabled`  
+이 서비스와 함께 Service Connect를 사용할지 여부를 지정합니다.  
+_필수 항목 여부_: 예  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`LogConfiguration`  
+컨테이너에 대한 로그 구성입니다. 이 매개 변수는 `LogConfig` Docker Remote API의 컨테이너 만들기 섹션과 `--log-driver` some-address 옵션에 매핑됩니다  
+기본적으로 컨테이너는 Docker 데몬이 사용하는 것과 동일한 로깅 드라이버를 사용합니다. 그러나 컨테이너는 컨테이너 정의에서 로그 드라이버 구성을 지정하여 Docker 데몬과 다른 로깅 드라이버를 사용할 수 있습니다. 지원되는 다양한 로그 드라이버에 대한 옵션에 대한 자세한 내용은 Docker 설명서에서 로깅 드라이버 구성을 참조하세요.  
+컨테이너에 대한 로그 구성을 지정할 때 다음 사항을 이해합니다.
+
+- Amazon ECS는 현재 도커 데몬에서 사용할 수 있는 로깅 드라이버의 하위 집합을 지원합니다. 추가 로그 드라이버는 Amazon ECS 컨테이너 에이전트의 향후 릴리스에서 사용할 수 있습니다.
+
+  AWS Fargate의 태스크에서 지원되는 로그 드라이버는 `awslogs`, `splunk`, 및 `awsfirelens`입니다.
+
+  Amazon EC2 인스턴스에서 호스팅되는 태스크의 경우 지원되는 로그 드라이버는 `awslogs`, `fluentd`, `gelf`, `json-file` `journald` `logentries``syslog` `splunk` `awsfirelens`
+
+- 이 파라미터를 사용하려면 컨테이너 인스턴스에 Docker Remote API 버전 1.18 이상이 필요합니다.
+- Amazon EC2 인스턴스에서 호스팅되는 태스크의 경우, Amazon ECS 컨테이너 에이전트는 해당 `ECS_AVAILABLE_LOGGING_DRIVERS` 인스턴스에 배치된 컨테이너가 이러한 로그 구성 옵션을 사용하기 전에 사용 가능한 로깅 드라이버를 환경 변수에 등록해야 합니다. 자세한 내용은 _Amazon Elastic Container Service 개발자 안내서의 Amazon ECS 컨테이너 에이전트 구성을 참조하세요_.
+- AWS Fargate에 있는 태스크의 경우 태스크가 호스팅되는 기본 인프라에 액세스할 수 없기 때문에 필요한 추가 소프트웨어를 태스크 외부에 설치해야 합니다. 예를 들어, Fluentd 출력 집계자 또는 Gelf 로그를 보낼 Logstash를 실행하는 원격 호스트가 있습니다.
+  *필수 항목 *여부: 아니요  
+  _형식_: LogConfiguration  
+  _업데이트 필요 사항_: 중단 없음
+
+`Namespace`  
+Service Connect에 사용할 AWS Cloud Map 네임스페이스의 네임스페이스 이름 또는 전체 Amazon 리소스 이름(ARN)입니다. 네임스페이스는 Amazon ECS 서비스 및 클러스터와 동일한 AWS 리전에 있어야 합니다. 네임스페이스 형식은 Service Connect에 영향을 주지 않습니다. AWS Cloud Map에 대한 자세한 내용은 * AWS Cloud Map 개발자 안내서*의 서비스 작업을 참조하십시오.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Services`  
+Service Connect 서비스 개체의 목록입니다. 이는 다른 Amazon ECS 서비스에서 이 서비스에 연결하는 데 사용하는 이름과 별칭(엔드포인트라고도 함)입니다.  
+이 필드는 네임스페이스의 멤버인 "클라이언트" Amazon ECS 서비스가 네임스페이스 내의 다른 서비스에 연결하는 데만 필요하지 않습니다. 예를 들어 서비스에 연결된 부하 분산 장치 또는 다른 방법으로 들어오는 요청을 수락하는 프런트 엔드 애플리케이션이 있습니다.  
+객체는 작업 정의에서 포트를 선택하고, AWS Cloud Map 서비스의 이름을 할당하고, 클라이언트 애플리케이션이 이 서비스를 참조할 수 있도록 별칭(엔드포인트) 및 포트 목록을 할당합니다.  
+*필수 항목 *여부: 아니요  
+_형식_: ServiceConnectService 목록  
+_업데이트 필요 사항_: 중단 없음

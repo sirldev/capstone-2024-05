@@ -1,0 +1,110 @@
+# AWS::EC2::D HCP애플리케이션
+
+VPC에 대한 DHCP 옵션 집합을 지정합니다.
+
+, `DomainNameServers`, , `NetbiosNameServers` 속성 중 하나 이상을 지정해야 합니다`NtpServers`. 를 지정하는 경우 `NetbiosNameServers` 를 지정해야 합니다`NetbiosNodeType`.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::EC2::DHCPOptions",
+  "Properties" : {
+      "DomainName" : String,
+      "DomainNameServers" : [ String, ... ],
+      "NetbiosNameServers" : [ String, ... ],
+      "NetbiosNodeType" : Integer,
+      "NtpServers" : [ String, ... ],
+      "Tags" : [Tag, ... ]
+    }
+}
+```
+
+## 속성
+
+`DomainName`  
+이 값은 정규화되지 않은 DNS 호스트 이름을 완성하는 데 사용됩니다. 에서 AmazonProvidedDNS를 사용하는 경우 를 `us-east-1`지정합니다`ec2.internal`. 다른 리전에서 AmazonProvidedDNS를 사용하는 경우 region을 지정합니다\**.`compute.internal` (예: `ap-northeast-1.compute.internal`). 그렇지 않으면 도메인 이름(예: *MyCompany.com*)을 지정합니다.  
+*필수 항목 *여부: 아니요  
+*유형*: 문자열  
+*업데이트 필요 사항\*: 바꿔 놓음
+
+`DomainNameServers`  
+최대 4개의 도메인 이름 서버의 IPv4 주소 또는 `AmazonProvidedDNS`. 기본값은 `AmazonProvidedDNS`입니다. 인스턴스에 지정된 대로 사용자 지정 DNS 호스트 이름을 수신하려면 `DomainName`이 속성을 사용자 지정 DNS 서버로 설정해야 합니다.  
+_필수_: 조건부  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`NetbiosNameServers`  
+최대 4개의 NetBIOS 이름 서버의 IPv4 주소입니다.  
+_필수_: 조건부  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`NetbiosNodeType`  
+NetBIOS 노드 유형(1, 2, 4 또는 8)입니다. 2를 지정하는 것이 좋습니다(브로드캐스트 및 멀티캐스트는 현재 지원되지 않음).  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`NtpServers`  
+최대 4개의 NTP(Network Time Protocol) 서버의 IPv4 주소입니다.  
+_필수_: 조건부  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Tags`  
+DHCP 옵션 집합에 할당된 모든 태그입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref`리소스 `Ref`ID가 반환됩니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`DhcpOptionsId` DHCP 옵션 집합의 ID입니다.
+
+## 예제
+
+###
+
+###
+
+#### JSON (영문)
+
+```
+{
+    "myDhcpOptions" : {
+        "Type" : "AWS::EC2::DHCPOptions",
+        "Properties" : {
+            "DomainName" : "example.com",
+            "DomainNameServers" : [ "AmazonProvidedDNS" ],
+            "NtpServers" : [ "10.2.5.1" ],
+            "NetbiosNameServers" : [ "10.2.5.1" ],
+            "NetbiosNodeType" : 2,
+            "Tags" : [ { "Key" : "project", "Value" : "123" } ]
+        }
+    }
+}
+```
+
+## 참고 항목
+
+- Amazon EC2 API 참조\* \*의 CreateDhcpOptions
+- Amazon VPC 사용 설명서*의 DHCP 옵션 세트 *

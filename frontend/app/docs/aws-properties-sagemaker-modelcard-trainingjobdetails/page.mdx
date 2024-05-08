@@ -1,0 +1,65 @@
+# AWS::SageMaker::모델 카드 TrainingJobDetails
+
+학습 작업의 개요입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "HyperParameters" : [ TrainingHyperParameter, ... ],
+  "TrainingArn" : String,
+  "TrainingDatasets" : [ String, ... ],
+  "TrainingEnvironment" : TrainingEnvironment,
+  "TrainingMetrics" : [ TrainingMetric, ... ],
+  "UserProvidedHyperParameters" : [ TrainingHyperParameter, ... ],
+  "UserProvidedTrainingMetrics" : [ TrainingMetric, ... ]
+}
+```
+
+## 속성
+
+`HyperParameters`  
+학습 작업에 사용되는 하이퍼 매개 변수입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: TrainingHyperParameter 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`TrainingArn`  
+SageMaker 훈련 작업 Amazon 리소스 이름(ARN)  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`TrainingDatasets`  
+모델을 학습하는 데 사용되는 데이터 세트의 위치입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`TrainingEnvironment`  
+SageMaker 훈련 작업 이미지 URI입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: TrainingEnvironment  
+_업데이트 필요 사항_: 중단 없음
+
+`TrainingMetrics`  
+SageMaker 훈련 작업 결과입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: TrainingMetric 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`UserProvidedHyperParameters`  
+모델을 학습할 때 지정한 추가 하이퍼 매개 변수입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: TrainingHyperParameter 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`UserProvidedTrainingMetrics`  
+사용자 지정 학습 작업 결과입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: TrainingMetric 목록  
+_업데이트 필요 사항_: 중단 없음

@@ -1,0 +1,60 @@
+# AWS::EC2::NetworkInsights분석 분석보안 그룹 규칙
+
+보안 그룹 규칙에 대해 설명합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Cidr" : String,
+  "Direction" : String,
+  "PortRange" : PortRange,
+  "PrefixListId" : String,
+  "Protocol" : String,
+  "SecurityGroupId" : String
+}
+```
+
+## 속성
+
+`Cidr`  
+CIDR 표기법의 IPv4 주소 범위입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Direction` 방향. 가능한 값은 다음과 같습니다.
+
+- 출구
+- 진입
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열  
+  _업데이트 필요 사항_: 중단 없음
+
+`PortRange`  
+포트 범위입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: PortRange  
+_업데이트 필요 사항_: 중단 없음
+
+`PrefixListId`  
+접두사 목록 ID입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Protocol`  
+프로토콜 이름입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`SecurityGroupId`  
+보안 그룹 ID입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음

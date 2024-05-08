@@ -1,0 +1,41 @@
+# AWS::Cognito::UserPool AdminCreateUserConfig
+
+요청에 대한 구성입니다 `AdminCreateUser` .
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "AllowAdminCreateUserOnly" : Boolean,
+  "InviteMessageTemplate" : InviteMessageTemplate,
+  "UnusedAccountValidityDays" : Integer
+}
+```
+
+## 속성
+
+`AllowAdminCreateUserOnly`  
+`True` 관리자만 사용자 프로필을 만들 수 있는 경우 설정합니다. `False` 사용자가 앱을 통해 직접 가입할 수 있는지 여부를 설정합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`InviteMessageTemplate`  
+새 사용자에게 보내는 환영 메시지에 사용할 메시지 템플릿입니다.  
+사용자 초대 메시지 사용자 지정을 참조하십시오.  
+*필수 항목 *여부: 아니요  
+_유형_: InviteMessageTemplate  
+_업데이트 필요 사항_: 중단 없음
+
+`UnusedAccountValidityDays`  
+로그인하지 않은 새 계정을 더 이상 사용할 수 없는 사용자 계정 만료 제한(일)입니다. 해당 시간 제한 후에 계정을 다시 설정하려면 매개 변수를 `AdminCreateUser` 지정하여 다시 `"RESEND"` `MessageAction` 호출해야 합니다 . 이 매개 변수의 기본값은 7입니다.  
+에 대한 값을 설정하면 `TemporaryPasswordValidityDays` `PasswordPolicy`해당 값이 사용 `UnusedAccountValidityDays` 되며 더 이상 해당 사용자 풀에 사용할 수 있는 파라미터가 아닙니다.
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_최소_: `0`  
+_최대_: `365`  
+_업데이트 필요 사항_: 중단 없음

@@ -1,0 +1,219 @@
+# AWS::ECR::리포지토리
+
+이 리소스는 `AWS::ECR::Repository` 사용자가 Docker 이미지, Open Container Initiative(OCI) 이미지 및 OCI 호환 아티팩트를 푸시하고 가져올 수 있는 Amazon Elastic Container Registry(Amazon ECR) 리포지토리를 지정합니다. 자세한 내용은 _Amazon ECR 사용 설명서의 Amazon ECR 프라이빗 리포지토리를 참조하세요_.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::ECR::Repository",
+  "Properties" : {
+      "EmptyOnDelete" : Boolean,
+      "EncryptionConfiguration" : EncryptionConfiguration,
+      "ImageScanningConfiguration" : ImageScanningConfiguration,
+      "ImageTagMutability" : String,
+      "LifecyclePolicy" : LifecyclePolicy,
+      "RepositoryName" : String,
+      "RepositoryPolicyText" : Json,
+      "Tags" : [Tag, ... ]
+    }
+}
+```
+
+## 속성
+
+`EmptyOnDelete`  
+true인 경우 리포지토리를 강제로 삭제하면 리포지토리의 내용이 삭제됩니다. false인 경우 리포지토리를 삭제하기 전에 저장소가 비어 있어야 합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`EncryptionConfiguration`  
+저장소의 암호화 구성입니다. 이는 저장소의 내용이 미사용 시 암호화되는 방식을 결정합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: EncryptionConfiguration  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ImageScanningConfiguration`  
+저장소의 이미지 스캔 구성입니다. 이는 이미지를 저장소로 푸시한 후 알려진 취약성을 검사할지 여부를 결정합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: ImageScanningConfiguration  
+_업데이트 필요 사항_: 중단 없음
+
+`ImageTagMutability`  
+리포지토리에 대한 태그 변경 가능성 설정입니다. 이 매개 변수를 생략하면 `MUTABLE` 이미지 태그를 덮어쓸 수 있는 기본 설정이 사용됩니다. `IMMUTABLE` 이 지정되면 저장소 내의 모든 이미지 태그를 변경할 수 없으므로 덮어쓸 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `IMMUTABLE | MUTABLE`  
+_업데이트 필요 사항_: 중단 없음
+
+`LifecyclePolicy`  
+수명 주기 정책을 생성하거나 업데이트합니다. 수명 주기 정책 구문에 대한 자세한 내용은 수명 주기 정책 템플릿 섹션을 참조하세요.  
+*필수 항목 *여부: 아니요  
+_유형_: LifecyclePolicy  
+_업데이트 필요 사항_: 중단 없음
+
+`RepositoryName`  
+저장소에 사용할 이름입니다. 저장소 이름은 단독으로 지정하거나(예: `nginx-web-app` ) 네임스페이스를 앞에 추가하여 저장소를 범주로 그룹화할 수 있습니다(예: `project-a/nginx-web-app`). 이름을 지정하지 않으면 AWS CloudFormation에서 고유한 물리적 ID를 생성하고 해당 ID를 리포지토리 이름으로 사용합니다. 자세한 내용은 이름 형식을 참조하세요.  
+리포지토리 이름은 문자로 시작해야 하며 소문자, 숫자, 하이픈, 밑줄 및 슬래시만 포함할 수 있습니다.  
+이름을 지정하면 이 리소스를 대체해야 하는 업데이트를 수행할 수 없습니다. 중단이 필요 없거나 약간의 중단이 필요한 업데이트를 수행할 수 있습니다. 리소스를 바꿔야 하는 경우 새 이름을 지정합니다.
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `2`  
+_최대_: `256`  
+_패턴_: `(?:[a-z0-9]+(?:[._-][a-z0-9]+)*/)*[a-z0-9]+(?:[._-][a-z0-9]+)*`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`RepositoryPolicyText`  
+리포지토리에 적용할 JSON 리포지토리 정책 텍스트입니다. 자세한 내용은 _Amazon Elastic Container Registry 사용 설명서의 Amazon ECR 리포지토리 정책을 참조하세요_.  
+*필수 항목 *여부: 아니요  
+_형식_: Json  
+_최소_: `0`  
+_최대_: `10240`  
+_업데이트 필요 사항_: 중단 없음
+
+`Tags`  
+이 리소스에 적용할 키-값 쌍의 배열입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref`는 `Ref`리소스 이름(예: )을 반환합니다 `test-repository`.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`Arn`  
+지정된 리소스의 Amazon 리소스 이름(ARN)을 반환합니다 `AWS::ECR::Repository` . 예를 들어, `arn:aws:ecr:eu-west-1:123456789012:repository/test-repository `.
+
+`RepositoryUri`  
+지정된 리소스의 URI를 반환합니다 `AWS::ECR::Repository` . 예를 들어, `123456789012.dkr.ecr.us-west-2.amazonaws.com/repository`.
+
+## 예제
+
+### 리포지토리 지정
+
+다음 예제에서는 라는 리포지토리를 지정합니다 `test-repository`. 해당 정책은 사용자가 `Bob` `Alice` 이미지를 푸시하고 가져올 수 있도록 허용합니다. IAM 사용자가 실제로 존재해야 하며, 그렇지 않으면 스택 생성이 실패합니다.
+
+#### JSON (영문)
+
+```
+"MyRepository": {
+  "Type": "AWS::ECR::Repository",
+  "Properties": {
+    "RepositoryName" : "test-repository",
+    "RepositoryPolicyText" : {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Sid": "AllowPushPull",
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": [
+              "arn:aws:iam::123456789012:user/Bob",
+              "arn:aws:iam::123456789012:user/Alice"
+            ]
+          },
+          "Action": [
+            "ecr:GetDownloadUrlForLayer",
+            "ecr:BatchGetImage",
+            "ecr:BatchCheckLayerAvailability",
+            "ecr:PutImage",
+            "ecr:InitiateLayerUpload",
+            "ecr:UploadLayerPart",
+            "ecr:CompleteLayerUpload"
+          ]
+        }
+      ]
+    }
+  }
+}
+```
+
+### Specify a repository with an image scanning configuration(이미지 스캔 구성으로 리포지토리 지정)
+
+다음 예제에서는 `test-repository` 이미지 스캔을 사용하도록 설정된 리포지토리를 만듭니다. 이미지 스캔에 대한 자세한 내용은 _Amazon ECR 사용 설명서의 이미지 스캔을 참조하세요_.
+
+#### JSON (영문)
+
+```
+"MyRepository": {
+  "Type": "AWS::ECR::Repository",
+  "Properties": {
+    "RepositoryName" : "test-repository",
+    "ImageScanningConfiguration" : {
+      "ScanOnPush": true
+    }
+  }
+}
+```
+
+### 수명 주기 정책이 있는 리포지토리 지정
+
+다음 예제에서는 수명 주기 정책을 사용하여 리포지토리를 생성합니다.
+
+#### JSON (영문)
+
+```
+{
+  "Parameters": {
+    "lifecyclePolicyText": {
+      "Type": "String"
+    },
+    "repositoryName": {
+      "Type": "String"
+    },
+    "registryId": {
+      "Type": "String"
+    }
+  },
+  "Resources": {
+    "MyRepository": {
+      "Type": "AWS::ECR::Repository",
+      "Properties": {
+        "LifecyclePolicy": {
+          "LifecyclePolicyText": {
+            "Ref": "lifecyclePolicyText"
+          },
+          "RegistryId": {
+            "Ref": "registryId"
+          }
+        },
+        "RepositoryName": {
+          "Ref": "repositoryName"
+        }
+      }
+    }
+  },
+  "Outputs": {
+    "Arn": {
+      "Value": {
+        "Fn::GetAtt": [
+          "MyRepository",
+          "Arn"
+        ]
+      }
+    }
+  }
+}
+```
+
+## 참고 항목
+
+- Amazon ECR 사용 설명서\* \* 의 수명 주기 정책 생성
+- Amazon ECR API 참조\* \*의 PutLifecyclePolicy

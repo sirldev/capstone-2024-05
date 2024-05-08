@@ -1,0 +1,82 @@
+# AWS::ElastiCache::서브넷 그룹
+
+캐시 서브넷 그룹을 생성합니다. 캐시 서브넷 그룹에 대한 자세한 내용은 *Amazon ElastiCache 사용 설명서*의 캐시 서브넷 그룹 또는 Amazon ElastiCache API 참조 안내서*의 CreateCacheSubnetGroup을 참조하십시오*.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::ElastiCache::SubnetGroup",
+  "Properties" : {
+      "CacheSubnetGroupName" : String,
+      "Description" : String,
+      "SubnetIds" : [ String, ... ],
+      "Tags" : [Tag, ... ]
+    }
+}
+```
+
+## 속성
+
+`CacheSubnetGroupName`  
+캐시 서브넷 그룹의 이름입니다. 이 값은 소문자 문자열로 저장됩니다.  
+제약 조건: 영숫자 또는 하이픈을 255자 이하로 포함해야 합니다.  
+예: `mysubnetgroup`  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Description`  
+캐시 서브넷 그룹에 대한 설명입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`SubnetIds`  
+캐시 서브넷 그룹의 EC2 서브넷 ID입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`Tags`  
+ElastiCache 서브넷 그룹에 추가할 수 있는 태그입니다. 태그는 키/값 쌍으로 구성됩니다. 태그를 사용하여 모든 서브넷 그룹을 분류하고 추적할 수 있습니다. null 값이 있는 태그가 허용됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID가 Ref 내장 함수에 제공되면 Ref는 리소스 이름을 반환합니다.
+
+Ref 함수 사용에 대한 자세한 내용은 Ref를 참조하십시오.
+
+## 예제
+
+###
+
+#### JSON (영문)
+
+```
+{
+    "SubnetGroup": {
+        "Type": "AWS::ElastiCache::SubnetGroup",
+        "Properties": {
+            "Description": "Cache Subnet Group",
+            "SubnetIds": [
+                {
+                    "Ref": "Subnet1"
+                },
+                {
+                    "Ref": "Subnet2"
+                }
+            ]
+        }
+    }
+}
+```

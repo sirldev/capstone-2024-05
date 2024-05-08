@@ -1,0 +1,128 @@
+# AWS::S3::버킷 리디렉션 규칙
+
+요청이 리디렉션되는 방법을 지정합니다. 오류가 발생할 경우 반환할 다른 오류 코드를 지정할 수 있습니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "HostName" : String,
+  "HttpRedirectCode" : String,
+  "Protocol" : String,
+  "ReplaceKeyPrefixWith" : String,
+  "ReplaceKeyWith" : String
+}
+```
+
+## 속성
+
+`HostName`  
+리디렉션 요청에 사용할 호스트 이름입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`HttpRedirectCode`  
+응답에 사용할 HTTP 리디렉션 코드입니다. 형제 중 한 명이 있는 경우에는 필요하지 않습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Protocol`  
+요청을 리디렉션할 때 사용할 프로토콜입니다. 기본값은 원래 요청에 사용되는 프로토콜입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `http | https`  
+_업데이트 필요 사항_: 중단 없음
+
+`ReplaceKeyPrefixWith`  
+리디렉션 요청에 사용할 객체 키 접두사입니다. 예를 들어, 접두사가 있는 모든 페이지 `docs/` (폴더의 객체 `docs/` ) 에 대한 `documents/` 요청을 로 리디렉션하려면 로 `KeyPrefixEquals` 설정된 `docs/` 조건 블록을 설정하고 리디렉션을 로 설정할 `ReplaceKeyPrefixWith`수 있습니다`/documents`. 형제 중 한 명이 있는 경우에는 필요하지 않습니다. 제공되지 않은 경우에만 존재할 수 `ReplaceKeyWith` 있습니다.  
+XML 요청을 사용할 때 특수 문자(예: 캐리지 리턴)를 포함하는 객체 키를 대체해야 합니다. 자세한 내용은 XML 관련 객체 키 제약 조건을 참조하세요.
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`ReplaceKeyWith`  
+리디렉션 요청에 사용할 특정 객체 키입니다. 예를 들어 요청을 로 리디렉션합니다`error.html`. 형제 중 한 명이 있는 경우에는 필요하지 않습니다. 제공되지 않은 경우에만 존재할 수 `ReplaceKeyPrefixWith` 있습니다.  
+XML 요청을 사용할 때 특수 문자(예: 캐리지 리턴)를 포함하는 객체 키를 대체해야 합니다. 자세한 내용은 XML 관련 객체 키 제약 조건을 참조하세요.
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+## 예제
+
+### 회람 규칙을 사용하여 정적 웹 사이트 구성Configure a static website with a routing rule
+
+이 예제에서는 `AWS::S3::Bucket's Fn::GetAtt` 값을 사용하여 출력을 제공합니다. HTTP 404 오류가 발생하면 라우팅 규칙은 요청을 EC2 인스턴스로 리디렉션하고 리디렉션에 객체 키 접두사를 삽입 `report-404/` 합니다. 예를 들어 호출된 페이지를 요청 `ExamplePage.html` 했는데 HTTP 404 오류가 발생하는 경우 요청은 지정된 인스턴스에서 호출된 페이지로 라우팅 `report-404/ExamplePage.html` 됩니다. 다른 모든 HTTP 오류 코드의 경우 `error.html` 가 반환됩니다.
+
+또한 이 예제에서는 `EntireBucket` 버킷 수준에서 CloudWatch 요청 지표를 활성화하는 지표 구성을 지정합니다.
+
+#### JSON (영문)
+
+```
+{
+    "Resources": {
+        "S3Bucket": {
+            "Type": "AWS::S3::Bucket",
+            "Properties": {
+                "AccessControl": "PublicRead",
+                "BucketName": "public-bucket",
+                "MetricsConfigurations": [
+                    {
+                        "Id": "EntireBucket"
+                    }
+                ],
+                "WebsiteConfiguration": {
+                    "IndexDocument": "index.html",
+                    "ErrorDocument": "error.html",
+                    "RoutingRules": [
+                        {
+                            "RoutingRuleCondition": {
+                                "HttpErrorCodeReturnedEquals": "404",
+                                "KeyPrefixEquals": "out1/"
+                            },
+                            "RedirectRule": {
+                                "HostName": "ec2-11-22-333-44.compute-1.amazonaws.com",
+                                "ReplaceKeyPrefixWith": "report-404/"
+                            }
+                        }
+                    ]
+                }
+            },
+            "DeletionPolicy": "Retain"
+        }
+    },
+    "Outputs": {
+        "WebsiteURL": {
+            "Value": {
+                "Fn::GetAtt": [
+                    "S3Bucket",
+                    "WebsiteURL"
+                ]
+            },
+            "Description": "URL for website hosted on S3"
+        },
+        "S3BucketSecureURL": {
+            "Value": {
+                "Fn::Join": [
+                    "",
+                    [
+                        "https://",
+                        {
+                            "Fn::GetAtt": [
+                                "S3Bucket",
+                                "DomainName"
+                            ]
+                        }
+                    ]
+                ]
+            },
+            "Description": "Name of S3 bucket to hold website content"
+        }
+    }
+}
+```

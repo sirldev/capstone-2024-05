@@ -1,0 +1,45 @@
+# AWS::AutoScalingPlans::ScalingPlan 사전 정의로드메트릭 사양
+
+`PredefinedLoadMetricSpecification` 는 AWS Auto Scaling(Auto Scaling 계획)과 함께 사용할 예측 조정에 대한 사전 정의된 로드 지표를 지정하는 ScalingInstruction의 하위 속성입니다.
+
+크기 조정 계획을 생성한 후 AWS Auto Scaling 콘솔을 사용하여 지정된 지표에 대한 예측을 시각화할 수 있습니다. 자세한 내용은 _AWS Auto Scaling 사용 설명서의 리소스에 대한 조정 정보 보기를 참조하십시오_.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "PredefinedLoadMetricType" : String,
+  "ResourceLabel" : String
+}
+```
+
+## 속성
+
+`PredefinedLoadMetricType`  
+측정항목 유형입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_허용되는 값_: `ALBTargetGroupRequestCount | ASGTotalCPUUtilization | ASGTotalNetworkIn | ASGTotalNetworkOut`  
+_업데이트 필요 사항_: 중단 없음
+
+`ResourceLabel`  
+메트릭 유형과 연결된 리소스를 식별합니다. 지표 유형이 이고 `ALBTargetGroupRequestCount` Auto Scaling 그룹에 연결된 Application Load Balancer에 대한 대상 그룹이 없는 한 리소스 레이블을 지정할 수 없습니다.  
+로드 밸런서 ARN의 마지막 부분과 대상 그룹 ARN의 마지막 부분을 슬래시(/)로 구분된 단일 값에 추가하여 리소스 레이블을 생성합니다. 형식은 app/<load-balancer-name>/<load-balancer-id>/targetgroup/<target-group-name>/<target-group-id>이며, 여기서
+
+- app/<load-balancer-name>/<load-balancer-id>는 로드 밸런서 ARN의 마지막 부분입니다.
+- targetgroup/<target-group-name>/<target-group-id> 은 대상 그룹 ARN의 마지막 부분입니다.
+  예: app/EC2Co-EcsEl-1TKLTMITMM0EO/f37c06a68c1748aa/targetgroup/EC2Co-Defau-LDNM7Q3ZH1ZN/6d4ea56ca2d6a18d.  
+  Application Load Balancer의 ARN을 찾으려면 DescribeLoadBalancers API 작업을 사용합니다. 대상 그룹의 ARN을 찾으려면 DescribeTargetGroups API 작업을 사용합니다.  
+  _필수_: 조건부  
+  _유형_: 문자열  
+  _최소_: `1`  
+  _최대_: `1023`  
+  _업데이트 필요 사항_: 중단 없음
+
+## 참고 항목
+
+- AWS Auto Scaling 사용 설명서

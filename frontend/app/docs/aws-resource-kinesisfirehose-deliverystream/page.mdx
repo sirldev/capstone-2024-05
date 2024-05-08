@@ -1,0 +1,331 @@
+# AWS::KinesisFirehose::D eliveryStream
+
+이 `AWS::KinesisFirehose::DeliveryStream` 리소스는 Amazon Simple Storage Service(Amazon S3), Amazon Redshift 또는 Amazon Elasticsearch Service(Amazon ES) 대상으로 실시간 스트리밍 데이터를 전송하는 Amazon Kinesis Data Firehose(Kinesis Data Firehose) 전송 스트림을 지정합니다. 자세한 내용은 Amazon Kinesis Data Firehose 개발자 안내서의 Amazon Kinesis Data Firehose 전송 스트림 생성을 참조하십시오\*\*.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::KinesisFirehose::DeliveryStream",
+  "Properties" : {
+      "AmazonOpenSearchServerlessDestinationConfiguration" : AmazonOpenSearchServerlessDestinationConfiguration,
+      "AmazonopensearchserviceDestinationConfiguration" : AmazonopensearchserviceDestinationConfiguration,
+      "DeliveryStreamEncryptionConfigurationInput" : DeliveryStreamEncryptionConfigurationInput,
+      "DeliveryStreamName" : String,
+      "DeliveryStreamType" : String,
+      "ElasticsearchDestinationConfiguration" : ElasticsearchDestinationConfiguration,
+      "ExtendedS3DestinationConfiguration" : ExtendedS3DestinationConfiguration,
+      "HttpEndpointDestinationConfiguration" : HttpEndpointDestinationConfiguration,
+      "KinesisStreamSourceConfiguration" : KinesisStreamSourceConfiguration,
+      "RedshiftDestinationConfiguration" : RedshiftDestinationConfiguration,
+      "S3DestinationConfiguration" : S3DestinationConfiguration,
+      "SplunkDestinationConfiguration" : SplunkDestinationConfiguration,
+      "Tags" : [Tag, ... ]
+    }
+}
+```
+
+## 속성
+
+`AmazonOpenSearchServerlessDestinationConfiguration`  
+속성 설명을 사용할 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: AmazonOpenSearchServerlessDestinationConfiguration  
+_업데이트 필요 사항_: 중단 없음
+
+`AmazonopensearchserviceDestinationConfiguration`  
+Amazon OpenSearch Service의 대상입니다. 수신인은 하나만 지정할 수 있습니다.  
+_필수_: 조건부  
+_유형_: AmazonopensearchserviceDestinationConfiguration  
+_업데이트 필요 사항_: 중단 없음
+
+`DeliveryStreamEncryptionConfigurationInput`  
+서버 측 암호화(SSE)에 사용할 CMK의 유형 및 Amazon 리소스 이름(ARN)을 지정합니다.  
+*필수 항목 *여부: 아니요  
+_형식_: DeliveryStreamEncryptionConfigurationInput  
+_업데이트 필요 사항_: 중단 없음
+
+`DeliveryStreamName`  
+배달 스트림의 이름입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `64`  
+_패턴_: `[a-zA-Z0-9_.-]+`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`DeliveryStreamType` 배달 스트림 유형입니다. 다음 값 중 하나일 수 있습니다.
+
+- `DirectPut`: 공급자 응용 프로그램이 배달 스트림에 직접 액세스합니다.
+- `KinesisStreamAsSource`: 전송 스트림은 Kinesis 데이터 스트림을 소스로 사용합니다.
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열  
+  _허용되는 값_: `DirectPut | KinesisStreamAsSource`  
+  _업데이트 필요 사항_: 바꿔 놓음
+
+`ElasticsearchDestinationConfiguration`  
+전송 스트림에 대한 Amazon ES 대상입니다.  
+조건부. 하나의 대상 구성만 지정해야 합니다.  
+전송 스트림 대상을 Amazon ES 대상에서 Amazon S3 또는 Amazon Redshift 대상으로 변경하는 경우 업데이트를 중단해야 합니다.  
+_필수_: 조건부  
+_유형_: ElasticsearchDestinationConfiguration  
+_업데이트 필요 사항_: 중단 없음
+
+`ExtendedS3DestinationConfiguration`  
+전송 스트림의 Amazon S3 대상입니다.  
+조건부. 하나의 대상 구성만 지정해야 합니다.  
+전송 스트림 대상을 Amazon Extended S3 대상에서 Amazon ES 대상으로 변경하는 경우 업데이트를 중단해야 합니다.  
+_필수_: 조건부  
+_유형_: ExtendedS3DestinationConfiguration  
+_업데이트 필요 사항_: 중단 없음
+
+`HttpEndpointDestinationConfiguration`  
+HTTP 엔드포인트 대상으로 데이터를 전송하도록 Kinesis Firehose를 구성할 수 있습니다. 수신인은 하나만 지정할 수 있습니다.  
+*필수 항목 *여부: 아니요  
+_형식_: HttpEndpointDestinationConfiguration  
+_업데이트 필요 사항_: 중단 없음
+
+`KinesisStreamSourceConfiguration`  
+Kinesis 스트림이 전송 스트림의 소스로 사용되는 경우 Kinesis 스트림 ARN 및 소스 스트림의 역할 ARN을 포함하는 KinesisStreamSourceConfiguration.  
+*필수 항목 *여부: 아니요  
+_유형_: KinesisStreamSourceConfiguration  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`RedshiftDestinationConfiguration`  
+전송 스트림에 대한 Amazon Redshift 대상입니다.  
+조건부. 하나의 대상 구성만 지정해야 합니다.  
+전송 스트림 대상을 Amazon Redshift 대상에서 Amazon ES 대상으로 변경하는 경우 업데이트 시 약간의 중단이 필요합니다.  
+_필수_: 조건부  
+_유형_: RedshiftDestinationConfiguration  
+_업데이트 필요 사항_: 중단 없음
+
+`S3DestinationConfiguration`  
+ `S3DestinationConfiguration` 속성 유형은 Amazon Kinesis Data Firehose(Kinesis Data Firehose)가 데이터를 전송하는 Amazon Simple Storage Service(Amazon S3) 대상을 지정합니다.  
+조건부. 하나의 대상 구성만 지정해야 합니다.  
+전송 스트림 대상을 Amazon S3 대상에서 Amazon ES 대상으로 변경하는 경우 업데이트 시 약간의 중단이 필요합니다.  
+_필수_: 조건부  
+_유형_: S3DestinationConfiguration  
+_업데이트 필요 사항_: 중단 없음
+
+`SplunkDestinationConfiguration`  
+전송 스트림에 대한 Splunk의 대상 구성입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: SplunkDestinationConfiguration  
+_업데이트 필요 사항_: 중단 없음
+
+`Tags`  
+전송 스트림에 할당할 태그 집합입니다. 태그는 정의하여 AWS 리소스에 할당할 수 있는 키-값 페어입니다. 태그는 메타데이터입니다. 예를 들어 친숙한 이름과 설명 또는 배달 스트림을 구분하는 데 도움이 되는 다른 유형의 정보를 추가할 수 있습니다. 태그에 대한 자세한 내용은 AWS Billing and Cost Management 사용 설명서의 비용 할당 태그 사용을 참조하세요.  
+전송 스트림을 생성할 때 최대 50개의 태그를 지정할 수 있습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_최대_: `50`  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID가 Ref 내장 함수에 제공되면 Ref는 배달 스트림 이름(예: )을 반환합니다 `mystack-deliverystream-1ABCD2EF3GHIJ`.
+
+Ref 함수 사용에 대한 자세한 내용은 Ref를 참조하십시오.
+
+### Fn::GetAtt
+
+Fn::GetAtt는 이 유형의 지정된 속성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+Fn::GetAtt 사용에 대한 자세한 내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`Arn`  
+전송 스트림의 Amazon 리소스 이름(ARN)입니다(예: `arn:aws:firehose:us-east-2:123456789012:deliverystream/delivery-stream-name`).
+
+## 예제
+
+### Kinesis Data Firehose 전송 스트림 생성
+
+다음 예제에서는 Amazon ES 대상으로 데이터를 전송하는 Kinesis Data Firehose 전송 스트림을 생성합니다. Kinesis Data Firehose는 대상으로 전송된 모든 데이터를 Amazon S3 버킷에 백업합니다.
+
+#### JSON (영문)
+
+```
+"ElasticSearchDeliveryStream": {
+   "Type": "AWS::KinesisFirehose::DeliveryStream",
+   "Properties": {
+      "ElasticsearchDestinationConfiguration": {
+         "BufferingHints": {
+            "IntervalInSeconds": 60,
+            "SizeInMBs": 50
+      },
+      "CloudWatchLoggingOptions": {
+         "Enabled": true,
+         "LogGroupName": "deliverystream",
+         "LogStreamName": "elasticsearchDelivery"
+      },
+      "DomainARN": { "Ref" : "MyDomainARN" },
+      "IndexName": { "Ref" : "MyIndexName" },
+      "IndexRotationPeriod": "NoRotation",
+      "TypeName" : "fromFirehose",
+      "RetryOptions": {
+         "DurationInSeconds": "60"
+      },
+      "RoleARN": { "Fn::GetAtt" : ["ESdeliveryRole", "Arn"] },
+      "S3BackupMode": "AllDocuments",
+      "S3Configuration": {
+         "BucketARN": { "Ref" : "MyBackupBucketARN" },
+         "BufferingHints": {
+            "IntervalInSeconds": "60",
+            "SizeInMBs": "50"
+         },
+         "CompressionFormat": "UNCOMPRESSED",
+         "Prefix": "firehose/",
+         "RoleARN": { "Fn::GetAtt" : ["S3deliveryRole", "Arn"] },
+         "CloudWatchLoggingOptions" : {
+            "Enabled" : true,
+            "LogGroupName" : "deliverystream",
+            "LogStreamName" : "s3Backup"
+         }
+      }
+    }
+  }
+}
+```
+
+### 레코드 형식 변환
+
+다음 예제에서는 레코드 형식 변환을 보여 줍니다.
+
+### 전송 스트림에 대한 Amazon S3 대상 지정
+
+다음 예제에서는 이 `ExtendedS3DestinationConfiguration` 속성을 사용하여 전송 스트림에 대한 Amazon S3 대상을 지정합니다.
+
+#### JSON (영문)
+
+```
+{
+  "Resources":{
+    "Firehose":{
+      "Type" : "AWS::KinesisFirehose::DeliveryStream",
+      "Properties" : {
+          "DeliveryStreamName" : "tester-partitioning-delimiter",
+          "DeliveryStreamType" : "DirectPut",
+          "ExtendedS3DestinationConfiguration":
+            {
+              "BucketARN": "arn:aws:s3:::dp-firehose-test",
+              "BufferingHints": {
+                "SizeInMBs": 128,
+                "IntervalInSeconds": 900
+              },
+              "CompressionFormat": "UNCOMPRESSED",
+              "ErrorOutputPrefix": "table/error/!{firehose:error-output-type}/dt=!{timestamp:yyyy'-'MM'-'dd}/h=!{timestamp:HH}/",
+              "Prefix": "YYYY=!{partitionKeyFromQuery:YYYY}/MM=!{partitionKeyFromQuery:MM}//DD=!{partitionKeyFromQuery:DD}/HH=!{partitionKeyFromQuery:HH}/REGION=!{partitionKeyFromQuery:REGION}/SITEID=!{partitionKeyFromQuery:SITEID}/",
+              "RoleARN": "arn:aws:iam::012345678912:role/service-role/KinesisFirehoseServiceRole-dp-kinesis-f-us-east-1-012345678912",
+              "DynamicPartitioningConfiguration":
+              {
+                "Enabled": true,
+                "RetryOptions": {
+                  "DurationInSeconds": 300
+                  }
+                },
+                "ProcessingConfiguration": {
+                  "Enabled": true,
+                  "Processors": [
+                  {
+                    "Type": "MetadataExtraction",
+                    "Parameters": [
+                      {
+                      "ParameterName": "MetadataExtractionQuery",
+                      "ParameterValue": "{YYYY : (.ts/1000) | strftime(\"%Y\"), MM : (.ts/1000) | strftime(\"%m\"), DD : (.ts/1000) | strftime(\"%d\"), HH: (.ts/1000) | strftime(\"%H\")}"
+                      },
+                      {
+                        "ParameterName": "JsonParsingEngine",
+                        "ParameterValue": "JQ-1.6"
+                      }
+                    ]
+                  },
+				    {
+                    "Type": "AppendDelimiterToRecord",
+                    "Parameters": [
+                        {
+                        "ParameterName": "Delimiter",
+                        "ParameterValue": "\\n"
+                      }
+                    ]
+                  }
+                ]
+                }
+              }
+            }
+          }
+        }
+      }
+```
+
+### Kinesis 스트림을 전송 스트림의 소스로 지정합니다
+
+다음 예제에서는 이 `KinesisStreamSourceConfiguration` 속성을 사용하여 Kinesis 스트림을 전송 스트림의 소스로 지정합니다.
+
+#### JSON (영문)
+
+```
+{
+    "Parameters": {
+        "deliveryRoleArn": {
+            "Type": "String"
+        },
+        "deliveryStreamName": {
+            "Type": "String"
+        },
+        "kinesisStreamARN": {
+            "Type": "String"
+        },
+        "kinesisStreamRoleArn": {
+            "Type": "String"
+        },
+        "s3bucketArn": {
+            "Type": "String"
+        }
+    },
+    "Resources": {
+        "Deliverystream": {
+            "Type": "AWS::KinesisFirehose::DeliveryStream",
+            "Properties": {
+                "DeliveryStreamName": {
+                    "Ref": "deliveryStreamName"
+                },
+                "DeliveryStreamType": "KinesisStreamAsSource",
+                "KinesisStreamSourceConfiguration": {
+                    "KinesisStreamARN": {
+                        "Ref": "kinesisStreamARN"
+                    },
+                    "RoleARN": {
+                        "Ref": "kinesisStreamRoleArn"
+                    }
+                },
+                "ExtendedS3DestinationConfiguration": {
+                    "BucketARN": {
+                        "Ref": "s3bucketArn"
+                    },
+                    "BufferingHints": {
+                        "IntervalInSeconds": 60,
+                        "SizeInMBs": 50
+                    },
+                    "CompressionFormat": "UNCOMPRESSED",
+                    "Prefix": "firehose/",
+                    "RoleARN": {
+                        "Ref": "deliveryRoleArn"
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+## 참고 항목
+
+- Amazon Kinesis Data Firehose API Reference*의 CreateDeliveryStream*.

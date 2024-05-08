@@ -1,0 +1,75 @@
+# AWS::EC2::SubnetRouteTableAssociation (AWS::EC2::서브넷 라우팅 테이블연결)
+
+서브넷을 경로 테이블과 연결합니다. 서브넷과 라우팅 테이블은 동일한 VPC에 있어야 합니다. 이 연결로 인해 서브넷에서 발생하는 트래픽이 경로 테이블의 경로에 따라 라우팅됩니다. 경로 테이블은 여러 서브넷과 연결할 수 있습니다. 라우팅 테이블을 생성하려면 AWS::EC2::RouteTable 단원을 참조하십시오.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+  "Properties" : {
+      "RouteTableId" : String,
+      "SubnetId" : String
+    }
+}
+```
+
+## 속성
+
+`RouteTableId`  
+경로 테이블의 ID입니다.  
+라우팅 테이블 ID가 변경되면 물리적 ID가 변경됩니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`SubnetId`  
+서브넷의 ID입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`서브넷 라우팅 테이블 연결의 ID를 반환합니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`Id` 서브넷 라우팅 테이블 연결의 ID입니다.
+
+## 예제
+
+### 서브넷 라우팅 테이블 연결
+
+다음 예제에서는 서브넷을 라우팅 테이블과 연결합니다.
+
+#### JSON (영문)
+
+```
+"mySubnetRouteTableAssociation" : {
+   "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties" : {
+      "SubnetId" : { "Ref" : "mySubnet" },
+      "RouteTableId" : { "Ref" : "myRouteTable" }
+   }
+}
+```
+
+## 참고 항목
+
+- Amazon EC2 API Reference*의 AssociateRouteTable *
+- Amazon VPC 사용 설명서*의 라우팅 테이블 *

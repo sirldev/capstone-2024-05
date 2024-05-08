@@ -1,0 +1,77 @@
+# AWS::EC2::LocalGatewayRoute (영문)
+
+지정된 로컬 게이트웨이 라우팅 테이블에 대한 고정 경로를 만듭니다. 다음 대상 중 하나를 지정해야 합니다.
+
+- `LocalGatewayVirtualInterfaceGroupId`
+- `NetworkInterfaceId`
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::EC2::LocalGatewayRoute",
+  "Properties" : {
+      "DestinationCidrBlock" : String,
+      "LocalGatewayRouteTableId" : String,
+      "LocalGatewayVirtualInterfaceGroupId" : String,
+      "NetworkInterfaceId" : String
+    }
+}
+```
+
+## 속성
+
+`DestinationCidrBlock`  
+대상 일치에 사용되는 CIDR 블록입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`LocalGatewayRouteTableId`  
+로컬 게이트웨이 라우팅 테이블의 ID입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`LocalGatewayVirtualInterfaceGroupId`  
+가상 인터페이스 그룹의 ID입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`NetworkInterfaceId`  
+네트워크 인터페이스의 ID입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`로컬 게이트웨이 라우팅 테이블의 ID와 대상 주소 범위를 반환합니다. 예를 들어:
+
+`{ "Ref": "lgw-rtb-12346789abcdef|10.0.0.0/24" }`
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`State` 로컬 게이트웨이 라우팅 테이블의 상태입니다.
+
+`Type` 로컬 게이트웨이 경로의 유형입니다.
+
+## 참고 항목
+
+- AWS Outposts 사용 설명서*의 로컬 게이트웨이 *
+- Amazon EC2 API 참조*의 CreateLocalGatewayRouteTable *

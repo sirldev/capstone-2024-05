@@ -1,0 +1,30 @@
+# AWS::RedshiftServerless::Workgroup Config매개 변수
+
+서버리스 데이터베이스를 더 잘 제어하기 위해 설정할 매개 변수 배열입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ParameterKey" : String,
+  "ParameterValue" : String
+}
+```
+
+## 속성
+
+`ParameterKey`  
+매개 변수의 키입니다. 옵션은 `datestyle`, `enable_user_activity_logging`, , `query_group` `search_path`및 `max_query_execution_time`입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`ParameterValue`  
+설정할 매개 변수의 값입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음

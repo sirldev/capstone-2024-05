@@ -1,0 +1,80 @@
+# AWS::Route53해석자::ResolverQueryLoggingConfig
+
+AWS::Route53Resolver::ResolverQueryLoggingConfig 리소스는 하나의 쿼리 로깅 구성에 대한 설정을 포함하는 복합 유형입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::Route53Resolver::ResolverQueryLoggingConfig",
+  "Properties" : {
+      "DestinationArn" : String,
+      "Name" : String
+    }
+}
+```
+
+## 속성
+
+`DestinationArn`  
+해석기가 쿼리 로그를 전송하도록 할 리소스의 ARN(Amazon S3 버킷, CloudWatch Logs 로그 그룹 또는 Kinesis Data Firehose 전송 스트림)입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `600`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Name`  
+쿼리 로깅 구성의 이름입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `64`  
+_패턴_: `(?!^[0-9]+$)([a-zA-Z0-9-_' ']+)`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`하나의 쿼리 로깅 구성에 대한 설정이 포함된 리소스의 ID를 반환합니다.
+
+예를 들어: `{ "Ref": "rqlc-1111222233334444" }`
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`Arn` 쿼리 로깅 구성에 대한 Amazon 리소스 이름(ARN)입니다.
+
+`AssociationCount` 쿼리 로깅 구성과 연결된 VPC 수입니다.
+
+`CreationTime` 쿼리 로깅 구성이 생성된 날짜 및 시간(Unix 시간 형식 및 UTC(협정 세계시))입니다.
+
+`CreatorRequestId`  
+쿼리 로깅 구성을 만든 요청을 식별하는 고유한 문자열입니다. 이렇게 `CreatorRequestId` 하면 작업을 두 번 실행할 위험 없이 실패한 요청을 다시 시도할 수 있습니다.
+
+`Id` 쿼리 로깅 구성의 ID입니다.
+
+`OwnerId` 쿼리 로깅 구성을 생성한 계정의 AWS 계정 ID입니다.
+
+`ShareStatus` 쿼리 로깅 구성이 다른 AWS 계정과 공유되는지 또는 다른 AWS 계정에서 현재 계정과 공유되었는지를 나타냅니다. 공유는 AWS Resource Access Manager(AWS RAM)를 통해 구성됩니다.
+
+`Status` 지정된 쿼리 로깅 구성의 상태입니다. 유효한 값은 다음과 같습니다.
+
+- `CREATING`: 해석기가 쿼리 로깅 구성을 만들고 있습니다.
+- `CREATED`: 쿼리 로깅 구성이 성공적으로 생성되었습니다. 해석기가 지정된 VPC에서 시작된 쿼리를 로깅하고 있습니다.
+- `DELETING`: 확인자가 이 쿼리 로깅 구성을 삭제하고 있습니다.
+- `FAILED`: 확인자가 쿼리 로깅 구성에 지정된 위치로 로그를 전송할 수 없습니다. 다음은 두 가지 일반적인 원인입니다.
+  - 지정된 대상(예: Amazon S3 버킷)이 삭제되었습니다.
+  - 권한은 대상에 로그를 보내는 것을 허용하지 않습니다.

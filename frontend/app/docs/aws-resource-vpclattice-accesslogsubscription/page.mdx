@@ -1,0 +1,64 @@
+# AWS::VpcLattice::AccessLog구독
+
+액세스 로그를 Amazon CloudWatch, Amazon S3 및 Amazon Kinesis Data Firehose로 전송할 수 있습니다. 서비스 네트워크 소유자는 액세스 로그를 사용하여 네트워크의 서비스를 감사할 수 있습니다. 서비스 네트워크 소유자는 서비스 네트워크와 연결된 클라이언트 및 서비스의 액세스 로그만 볼 수 있습니다. 액세스 로그 항목은 해당 네트워크와 연결된 VPC에서 발생한 트래픽을 나타냅니다. 자세한 내용은 _Amazon VPC Lattice 사용 설명서의 액세스 로그를 참조하세요_.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::VpcLattice::AccessLogSubscription",
+  "Properties" : {
+      "DestinationArn" : String,
+      "ResourceIdentifier" : String,
+      "Tags" : [Tag, ... ]
+    }
+}
+```
+
+## 속성
+
+`DestinationArn`  
+대상의 Amazon 리소스 이름(ARN)입니다. 지원되는 대상 유형은 CloudWatch 로그 그룹, Kinesis Data Firehose 전송 스트림 및 Amazon S3 버킷입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`ResourceIdentifier`  
+서비스 네트워크 또는 서비스의 ID 또는 Amazon 리소스 이름(ARN)입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Tags`  
+액세스 로그 구독에 대한 태그입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`액세스 로그 구독의 Amazon 리소스 이름(ARN)을 반환합니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`Arn` 액세스 로그 구독의 Amazon 리소스 이름(ARN)입니다.
+
+`Id` 액세스 로그 구독의 ID입니다.
+
+`ResourceArn` 액세스 로그 구독의 Amazon 리소스 이름(ARN)입니다.
+
+`ResourceId` 서비스 네트워크 또는 서비스의 ID입니다.

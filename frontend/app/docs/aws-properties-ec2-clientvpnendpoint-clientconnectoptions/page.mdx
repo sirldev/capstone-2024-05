@@ -1,0 +1,30 @@
+# AWS::EC2::ClientVpnEndpoint ClientConnectOptions
+
+클라이언트 연결 옵션을 사용할 수 있는지 여부를 나타냅니다. 기본값은 `false` (사용 안 함)입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Enabled" : Boolean,
+  "LambdaFunctionArn" : String
+}
+```
+
+## 속성
+
+`Enabled`  
+클라이언트 연결 옵션을 사용할 수 있는지 여부를 나타냅니다. 기본값은 `false` (사용 안 함)입니다.  
+_필수 항목 여부_: 예  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`LambdaFunctionArn`  
+연결 권한 부여에 사용되는 AWS Lambda 함수의 Amazon 리소스 이름(ARN)입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음

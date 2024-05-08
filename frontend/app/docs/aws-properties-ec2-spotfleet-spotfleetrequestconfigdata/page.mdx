@@ -1,0 +1,201 @@
+# AWS::EC2::SpotFleet SpotFleetRequestConfigData
+
+스팟 집합 요청의 구성을 지정합니다. 자세한 내용은 _Amazon EC2 사용 설명서의 스팟 집합을 참조하십시오_.
+
+또는 `LaunchSpecifications`를`LaunchTemplateConfigs` 지정해야 합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "AllocationStrategy" : String,
+  "Context" : String,
+  "ExcessCapacityTerminationPolicy" : String,
+  "IamFleetRole" : String,
+  "InstanceInterruptionBehavior" : String,
+  "InstancePoolsToUseCount" : Integer,
+  "LaunchSpecifications" : [ SpotFleetLaunchSpecification, ... ],
+  "LaunchTemplateConfigs" : [ LaunchTemplateConfig, ... ],
+  "LoadBalancersConfig" : LoadBalancersConfig,
+  "OnDemandAllocationStrategy" : String,
+  "OnDemandMaxTotalPrice" : String,
+  "OnDemandTargetCapacity" : Integer,
+  "ReplaceUnhealthyInstances" : Boolean,
+  "SpotMaintenanceStrategies" : SpotMaintenanceStrategies,
+  "SpotMaxTotalPrice" : String,
+  "SpotPrice" : String,
+  "TagSpecifications" : [ SpotFleetTagSpecification, ... ],
+  "TargetCapacity" : Integer,
+  "TargetCapacityUnitType" : String,
+  "TerminateInstancesWithExpiration" : Boolean,
+  "Type" : String,
+  "ValidFrom" : String,
+  "ValidUntil" : String
+}
+```
+
+## 속성
+
+`AllocationStrategy`  
+스팟 플릿 시작 구성에 의해 지정된 스팟 인스턴스 풀에 대상 스팟 인스턴스 용량을 할당하는 방법을 결정하는 전략입니다. 자세한 내용은 *Amazon EC2 사용 설명서*의 스팟 인스턴스에 대한 할당 전략을 참조하십시오.  
+priceCapacityOptimized(권장)  
+스팟 집합은 시작 중인 인스턴스 수에 대해 용량 가용성이 가장 높은 풀을 식별합니다. 즉, 단기적으로 중단 가능성이 가장 낮다고 생각되는 풀에서 스팟 인스턴스를 요청할 것입니다. 그런 다음 스팟 집합은 이러한 풀 중 가장 낮은 가격의 스팟 인스턴스를 요청합니다.  
+capacityOptimized (용량최적화)  
+스팟 집합은 시작 중인 인스턴스 수에 대해 용량 가용성이 가장 높은 풀을 식별합니다. 즉, 단기적으로 중단 가능성이 가장 낮다고 생각되는 풀에서 스팟 인스턴스를 요청할 것입니다. 특정 인스턴스 유형이 먼저 시작될 확률을 높이려면 를 사용합니다`capacityOptimizedPrioritized`. 에 대한 매개 변수를 사용하여 각 인스턴스 유형에 대한 우선 순위를 설정합니다 `Priority` `LaunchTemplateOverrides`. 다른 `LaunchTemplateOverrides`. EC2는 최선을 다해 우선 순위를 구현하지만 용량을 먼저 최적화합니다. `capacityOptimizedPrioritized` 는 스팟 집합이 시작 템플릿을 사용하는 경우에만 지원됩니다. 로 `OnDemandAllocationStrategy` 설정된 `prioritized` 경우 온디맨드 용량을 이행할 때 동일한 우선 순위가 적용됩니다.  
+다양 한  
+스팟 집합은 지정한 모든 스팟 인스턴스 풀에서 인스턴스를 요청합니다.  
+최저 가격  
+스팟 집합은 가용 용량이 있는 가장 저렴한 스팟 인스턴스 풀에서 인스턴스를 요청합니다. 가장 낮은 가격의 풀에 가용 용량이 없는 경우, 스팟 인스턴스는 사용 가능한 용량이 있는 다음으로 낮은 가격의 풀에서 가져옵니다. 원하는 용량을 채우기 전에 풀의 용량이 부족해지면 스팟 집합은 다음으로 낮은 가격의 풀에서 끌어와 요청을 계속 이행합니다. 원하는 용량이 충족되도록 하기 위해 여러 풀에서 스팟 인스턴스를 받을 수 있습니다. 이 전략은 용량 가용성이 아닌 인스턴스 가격만 고려하기 때문에 중단률이 높을 수 있습니다.
+기본값: `lowestPrice`  
+_필수_: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `capacityOptimized | capacityOptimizedPrioritized | diversified | lowestPrice | priceCapacityOptimized`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Context`  
+예약.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`ExcessCapacityTerminationPolicy`  
+스팟 집합 요청의 목표 용량을 현재 스팟 집합 크기 미만으로 줄이는 경우 실행 중인 스팟 인스턴스를 종료해야 하는지 여부를 나타냅니다.  
+유형의 플릿에 대해서만 지원됩니다`maintain`.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `default | noTermination`  
+_업데이트 필요 사항_: 중단 없음
+
+`IamFleetRole`  
+사용자를 대신하여 인스턴스를 요청, 시작, 종료 및 태깅할 수 있는 권한을 스팟 집합에 부여하는 AWS Identity and Access Management(IAM) 역할의 Amazon 리소스 이름(ARN)입니다. 자세한 내용은 *Linux 인스턴스용 Amazon EC2 사용 설명서*의 스팟 집합 사전 조건을 참조하십시오. 스팟 집합은 사용자가 스팟 집합 요청을 취소하거나 스팟 집합 요청이 만료될 때(설정된 경우) 사용자를 대신하여 스팟 인스턴스를 종료할 수 있습니다`TerminateInstancesWithExpiration`.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`InstanceInterruptionBehavior`  
+스팟 인스턴스가 중단될 때의 동작입니다. 기본값은 `terminate`입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `hibernate | stop | terminate`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`InstancePoolsToUseCount`  
+목표 스팟 용량을 할당할 스팟 풀의 수입니다. Spot **AllocationStrategy** 가 로 설정된 `lowest-price` 경우에만 유효합니다. 스팟 집합은 가장 저렴한 스팟 풀을 선택하고 지정한 스팟 풀 수에 걸쳐 목표 스팟 용량을 균등하게 할당합니다.  
+스팟 집합은 사용자가 지정한 풀 수에서 스팟 인스턴스를 최대한 활용하려고 시도합니다. 목표 용량을 충족하기 전에 풀의 스팟 용량이 부족해지면 스팟 집합은 다음으로 가장 저렴한 풀에서 끌어와 요청을 계속 이행합니다. 목표 용량을 충족하기 위해 지정한 풀 수보다 많은 풀에서 스팟 인스턴스를 수신할 수 있습니다. 마찬가지로, 대부분의 풀에 스팟 용량이 없는 경우 지정한 풀 수보다 적은 풀에서 전체 목표 용량을 받을 수 있습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`LaunchSpecifications`  
+스팟 집합 요청에 대한 시작 사양입니다. 를 지정 `LaunchSpecifications`하면 를 지정할 수 없습니다 `LaunchTemplateConfigs`.  
+_필수_: 조건부  
+_유형_: SpotFleetLaunchSpecification 목록  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`LaunchTemplateConfigs`  
+시작 템플릿 및 재정의입니다. 를 지정 `LaunchTemplateConfigs`하면 를 지정할 수 없습니다 `LaunchSpecifications`.  
+_필수_: 조건부  
+_유형_: LaunchTemplateConfig 목록  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`LoadBalancersConfig`  
+스팟 집합 요청에 연결할 하나 이상의 Classic Load Balancer 및 대상 그룹. 스팟 집합은 실행 중인 스팟 인스턴스를 지정된 Classic Load Balancer 및 대상 그룹에 등록합니다.  
+Network Load Balancer를 사용하는 경우 스팟 집합은 C1, CC1, CC2, CG1, CG2, CR1, CS1, G1, G2, HI1, HS1, M1, M2, M3 및 T1 인스턴스 유형이 있는 인스턴스를 등록할 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: LoadBalancersConfig  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`OnDemandAllocationStrategy`  
+시작 템플릿의 순서는 온디맨드 용량을 이행하는 데 사용하도록 재정의됩니다. 를 지정하면 `lowestPrice`스팟 집합은 가격을 사용하여 주문을 결정하고 최저 가격을 먼저 시작합니다. 를 지정하는 경우 `prioritized`스팟 집합은 각 스팟 집합 시작 템플릿 재정의에 할당한 우선 순위를 사용하여 가장 높은 우선 순위를 먼저 시작합니다. 값을 지정하지 않으면 스팟 집합의 기본값은 `lowestPrice`입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `lowestPrice | prioritized`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`OnDemandMaxTotalPrice`  
+지불할 의사가 있는 온디맨드 인스턴스의 시간당 최대 금액입니다. `onDemandMaxTotalPrice` 파라미터, `spotMaxTotalPrice` 파라미터 또는 두 파라미터 모두를 사용하여 플릿 비용이 예산을 초과하지 않도록 할 수 있습니다. 요청에서 온디맨드 인스턴스 및 스팟 인스턴스에 대해 시간당 최고 가격을 설정하면 스팟 집합은 지불할 의사가 있는 최대 금액에 도달할 때까지 인스턴스를 시작합니다. 지불할 의사가 있는 최대 금액에 도달하면 플릿은 목표 용량을 충족하지 않은 경우에도 인스턴스 시작을 중지합니다.  
+플릿에 로 구성된 T 인스턴스가 포함되어 `unlimited`있고 평균 CPU 사용량이 기준 사용률을 초과하는 경우 잉여 크레딧에 대한 요금이 발생합니다. 는 `onDemandMaxTotalPrice` 잉여 크레딧을 고려하지 않으며, 잉여 크레딧을 사용하는 경우 최종 비용이 에 대해 지정한 비용보다 높을 수 있습니다`onDemandMaxTotalPrice`. 자세한 내용은 EC2 사용 설명서의 잉여 크레딧에 요금이 부과될 수 _있음을 참조하세요_.
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`OnDemandTargetCapacity`  
+요청할 온디맨드 단위의 수입니다. 인스턴스 또는 애플리케이션 워크로드에 중요한 성능 특성(예: vCPU, 메모리 또는 I/O)을 기준으로 목표 용량을 설정하도록 선택할 수 있습니다. 요청 유형이 인 경우 `maintain`목표 용량을 0으로 지정하고 나중에 용량을 추가할 수 있습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ReplaceUnhealthyInstances`  
+스팟 집합이 비정상 인스턴스를 대체해야 하는지 여부를 나타냅니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`SpotMaintenanceStrategies`  
+중단될 위험이 높은 스팟 인스턴스를 관리하기 위한 전략입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: SpotMaintenanceStrategies  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`SpotMaxTotalPrice`  
+지불할 의사가 있는 스팟 인스턴스의 시간당 최대 금액입니다. `spotMaxTotalPrice` 파라미터, `onDemandMaxTotalPrice` 파라미터 또는 두 파라미터 모두를 사용하여 플릿 비용이 예산을 초과하지 않도록 할 수 있습니다. 요청에서 온디맨드 인스턴스 및 스팟 인스턴스에 대해 시간당 최고 가격을 설정하면 스팟 집합은 지불할 의사가 있는 최대 금액에 도달할 때까지 인스턴스를 시작합니다. 지불할 의사가 있는 최대 금액에 도달하면 플릿은 목표 용량을 충족하지 않은 경우에도 인스턴스 시작을 중지합니다.  
+플릿에 로 구성된 T 인스턴스가 포함되어 `unlimited`있고 평균 CPU 사용량이 기준 사용률을 초과하는 경우 잉여 크레딧에 대한 요금이 발생합니다. 는 `spotMaxTotalPrice` 잉여 크레딧을 고려하지 않으며, 잉여 크레딧을 사용하는 경우 최종 비용이 에 대해 지정한 비용보다 높을 수 있습니다`spotMaxTotalPrice`. 자세한 내용은 EC2 사용 설명서의 잉여 크레딧에 요금이 부과될 수 _있음을 참조하세요_.
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`SpotPrice`  
+스팟 인스턴스에 대해 지불할 의사가 있는 단위 시간당 최고 가격입니다. 이 매개 변수는 중단이 증가할 수 있으므로 사용하지 않는 것이 좋습니다. 이 파라미터를 지정하지 않으면 현재 스팟 가격을 지불하게 됩니다.  
+최고 가격을 지정하면 이 파라미터를 지정하지 않을 때보다 인스턴스가 더 자주 중단됩니다.
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`TagSpecifications`  
+생성 시 스팟 집합 요청에 태그를 지정하기 위한 키-값 페어입니다. 의 값은 `ResourceType` 여야 하며`spot-fleet-request`, 그렇지 않으면 스팟 집합 요청이 실패합니다. 시작 시 인스턴스에 태그를 지정하려면 시작 템플릿(를 사용하는 경우에만 유효 함`LaunchTemplateConfigs`) 또는 `SpotFleetTagSpecification` (를 사용하는 경우에만 유효 `LaunchSpecifications` 함)에서 태그를 지정합니다. 시작 후 태그 지정에 대한 자세한 내용은 리소스 태그 지정을 참조하세요.  
+*필수 항목 *여부: 아니요  
+_유형_: SpotFleetTagSpecification 목록  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`TargetCapacity`  
+스팟 집합에 대해 요청할 단위 수입니다. 인스턴스 또는 애플리케이션 워크로드에 중요한 성능 특성(예: vCPU, 메모리 또는 I/O)을 기준으로 목표 용량을 설정하도록 선택할 수 있습니다. 요청 유형이 인 경우 `maintain`목표 용량을 0으로 지정하고 나중에 용량을 추가할 수 있습니다.  
+_필수 항목 여부_: 예  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`TargetCapacityUnitType`  
+목표 용량의 단위입니다. 지정된 `TargetCapacityUnitType` 경우에만 지정할 수 있습니다 `InstanceRequirements` .  
+기본값: `units` (인스턴스 수로 변환)  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `memory-mib | units | vcpu`  
+_업데이트 필요 사항_: 중단 없음
+
+`TerminateInstancesWithExpiration`  
+스팟 집합 요청이 만료될 때 실행 중인 스팟 인스턴스가 종료되는지 여부를 나타냅니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Type`  
+요청 유형입니다. 스팟 집합이 목표 용량만 요청하는지 아니면 유지 관리도 시도하는지 여부를 나타냅니다. 이 값이 이면 `request`스팟 집합은 필요한 요청만 배치합니다. 용량이 감소하는 경우 스팟 인스턴스를 보충하려고 시도하지 않으며, 용량을 사용할 수 없는 경우 대체 스팟 풀에서 요청을 제출하지 않습니다. 이 값이 인 경우 `maintain`스팟 집합은 목표 용량을 유지합니다. 스팟 집합은 용량을 충족하는 데 필요한 요청을 배치하고 중단된 인스턴스를 자동으로 보충합니다. 기본값: `maintain`. `instant` 이(가) 나열되지만 스팟 집합에서 사용되지 않습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `instant | maintain | request`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ValidFrom`  
+UTC 형식(*YYYY-MM-DD\*\*\*\* *T*HH*:_MM_:_SS_ Z)의 요청 시작 날짜 및 시간입니다. 기본적으로 Amazon EC2는 요청을 즉시 이행하기 시작합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ValidUntil`  
+UTC 형식(*YYYY-MM-DD\*\*\*\* *T*HH*:_MM_:_SS_ Z)의 요청 종료 날짜 및 시간입니다. 종료 날짜 및 시간 이후에는 새 스팟 인스턴스 요청이 배치되거나 요청을 이행할 수 없습니다. 값을 지정하지 않으면 스팟 집합 요청은 취소할 때까지 유지됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음

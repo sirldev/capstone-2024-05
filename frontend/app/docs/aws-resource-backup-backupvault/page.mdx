@@ -1,0 +1,86 @@
+# AWS::백업::백업 볼트
+
+백업이 저장되는 논리적 컨테이너를 만듭니다. `CreateBackupVault` 요청에는 이름, 선택적으로 하나 이상의 리소스 태그, 암호화 키 및 요청 ID가 포함됩니다.
+
+백업 볼트의 이름에 여권 번호와 같은 민감한 데이터를 포함하지 마십시오.
+
+샘플 AWS CloudFormation 템플릿은 AWS Backup 개발자 안내서를 참조하십시오.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::Backup::BackupVault",
+  "Properties" : {
+      "AccessPolicy" : Json,
+      "BackupVaultName" : String,
+      "BackupVaultTags" : {Key: Value, ...},
+      "EncryptionKeyArn" : String,
+      "LockConfiguration" : LockConfigurationType,
+      "Notifications" : NotificationObjectType
+    }
+}
+```
+
+## 속성
+
+`AccessPolicy`  
+대상 백업 자격 증명 모음에 대한 액세스 권한을 관리하는 데 사용되는 리소스 기반 정책입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: Json  
+_업데이트 필요 사항_: 중단 없음
+
+`BackupVaultName`  
+백업이 저장되는 논리적 컨테이너의 이름입니다. 백업 저장소는 생성에 사용된 계정과 생성된 AWS 리전에 고유한 이름으로 식별됩니다. 소문자, 숫자 및 하이픈으로 구성됩니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_패턴_: `^[a-zA-Z0-9-_]{2,50}$`  
+*업데이트 필요 *사항: 바꿔 놓음
+
+`BackupVaultTags`  
+만든 리소스를 구성하는 데 도움이 되도록 할당할 수 있는 메타데이터입니다. 각 태그는 키-값 페어입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 맵  
+_업데이트 필요 사항_: 중단 없음
+
+`EncryptionKeyArn`  
+전체 AWS Backup 관리를 지원하는 서비스에서 백업을 암호화하기 위해 지정할 수 있는 서버 측 암호화 키입니다. 예를 들어, `arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab`. 키를 지정하는 경우 별칭이 아닌 ARN을 지정해야 합니다. 키를 지정하지 않으면 기본적으로 AWS Backup에서 KMS 키를 생성합니다.  
+전체 AWS Backup 관리를 지원하는 AWS Backup 서비스와 AWS Backup이 아직 전체 AWS Backup을 지원하지 않는 서비스의 백업에 대한 암호화를 처리하는 방법에 대한 자세한 내용은 AWS Backup의 백업 암호화 섹션을 참조하세요.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`LockConfiguration`  
+AWS Backup 저장소 잠금에 대한 구성입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: LockConfigurationType  
+_업데이트 필요 사항_: 중단 없음
+
+`Notifications`  
+지정된 백업 볼트에 대한 SNS 이벤트 알림입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: NotificationObjectType  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달 `Ref` 하면 `Ref`가 반환`BackupVaultName`됩니다.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`BackupVaultArn`  
+백업 볼트를 고유하게 식별하는 Amazon 리소스 이름(ARN) 예를 들어, `arn:aws:backup:us-east-1:123456789012:backup-vault:aBackupVault`.
+
+`BackupVaultName` 백업이 저장되는 논리적 컨테이너의 이름입니다. 백업 자격 증명 모음은 자격 증명 모음을 만드는 데 사용된 계정과 자격 증명 모음이 만들어진 지역에 고유한 이름으로 식별됩니다. 소문자와 대문자, 숫자 및 하이픈으로 구성됩니다.

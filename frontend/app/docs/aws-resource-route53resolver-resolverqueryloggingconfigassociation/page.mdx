@@ -1,0 +1,76 @@
+# AWS::Route53Resolver::ResolverQueryLoggingConfigAssociation
+
+AWS::Route53Resolver::ResolverQueryLoggingConfigAssociation 리소스는 DNS 쿼리 로깅을 위한 구성입니다. 쿼리 로깅 구성을 생성하면 Amazon Route 53이 Amazon CloudWatch Logs 로그 그룹에 로그 데이터를 게시하기 시작합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::Route53Resolver::ResolverQueryLoggingConfigAssociation",
+  "Properties" : {
+      "ResolverQueryLogConfigId" : String,
+      "ResourceId" : String
+    }
+}
+```
+
+## 속성
+
+`ResolverQueryLogConfigId`  
+VPC가 연결된 쿼리 로깅 구성의 ID입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `64`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ResourceId`  
+쿼리 로깅 구성과 연결된 Amazon VPC의 ID입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `64`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`DNS 쿼리 로깅을 위한 구성의 ID를 반환합니다.
+
+예를 들어: `{ "Ref": "rqlca-1111222233334444" }`
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`CreationTime` VPC가 쿼리 로깅 구성과 연결된 날짜 및 시간(Unix 시간 형식 및 UTC(협정 세계시))입니다.
+
+`Error`  
+의 값이 `Status` 인 `FAILED` 경우 의 값은 `Error` 원인을 나타냅니다.
+
+- `DESTINATION_NOT_FOUND`: 지정된 대상(예: Amazon S3 버킷)이 삭제되었습니다.
+- `ACCESS_DENIED`: 권한은 대상에 로그를 보내는 것을 허용하지 않습니다.
+  의 값이 `Status` 이외의 값이면 `FAILED` `Error` null입니다.
+
+`ErrorMessage`  
+오류에 대한 추가 정보를 포함합니다. 값 or이 `Error` null이면 의 값 `ErrorMessage` 도 null입니다.
+
+`Id` 쿼리 로깅 연결의 ID입니다.
+
+`Status` 지정된 쿼리 로깅 연결의 상태입니다. 유효한 값은 다음과 같습니다.
+
+- `CREATING`: 해석기가 Amazon Virtual Private Cloud(Amazon VPC)와 쿼리 로깅 구성 간의 연결을 생성하고 있습니다.
+- `CREATED`: Amazon VPC와 쿼리 로깅 구성 간의 연결이 성공적으로 생성되었습니다. 해석기가 지정된 VPC에서 시작된 쿼리를 로깅하고 있습니다.
+- `DELETING`: 해석기가 이 쿼리 로깅 연결을 삭제하고 있습니다.
+- `FAILED`: 해석기가 쿼리 로깅 연결을 만들 수 없거나 삭제할 수 없습니다.

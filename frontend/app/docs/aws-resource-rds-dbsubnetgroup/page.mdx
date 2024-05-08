@@ -1,0 +1,89 @@
+# AWS::RDS::D BSubnetGroup
+
+`AWS::RDS::DBSubnetGroup` 리소스는 데이터베이스 서브넷 그룹을 생성합니다. 서브넷 그룹은 동일한 리전의 서로 다른 두 가용 영역에 두 개 이상의 서브넷을 포함해야 합니다.
+
+자세한 내용은 Amazon RDS 사용 설명서*의 DB 서브넷 그룹 작업을 참조하세요*.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::RDS::DBSubnetGroup",
+  "Properties" : {
+      "DBSubnetGroupDescription" : String,
+      "DBSubnetGroupName" : String,
+      "SubnetIds" : [ String, ... ],
+      "Tags" : [Tag, ... ]
+    }
+}
+```
+
+## 속성
+
+`DBSubnetGroupDescription`  
+DB 서브넷 그룹에 대한 설명입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`DBSubnetGroupName`  
+DB 서브넷 그룹의 이름입니다. 이 값은 소문자 문자열로 저장됩니다.  
+제약 조건: 소문자 영숫자 또는 하이픈을 255자 이하로 포함해야 합니다. "기본값"이 아니어야 합니다.  
+예: `mysubnetgroup`  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`SubnetIds`  
+DB 서브넷 그룹의 EC2 서브넷 ID입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`Tags`  
+이 DB 서브넷 그룹에 적용할 키-값 페어의 선택적 배열입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`DB 서브넷 그룹의 이름을 반환합니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+## 예제
+
+###
+
+#### JSON (영문)
+
+```
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Resources": {
+        "myDBSubnetGroup": {
+            "Type": "AWS::RDS::DBSubnetGroup",
+            "Properties": {
+                "DBSubnetGroupDescription": "description",
+                "SubnetIds": [
+                    "subnet-7b5b4112",
+                    "subnet-7b5b4115"
+                ],
+                "Tags": [
+                    {
+                        "Key": "String",
+                        "Value": "String"
+                    }
+                ]
+            }
+        }
+    }
+}
+```

@@ -1,0 +1,66 @@
+# AWS::EC2::NetworkInsightsAccessScope
+
+네트워크 액세스 범위에 대해 설명합니다. 네트워크 액세스 범위는 원본, 대상, 경로 및 트래픽 유형을 포함하여 아웃바운드(송신) 및 인바운드(수신) 트래픽 패턴을 정의합니다.
+
+Network Access Analyzer는 AWS의 리소스에 대한 의도하지 않은 네트워크 액세스를 식별합니다. 네트워크 액세스 범위에 대한 분석을 시작하면 네트워크 액세스 분석기가 결과를 생성합니다. 자세한 내용은 Network Access Analyzer 사용 설명서를 참조하세요.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::EC2::NetworkInsightsAccessScope",
+  "Properties" : {
+      "ExcludePaths" : [ AccessScopePathRequest, ... ],
+      "MatchPaths" : [ AccessScopePathRequest, ... ],
+      "Tags" : [Tag, ... ]
+    }
+}
+```
+
+## 속성
+
+`ExcludePaths`  
+제외할 경로입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: AccessScopePathRequest 목록  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`MatchPaths`  
+일치시킬 경로입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: AccessScopePathRequest 목록  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Tags`  
+태그.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`네트워크 인사이트 범위의 ID를 반환합니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`CreatedDate` 만든 날짜입니다.
+
+`NetworkInsightsAccessScopeArn` 네트워크 액세스 범위의 ARN입니다.
+
+`NetworkInsightsAccessScopeId` 네트워크 액세스 범위의 ID입니다.
+
+`UpdatedDate` 마지막 업데이트 날짜입니다.

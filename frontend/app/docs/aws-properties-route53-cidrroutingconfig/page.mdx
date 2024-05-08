@@ -1,0 +1,36 @@
+# AWS::Route53::RecordSetGroup Cidr라우팅 구성
+
+리소스 레코드 세트를 CIDR 위치에 연결할 때 리소스 레코드 세트 객체에 지정된 객체입니다.
+
+`LocationName` 별표 "\*"가 있는 A를 사용하여 기본 CIDR 레코드를 생성할 수 있습니다. `CollectionId` 기본 레코드에는 여전히 필요합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "CollectionId" : String,
+  "LocationName" : String
+}
+```
+
+## 속성
+
+`CollectionId`  
+CIDR 컬렉션 ID입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_패턴_: `[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}`  
+_업데이트 필요 사항_: 중단 없음
+
+`LocationName`  
+CIDR 수집 위치 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `16`  
+_패턴_: `[0-9A-Za-z_-*]+`  
+_업데이트 필요 사항_: 중단 없음

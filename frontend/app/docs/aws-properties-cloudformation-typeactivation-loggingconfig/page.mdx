@@ -1,0 +1,36 @@
+# AWS::CloudFormation::TypeActivation 로깅 구성
+
+확장에 대한 로깅 구성 정보를 포함합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "LogGroupName" : String,
+  "LogRoleArn" : String
+}
+```
+
+## 속성
+
+`LogGroupName`  
+CloudFormation에서 확장 프로그램의 핸들러를 호출할 때 오류 로깅 정보를 전송하는 Amazon CloudWatch Logs 그룹입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `512`  
+_패턴_: `[.-_/#A-Za-z0-9]+`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`LogRoleArn`  
+CloudWatch Logs에 로그 항목을 전송할 때 CloudFormation에서 수임해야 하는 역할의 Amazon 리소스 이름(ARN)입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `256`  
+_패턴_: `arn:.+:iam::[0-9]{12}:role/.+`  
+_업데이트 필요 사항_: 바꿔 놓음

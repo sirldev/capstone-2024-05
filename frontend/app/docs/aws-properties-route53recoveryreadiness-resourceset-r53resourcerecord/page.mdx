@@ -1,0 +1,30 @@
+# AWS::Route53RecoveryReadiness::리소스 세트 R53ResourceRecord
+
+DNS 대상 리소스 레코드가 가리키는 Amazon Route 53 리소스입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "DomainName" : String,
+  "RecordSetId" : String
+}
+```
+
+## 속성
+
+`DomainName`  
+DNS 대상 도메인 이름입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`RecordSetId`  
+Amazon Route 53 리소스 레코드 세트 ID입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음

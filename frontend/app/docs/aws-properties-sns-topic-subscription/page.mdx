@@ -1,0 +1,33 @@
+# AWS::SNS::주제 구독
+
+`Subscription` 는 Amazon SNS 주제의 구독 엔드포인트를 설명하는 포함된 속성입니다.
+
+**메모**  
+구독 동작(예: 전송 정책, 필터링, 원시 메시지 전송 및 교차 리전 구독)을 완전히 제어하려면 AWS::SNS::Subscription 리소스를 사용합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Endpoint" : String,
+  "Protocol" : String
+}
+```
+
+## 속성
+
+`Endpoint`  
+Amazon SNS 주제에서 알림을 수신하는 엔드포인트입니다. 끝점 값은 지정하는 프로토콜에 따라 달라집니다. 자세한 내용은 `Endpoint`Amazon SNS API Reference`Subscribe`에서 작업의 _ 파라미터 를 참조하십시오_.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Protocol`  
+구독의 프로토콜입니다. 자세한 내용은 `Protocol`Amazon SNS API Reference`Subscribe`에서 작업의 _ 파라미터 를 참조하십시오_.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음

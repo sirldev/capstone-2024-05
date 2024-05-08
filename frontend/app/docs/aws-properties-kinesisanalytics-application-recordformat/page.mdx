@@ -1,0 +1,31 @@
+# AWS::KinesisAnalytics::애플리케이션 레코드 형식
+
+스트림의 레코드를 스키마화하기 위해 적용해야 하는 레코드 형식 및 관련 매핑 정보에 대해 설명합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "MappingParameters" : MappingParameters,
+  "RecordFormatType" : String
+}
+```
+
+## 속성
+
+`MappingParameters`  
+응용 프로그램을 만들거나 업데이트할 때 응용 프로그램 입력을 구성할 때 스트리밍 원본의 레코드 형식(예: JSON, CSV 또는 일부 구분 기호로 구분된 레코드 필드)과 관련된 추가 매핑 정보를 제공합니다.  
+*필수 항목 *여부: 아니요  
+_형식_: MappingParameters  
+_업데이트 필요 사항_: 중단 없음
+
+`RecordFormatType`  
+레코드 형식의 유형입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_허용되는 값_: `CSV | JSON`  
+_업데이트 필요 사항_: 중단 없음

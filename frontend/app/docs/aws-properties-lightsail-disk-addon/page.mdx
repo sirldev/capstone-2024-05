@@ -1,0 +1,39 @@
+# AWS::Lightsail::D isk 추가 기능
+
+`AddOn` 은 AWS::Lightsail::D isk 리소스의 속성입니다. 디스크의 추가 기능에 대해 설명합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "AddOnType" : String,
+  "AutoSnapshotAddOnRequest" : AutoSnapshotAddOn,
+  "Status" : String
+}
+```
+
+## 속성
+
+`AddOnType`  
+추가 기능 유형(예: `AutoSnapshot`).  
+`AutoSnapshot` 는 디스크에 사용할 수 있는 유일한 추가 기능입니다.
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`AutoSnapshotAddOnRequest`  
+자동 스냅숏 추가 기능에 대한 매개 변수(예: 자동 스냅숏이 만들어지는 일일 시간)The parameters for the automatic snapshot add-on, such as the daily time when a automatic snapshot will be created.  
+*필수 항목 *여부: 아니요  
+_형식_: AutoSnapshotAddOn  
+_업데이트 필요 사항_: 중단 없음
+
+`Status`  
+추가 기능의 상태입니다.  
+유효한 값 : `Enabled` | `Disabled`  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음

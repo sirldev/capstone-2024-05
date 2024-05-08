@@ -1,0 +1,207 @@
+# AWS::RDS::D BProxy
+
+`AWS::RDS::DBProxy` 리소스는 DB 프록시를 생성하거나 업데이트합니다.
+
+Amazon RDS용 RDS Proxy에 대한 자세한 내용은 Amazon RDS 사용 설명서의 Amazon RDS Proxy와의 연결 관리를 참조하십시오\*\*.
+
+Amazon Aurora용 RDS Proxy에 대한 자세한 내용은 Amazon Aurora 사용 설명서의 Amazon RDS Proxy를 사용한 연결 관리를 참조하십시오\*\*.
+
+**메모**  
+DB 엔진 버전 제한 및 AWS 리전 제한을 포함하여 RDS Proxy에 대한 제한이 적용됩니다.  
+Amazon RDS용 RDS Proxy에 적용되는 제한 사항에 대한 자세한 내용은 *Amazon RDS 사용 설명서*의 RDS Proxy에 대한 제한 사항을 참조하십시오.  
+Amazon Aurora용 RDS Proxy에 적용되는 방법에 대한 자세한 내용은 Amazon Aurora 사용 설명서의 RDS Proxy에 대한 제한 사항을 참조하세요\*\*.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::RDS::DBProxy",
+  "Properties" : {
+      "Auth" : [ AuthFormat, ... ],
+      "DBProxyName" : String,
+      "DebugLogging" : Boolean,
+      "EngineFamily" : String,
+      "IdleClientTimeout" : Integer,
+      "RequireTLS" : Boolean,
+      "RoleArn" : String,
+      "Tags" : [ TagFormat, ... ],
+      "VpcSecurityGroupIds" : [ String, ... ],
+      "VpcSubnetIds" : [ String, ... ]
+    }
+}
+```
+
+## 속성
+
+`Auth`  
+프록시가 사용하는 권한 부여 메커니즘입니다.  
+_필수 항목 여부_: 예  
+_유형_: AuthFormat 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`DBProxyName`  
+프록시의 식별자입니다. 이 이름은 지정된 AWS 리전에서 AWS 계정이 소유한 모든 프록시에 대해 고유해야 합니다. 식별자는 문자로 시작해야 하며 ASCII 문자, 숫자 및 하이픈만 포함해야 합니다. 하이픈으로 끝나거나 두 개의 연속 하이픈을 포함할 수 없습니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`DebugLogging`  
+프록시가 로그에 SQL 문에 대한 자세한 정보를 포함하는지 여부입니다. 이 정보는 SQL 동작 또는 프록시 연결의 성능 및 확장성과 관련된 문제를 디버그하는 데 도움이 됩니다. 디버그 정보에는 프록시를 통해 제출하는 SQL문의 텍스트가 포함됩니다. 따라서 디버깅에 필요한 경우와 로그에 표시되는 중요한 정보를 보호하기 위한 보안 조치가 있는 경우에만 이 설정을 사용하도록 설정합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`EngineFamily`  
+프록시가 연결할 수 있는 데이터베이스의 종류입니다. 이 값은 프록시가 데이터베이스와 주고받는 네트워크 트래픽을 해석할 때 인식하는 데이터베이스 네트워크 프로토콜을 결정합니다. Aurora MySQL, RDS for MariaDB 및 RDS for MySQL 데이터베이스의 경우 를 지정합니다 `MYSQL`. Aurora PostgreSQL 및 RDS for PostgreSQL 데이터베이스의 경우 를 지정합니다 `POSTGRESQL`. RDS for Microsoft SQL Server의 경우 을 지정합니다 `SQLSERVER`.  
+_유효한 값_: `MYSQL` | `POSTGRESQL` | `SQLSERVER`  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`IdleClientTimeout`  
+프록시가 연결을 끊기 전에 프록시에 대한 연결을 비활성화할 수 있는 시간(초)입니다. 이 값을 연결된 데이터베이스에 대한 연결 제한시간 제한보다 높거나 낮게 설정할 수 있습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`RequireTLS`  
+프록시 연결에 TLS(전송 계층 보안) 암호화가 필요한지 여부를 지정하는 부울 매개 변수입니다. 이 설정을 사용하도록 설정하면 프록시에 암호화된 TLS 연결을 적용할 수 있습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`RoleArn`  
+프록시가 AWS Secrets Manager의 보안 암호에 액세스하는 데 사용하는 IAM 역할의 Amazon 리소스 이름(ARN)입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Tags`  
+선택한 임의의 데이터를 프록시와 연결하기 위한 선택적 키-값 쌍 집합입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: TagFormat 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`VpcSecurityGroupIds`  
+새 프록시와 연결할 하나 이상의 VPC 보안 그룹 ID입니다.  
+리소스를 업데이트하려는 경우 공유 VPC에서 VPC 보안 그룹을 지정하지 마십시오.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`VpcSubnetIds`  
+새 프록시와 연결할 하나 이상의 VPC 서브넷 ID입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 바꿔 놓음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`DB 프록시의 이름을 반환합니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+####
+
+`DBProxyArn` 대상 그룹을 나타내는 Amazon 리소스 이름(ARN)입니다.
+
+`Endpoint` RDS DB 인스턴스 또는 Aurora DB 클러스터에 대한 라이터 엔드포인트입니다.
+
+`VpcId` DB 프록시와 연결할 VPC ID입니다.
+
+## 예제
+
+### DB 프록시 생성 및 DB 인스턴스 등록
+
+다음은 DB 프록시를 생성하고 DB 인스턴스를 등록하는 예제입니다.
+
+#### JSON (영문)
+
+```
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Parameters": {
+        "ProxyName": {
+            "Type": "String",
+            "Default": "exampleProxy"
+        },
+        "InstanceName": {
+            "Type": "String",
+            "Default": "database-1"
+        },
+        "BootstrapSecretReaderRoleArn": {
+            "Type": "String",
+            "Default": "arn:aws:iam::123456789012:role/RDSSecretReaderRoleForDBProxy"
+        },
+        "BootstrapProxySecretArn": {
+            "Type": "String",
+            "Default": "arn:aws:secretsmanager:us-west-2:123456789012:secret:MySecretForDBProxy"
+        },
+        "SubnetIds": {
+            "Type": "String",
+            "Default": "subnet-01b761b31fb498f20,subnet-012b9a958ef0f9949,subnet-05e8e263052025378"
+        }
+    },
+    "Resources": {
+        "TestDBProxy": {
+            "Type": "AWS::RDS::DBProxy",
+            "Properties": {
+                "DebugLogging": true,
+                "DBProxyName": {
+                    "Ref": "ProxyName"
+                },
+                "EngineFamily": "MYSQL",
+                "IdleClientTimeout": 120,
+                "RequireTLS": true,
+                "RoleArn": {
+                    "Ref": "BootstrapSecretReaderRoleArn"
+                },
+                "Auth": [
+                    {
+                        "AuthScheme": "SECRETS",
+                        "SecretArn": {
+                            "Ref": "BootstrapProxySecretArn"
+                        },
+                        "IAMAuth": "DISABLED"
+                    }
+                ],
+                "VpcSubnetIds": {
+                    "Fn::Split": [
+                        ",",
+                        {
+                            "Ref": "SubnetIds"
+                        }
+                    ]
+                }
+            }
+        },
+        "ProxyTargetGroup": {
+            "Type": "AWS::RDS::DBProxyTargetGroup",
+            "Properties": {
+                "DBProxyName": {
+                    "Ref": "TestDBProxy"
+                },
+                "DBInstanceIdentifiers": [
+                    {
+                        "Ref": "InstanceName"
+                    }
+                ],
+                "TargetGroupName": "default",
+                "ConnectionPoolConfigurationInfo": {
+                    "MaxConnectionsPercent": 100,
+                    "MaxIdleConnectionsPercent": 50,
+                    "ConnectionBorrowTimeout": 120
+                }
+            }
+        }
+    }
+}
+```

@@ -1,0 +1,32 @@
+# AWS::SageMaker::MonitoringSchedule VpcConfig
+
+훈련 작업 및 호스팅 모델이 액세스할 수 있는 VPC를 지정합니다. VPC를 구성하여 훈련 및 모델 컨테이너에 대한 액세스를 제어합니다. 자세한 내용은 Amazon Virtual Private Cloud를 사용하여 엔드포인트 보호 및 Amazon Virtual Private Cloud를 사용하여 교육 작업 보호 단원을 참조하십시오.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "SecurityGroupIds" : [ String, ... ],
+  "Subnets" : [ String, ... ]
+}
+```
+
+## 속성
+
+`SecurityGroupIds`  
+VPC 보안 그룹 ID(sg-xxxxxxxx 형식)입니다. 필드에 지정된 VPC의 보안 그룹을 지정합니다 `Subnets` .  
+_필수 항목 여부_: 예  
+_유형_: 문자열 목록  
+_최대_: `5`  
+_업데이트 필요 사항_: 중단 없음
+
+`Subnets`  
+훈련 작업 또는 모델을 연결하려는 VPC의 서브넷 ID입니다. 특정 인스턴스 유형의 가용성에 대한 자세한 내용은 지원되는 인스턴스 유형 및 가용 영역을 참조하십시오.  
+_필수 항목 여부_: 예  
+_유형_: 문자열 목록  
+_최대_: `16`  
+_업데이트 필요 사항_: 중단 없음

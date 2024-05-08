@@ -1,0 +1,54 @@
+# AWS::SageMaker::ModelPackage 변환 입력
+
+변환 작업의 입력 소스와 변환 작업이 이를 사용하는 방식에 대해 설명합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "CompressionType" : String,
+  "ContentType" : String,
+  "DataSource" : DataSource,
+  "SplitType" : String
+}
+```
+
+## 속성
+
+`CompressionType`  
+변환 데이터가 압축된 경우 압축 유형을 지정합니다. Amazon SageMaker는 그에 따라 변환 작업에 대한 데이터의 압축을 자동으로 풉니다. 기본값은 `None`입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `Gzip | None`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ContentType`  
+데이터의 MIME(Multipurpose Internet Mail Extension) 유형입니다. Amazon SageMaker는 각 http 호출에 MIME 유형을 사용하여 데이터를 변환 작업으로 전송합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최대_: `256`  
+_패턴_: `.*`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`DataSource`  
+채널 데이터의 위치, 즉 모델이 사용할 수 있는 입력 데이터의 S3 위치를 설명합니다.  
+_필수 항목 여부_: 예  
+_유형_: DataSource  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`SplitType`  
+변환 작업의 데이터 파일을 더 작은 배치로 분할하는 데 사용할 메서드입니다. 각 개체의 총 크기가 너무 커서 단일 요청에 맞지 않는 경우 분할이 필요합니다. 또한 데이터 분할을 사용하여 여러 개의 동시 미니 배치를 처리하여 성능을 향상시킬 수 있습니다. 의 기본값은 `SplitType` `None`입력 데이터 파일이 분할되지 않고 요청 페이로드에 입력 객체의 전체 내용이 포함되어 있음을 나타냅니다. 이 매개변수의 값을 로 설정하여 `Line` 줄 바꿈 문자 경계에서 레코드를 분할합니다. `SplitType` 또한 다양한 레코드 지향 이진 데이터 형식을 지원합니다. 현재 지원되는 레코드 형식은 다음과 같습니다.
+
+- 레코드IO
+- TFRecord (TFRecord)
+  분할을 사용하는 경우 미니 배치의 크기는 및 매개 변수의 값에 따라 달라집니다 `BatchStrategy` `MaxPayloadInMB` . 의 값이 `BatchStrategy` 인 `MultiRecord` 경우 Amazon SageMaker는 각 요청의 최대 레코드 수를 한도까지 전송 합니다 `MaxPayloadInMB` . 의 값이 `BatchStrategy` 인 `SingleRecord` 경우 Amazon SageMaker는 각 요청에서 개별 레코드를 전송합니다.  
+  일부 데이터 형식은 레코드를 추가 패딩 바이트로 래핑된 이진 페이로드로 나타냅니다. 이진 데이터 형식에 분할을 적용할 때 의 값이 로 설정된 경우 안쪽 여백이 제거됩니다 `BatchStrategy` `SingleRecord`. 의 값이 로 설정된 경우 안쪽 여백이 제거되지 않습니다 `BatchStrategy` `MultiRecord`.  
+  에 대한 자세한 `RecordIO`내용은 MXNet 설명서의 RecordIO를 사용하여 데이터 세트 생성을 참조하십시오. 에 대한 자세한 내용은 `TFRecord`TensorFlow 문서의 TFRecord 데이터 사용을 참조하세요.
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열  
+  _허용되는 값_: `Line | None | RecordIO | TFRecord`  
+  _업데이트 필요 사항_: 바꿔 놓음

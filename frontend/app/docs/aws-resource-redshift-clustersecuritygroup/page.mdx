@@ -1,0 +1,71 @@
+# AWS::Redshift::클러스터 보안 그룹
+
+새 Amazon Redshift 보안 그룹을 지정합니다. 보안 그룹을 사용하여 VPC가 아닌 클러스터에 대한 액세스를 제어할 수 있습니다.
+
+보안 그룹 관리에 대한 자세한 내용은 Amazon Redshift Cluster Management Guide의 Amazon Redshift Cluster Security Groups를 참조하십시오\*\*.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::Redshift::ClusterSecurityGroup",
+  "Properties" : {
+      "Description" : String,
+      "Tags" : [Tag, ... ]
+    }
+}
+```
+
+## 속성
+
+`Description`  
+보안 그룹에 대한 설명입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최대_: `2147483647`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Tags`  
+이 보안 그룹과 연결할 임의의 태그 집합(키-값 페어)을 지정합니다. 태그를 사용하여 리소스를 관리합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`리소스 이름이 반환됩니다. 예를 들어:
+
+`{ "Ref": "myClusterSecurityGroup" }`
+
+Amazon Redshift 클러스터 보안 그룹의 `myClusterSecurityGroup`경우 Ref는 클러스터 보안 그룹의 이름을 반환합니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+## 예제
+
+### 클러스터 보안 그룹 지정
+
+다음 예제에서는 클러스터 보안 그룹 수신 규칙을 연결할 수 있는 Amazon Redshift 클러스터 보안 그룹에 대해 설명합니다.
+
+#### JSON (영문)
+
+```
+"myClusterSecurityGroup": {
+  "Type": "AWS::Redshift::ClusterSecurityGroup",
+  "Properties": {
+    "Description": "Security group to determine where connections to the Amazon Redshift cluster can come from",
+    "Tags": [
+      {
+        "Key": "foo",
+        "Value": "bar"
+      }
+    ]
+  }
+}
+```

@@ -1,0 +1,42 @@
+# AWS::S3::버킷 전환
+
+객체가 지정된 스토리지 클래스로 전환되는 시기를 지정합니다. Amazon S3 수명 주기 구성 규칙에 대한 자세한 내용은 Amazon S3 사용 설명서의 Amazon S3 수명 주기를 사용하여 객체 전환을 참조하십시오\*\*.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "StorageClass" : String,
+  "TransitionDate" : Timestamp,
+  "TransitionInDays" : Integer
+}
+```
+
+## 속성
+
+`StorageClass`  
+객체를 전환할 스토리지 클래스입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_허용되는 값_: `DEEP_ARCHIVE | GLACIER | GLACIER_IR | INTELLIGENT_TIERING | ONEZONE_IA | STANDARD_IA`  
+_업데이트 필요 사항_: 중단 없음
+
+`TransitionDate`  
+객체가 지정된 스토리지 클래스로 전환되는 시기를 나타냅니다. 날짜 값은 ISO 8601 형식이어야 합니다. 시간은 항상 자정(UTC)입니다.  
+_필수_: 조건부  
+_유형_: 타임스탬프  
+_업데이트 필요 사항_: 중단 없음
+
+`TransitionInDays`  
+생성 후 객체가 지정된 스토리지 클래스로 전환되는 기간(일)을 나타냅니다. 값은 양의 정수여야 합니다.  
+_필수_: 조건부  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+## 참고 항목
+
+- AWS::S3::버킷 예제

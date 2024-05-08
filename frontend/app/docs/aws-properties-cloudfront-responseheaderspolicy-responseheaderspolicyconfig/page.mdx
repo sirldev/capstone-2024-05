@@ -1,0 +1,69 @@
+# AWS::CloudFront::ResponseHeadersPolicy ResponseHeadersPolicyConfig
+
+응답 헤더 정책 구성입니다.
+
+응답 헤더 정책 구성에는 응답 헤더 정책에 대한 메타데이터와 HTTP 응답 헤더 집합에 대한 구성이 포함되어 있습니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Comment" : String,
+  "CorsConfig" : CorsConfig,
+  "CustomHeadersConfig" : CustomHeadersConfig,
+  "Name" : String,
+  "RemoveHeadersConfig" : RemoveHeadersConfig,
+  "SecurityHeadersConfig" : SecurityHeadersConfig,
+  "ServerTimingHeadersConfig" : ServerTimingHeadersConfig
+}
+```
+
+## 속성
+
+`Comment`  
+응답 헤더 정책을 설명하는 주석입니다.  
+주석은 128자를 초과할 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`CorsConfig`  
+CORS(Cross-Origin Resource Sharing)에 사용되는 HTTP 응답 헤더 집합에 대한 구성입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: CorsConfig  
+_업데이트 필요 사항_: 중단 없음
+
+`CustomHeadersConfig`  
+사용자 지정 HTTP 응답 헤더 집합에 대한 구성입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: CustomHeadersConfig  
+_업데이트 필요 사항_: 중단 없음
+
+`Name`  
+응답 헤더 정책을 식별하기 위한 이름입니다.  
+이 이름은 이 AWS 계정의 응답 헤더 정책에 대해 고유해야 합니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`RemoveHeadersConfig`  
+HTTP 응답에서 제거할 HTTP 헤더 집합에 대한 구성입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: RemoveHeadersConfig  
+_업데이트 필요 사항_: 중단 없음
+
+`SecurityHeadersConfig`  
+보안 관련 HTTP 응답 헤더 집합에 대한 구성입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: SecurityHeadersConfig  
+_업데이트 필요 사항_: 중단 없음
+
+`ServerTimingHeadersConfig`  
+`Server-Timing` CloudFront에서 전송된 HTTP 응답에서 헤더를 활성화하기 위한 구성입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: ServerTimingHeadersConfig  
+_업데이트 필요 사항_: 중단 없음

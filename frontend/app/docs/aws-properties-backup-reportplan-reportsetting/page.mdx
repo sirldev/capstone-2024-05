@@ -1,0 +1,52 @@
+# AWS::백업::보고서 계획 보고서 설정
+
+보고서 설정에 대한 자세한 정보를 포함합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Accounts" : [ String, ... ],
+  "FrameworkArns" : [ String, ... ],
+  "OrganizationUnits" : [ String, ... ],
+  "Regions" : [ String, ... ],
+  "ReportTemplate" : String
+}
+```
+
+## 속성
+
+`Accounts`  
+보고서에 포함될 계정입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`FrameworkArns`  
+보고서에서 다루는 프레임워크의 Amazon 리소스 이름(ARN)입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`OrganizationUnits`  
+보고서에 포함될 조직 단위입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`Regions`  
+보고서에 포함될 지역입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`ReportTemplate`  
+보고서의 보고서 템플릿을 식별합니다. 보고서는 보고서 템플릿을 사용하여 작성됩니다. 보고서 템플릿은 다음과 같습니다.  
+ `RESOURCE_COMPLIANCE_REPORT | CONTROL_COMPLIANCE_REPORT | BACKUP_JOB_REPORT | COPY_JOB_REPORT | RESTORE_JOB_REPORT`  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음

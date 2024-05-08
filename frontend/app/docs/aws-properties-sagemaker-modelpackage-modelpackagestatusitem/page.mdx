@@ -1,0 +1,41 @@
+# AWS::SageMaker::ModelPackage ModelPackageStatusItem
+
+모델 패키지의 전체 상태를 나타냅니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "FailureReason" : String,
+  "Name" : String,
+  "Status" : String
+}
+```
+
+## 속성
+
+`FailureReason`  
+전체 상태가 인 경우 `Failed`실패 이유입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Name`  
+전체 상태가 보고되는 모델 패키지의 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `63`  
+_패턴_: `^a-zA-Z0-9{0,62}$`  
+_업데이트 필요 사항_: 중단 없음
+
+`Status`  
+현재 상태입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_허용되는 값_: `Completed | Failed | InProgress | NotStarted`  
+_업데이트 필요 사항_: 중단 없음

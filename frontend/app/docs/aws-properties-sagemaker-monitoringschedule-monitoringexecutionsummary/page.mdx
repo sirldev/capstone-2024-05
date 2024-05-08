@@ -1,0 +1,81 @@
+# AWS::SageMaker::MonitoringSchedule MonitoringExecutionSummary
+
+실행할 마지막 모니터링 작업에 대한 정보 요약입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "CreationTime" : String,
+  "EndpointName" : String,
+  "FailureReason" : String,
+  "LastModifiedTime" : String,
+  "MonitoringExecutionStatus" : String,
+  "MonitoringScheduleName" : String,
+  "ProcessingJobArn" : String,
+  "ScheduledTime" : String
+}
+```
+
+## 속성
+
+`CreationTime`  
+모니터링 작업이 생성된 시간입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`EndpointName`  
+모니터링 작업을 실행하는 데 사용되는 엔드포인트의 이름입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최대_: `63`  
+_패턴_: `^a-zA-Z0-9{0,62}`  
+_업데이트 필요 사항_: 중단 없음
+
+`FailureReason`  
+모니터링 작업이 실패한 경우 실패한 이유를 포함합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최대_: `1024`  
+_업데이트 필요 사항_: 중단 없음
+
+`LastModifiedTime`  
+모니터링 작업이 마지막으로 수정된 시간을 나타내는 타임스탬프입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`MonitoringExecutionStatus`  
+모니터링 작업의 상태입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_허용되는 값_: `Completed | CompletedWithViolations | Failed | InProgress | Pending | Stopped | Stopping`  
+_업데이트 필요 사항_: 중단 없음
+
+`MonitoringScheduleName`  
+모니터링 일정의 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `63`  
+_패턴_: `^a-zA-Z0-9{0,62}$`  
+_업데이트 필요 사항_: 중단 없음
+
+`ProcessingJobArn`  
+모니터링 작업의 Amazon 리소스 이름(ARN)입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최대_: `256`  
+_패턴_: `arn:aws[a-z-]*:sagemaker:[a-z0-9-]*:[0-9]{12}:processing-job/.*`  
+_업데이트 필요 사항_: 중단 없음
+
+`ScheduledTime`  
+모니터링 작업이 예약된 시간입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음

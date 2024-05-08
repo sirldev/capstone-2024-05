@@ -1,0 +1,92 @@
+# AWS::SageMaker::ModelPackage ModelPackageContainerDefinition
+
+모델 패키지의 Docker 컨테이너에 대해 설명합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ContainerHostname" : String,
+  "Environment" : {Key: Value, ...},
+  "Framework" : String,
+  "FrameworkVersion" : String,
+  "Image" : String,
+  "ImageDigest" : String,
+  "ModelDataUrl" : String,
+  "ModelInput" : ModelInput,
+  "NearestModelName" : String
+}
+```
+
+## 속성
+
+`ContainerHostname`  
+Docker 컨테이너의 DNS 호스트 이름입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최대_: `63`  
+_패턴_: `^a-zA-Z0-9{0,62}`  
+_업데이트 필요 사항_: 일부 중단
+
+`Environment`  
+Docker 컨테이너에서 설정할 환경 변수입니다. 문자열 간 맵의 각 키와 값의 `Environment` 길이는 최대 1024입니다. 맵에서 최대 16개의 항목을 지원합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 맵  
+_업데이트 필요 사항_: 일부 중단
+
+`Framework`  
+모델 패키지 컨테이너 이미지의 기계 학습 프레임워크입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 일부 중단
+
+`FrameworkVersion`  
+모델 패키지 컨테이너 이미지의 프레임워크 버전입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `3`  
+_최대_: `10`  
+_패턴_: `[0-9].[A-Za-z0-9.-]+`  
+_업데이트 필요 사항_: 일부 중단
+
+`Image`  
+추론 코드가 저장되는 Amazon EC2 Container Registry(Amazon ECR) 경로입니다.  
+SageMaker에서 제공하는 알고리즘 대신 자체 사용자 지정 알고리즘을 사용하는 경우 추론 코드가 SageMaker 요구 사항을 충족해야 합니다. SageMaker는 `registry/repository[:tag]` `registry/repository[@digest]` 이미지 경로 형식을 모두 지원합니다. 자세한 내용은 Amazon SageMaker에서 자체 알고리즘 사용 단원을 참조하십시오.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최대_: `255`  
+_패턴_: `[S]+`  
+_업데이트 필요 사항_: 일부 중단
+
+`ImageDigest`  
+학습에 사용되는 Docker 이미지를 식별하는 학습 알고리즘의 MD5 해시입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최대_: `72`  
+_패턴_: `^[Ss][Hh][Aa]256:[0-9a-fA-F]{64}$`  
+_업데이트 필요 사항_: 일부 중단
+
+`ModelDataUrl`  
+모델 교육의 결과인 모델 아티팩트가 저장되는 Amazon S3 경로입니다. 이 경로는 압축된 단일 `gzip` tar 아카이브(`.tar.gz` 접미사)를 가리켜야 합니다.  
+모델 아티팩트는 모델 패키지와 동일한 리전에 있는 S3 버킷에 있어야 합니다.
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최대_: `1024`  
+_패턴_: `^(https|s3)://([^/]+)/?(.*)$`  
+_업데이트 필요 사항_: 일부 중단
+
+`ModelInput`  
+모델 입력 세부 정보가 있는 구조입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: ModelInput  
+_업데이트 필요 사항_: 일부 중단
+
+`NearestModelName`  
+모델과 일치하는 Amazon SageMaker Inference Recommender 모델에서 벤치마킹한 사전 훈련된 기계 학습의 이름입니다. 를 호출하여 벤치마킹된 모델 목록을 찾을 수 있습니다`ListModelMetadata`.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 일부 중단

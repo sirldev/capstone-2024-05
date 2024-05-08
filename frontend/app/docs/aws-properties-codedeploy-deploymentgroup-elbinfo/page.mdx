@@ -1,0 +1,28 @@
+# AWS::CodeDeploy::D eploymentGroup ELBnfo
+
+`ELBInfo` 속성 유형은 CodeDeploy 배포 그룹에 사용되는 Elastic Load Balancing 로드 밸런서에 대한 정보를 지정합니다.
+
+속성을 `ELBInfo`지정하는 경우 `DeploymentStyle.DeploymentOption` AWS CodeDeploy가 지정된 로드 밸런서를 사용하여 트래픽을 라우팅할 수`WITH_TRAFFIC_CONTROL` 있도록 속성을 설정해야 합니다.
+
+`ELBInfo` 은 AWS CodeDeploy DeploymentGroup LoadBalancerInfo 속성 유형의 속성입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Name" : String
+}
+```
+
+## 속성
+
+`Name`  
+블루/그린 배포의 경우, 블루/그린 배포에서 원본 인스턴스에서 대체 인스턴스로 트래픽을 라우팅하는 데 사용되는 로드 밸런서의 이름입니다. 현재 위치 배포의 경우, 인스턴스가 배포 중에 트래픽을 처리하지 않도록 등록 취소되었다가 배포가 완료된 후 다시 등록되는 로드 밸런서의 이름입니다.  
+AWS CloudFormation은 AWS Lambda 컴퓨팅 플랫폼에서만 블루/그린 배포를 지원합니다.
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음

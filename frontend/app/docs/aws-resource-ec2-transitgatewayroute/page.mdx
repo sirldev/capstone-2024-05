@@ -1,0 +1,59 @@
+# AWS::EC2::TransitGatewayRoute를 선택합니다.
+
+transit gateway 라우팅 테이블에 대한 정적 라우팅을 지정합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::EC2::TransitGatewayRoute",
+  "Properties" : {
+      "Blackhole" : Boolean,
+      "DestinationCidrBlock" : String,
+      "TransitGatewayAttachmentId" : String,
+      "TransitGatewayRouteTableId" : String
+    }
+}
+```
+
+## 속성
+
+`Blackhole`  
+이 경로와 일치하는 트래픽을 삭제할지 여부를 나타냅니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`DestinationCidrBlock`  
+대상 일치에 사용되는 CIDR 블록입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`TransitGatewayAttachmentId`  
+첨부 파일의 ID입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`TransitGatewayRouteTableId`  
+전송 게이트웨이 라우팅 테이블의 ID입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`transit gateway 라우팅의 ID를 반환합니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+## 참고 항목
+
+- Amazon EC2 API 참조*의 CreateTransitGatewayRoute *

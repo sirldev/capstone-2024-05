@@ -1,0 +1,43 @@
+# AWS::ElastiCache::보안 그룹
+
+리소스는 `AWS::ElastiCache::SecurityGroup` 캐시 보안 그룹을 만듭니다. 캐시 보안 그룹에 대한 자세한 내용은 *Amazon ElastiCache 사용 설명서*의 CacheSecurityGroups 또는 Amazon ElastiCache API 참조 안내서*의 CreateCacheSecurityGroup을 참조하십시오*.
+
+자세한 내용은 CreateCacheSubnetGroup 단원을 참조하십시오.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::ElastiCache::SecurityGroup",
+  "Properties" : {
+      "Description" : String,
+      "Tags" : [Tag, ... ]
+    }
+}
+```
+
+## 속성
+
+`Description`  
+캐시 보안 그룹에 대한 설명입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Tags`  
+ElastiCache 보안 그룹에 추가할 수 있는 태그입니다. 태그는 키/값 쌍으로 구성됩니다. 태그를 사용하여 모든 보안 그룹을 분류하고 추적할 수 있습니다. null 값이 있는 태그가 허용됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID가 `Ref` 내장 함수 에 제공되면 `Ref` 리소스 이름을 반환합니다.
+
+함수 사용에 대한 자세한 `Ref` 내용은 Ref를 참조하세요.

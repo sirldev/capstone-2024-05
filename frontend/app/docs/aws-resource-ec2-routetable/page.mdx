@@ -1,0 +1,78 @@
+# AWS::EC2::경로 테이블
+
+지정된 VPC에 대한 라우팅 테이블을 지정합니다. 라우팅 테이블을 생성한 후 경로를 추가하고 테이블을 서브넷과 연결할 수 있습니다.
+
+자세한 내용은 Amazon VPC 사용 설명서*의 라우팅 테이블을 참조하십시오*.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::EC2::RouteTable",
+  "Properties" : {
+      "Tags" : [Tag, ... ],
+      "VpcId" : String
+    }
+}
+```
+
+## 속성
+
+`Tags`  
+라우팅 테이블에 할당된 모든 태그입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`VpcId`  
+VPC의 ID입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`라우팅 테이블의 ID가 반환됩니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`RouteTableId` 경로 테이블의 ID입니다.
+
+## 예제
+
+### 경로 테이블
+
+다음 예제에서는 동일한 템플릿의 다른 곳에서 선언된 myVPC라는 VPC의 VPC ID를 사용합니다.
+
+#### JSON (영문)
+
+```
+"myRouteTable" : {
+   "Type" : "AWS::EC2::RouteTable",
+   "Properties" : {
+      "VpcId" : { "Ref" : "myVPC" },
+      "Tags" : [ { "Key" : "stack", "Value" : "production" } ]
+   }
+}
+```
+
+## 참고 항목
+
+- AWS::EC2::경로
+- Amazon EC2 API 참조*의 CreateRouteTable *
+- Amazon VPC 사용 설명서*의 라우팅 테이블 *
+- Amazon EC2 사용 설명서*의 Amazon EC2 리소스에 태그 지정 *

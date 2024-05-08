@@ -1,0 +1,107 @@
+# AWS::ElastiCache::사용자
+
+Redis 엔진 버전 6.0 이상: Redis 사용자를 생성합니다. 자세한 내용은 RBAC(역할 기반 액세스 제어) 사용을 참조하세요.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::ElastiCache::User",
+  "Properties" : {
+      "AccessString" : String,
+      "AuthenticationMode" : AuthenticationMode,
+      "Engine" : String,
+      "NoPasswordRequired" : Boolean,
+      "Passwords" : [ String, ... ],
+      "Tags" : [Tag, ... ],
+      "UserId" : String,
+      "UserName" : String
+    }
+}
+```
+
+## 속성
+
+`AccessString`  
+이 사용자에 대해 사용되는 액세스 권한 문자열입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_패턴_: `.*S.*`  
+_업데이트 필요 사항_: 중단 없음
+
+`AuthenticationMode` 사용할 인증 모드를 지정합니다. 다음은 가능한 JSON 값의 예입니다.
+
+```
+{
+ Type: <iam | no-password-required | password>
+ Passwords: ["*****", "******"] // If Type is password.
+}
+```
+
+*필수 항목 *여부: 아니요  
+_형식_: AuthenticationMode  
+_업데이트 필요 사항_: 중단 없음
+
+`Engine`  
+현재 지원되는 값은 redis입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_패턴_: `[a-zA-Z]*`  
+*업데이트 필요 *사항: 바꿔 놓음
+
+`NoPasswordRequired`  
+이 사용자에게 암호가 필요하지 않음을 나타냅니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`Passwords`  
+이 사용자에 대해 사용되는 암호입니다. 각 사용자에 대해 최대 2개의 암호를 만들 수 있습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`Tags`  
+속성 설명을 사용할 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`UserId`  
+사용자의 ID입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_패턴_: `[a-zA-Z][a-zA-Z0-9-]*`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`UserName`  
+사용자의 사용자 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID가 `Ref` 내장 함수 에 제공되면 `Ref` 리소스 이름을 반환합니다.
+
+함수 사용에 대한 자세한 `Ref` 내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`Arn` 사용자의 Amazon 리소스 이름(ARN)입니다.
+
+`Status` 사용자 상태를 나타냅니다. "활성", "수정 중" 또는 "삭제 중"일 수 있습니다.

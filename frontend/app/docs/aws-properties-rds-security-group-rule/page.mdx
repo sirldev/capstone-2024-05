@@ -1,0 +1,47 @@
+# AWS::RDS::D BSecurityGroup 수신
+
+`Ingress` property type은 리소스 내의 개별 ingress 규칙을 지정합니다 `AWS::RDS::DBSecurityGroup` .
+
+**메모**  
+EC2-Classic은 2022년 8월 15일에 사용 중지되었습니다. EC2-Classic에서 VPC로 마이그레이션하지 않은 경우 가능한 한 빨리 마이그레이션하는 것이 좋습니다. 자세한 내용은 Amazon EC2 사용 설명서의 EC2-Classic에서 VPC로 마이그레이션*, *블로그 EC2-Classic Networking is Retiring – Here's How to Prepare 및 Amazon RDS 사용 설명서의 VPC에 없는 DB 인스턴스를 VPC로 이동 _ 을 참조하세요_.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "CIDRIP" : String,
+  "EC2SecurityGroupId" : String,
+  "EC2SecurityGroupName" : String,
+  "EC2SecurityGroupOwnerId" : String
+}
+```
+
+## 속성
+
+`CIDRIP`  
+권한을 부여할 IP 범위입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`EC2SecurityGroupId`  
+권한을 부여할 EC2 보안 그룹의 ID입니다. VPC DB 보안 그룹의 경우 `EC2SecurityGroupId` 제공해야 합니다. 그렇지 않으면 `EC2SecurityGroupOwnerId` or `EC2SecurityGroupName` 중 하나를 `EC2SecurityGroupId` 제공해야 합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`EC2SecurityGroupName`  
+권한을 부여할 EC2 보안 그룹의 이름입니다. VPC DB 보안 그룹의 경우 `EC2SecurityGroupId` 제공해야 합니다. 그렇지 않으면 `EC2SecurityGroupOwnerId` or `EC2SecurityGroupName` 중 하나를 `EC2SecurityGroupId` 제공해야 합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`EC2SecurityGroupOwnerId`  
+ 파라미터에 지정된 EC2 보안 그룹 소유자의 AWS 계정 번호입니다 `EC2SecurityGroupName` . AWS 액세스 키 ID는 허용되는 값이 아닙니다. VPC DB 보안 그룹의 경우 `EC2SecurityGroupId` 제공해야 합니다. 그렇지 않으면 `EC2SecurityGroupOwnerId` or `EC2SecurityGroupName` 중 하나를 `EC2SecurityGroupId` 제공해야 합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음

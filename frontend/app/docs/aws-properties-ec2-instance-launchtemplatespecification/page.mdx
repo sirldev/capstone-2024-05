@@ -1,0 +1,55 @@
+# AWS::EC2::인스턴스 LaunchTemplate사양
+
+Amazon EC2 인스턴스를 시작할 때 사용할 시작 템플릿을 지정합니다.
+
+다음을 지정해야 합니다.
+
+- 시작 템플릿의 ID 또는 이름이지만 둘 다 아님.
+- 시작 템플릿의 버전입니다.
+
+`LaunchTemplateSpecification` 은 AWS::EC2::Instance 리소스의 속성입니다.
+
+시작 템플릿 생성에 대한 자세한 내용은 Amazon EC2 사용 설명서*의 AWS::EC2::LaunchTemplate 및 시작 템플릿 생성을 참조하십시오*.
+
+시작 템플릿의 예는 예제를 참조하십시오.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "LaunchTemplateId" : String,
+  "LaunchTemplateName" : String,
+  "Version" : String
+}
+```
+
+## 속성
+
+`LaunchTemplateId`  
+시작 템플릿의 ID입니다.  
+또는 를 지정해야 하지만 `LaunchTemplateId` `LaunchTemplateName`둘 다 지정해서는 안 됩니다.  
+_필수_: 조건부  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`LaunchTemplateName`  
+시작 템플릿의 이름입니다.  
+또는 를 지정해야 하지만 `LaunchTemplateName` `LaunchTemplateId`둘 다 지정해서는 안 됩니다.  
+_필수_: 조건부  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Version`  
+시작 템플릿의 버전 번호입니다.  
+`$Latest` `$Default` 템플릿 버전 번호에 대해 or을 지정하는 것은 지원되지 않습니다. 그러나 intrinsic 함수를 `LatestVersionNumber` 사용하여 OR을 `DefaultVersionNumber` 지정할 수 `Fn::GetAtt` 있습니다. 자세한 내용은 Fn::GetAtt 단원을 참조하십시오.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+## 참고 항목
+
+- LaunchTemplateSpecification (_Amazon EC2 API 참조_)

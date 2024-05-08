@@ -1,0 +1,69 @@
+# AWS::EC2::인터넷 게이트웨이
+
+VPC와 함께 사용할 인터넷 게이트웨이를 할당합니다. 인터넷 게이트웨이를 생성한 후 VPC에 연결합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::EC2::InternetGateway",
+  "Properties" : {
+      "Tags" : [Tag, ... ]
+    }
+}
+```
+
+## 속성
+
+`Tags`  
+인터넷 게이트웨이에 할당할 모든 태그입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`인터넷 게이트웨이의 ID를 반환합니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`InternetGatewayId` 인터넷 게이트웨이의 ID입니다.
+
+## 예제
+
+### 인터넷 게이트웨이 생성
+
+다음 예제에서는 인터넷 게이트웨이를 생성하고 태그를 할당합니다.
+
+#### JSON (영문)
+
+```
+"Resources" : {
+   "myInternetGateway" : {
+      "Type" : "AWS::EC2::InternetGateway",
+      "Properties" : {
+        "Tags" : [ {"Key" : "stack", "Value" : "production"}]
+      }
+   }
+}
+```
+
+## 참고 항목
+
+- Amazon EC2 API Reference*의 CreateInternetGateway *
+- Amazon VPC 사용 설명서*의 인터넷 게이트웨이 *
+- AWS::EC2::VPCGatewayAttachment 리소스를 사용하여 인터넷 게이트웨이를 VPC와 연결

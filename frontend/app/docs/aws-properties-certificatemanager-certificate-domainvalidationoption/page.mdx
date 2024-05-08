@@ -1,0 +1,53 @@
+# AWS::CertificateManager::인증서 DomainValidationOption
+
+`DomainValidationOption` 는 검증할 AWS Certificate Manager(ACM) 인증서 도메인을 지정하는 AWS::CertificateManager::Certificate 리소스의 속성입니다. 선택한 검증 방법에 따라 ACM은 도메인의 DNS 레코드에서 검증 CNAME을 확인하거나 도메인 소유자에게 검증 이메일 메시지를 전송하려고 시도합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "DomainName" : String,
+  "HostedZoneId" : String,
+  "ValidationDomain" : String
+}
+```
+
+## 속성
+
+`DomainName`  
+인증서 요청의 FQDN(정규화된 도메인 이름)입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `253`  
+_패턴_: `^(*.)?(((?!-)[A-Za-z0-9-]{0,62}[A-Za-z0-9]).)+((?!-)[A-Za-z0-9-]{1,62}[A-Za-z0-9])$`  
+_업데이트 필요 사항_: 중단 없음
+
+`HostedZoneId`  
+`HostedZoneId` Route 53을 도메인 등록 대행자로 사용하는 경우 사용할 수 있는 이 옵션을 사용하면 ACM이 CNAME을 도메인 레코드에 추가합니다. 목록 `DomainValidationOptions` 에는 도메인 유효성 검사 옵션 중 하나만 포함되어야 하며, 유효성 검사 방법으로 지정된 `HostedZoneId` 경우에만 사용할 수 `DNS` 있습니다.  
+Route 53 API를 사용하여 `ListHostedZones` 사용 가능한 호스팅 영역의 ID를 검색합니다.  
+이 옵션은 공개적으로 신뢰할 수 있는 인증서에 필요합니다.  
+API는 `ListHostedZones` "/hostedzone/Z111111QQQQQQQ" 형식으로 ID를 반환하지만 CloudFormation에서는 ID가 "Z111111QQQQQQQ" 형식이어야 합니다.
+를 변경 하면 `DomainValidationOptions`새 리소스가 만들어집니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`ValidationDomain`  
+ACM에서 검증 이메일을 보낼 도메인 이름입니다. 이 도메인 이름은 ACM에서 사용할 이메일 주소의 접미사입니다. 이는 `DomainName` 값 또는 값의 수퍼 도메인 `DomainName` 과 동일해야 합니다 . 예를 들어, 에 대한 인증서를 요청하는 경우 이 값으로 `testing.example.com`지정할 수 있습니다 `example.com` . 이 경우 ACM은 도메인 검증 이메일을 다음 5개 주소로 보냅니다.
+
+- admin@example.com
+- administrator@example.com
+- hostmaster@example.com
+- postmaster@example.com
+- webmaster@example.com
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열  
+  _최소_: `1`  
+  _최대_: `253`  
+  _패턴_: `^(*.)?(((?!-)[A-Za-z0-9-]{0,62}[A-Za-z0-9]).)+((?!-)[A-Za-z0-9-]{1,62}[A-Za-z0-9])$`  
+  _업데이트 필요 사항_: 중단 없음

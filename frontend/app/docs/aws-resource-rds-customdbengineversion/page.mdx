@@ -1,0 +1,111 @@
+# AWS::RDS::CustomDBEngineVersion
+
+사용자 지정 DB 엔진 버전(CEV)을 생성합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::RDS::CustomDBEngineVersion",
+  "Properties" : {
+      "DatabaseInstallationFilesS3BucketName" : String,
+      "DatabaseInstallationFilesS3Prefix" : String,
+      "Description" : String,
+      "Engine" : String,
+      "EngineVersion" : String,
+      "KMSKeyId" : String,
+      "Manifest" : String,
+      "Status" : String,
+      "Tags" : [Tag, ... ]
+    }
+}
+```
+
+## 속성
+
+`DatabaseInstallationFilesS3BucketName`  
+CEV에 대한 데이터베이스 설치 파일이 포함된 Amazon S3 버킷의 이름입니다. 예를 들어, 유효한 버킷 이름은 입니다 `my-custom-installation-files`.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`DatabaseInstallationFilesS3Prefix`  
+CEV에 대한 데이터베이스 설치 파일이 포함된 Amazon S3 디렉터리입니다. 예를 들어, 유효한 버킷 이름은 입니다`123456789012/cev1`. 이 설정을 지정하지 않으면 접두사가 가정되지 않습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Description`  
+CEV에 대한 설명(선택 사항)입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Engine` CEV(사용자 지정 엔진 버전)에 사용할 데이터베이스 엔진입니다.  
+유효한 값:
+
+- `custom-oracle-ee`
+- `custom-oracle-ee-cdb`
+  _필수 항목 여부_: 예  
+  _유형_: 문자열  
+  _업데이트 필요 사항_: 바꿔 놓음
+
+`EngineVersion`  
+CEV의 이름입니다. 이름 형식은 입니다 `major version.customized_string`. 예를 들어, 유효한 CEV 이름은 입니다 `19.my_cev1`. 이 설정은 RDS Custom for Oracle의 경우 필수이지만 Amazon RDS의 경우 선택 사항입니다. 및 의 조합은 `Engine` `EngineVersion` 지역별 고객별로 고유합니다.  
+_제약 조건:_ 최소 길이는 1입니다. 최대 길이는 60입니다.  
+_패턴:_ `^[a-z0-9_.-]{1,60$`}  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`KMSKeyId`  
+암호화된 CEV에 대한 AWS KMS 키 식별자입니다. 대칭 암호화 KMS 키는 RDS Custom에 필요하지만 Amazon RDS에는 선택 사항입니다.  
+계정에 기존 대칭 암호화 KMS 키가 있는 경우 RDS Custom에서 사용할 수 있습니다. 추가 작업이 필요하지 않습니다. 계정에 대칭 암호화 KMS 키가 아직 없는 경우 * AWS Key Management Service 개발자 안내서*의 대칭 암호화 KMS 키 생성에 나와 있는 지침을 따릅니다.  
+CEV와 DB 인스턴스를 생성할 때 동일한 대칭 암호화 키를 선택하거나 다른 키를 선택할 수 있습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Manifest`  
+CEV 매니페스트 - Amazon S3에 저장된 설치 .zip 파일을 설명하는 JSON 문서입니다. 이름/값 쌍을 파일 또는 따옴표로 묶인 문자열로 지정합니다. RDS Custom은 나열된 순서대로 패치를 적용합니다.  
+유효한 JSON 필드는 다음과 같습니다.  
+MediaImportTemplateVersion (영문)  
+CEV 매니페스트의 버전입니다. 날짜는 `YYYY-MM-DD`.  
+databaseInstallationFileNames (데이터베이스 설치 파일 이름)  
+CEV에 대한 설치 파일의 정렬된 목록입니다.  
+opatch파일 이름  
+Oracle DB 엔진에 사용되는 OPatch 설치 프로그램의 순서가 지정된 목록입니다.  
+psuRuPatchFileNames (영문)  
+이 CEV에 대한 PSU 및 RU 패치입니다.  
+기타PatchFileNames  
+PSU 및 RU 패치 목록에 없는 패치입니다. Amazon RDS는 PSU 및 RU 패치를 적용한 후 이러한 패치를 적용합니다.
+자세한 내용은 _Amazon RDS 사용 설명서의 CEV 매니페스트 생성을 참조하세요_.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Status`  
+CEV(사용자 지정 엔진 버전)의 상태를 나타내는 값입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Tags`  
+태그 목록입니다. 자세한 내용은 Amazon RDS 사용 설명서의 Amazon RDS 리소스 태깅을 참조하십시오*.*  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+### Fn::GetAtt
+
+####
+
+`DBEngineVersionArn` 사용자 지정 엔진 버전의 ARN입니다.

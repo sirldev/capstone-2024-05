@@ -1,0 +1,92 @@
+# AWS::Lambda::LayerVersion권한
+
+리소스는 `AWS::Lambda::LayerVersionPermission` Lambda 계층 버전의 리소스 기반 정책에 권한을 추가합니다. 이 작업을 사용하면 다른 계정에 레이어 사용 권한을 부여할 수 있습니다. 단일 계정, 모든 AWS 계정 또는 조직의 모든 계정에 권한을 부여할 수 있습니다.
+
+**중요하다**  
+UpdateReplacePolicy가 릴리스된 이후 `UpdateReplacePolicy` `DeletionPolicy` 에는 Resources/LayerPermissions가 삭제되지 않도록 보호하는 데 필요합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::Lambda::LayerVersionPermission",
+  "Properties" : {
+      "Action" : String,
+      "LayerVersionArn" : String,
+      "OrganizationId" : String,
+      "Principal" : String
+    }
+}
+```
+
+## 속성
+
+`Action`  
+레이어에 대한 접근 권한을 부여하는 API 작업입니다. 예를 들어, `lambda:GetLayerVersion`.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최대_: `22`  
+_패턴_: `lambda:GetLayerVersion`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`LayerVersionArn`  
+계층의 이름 또는 Amazon 리소스 이름(ARN)입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `140`  
+_패턴_: `(arn:[a-zA-Z0-9-]+:lambda:[a-zA-Z0-9-]+:d{12}:layer:[a-zA-Z0-9-_]+)|[a-zA-Z0-9-_]+`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`OrganizationId`  
+보안 주체를 로 설정한 상태에서 `*`지정된 조직의 모든 계정에 권한을 부여합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최대_: `34`  
+_패턴_: `o-[a-z0-9]{10,32}`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Principal`  
+계정 ID 또는 `*` 조직의 모든 계정 또는 모든 AWS 계정(지정되지 않은 경우)에 계층 사용 권한을 부여 `organizationId` 합니다. 마지막 경우에는 모든 AWS 계정이 이 계층에 대한 사용 권한을 갖도록 해야 합니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_패턴_: `d{12}|*|arn:(aws[a-zA-Z-]*):iam::d{12}:root`  
+*업데이트 필요 *사항: 바꿔 놓음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`계층 버전 ARN 및 문 ID(예: )를 반환합니다 `arn:aws:lambda:us-west-2:123456789012:layer:my-layer:1#engineering-org`.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+####
+
+`Id` 속성 설명을 사용할 수 없습니다.
+
+## 예제
+
+### 레이어 버전 권한
+
+조직의 계정에 레이어 사용 권한을 부여합니다 `o-t194hfs8cz`.
+
+#### JSON (영문)
+
+```
+"MyLayerPermission": {
+    "Type": "AWS::Lambda::LayerVersionPermission",
+    "Properties": {
+        "Action": "lambda:GetLayerVersion",
+        "LayerVersionArn": "arn:aws:lambda:us-west-2:123456789012:layer:my-layer:1",
+        "OrganizationId": "o-t194hfs8cz",
+        "Principal": "*"
+    }
+}
+```

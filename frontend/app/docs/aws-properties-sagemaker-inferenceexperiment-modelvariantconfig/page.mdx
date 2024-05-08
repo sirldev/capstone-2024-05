@@ -1,0 +1,41 @@
+# AWS::SageMaker::InferenceExperiment ModelVariantConfig
+
+모델의 배포 옵션에 대한 정보를 포함합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "InfrastructureConfig" : ModelInfrastructureConfig,
+  "ModelName" : String,
+  "VariantName" : String
+}
+```
+
+## 속성
+
+`InfrastructureConfig`  
+모델이 배포될 인프라에 대한 구성입니다.  
+_필수 항목 여부_: 예  
+_형식_: ModelInfrastructureConfig  
+_업데이트 필요 사항_: 중단 없음
+
+`ModelName`  
+Amazon SageMaker 모델 엔터티의 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최대_: `63`  
+_패턴_: `^a-zA-Z0-9*`  
+_업데이트 필요 사항_: 중단 없음
+
+`VariantName`  
+변형의 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최대_: `63`  
+_패턴_: `^a-zA-Z0-9?`  
+_업데이트 필요 사항_: 중단 없음

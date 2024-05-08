@@ -1,0 +1,294 @@
+# AWS::Cognito::UserPoolIdentityProvider를 선택합니다
+
+리소스 `AWS::Cognito::UserPoolIdentityProvider` 는 사용자 풀에 대한 자격 증명 공급자를 생성합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::Cognito::UserPoolIdentityProvider",
+  "Properties" : {
+      "AttributeMapping" : Json,
+      "IdpIdentifiers" : [ String, ... ],
+      "ProviderDetails" : Json,
+      "ProviderName" : String,
+      "ProviderType" : String,
+      "UserPoolId" : String
+    }
+}
+```
+
+## 속성
+
+`AttributeMapping`  
+IdP 속성을 표준 및 사용자 지정 사용자 풀 속성에 매핑합니다.  
+*필수 항목 *여부: 아니요  
+_형식_: Json  
+_업데이트 필요 사항_: 중단 없음
+
+`IdpIdentifiers`  
+IdP 식별자 목록입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_최대_: `50`  
+_업데이트 필요 사항_: 중단 없음
+
+`ProviderDetails` IdP 세부 정보입니다. 다음 목록에서는 각 IdP 유형에 대한 공급자 세부 정보 키를 설명합니다.
+
+- Google 및 Login with Amazon의 경우:
+  - client_id
+  - client_secret
+  - authorize_scopes
+- 페이스 북의 경우 :
+  - client_id
+  - client_secret
+  - authorize_scopes
+  - api_version
+- Apple로 로그인의 경우:
+  - client_id
+  - team_id
+  - key_id
+  - private_key
+  - authorize_scopes
+- OIDC(OpenID Connect) 공급자의 경우:
+  - client_id
+  - client_secret
+  - attributes_request_method
+  - oidc_issuer
+  - authorize_scopes
+  - 다음 키는 Amazon Cognito가 URL에서 해당 키를 검색하지 못한 경우에만 표시됩니다 `oidc_issuer` .
+    - authorize_url
+    - token_url
+    - attributes_url
+    - jwks_uri
+  - Amazon Cognito는 다음 키의 값을 자동으로 설정합니다. 읽기 전용입니다.
+    - attributes_url_add_attributes
+- SAML 공급자의 경우:
+  - MetadataFile 또는 MetadataURL
+  - IDPSignout _선택_
+    _항목 필수 항목 여부_: 아니요  
+    _형식_: Json  
+    _업데이트 필요 사항_: 중단 없음
+
+`ProviderName`  
+IdP 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `32`  
+_패턴_: `[^_p{Z}][p{L}p{M}p{S}p{N}p{P}][^_p{Z}]+`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ProviderType`  
+IdP 유형입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_허용되는 값_: `Facebook | Google | LoginWithAmazon | OIDC | SAML | SignInWithApple`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`UserPoolId`  
+사용자 풀 ID입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `55`  
+_패턴_: `[w-]+_[0-9a-zA-Z]+`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`"ProviderName"인 physicalResourceId를 반환합니다. 예를 들어:
+
+`{ "Ref": "testProvider" }`
+
+Amazon Cognito 자격 증명 공급자의 경우 `testProvider`Ref는 자격 증명 공급자의 이름을 반환합니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+## 예제
+
+### 새 Login with Amazon 자격 증명 공급자 생성
+
+다음 예제에서는 참조된 사용자 풀에 Login with Amazon 자격 증명 공급자를 생성합니다.
+
+#### JSON (영문)
+
+```
+{
+  "UserPoolIdentityProvider": {
+    "Type": "AWS::Cognito::UserPoolIdentityProvider",
+    "Properties": {
+      "UserPoolId": {
+        "Ref": "UserPool"
+      },
+      "ProviderName": "LoginWithAmazon",
+      "ProviderDetails": {
+        "client_id": "YourLoginWithAmazonAppId",
+        "client_secret": "YourLoginWithAmazonAppSecret",
+        "authorize_scopes": "profile postal_code"
+      },
+      "ProviderType": "LoginWithAmazon",
+      "AttributeMapping": {
+        "email": "email"
+      }
+    }
+  }
+}
+```
+
+### 새 Google ID 공급업체 만들기
+
+다음 예제에서는 참조된 사용자 풀에 Google 자격 증명 공급자를 생성합니다.
+
+#### JSON (영문)
+
+```
+{
+  "UserPoolIdentityProvider": {
+    "Type": "AWS::Cognito::UserPoolIdentityProvider",
+    "Properties": {
+      "UserPoolId": {
+        "Ref": "UserPool"
+      },
+      "ProviderName": "Google",
+      "ProviderDetails": {
+        "client_id": "YourGoogleAppId",
+        "client_secret": "YourGoogleAppSecret",
+        "authorize_scopes": "profile email openid"
+      },
+      "ProviderType": "Google",
+      "AttributeMapping": {
+        "email": "email"
+      }
+    }
+  }
+}
+```
+
+### 새 Facebook ID 공급자 만들기
+
+다음 예제에서는 참조된 사용자 풀에 Facebook 자격 증명 공급자를 생성합니다.
+
+#### JSON (영문)
+
+```
+{
+  "UserPoolIdentityProvider": {
+    "Type": "AWS::Cognito::UserPoolIdentityProvider",
+    "Properties": {
+      "UserPoolId": {
+        "Ref": "UserPool"
+      },
+      "ProviderName": "Facebook",
+      "ProviderDetails": {
+        "client_id": "YourFacebookAppId",
+        "client_secret": "YourFacebookAppSecret",
+        "authorize_scopes": "public_profile,email"
+      },
+      "ProviderType": "Facebook",
+      "AttributeMapping": {
+        "email": "email"
+      }
+    }
+  }
+}
+```
+
+### 새 Apple ID 공급자로 로그인 만들기
+
+다음 예제에서는 참조된 사용자 풀에 Sign in with Apple 자격 증명 공급자를 생성합니다.
+
+#### JSON (영문)
+
+```
+{
+  "UserPoolIdentityProvider": {
+    "Type": "AWS::Cognito::UserPoolIdentityProvider",
+    "Properties": {
+      "UserPoolId": {
+        "Ref": "UserPool"
+      },
+      "ProviderName": "SignInWithApple",
+      "ProviderDetails": {
+        "client_id": "YourAppleServicesId",
+        "team_id": "YourAppleTeamId",
+        "key_id": "YourApplePrivateKeyID",
+        "private_key": "YourApplePrivateKey",
+        "authorize_scopes": "public_profile,email"
+      },
+      "ProviderType": "SignInWithApple",
+      "AttributeMapping": {
+        "email": "email"
+      }
+    }
+  }
+}
+```
+
+### 새 OIDC ID 공급자 생성
+
+다음 예제에서는 참조된 사용자 풀에 OIDC 자격 증명 공급자 "YourOIDCProviderName"을 생성합니다.
+
+#### JSON (영문)
+
+```
+{
+  "UserPoolIdentityProvider": {
+    "Type": "AWS::Cognito::UserPoolIdentityProvider",
+    "Properties": {
+      "UserPoolId": {
+        "Ref": "UserPool"
+      },
+      "ProviderName": "YourOIDCProviderName",
+      "ProviderDetails": {
+        "client_id": "YourOIDCClientId",
+        "client_secret": "YourOIDCClientSecret",
+        "attributes_request_method": "GET",
+        "oidc_issuer": "YourOIDCIssuerURL",
+        "authorize_scopes": "email profile openid"
+      },
+      "ProviderType": "OIDC",
+      "AttributeMapping": {
+        "email": "email"
+      },
+      "IdpIdentifiers": [
+        "IdpIdentifier"
+      ]
+    }
+  }
+}
+```
+
+### 새 SAML ID 공급자 생성
+
+다음 예제에서는 참조된 사용자 풀에 SAML 자격 증명 공급자 "YourProviderName"을 생성합니다.
+
+#### JSON (영문)
+
+```
+{
+   "UserPoolIdentityProvider": {
+      "Type": "AWS::Cognito::UserPoolIdentityProvider",
+      "Properties": {
+         "UserPoolId": {"Ref": "UserPool"},
+         "ProviderName": "YourProviderName",
+         "ProviderDetails": {
+            "MetadataURL": "YourMetadataURL"
+         },
+         "ProviderType": "SAML",
+         "AttributeMapping": {
+            "email": "Attribute"
+         },
+         "IdpIdentifiers": [
+            "IdpIdentifier"
+         ]
+      }
+   }
+}
+```

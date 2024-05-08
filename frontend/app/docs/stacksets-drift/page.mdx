@@ -1,0 +1,302 @@
+# 스택 세트에서 관리되지 않는 구성 변경 감지
+
+CloudFormation을 통해 스택과 스택에 포함된 리소스를 관리하더라도 사용자는 CloudFormation 외부에서 해당 리소스를 변경할 수 있습니다. 사용자는 리소스를 만든 기본 서비스를 사용하여 리소스를 직접 편집할 수 있습니다. 스택 세트에서 드리프트 감지를 수행하면 해당 스택 세트에 속하는 스택 인스턴스 가 *예상 구성과 다르거나 *드리프트되었는지 확인할 수 있습니다.
+
+## CloudFormation이 스택 세트에서 드리프트 감지를 수행하는 방법
+
+CloudFormation은 스택 세트에서 드리프트 감지를 수행할 때 스택 세트의 각 스택 인스턴스와 연결된 스택에서 드리프트 감지를 수행합니다. 이를 위해 CloudFormation은 스택에 있는 각 리소스의 현재 상태를 스택의 템플릿 및 지정된 입력 파라미터에 정의된 대로 해당 리소스의 예상 상태와 비교합니다. 리소스의 현재 상태가 예상 상태와 다르면 해당 리소스는 표류한 것으로 간주됩니다. 스택에 있는 하나 이상의 리소스가 드리프트된 경우 스택 자체가 드리프트된 것으로 간주되고 스택이 연결된 스택 인스턴스도 드리프트된 것으로 간주됩니다. 스택 세트에 있는 하나 이상의 스택 인스턴스가 드리프트된 경우 스택 세트 자체가 드리프트된 것으로 간주됩니다.
+
+드리프트 감지는 관리되지 않는 변경 내용을 식별합니다. 즉, CloudFormation 외부의 스택에 대한 변경 사항입니다. CloudFormation을 통해 스택 세트 수준이 아닌 스택에 직접 변경한 내용은 드리프트로 간주되지 않습니다. 예를 들어, 스택 세트의 stack 인스턴스와 연결된 스택이 있다고 가정해 보겠습니다. CloudFormation을 사용하여 다른 템플릿을 사용하도록 해당 스택을 업데이트하는 경우, 해당 스택에 스택 세트에 속하는 다른 스택과 다른 템플릿이 있더라도 드리프트로 간주되지 않습니다. 이는 스택이 CloudFormation에서 예상되는 템플릿 및 파라미터 구성과 여전히 일치하기 때문입니다.
+
+CloudFormation이 스택에서 드리프트 감지를 수행하는 방법에 대한 자세한 내용은 스택 및 리소스에 대한 비관리형 구성 변경 감지 섹션을 참조하세요.
+
+CloudFormation은 각 스택에 대해 개별적으로 드리프트 감지를 수행하기 때문에 스택이 드리프트되었는지 여부를 확인할 때 재정의된 파라미터 값을 고려합니다. 스택 인스턴스에서 템플릿 파라미터를 재정의하는 방법에 대한 자세한 내용은 스택 인스턴스에서 파라미터 재정의 섹션을 참조하세요.
+
+스택 인스턴스와 연결된 스택에서 직접 드리프트 감지를 수행하는 경우 이러한 드리프트 결과는 **StackSets** 콘솔 페이지에서 사용할 수 없습니다.
+
+**AWS Management Console을 사용하여 스택 세트의 드리프트를 감지하려면**
+
+1.  some-address에서 AWS CloudFormation 콘솔을 엽니다.
+
+1.  [StackSets**] \*\* 페이지에서 드리프트 감지를 수행할 스택 세트를 선택합니다.
+
+1.  Actions(**작업) 메뉴에서 **Detect drifts(드리프트 감지)를** 선택합니다**.
+
+    CloudFormation은 선택한 스택 세트에 대해 드리프트 감지가 시작되었음을 나타내는 정보 표시줄을 표시합니다.
+
+1.  선택 사항: 드리프트 감지 작업의 진행 상황을 모니터링하려면 다음을 수행합니다.
+
+    1. 스택 세트 이름을 선택하여 **스택 세트 세부 정보** 페이지를 표시합니다.
+
+    1. **작업** 탭을 선택하고, 드리프트 검색 작업을 선택한 다음, **드리프트 세부 정보 보기를 선택합니다**.
+
+    CloudFormation에 **작업 세부 정보** 대화 상자가 표시됩니다.
+
+1.  CloudFormation이 드리프트 감지 작업을 완료할 때까지 기다립니다. 드리프트 감지 작업이 완료되면 CloudFormation 은 스택 세트에 대한 **드리프트 상태(Drift status**) 및 **마지막 드리프트 확인 시간(Last drift check time**)을 업데이트합니다. 이러한 필드는 ** 선택한 스택 세트에 대한** StackSet 세부 정보** 페이지의 [Overview**] 탭 에 나열됩니다.
+
+    드리프트 감지 작업은 스택 세트에 포함된 스택 인스턴스의 수와 스택 세트에 포함된 리소스의 수에 따라 다소 시간이 걸릴 수 있습니다. 지정된 스택 세트에서 한 번에 하나의 드리프트 감지 작업만 실행할 수 있습니다. CloudFormation은 정보 표시줄을 닫은 후에도 드리프트 감지 작업을 계속합니다.
+
+1.  스택 세트의 스택 인스턴스에 대한 드리프트 감지 결과를 검토하려면 **[Stack instances] ** 탭을 선택합니다.
+
+    **[Stack name**] 열에는 각 스택 인스턴스와 연결된 스택의 이름이 나열되고, **[Drift status**] 열에는 해당 스택의 드리프트 상태가 나열됩니다. 스택은 하나 이상의 리소스가 표류한 경우 표류한 것으로 간주됩니다.
+
+1.  특정 스택 인스턴스와 연결된 스택에 대한 드리프트 감지 결과를 검토하려면:
+
+    1. 작업(**Operations) ** 탭을 선택합니다.
+
+    1. 드리프트 감지 결과를 보려는 드리프트 작업을 선택합니다. 분할 패널에는 스택 인스턴스 상태와 선택한 작업의 이유가 표시됩니다. 드리프트 작업의 경우 status reason(상태 이유) 열에는 스택 인스턴스의 드리프트 상태가 표시됩니다.
+
+    1. 드리프트 세부 정보를 보려는 스택 인스턴스를 선택하고 **리소스 드리프트 보기(View resource drifts**)를 선택합니다. **Resource Drifts(리소스 드리프트) 페이지의 **Resource drift status(리소스 드리프트 상태**) 테이블 ** 에는 각 스택 리소스가 드리프트 상태 및 리소스에서 드리프트 감지가 마지막으로 시작된 시간과 함께 나열됩니다. 각 리소스의 논리적 ID와 물리적 ID가 표시되어 리소스를 쉽게 식별할 수 있습니다.
+
+1.  Drift status(드리프트 상태) 열을 **사용하여 드리프트 상태에 따라 리소스를 정렬할 수 ** 있습니다 .
+
+    수정된 리소스에 대한 세부 정보를 보려면:
+
+    1.  리소스를 선택한 상태에서 **View drift details(드리프트 세부 정보 보기**)를 선택합니다.
+
+             CloudFormation은 해당 특정 리소스에 대한 드리프트 세부 정보 페이지를 표시합니다. 이 페이지에는 리소스의 차이점이 나열되어 있습니다. 또한 리소스의 예상 속성 값과 현재 속성 값도 나열합니다.
+
+        **메모**  
+        스택이 현재 로그인되어 있는 리전 및 계정이 아닌 다른 리전 및 계정에 속해 있는 경우 **드리프트 감지** 버튼이 비활성화되고 세부 정보를 볼 수 없습니다.
+
+**AWS CLI를 사용하여 스택 세트의 드리프트를 감지하려면**
+
+AWS CLI를 사용하여 전체 스택에서 드리프트를 감지하려면 다음 명령을 사용합니다 `aws cloudformation` .
+
+- `detect-stack-set-drift` 스택에서 드리프트 감지 작업을 시작합니다.
+- `describe-stack-set-operation` 스택 드리프트 감지 작업의 상태를 모니터링합니다.
+- 드리프트 감지 작업이 완료되면 다음 명령을 사용하여 원하는 드리프트 정보를 반환합니다.
+  - 스택 세트에서 수행된 마지막으로 완료된`describe-stack-set` 드리프트 작업에 대한 세부 정보를 포함하여 스택 세트에 대한 자세한 정보를 반환하는 데 _사용합니다 _ . (진행 중인 드리프트 작업에 대한 정보는 포함되지 않습니다.)
+  - `list-stack-instances` 스택 세트에 속하는 스택 인스턴스 목록을 반환하는 데 사용하며, 여기에는 각 인스턴스의 드리프트 상태와 마지막으로 확인된 드리프트 시간이 포함됩니다.
+  - 드리프트 상태 및 마지막으로 확인된 드리프트 시간을 포함하여 특정 스택 인스턴스에 대한 자세한 정보를 반환하는`describe-stack-instance` 데 사용합니다.
+  - 스택 인스턴스에 있는 각 리소스의 드리프트 상태에 대한 자세한 정보를 반환하는 데`list-stack-instance-resource-drifts` 사용합니다.
+  - 스택 인스턴스의 리소스 드리프트에 대한 요약 정보를 반환하는 데`stack-instance-resource-drifts-summary` 사용합니다.
+
+1.  전체 스택 세트 및 연결된 스택 인스턴스의 드리프트를 감지하는 데`detect-stack-set-drift` 사용합니다.
+
+다음 예제에서는 스택 세트에서 드리프트 감지를 시작합니다 `stack-set-drift-example`.
+
+```
+1. aws cloudformation detect-stack-set-drift --stack-set-name stack-set-drift-example
+2.
+3. {
+4.     "작업 ID": "c36e44aa-3a83-411a-b503-cb611example"
+5. }
+```
+
+1. 스택 세트 드리프트 감지 작업은 장기 실행 작업일 수 있으므로 를 사용하여 `describe-stack-set-operation` 드리프트 작업의 상태를 모니터링합니다. 이 명령은 명령에서 반환된 스택 세트 작업 ID를 사용합니다 `detect-stack-set-drift` .
+
+   다음 예제에서는 이전 예제의 작업 ID를 사용하여 스택 세트 드리프트 감지 작업에 대한 정보를 반환합니다. 이 예제에서는 작업이 계속 실행 중입니다. 이 스택 세트와 연결된 7개의 스택 인스턴스 중 1개의 스택 인스턴스는 이미 드리프트된 것으로 확인되었고, 2개의 인스턴스는 동기화 중이며, 나머지 4개의 스택 인스턴스에 대한 드리프트 감지는 아직 진행 중입니다. 한 인스턴스가 드리프트되었기 때문에 스택 세트 자체의 드리프트 상태는 이제 `DRIFTED`입니다.
+
+   ```
+    1. aws cloudformation describe-stack-set-operation --stack-set-name stack-set-drift-example --operation-id c36e44aa-3a83-411a-b503-cb611example
+    2.
+    3. {
+    4.     "스택 설정 작업": {
+    5.         "Status": "RUNNING",
+    6.         "AdministrationRoleARN": "arn:aws:iam::123456789012:role/AWSCloudFormationStackSetAdministrationRole",
+    7.         "OperationPreferences": {
+    8.             "RegionOrder": []
+    9.         },
+   10.         "ExecutionRoleName": "AWSCloudFormationStackSetExecutionRole",
+   11.         "StackSetDriftDetectionDetails": {
+   12.             "DriftedStackInstancesCount": 1,
+   13.             "TotalStackInstancesCount": 7,
+   14.             "LastDriftCheckTimestamp": "2019-12-04T20:34:28.543Z",
+   15.             "InSyncStackInstancesCount": 2,
+   16.             "InProgressStackInstancesCount": 4,
+   17.             "DriftStatus": "DRIFTED",
+   18.             "FailedStackInstancesCount": 0
+   19.         },
+   20.         "Action": "DETECT_DRIFT",
+   21.         "CreationTimestamp": "2019-12-04T20:33:13.673Z",
+   22.         "StackSetId": "stack-set-drift-example:bd1f4017-d4f9-432e-a73f-8c22example",
+   23.         "OperationId": "c36e44aa-3a83-411a-b503-cb611example"
+   24.     }
+   25. }
+   ```
+
+   Performing the same command later, this example shows the information returned once the drift detection operation has completed. Two of the seven total stack instances associated with this stack set have drifted, rendering the drift status of the stack set itself as `DRIFTED`.
+
+   ```
+    1. AWS CloudFormation describe-stack-set-operation --stack-set-name stack-set-drift-example --operation-id c36e44aa-3a83-411a-b503-cb611example
+    2.
+    3. {
+    4.     "스택 설정 작업": {
+    5.         "Status": "SUCCEEDED",
+    6.         "AdministrationRoleARN": "arn:aws:iam::123456789012:role/AWSCloudFormationStackSetAdministrationRole",
+    7.         "OperationPreferences": {
+    8.             "RegionOrder": []
+    9.         }
+   10.         "ExecutionRoleName": "AWSCloudFormationStackSetExecutionRole",
+   11.         "EndTimestamp": "2019-12-04T20:37:32.829Z",
+   12.         "StackSetDriftDetectionDetails": {
+   13.             "DriftedStackInstancesCount": 2,
+   14.             "TotalStackInstancesCount": 7,
+   15.             "LastDriftCheckTimestamp": "2019-12-04T20:36:55.612Z",
+   16.             "InSyncStackInstancesCount": 5,
+   17.             "InProgressStackInstancesCount": 0,
+   18.             "DriftStatus": "DRIFTED",
+   19.             "FailedStackInstancesCount": 0
+   20.         },
+   21.         "Action": "DETECT_DRIFT",
+   22.         "CreationTimestamp": "2019-12-04T20:33:13.673Z",
+   23.         "StackSetId": "stack-set-drift-example:bd1f4017-d4f9-432e-a73f-8c22example",
+   24.         "OperationId": "c36e44aa-3a83-411a-b503-cb611example"
+   25.     }
+   26. }
+   ```
+
+1. 스택 세트 드리프트 감지 작업이 완료되면 `describe-stack-set`, `list-stack-instances`, `describe-stack-instance`및 `list-stack-instance-resource-drifts` 명령을 사용하여 결과를 검토합니다.
+
+   명령에는 `describe-stack-set` 명령 에서 반환된 것과 동일한 자세한 드리프트 정보가 포함됩니다 `describe-stack-set-operation` .
+
+   ```
+   aws cloudformation describe-stack-set --stack-set-name stack-set-drift-example
+
+               {
+       "StackSet": {
+           "Status": "ACTIVE",
+           "Description": "Demonstration of drift detection on stack sets.",
+           "Parameters": [],
+           "Tags": [
+               {
+                   "Value": "Drift detection",
+                   "Key": "Feature"
+               }
+           ],
+           "ExecutionRoleName": "AWSCloudFormationStackSetExecutionRole",
+           "Capabilities": [],
+           "AdministrationRoleARN": "arn:aws:iam::123456789012:role/AWSCloudFormationStackSetAdministrationRole",
+           "StackSetDriftDetectionDetails": {
+               "DriftedStackInstancesCount": 2,
+               "TotalStackInstancesCount": 7,
+               "LastDriftCheckTimestamp": "2019-12-04T20:36:55.612Z",
+               "InProgressStackInstancesCount": 0,
+               "DriftStatus": "DRIFTED",
+               "DriftDetectionStatus": "COMPLETED",
+               "InSyncStackInstancesCount": 5,
+               "FailedStackInstancesCount": 0
+           },
+           "StackSetARN": "arn:aws:cloudformation:us-east-1:123456789012:stackset/stack-set-drift-example:bd1f4017-d4f9-432e-a73f-8c22example",
+           "TemplateBody": [details omitted],
+           "StackSetId": "stack-set-drift-example:bd1f4017-d4f9-432e-a73f-8c22ebexample",
+           "StackSetName": "stack-set-drift-example"
+       }
+   }
+   ```
+
+   이 `list-stack-instances` 명령을 사용하여 각 스택 인스턴스의 드리프트 상태를 포함하여 스택 세트와 연결된 스택 인스턴스에 대한 요약 정보를 반환할 수 있습니다.
+
+   이 예제에서는 `list-stack-instances` 드리프트 상태 필터를 로 설정하여 예제 스택 세트에서 `DRIFTED` 실행하면 드리프트 상태가 인 두 스택 인스턴스를 식별할 수 있습니다`DRIFTED`.
+
+   ```
+   aws cloudformation list-stack-instances --stack-set-name stack-set-drift-example --filters Name=DRIFT_STATUS,Values=DRIFTED
+
+   {
+   "Summaries": [
+           {
+   "StackId": "arn:aws:cloudformation:eu-west-1:123456789012:stack/StackSet-stack-set-drift-example-b0fb6083-60c0-4e39-af15-2f071e0db90c/0e4f0940-16d4-11ea-93d8-0641cexample",
+               "Status": "CURRENT",
+               "Account": "012345678910",
+               "Region": "eu-west-1",
+               "LastDriftCheckTimestamp": "2019-12-04T20:37:32.687Z",
+               "DriftStatus": "DRIFTED",
+               "StackSetId": "stack-set-drift-example:bd1f4017-d4f9-432e-a73f-8c22eexample
+               "LastOperationId": "c36e44aa-3a83-411a-b503-cb611example"
+           },
+           {
+               "StackId": "arn:aws:cloudformation:us-east-1:123456789012:stack/StackSet-stack-set-drift-example-b7fde68e-e541-44c2-b33d-ef2e2988071a/008e6030-16d4-11ea-8090-12f89example",
+               "Status": "CURRENT",
+               "Account": "123456789012",
+               "Region": "us-east-1",
+               "LastDriftCheckTimestamp": "2019-12-04T20:34:28.275Z",
+               "DriftStatus": "DRIFTED",
+               "StackSetId": "stack-set-drift-example:bd1f4017-d4f9-432e-a73f-8c22eexample"
+               "LastOperationId": "c36e44aa-3a83-411a-b503-cb611example"
+           },
+
+           [additional stack instances omitted]
+
+       ]
+   }
+   ```
+
+   이 `describe-stack-instance` 명령은 이 정보도 반환하지만 아래 예제와 같이 단일 스택 인스턴스에 대해 반환합니다.
+
+   ```
+   aws cloudformation describe-stack-instance --stack-set-name stack-set-drift-example --stack-instance-account 012345678910 --stack-instance-region us-east-1
+
+   {
+       "StackInstance": {
+           "StackId": "arn:aws:cloudformation:us-east-1:123456789012:stack/StackSet-stack-set-drift-example-b7fde68e-e541-44c2-b33d-ef2e2988071a/008e6030-16d4-11ea-8090-12f89example",
+           "Status": "CURRENT",
+           "Account": "123456789012",
+           "Region": "us-east-1",
+           "ParameterOverrides": [],
+           "DriftStatus": "DRIFTED",
+           "LastDriftCheckTimestamp": "2019-12-04T20:34:28.275Z",
+           "StackSetId": "stack-set-drift-example:bd1f4017-d4f9-432e-a73f-8c22eexample"
+           "LastOperationId": "c36e44aa-3a83-411a-b503-cb611example"
+       }
+   }
+   ```
+
+1. 드리프트된 스택 인스턴스를 식별한 후에는 또는 명령에서 반환되는 스택 인스턴스에 대한 정보를 사용하여 `list-stack-instances` `describe-stack-instance` list-stack-instance-resource-drifts를 실행할 수 있습니다. 이 명령은 스택에서 특정 드리프트 작업을 위해 드리프트된 리소스에 대한 자세한 정보를 반환합니다.
+
+   다음 예제에서는 파라미터를 사용하여 `stack-instance-resource-drift-statuses` 이전 드리프트 작업 예제에서 수정되거나 삭제된 리소스에 대한 스택 드리프트 정보를 요청합니다. 요청은 두 개의 속성 및 변경된 값에 대한 세부 정보를 포함하여 수정된 하나의 리소스에 대한 정보를 반환합니다. 삭제된 리소스가 없습니다.
+
+   ```
+   aws cloudformation list-stack-instance-resource-drifts --stack-set-name my-stack-set-with-resource-drift --stack-instance-account 123456789012 --stack-instance-region us-east-1 --operation-id c36e44aa-3a83-411a-b503-cb611example --stack-instance-resource-drift-statuses MODIFIED DELETED
+
+   {
+       "Summaries": [
+           {
+               "StackId": "arn:aws:cloudformation:us-east-1:123456789012:stack/my-stack-set-with-resource-drift/489e5570-df85-11e7-a7d9-50example",
+               "ResourceType": "AWS::SQS::Queue",
+               "Timestamp": "2018-03-26T17:23:34.489Z",
+               "PhysicalResourceId": "https://sqs.us-east-1.amazonaws.com/123456789012/my-stack-with-resource-drift-Queue-494PBHCO76H4",
+               "StackResourceDriftStatus": "MODIFIED",
+               "PropertyDifferences": [
+                   {
+                       "PropertyPath": "/DelaySeconds",
+                       "ActualValue": "120",
+                       "ExpectedValue": "20",
+                       "DifferenceType": "NOT_EQUAL"
+                   },
+                   {
+                       "PropertyPath": "/RedrivePolicy/maxReceiveCount",
+                       "ActualValue": "12",
+                       "ExpectedValue": "10",
+                       "DifferenceType": "NOT_EQUAL"
+                   }
+               ],
+               "LogicalResourceId": "Queue"
+           }
+       ]
+   }
+   ```
+
+## 스택 세트에서 드리프트 감지 중지
+
+스택 세트의 드리프트 감지는 장기 실행 작업일 수 있으므로 스택 세트에서 현재 실행 중인 드리프트 감지 작업을 중지하려는 경우가 있을 수 있습니다.
+
+**AWS Management Console을 사용하여 스택 세트에서 드리프트 감지를 중지하려면**
+
+1. some-address에서 AWS CloudFormation 콘솔을 엽니다.
+
+1. [StackSets**] \*\* 페이지에서 스택 세트의 이름을 선택합니다.
+
+   CloudFormation은 ** 선택한 스택 세트에 대한 **StackSets 세부 정보 페이지를 표시합니다.
+
+1. **StackSets 세부 정보** 페이지에서 **작업** 탭을 선택한 다음 드리프트 감지 작업을 선택합니다.
+
+1. 작업 중지**를 선택합니다**.
+
+**AWS CLI를 사용하여 스택 세트에서 드리프트 감지를 중지하려면**
+
+- 명령을 사용합니다 `stop-stack-set-operation` . 스택 세트 이름과 드리프트 감지 스택 세트 작업의 작업 ID를 모두 제공해야 합니다.
+
+  ```
+  1. aws cloudformation stop-stack-set-operation --stack-set-name stack-set-drift-example --operation-id 624af370-311a-11e8-b6b7-500cexample
+  ```

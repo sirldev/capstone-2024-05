@@ -1,0 +1,55 @@
+# AWS::Route53해석자::ResolverDNSSECConfig
+
+`AWS::Route53Resolver::ResolverDNSSECConfig` 리소스는 DNSSEC 유효성 검사를 위한 구성에 대한 정보를 포함하는 복합 형식입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::Route53Resolver::ResolverDNSSECConfig",
+  "Properties" : {
+      "ResourceId" : String
+    }
+}
+```
+
+## 속성
+
+`ResourceId`  
+DNSSEC 검증 상태를 구성하는 Virtual Private Cloud(VPC)의 ID입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `64`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref`ID `Ref`를 반환합니다. 예를 들어:
+
+`{ "Ref": "rdsc-689d45d1ae623bf3" }`
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`Id`  
+이 리소스의 기본 식별자입니다 `ResolverDNSSECConfig` . 예를 들면 다음과 같습니다 `rdsc-689d45d1ae623bf3`.
+
+`OwnerId`  
+소유자의 AWS 계정입니다. 예를 들면 다음과 같습니다 `111122223333`.
+
+`ValidationStatus`  
+이 리소스의 현재 상태 `ResolverDNSSECConfig` 입니다. 예를 들면 다음과 같습니다 `Enabled`.

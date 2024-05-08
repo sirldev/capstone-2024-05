@@ -1,0 +1,56 @@
+# AWS::백업::백업 선택
+
+백업 계획에 할당할 자원 집합을 지정합니다.
+
+샘플 AWS CloudFormation 템플릿은 AWS Backup 개발자 안내서를 참조하십시오.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::Backup::BackupSelection",
+  "Properties" : {
+      "BackupPlanId" : String,
+      "BackupSelection" : BackupSelectionResourceType
+    }
+}
+```
+
+## 속성
+
+`BackupPlanId`  
+백업 계획을 고유하게 식별합니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`BackupSelection`  
+백업 계획에 리소스 집합을 할당하기 위한 요청의 본문을 지정합니다.  
+여기에는 리소스 배열, 리소스를 제외하기 위한 선택적 패턴 배열, 리소스가 속한 AWS 서비스에 대한 액세스를 제공하는 선택적 역할, 리소스 집합을 식별하는 데 사용되는 태그의 선택적 배열이 포함됩니다.  
+_필수 항목 여부_: 예  
+_유형_: BackupSelectionResourceType  
+_업데이트 필요 사항_: 바꿔 놓음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달 `Ref` 하면 `Ref`가 반환`BackupSelectionId`됩니다.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`BackupPlanId` 백업 계획을 고유하게 식별합니다.
+
+`Id` 백업 선택을 고유하게 식별합니다.
+
+`SelectionId` 백업 계획에 자원 집합을 할당하는 요청을 고유하게 식별합니다.

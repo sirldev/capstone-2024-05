@@ -1,0 +1,49 @@
+# AWS::SageMaker::FeatureGroup OfflineStoreConfig
+
+의 구성입니다 `OfflineStore`.
+
+에 대한 요청을 `OfflineStoreConfig` `CreateFeatureGroup`제공하여 `OfflineStore`.
+
+사용 중인 저장 데이터 암호화를 암호화하려면 `OfflineStore` AWS Key Management Service(KMS) 키 ID 또는 `KMSKeyId`에서 를 지정합니다`S3StorageConfig`.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "DataCatalogConfig" : DataCatalogConfig,
+  "DisableGlueTableCreation" : Boolean,
+  "S3StorageConfig" : S3StorageConfig,
+  "TableFormat" : String
+}
+```
+
+## 속성
+
+`DataCatalogConfig`  
+생성 시 자동 생성되는 Glue 테이블의 메타데이터입니다 `OfflineStore` .  
+*필수 항목 *여부: 아니요  
+_형식_: DataCatalogConfig  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`DisableGlueTableCreation`  
+`True` 를 구성할 때 AWS Glue 테이블의 자동 생성을 비활성화하려면 로 설정합니다`OfflineStore`. 로 설정하면 `False`Feature Store는 `OfflineStore` Athena의 명명 권장 사항에 따라 Glue 테이블의 이름을 지정합니다.  
+기본값은 `False`입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`S3StorageConfig`  
+의 Amazon Simple Storage(Amazon S3) 위치 `OfflineStore`입니다.  
+_필수 항목 여부_: 예  
+_유형_: S3StorageConfig  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`TableFormat`  
+속성 설명을 사용할 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음

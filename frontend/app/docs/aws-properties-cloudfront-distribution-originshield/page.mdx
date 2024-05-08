@@ -1,0 +1,38 @@
+# AWS::CloudFront::D istribution OriginShield
+
+CloudFront 오리진 쉴드.
+
+Origin Shield를 사용하면 오리진의 부하를 줄이는 데 도움이 될 수 있습니다. 자세한 내용은 _Amazon CloudFront 개발자 안내서의 Origin Shield 사용을 참조하십시오_.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Enabled" : Boolean,
+  "OriginShieldRegion" : String
+}
+```
+
+## 속성
+
+`Enabled`  
+Origin Shield의 활성화 여부를 지정하는 플래그입니다.  
+활성화되면 CloudFront는 오리진을 보호하는 데 도움이 될 수 있는 Origin Shield를 통해 모든 요청을 라우팅합니다. 비활성화된 경우 CloudFront는 여러 엣지 로케이션 또는 리전 엣지 캐시에서 오리진으로 직접 요청을 보낼 수 있습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`OriginShieldRegion`  
+Origin Shield의 AWS 리전입니다.  
+오리진에 대한 지연 시간이 가장 짧은 AWS 리전을 지정합니다. 지역을 지정하려면 지역 이름이 아닌 지역 코드를 사용합니다. 예를 들어 미국 동부(오하이오) 리전을 로 지정합니다`us-east-2`.  
+CloudFront Origin Shield를 활성화할 때 Origin Shield에 대해 AWS 리전을 지정해야 합니다. 지정할 수 있는 AWS 리전 목록과 오리진에 가장 적합한 리전을 선택하는 데 도움이 필요한 경우 Amazon CloudFront 개발자 안내서의 오리진 쉴드에 대한 AWS 리전 선택을 참조하십시오\**.  
+*필수 항목 *여부: 아니요  
+*유형*: 문자열  
+*최소*: `1`  
+*최대*: `32`  
+*패턴*: `[a-z]{2}-[a-z]+-d`  
+*업데이트 필요 사항\*: 중단 없음

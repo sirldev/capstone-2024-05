@@ -1,0 +1,33 @@
+# AWS::CodeDeploy::D eploymentGroup DeploymentReadyOption
+
+블루/그린 배포의 대체 환경에서 인스턴스로 트래픽을 다시 라우팅하는 방법에 대한 정보입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ActionOnTimeout" : String,
+  "WaitTimeInMinutes" : Integer
+}
+```
+
+## 속성
+
+`ActionOnTimeout` 블루/그린 배포에서 원래 환경에서 대체 환경으로 트래픽을 다시 라우팅하는 시기에 대한 정보입니다.
+
+- CONTINUE_DEPLOYMENT: 새 애플리케이션 개정이 대체 환경의 인스턴스에 설치된 직후 로드 밸런서에 새 인스턴스를 등록합니다.
+- STOP_DEPLOYMENT: ContinueDeployment를 사용하여 트래픽 재라우팅을 시작하지 않는 한 로드 밸런서에 새 인스턴스를 등록하지 마십시오. 지정된 대기 기간이 끝나기 전에 트래픽 재라우팅이 시작되지 않으면 배포 상태가 중지됨으로 변경됩니다.
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열  
+  _허용되는 값_: `CONTINUE_DEPLOYMENT | STOP_DEPLOYMENT`  
+  _업데이트 필요 사항_: 중단 없음
+
+`WaitTimeInMinutes`  
+경로 재지정이 수동으로 시작되지 않은 경우 블루/그린 배포의 상태가 중지됨으로 변경되기 전에 대기하는 시간(분)입니다. `STOP_DEPLOYMENT` 에 대한 옵션 에만 적용됩니다`actionOnTimeout`.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음

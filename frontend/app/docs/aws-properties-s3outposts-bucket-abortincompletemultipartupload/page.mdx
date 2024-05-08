@@ -1,0 +1,23 @@
+# AWS::S3Outposts::버킷 중단 완료 멀티파트 업로드
+
+불완전한 멀티파트 업로드가 시작된 이후 Amazon S3 on Outposts가 업로드의 모든 부분을 영구적으로 제거하기 전에 대기하는 일수를 지정합니다. 자세한 내용은 버킷 수명 주기 정책을 사용하여 불완전한 멀티파트 업로드 중단 단원을 참조하십시오.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "DaysAfterInitiation" : Integer
+}
+```
+
+## 속성
+
+`DaysAfterInitiation`  
+시작 후 Amazon S3 on Outposts가 불완전한 멀티파트 업로드를 중단할 때까지의 기간(일)을 지정합니다.  
+_필수 항목 여부_: 예  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음

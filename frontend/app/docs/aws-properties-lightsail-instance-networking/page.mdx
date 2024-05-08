@@ -1,0 +1,30 @@
+# AWS::Lightsail::인스턴스 네트워킹
+
+`Networking` 은 AWS::Lightsail::Instance 리소스의 속성입니다. 퍼블릭 포트와 인스턴스에 할당된 월별 데이터 전송량을 설명합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "MonthlyTransfer" : MonthlyTransfer,
+  "Ports" : [ Port, ... ]
+}
+```
+
+## 속성
+
+`MonthlyTransfer`  
+인스턴스에 할당된 월별 데이터 전송량(GB)  
+*필수 항목 *여부: 아니요  
+_유형_: MonthlyTransfer  
+_업데이트 필요 사항_: 업데이트가 지원되지 않습니다.
+
+`Ports`  
+인스턴스에서 열 포트의 배열입니다.  
+_필수 항목 여부_: 예  
+_유형_: 포트 목록  
+_업데이트 필요 사항_: 중단 없음

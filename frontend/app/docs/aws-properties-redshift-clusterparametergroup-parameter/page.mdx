@@ -1,0 +1,32 @@
+# AWS::Redshift::ClusterParameterGroup 파라미터
+
+클러스터 파라미터 그룹의 파라미터를 설명합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ParameterName" : String,
+  "ParameterValue" : String
+}
+```
+
+## 속성
+
+`ParameterName`  
+매개 변수의 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최대_: `2147483647`  
+_업데이트 필요 사항_: 중단 없음
+
+`ParameterValue`  
+매개 변수의 값입니다. `ParameterName` 인 `wlm_json_configuration` 경우 최대 크기는 `ParameterValue` 8000자입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최대_: `2147483647`  
+_업데이트 필요 사항_: 중단 없음

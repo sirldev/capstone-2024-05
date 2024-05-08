@@ -1,0 +1,517 @@
+# AWS::Redshift::클러스터
+
+클러스터를 지정합니다. _클러스터_ 는 계산 노드 집합으로 구성된 완전 관리형 데이터 웨어하우스입니다.
+
+Virtual Private Cloud(VPC)에서 클러스터를 생성하려면 클러스터 서브넷 그룹 이름을 제공해야 합니다. 클러스터 서브넷 그룹은 Amazon Redshift가 클러스터를 생성할 때 사용하는 VPC의 서브넷을 식별합니다. 클러스터 관리에 대한 자세한 내용은 Amazon Redshift Cluster Management Guide의 Amazon Redshift Clusters를 참조하십시오\*\*.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::Redshift::Cluster",
+  "Properties" : {
+      "AllowVersionUpgrade" : Boolean,
+      "AquaConfigurationStatus" : String,
+      "AutomatedSnapshotRetentionPeriod" : Integer,
+      "AvailabilityZone" : String,
+      "AvailabilityZoneRelocation" : Boolean,
+      "AvailabilityZoneRelocationStatus" : String,
+      "Classic" : Boolean,
+      "ClusterIdentifier" : String,
+      "ClusterParameterGroupName" : String,
+      "ClusterSecurityGroups" : [ String, ... ],
+      "ClusterSubnetGroupName" : String,
+      "ClusterType" : String,
+      "ClusterVersion" : String,
+      "DBName" : String,
+      "DeferMaintenance" : Boolean,
+      "DeferMaintenanceDuration" : Integer,
+      "DeferMaintenanceEndTime" : String,
+      "DeferMaintenanceStartTime" : String,
+      "DestinationRegion" : String,
+      "ElasticIp" : String,
+      "Encrypted" : Boolean,
+      "Endpoint" : Endpoint,
+      "EnhancedVpcRouting" : Boolean,
+      "HsmClientCertificateIdentifier" : String,
+      "HsmConfigurationIdentifier" : String,
+      "IamRoles" : [ String, ... ],
+      "KmsKeyId" : String,
+      "LoggingProperties" : LoggingProperties,
+      "MaintenanceTrackName" : String,
+      "ManualSnapshotRetentionPeriod" : Integer,
+      "MasterUsername" : String,
+      "MasterUserPassword" : String,
+      "NodeType" : String,
+      "NumberOfNodes" : Integer,
+      "OwnerAccount" : String,
+      "Port" : Integer,
+      "PreferredMaintenanceWindow" : String,
+      "PubliclyAccessible" : Boolean,
+      "ResourceAction" : String,
+      "RevisionTarget" : String,
+      "RotateEncryptionKey" : Boolean,
+      "SnapshotClusterIdentifier" : String,
+      "SnapshotCopyGrantName" : String,
+      "SnapshotCopyManual" : Boolean,
+      "SnapshotCopyRetentionPeriod" : Integer,
+      "SnapshotIdentifier" : String,
+      "Tags" : [Tag, ... ],
+      "VpcSecurityGroupIds" : [ String, ... ]
+    }
+}
+```
+
+## 속성
+
+`AllowVersionUpgrade`  
+의 경우 `true`유지 관리 기간 동안 클러스터에서 실행 중인 Amazon Redshift 엔진에 메이저 버전 업그레이드를 적용할 수 있습니다.  
+Amazon Redshift 엔진의 새 메이저 버전이 릴리스되면 유지 관리 기간 동안 클러스터에서 실행 중인 Amazon Redshift 엔진에 업그레이드를 자동으로 적용하도록 서비스에 요청할 수 있습니다.  
+기본값: `true`  
+_필수_: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`AquaConfigurationStatus`  
+이 매개 변수는 더 이상 사용되지 않습니다. AQUA 구성 상태를 설정하지 않습니다. Amazon Redshift는 AQUA(Advanced Query Accelerator)를 사용할지 여부를 자동으로 결정합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `auto | disabled | enabled`  
+_업데이트 필요 사항_: 중단 없음
+
+`AutomatedSnapshotRetentionPeriod`  
+자동 스냅샷이 보존되는 기간(일)입니다. 값이 0이면 자동 스냅샷이 비활성화됩니다. 자동 스냅샷이 비활성화된 경우에도 Amazon Redshift API Reference의 CreateClusterSnapshot을 사용하여 원할 때 수동 스냅샷을 생성할 수 _있습니다_.  
+기본값: `1`  
+제약 조건: 0에서 35 사이의 값이어야 합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`AvailabilityZone`  
+Amazon Redshift에서 클러스터를 프로비저닝할 EC2 가용 영역(AZ)입니다. 예를 들어, 특정 가용 영역에서 여러 EC2 인스턴스를 실행 중인 경우 네트워크 지연 시간을 줄이기 위해 클러스터를 동일한 영역에 프로비저닝할 수 있습니다.  
+기본값: 엔드포인트에서 지정한 리전에서 시스템에서 선택한 임의의 가용 영역입니다.  
+본보기: `us-east-2d`  
+제약 조건: 지정된 가용 영역은 현재 엔드포인트와 동일한 지역에 있어야 합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최대_: `2147483647`  
+_업데이트 필요 사항_: 중단 없음
+
+`AvailabilityZoneRelocation`  
+클러스터가 생성된 후 가용 영역 간에 Amazon Redshift 클러스터에 대한 재배치를 활성화하는 옵션입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`AvailabilityZoneRelocationStatus`  
+가용 영역 재배치 작업의 상태를 설명합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최대_: `2147483647`  
+_업데이트 필요 사항_: 중단 없음
+
+`Classic`  
+크기 조정 작업이 클래식 크기 조정 프로세스를 사용하는지 여부를 나타내는 부울 값입니다. 이 매개 변수를 제공하지 않거나 값을 로 설정하면 `false`크기 조정 유형이 탄력적입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`ClusterIdentifier` 클러스터의 고유 식별자입니다. 이 식별자를 사용하여 삭제 또는 수정과 같은 후속 클러스터 작업을 위해 클러스터를 참조합니다. 식별자는 Amazon Redshift 콘솔에도 표시됩니다.  
+제약 조건:
+
+- 1-63자의 영숫자 또는 하이픈을 포함해야 합니다.
+- 알파벳 문자는 소문자여야 합니다.
+- 첫 번째 문자는 문자여야 합니다.
+- 하이픈으로 끝나거나 두 개의 연속 하이픈을 포함할 수 없습니다.
+- AWS 계정 내의 모든 클러스터에 대해 고유해야 합니다.
+  예: `myexamplecluster`  
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열  
+  _최대_: `2147483647`  
+  _업데이트 필요 사항_: 바꿔 놓음
+
+`ClusterParameterGroupName` 이 클러스터와 연결할 파라미터 그룹의 이름입니다.  
+기본값: 기본 Amazon Redshift 클러스터 파라미터 그룹입니다. 기본 파라미터 그룹에 대한 자세한 내용은 Amazon Redshift 파라미터 그룹 작업 단원을 참조하십시오  
+제약 조건:
+
+- 1-255자의 영숫자 또는 하이픈이어야 합니다.
+- 첫 번째 문자는 문자여야 합니다.
+- 하이픈으로 끝나거나 두 개의 연속 하이픈을 포함할 수 없습니다.
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열  
+  _최대_: `2147483647`  
+  _업데이트 필요 사항_: 중단 없음
+
+`ClusterSecurityGroups`  
+이 클러스터와 연결할 보안 그룹 목록입니다.  
+기본값: Amazon Redshift의 기본 클러스터 보안 그룹입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`ClusterSubnetGroupName`  
+이 클러스터와 연결할 클러스터 서브넷 그룹의 이름입니다.  
+이 파라미터를 제공하지 않으면 결과 클러스터가 Virtual Private Cloud(VPC) 외부에 배포됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최대_: `2147483647`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ClusterType` 클러스터의 유형입니다. cluster type이
+
+- `single-node`, **NumberOfNodes** 매개 변수는 필요하지 않습니다.
+- `multi-node`, **NumberOfNodes** 매개 변수가 필요합니다.
+  유효한 값 : `multi-node` | `single-node`  
+  기본값: `multi-node`  
+  _필수_: 예  
+  _유형_: 문자열  
+  _최대_: `2147483647`  
+  _업데이트 필요 사항_: 중단 없음
+
+`ClusterVersion`  
+클러스터에 배포하려는 Amazon Redshift 엔진 소프트웨어의 버전입니다.  
+선택한 버전은 클러스터의 모든 노드에서 실행됩니다.  
+제약 조건: 현재 버전 1.0만 사용할 수 있습니다.  
+예: `1.0`  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최대_: `2147483647`  
+_업데이트 필요 사항_: 중단 없음
+
+`DBName`  
+클러스터를 만들 때 만들 첫 번째 데이터베이스의 이름입니다.  
+클러스터를 만든 후 추가 데이터베이스를 만들려면 SQL 클라이언트를 사용하여 클러스터에 연결하고 SQL 명령을 사용하여 데이터베이스를 만듭니다. 자세한 내용은 Amazon Redshift 데이터베이스 개발자 안내서의 데이터베이스 생성을 참조하십시오.  
+기본값: `dev`  
+제약 조건:
+
+- 1-64자의 영숫자를 포함해야 합니다.
+- 소문자만 포함해야 합니다.
+- 서비스에서 예약한 단어일 수 없습니다. 예약어 목록은 Amazon Redshift 데이터베이스 개발자 안내서의 예약어에서 확인할 수 있습니다.
+  _필수 항목 여부_: 예  
+  _유형_: 문자열  
+  _최대_: `2147483647`  
+  _업데이트 필요 사항_: 바꿔 놓음
+
+`DeferMaintenance`  
+지연된 유지 관리 기간을 사용할지 여부를 나타내는 부울입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`DeferMaintenanceDuration`  
+유지 관리 기간(일)을 나타내는 정수입니다. 기간을 지정하면 종료 시간을 지정할 수 없습니다. 기간은 45일 이하여야 합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`DeferMaintenanceEndTime`  
+유지 관리를 연기하는 기간의 종료에 대한 타임스탬프입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`DeferMaintenanceStartTime`  
+지연된 유지 관리 기간의 시작 시간을 나타내는 타임스탬프입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`DestinationRegion`  
+교차 리전 스냅샷 복사가 활성화된 경우 스냅샷이 자동으로 복사되는 대상 리전입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최대_: `2147483647`  
+_업데이트 필요 사항_: 중단 없음
+
+`ElasticIp`  
+클러스터의 EIP(탄력적 IP) 주소입니다.  
+제약 조건: 클러스터는 EC2-VPC에서 프로비저닝되어야 하며 인터넷 게이트웨이를 통해 공개적으로 액세스할 수 있어야 합니다. 가용성 영역 재배치가 켜져 있는 공개적으로 액세스할 수 있는 클러스터에 대한 탄력적 IP 주소를 지정하지 마십시오. EC2-VPC에서 클러스터를 프로비저닝하는 방법에 대한 자세한 내용은 Amazon Redshift Cluster Management Guide의 지원되는 플랫폼에서 클러스터 시작을 참조하십시오.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최대_: `2147483647`  
+_업데이트 필요 사항_: 중단 없음
+
+`Encrypted`  
+인 경우 `true`클러스터의 데이터는 미사용 시 암호화됩니다.  
+기본값 : false  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`Endpoint`  
+연결 끝점입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 끝점  
+_업데이트 필요 사항_: 중단 없음
+
+`EnhancedVpcRouting`  
+향상된 VPC 라우팅이 활성화된 클러스터를 생성할지 여부를 지정하는 옵션입니다. 향상된 VPC 라우팅을 사용하는 클러스터를 생성하려면 클러스터가 VPC에 있어야 합니다. 자세한 내용은 Amazon Redshift Cluster Management Guide의 향상된 VPC 라우팅을 참조하십시오.  
+이 옵션이 인 경우 `true`향상된 VPC 라우팅이 활성화됩니다.  
+기본값 : false  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`HsmClientCertificateIdentifier`  
+Amazon Redshift 클러스터가 HSM에 저장된 데이터 암호화 키를 검색하는 데 사용하는 HSM 클라이언트 인증서의 이름을 지정합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최대_: `2147483647`  
+_업데이트 필요 사항_: 중단 없음
+
+`HsmConfigurationIdentifier`  
+Amazon Redshift 클러스터가 HSM에서 키를 검색하고 저장하는 데 사용할 수 있는 정보가 포함된 HSM 구성의 이름을 지정합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최대_: `2147483647`  
+_업데이트 필요 사항_: 중단 없음
+
+`IamRoles`  
+클러스터에서 다른 AWS 서비스에 액세스하는 데 사용할 수 있는 AWS Identity and Access Management(IAM) 역할 목록입니다. IAM 역할을 Amazon 리소스 이름(ARN) 형식으로 제공해야 합니다.  
+연결할 수 있는 최대 IAM 역할 수에는 할당량이 적용됩니다. 자세한 내용은 _Amazon Redshift Cluster Management Guide의 할당량 및 제한을 참조하십시오_.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`KmsKeyId`  
+클러스터의 데이터를 암호화하는 데 사용할 암호화 키의 AWS Key Management Service(KMS) 키 ID입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최대_: `2147483647`  
+_업데이트 필요 사항_: 중단 없음
+
+`LoggingProperties`  
+지정된 Amazon Redshift 클러스터에 대한 로깅 정보(예: 쿼리 및 연결 시도)를 지정합니다.  
+*필수 항목 *여부: 아니요  
+_형식_: LoggingProperties  
+_업데이트 필요 사항_: 중단 없음
+
+`MaintenanceTrackName`  
+클러스터의 유지 관리 트랙 이름에 대한 선택적 매개 변수입니다. 유지 관리 트랙 이름을 제공하지 않으면 클러스터가 트랙에 할당됩니다 `current` .  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최대_: `2147483647`  
+_업데이트 필요 사항_: 중단 없음
+
+`ManualSnapshotRetentionPeriod`  
+수동 스냅샷을 보존할 기본 일 수입니다. 값이 -1이면 스냅샷이 무기한 보존됩니다. 이 설정은 기존 스냅샷의 보존 기간을 변경하지 않습니다.  
+값은 -1 또는 1에서 3,653 사이의 정수여야 합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`MasterUsername` 생성 중인 클러스터의 admin 사용자 계정과 연결된 사용자 이름입니다.  
+제약 조건:
+
+- 1 - 128자의 영숫자 또는 하이픈이어야 합니다. 사용자 이름은 `PUBLIC`.
+- 소문자, 숫자, 밑줄, 더하기 기호, 마침표(점), at 기호(@) 또는 하이픈만 포함해야 합니다.
+- 첫 번째 문자는 문자여야 합니다.
+- 콜론(:) 또는 슬래시(/)을 포함할 수 없습니다.
+- 예약어일 수 없습니다. 예약어 목록은 Amazon Redshift 데이터베이스 개발자 안내서의 예약어에서 확인할 수 있습니다.
+  _필수 항목 여부_: 예  
+  _유형_: 문자열  
+  _최대_: `2147483647`  
+  _업데이트 필요 사항_: 바꿔 놓음
+
+`MasterUserPassword` 생성 중인 클러스터의 admin 사용자 계정과 연결된 암호입니다.  
+제약 조건:
+
+- 길이는 8자에서 64자 사이여야 합니다.
+- 하나 이상의 대문자를 포함해야 합니다.
+- 하나 이상의 소문자를 포함해야 합니다.
+- 하나의 숫자를 포함해야 합니다.
+- (작은따옴표), `'` (큰따옴표), '', `"`또는 를 `/`제외한 모든 인쇄 가능한 ASCII 문자(ASCII 코드 33-126)일 수 있습니다`@`.
+  _필수 항목 여부_: 예  
+  _유형_: 문자열  
+  _최대_: `2147483647`  
+  _업데이트 필요 사항_: 중단 없음
+
+`NodeType`  
+클러스터에 대해 프로비저닝할 노드 유형입니다. 노드 유형에 대한 자세한 내용은 *Amazon Redshift Cluster Management Guide*의 클러스터 작업 단원을 참조하십시오.  
+유효한 값 : `ds2.xlarge` | `ds2.8xlarge` | `dc1.large` | `dc1.8xlarge` | `dc2.large` | `dc2.8xlarge` | `ra3.xlplus` | `ra3.4xlarge` | `ra3.16xlarge`  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최대_: `2147483647`  
+_업데이트 필요 사항_: 중단 없음
+
+`NumberOfNodes`  
+클러스터의 계산 노드 수입니다. 이 매개 변수는 **ClusterType** 매개 변수가 로 지정된 `multi-node` 경우에 필요합니다.  
+필요한 노드 수를 결정하는 방법에 대한 자세한 내용은 *Amazon Redshift Cluster Management Guide*의 클러스터 작업 단원을 참조하십시오.  
+이 매개 변수를 지정하지 않으면 단일 노드 클러스터가 생성됩니다. 다중 노드 클러스터를 요청할 때 클러스터에서 원하는 노드 수를 지정해야 합니다.  
+기본값: `1`  
+제약 조건: 값은 1 이상, 100 이하여야 합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`OwnerAccount`  
+스냅샷을 생성하거나 복사하는 데 사용되는 AWS 계정입니다. 소유하지 않은 스냅샷을 복원하는 경우 필수이며, 스냅샷을 소유하는 경우 선택 사항입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최대_: `2147483647`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Port`  
+클러스터가 들어오는 연결을 수락하는 포트 번호입니다.  
+클러스터는 JDBC 및 ODBC 연결 문자열을 통해서만 액세스할 수 있습니다. 연결 문자열의 일부에는 클러스터가 들어오는 연결을 수신 대기할 포트가 필요합니다.  
+기본값: `5439`  
+유효한 값 : `1150-65535`  
+*필수 항목 *여부 : 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`PreferredMaintenanceWindow`  
+자동화된 클러스터 유지 관리가 발생할 수 있는 주간 시간 범위(UTC)입니다.  
+ 판: `ddd:hh24:mi-ddd:hh24:mi`  
+ 기본값: 지역별 8시간 시간 블록 중에서 임의로 선택되는 30분 기간으로, 임의의 요일에 발생합니다. 각 리전의 타임 블록에 대한 자세한 내용은 Amazon Redshift Cluster Management Guide의 유지 관리 기간을 참조하십시오.  
+유효일: 월 | 화 | 수 | 목 | 금 | 토 | 태양  
+제약 조건: 최소 30분 기간.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최대_: `2147483647`  
+_업데이트 필요 사항_: 중단 없음
+
+`PubliclyAccessible`  
+인 경우 `true`공용 네트워크에서 클러스터에 액세스할 수 있습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`ResourceAction`  
+수행할 Amazon Redshift 작업입니다. 지원되는 작업은 `pause-cluster` 및 `resume-cluster`입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`RevisionTarget`  
+개체를 설명합니다 `RevisionTarget` .  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`RotateEncryptionKey`  
+클러스터의 암호화 키를 교체합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`SnapshotClusterIdentifier`  
+소스 스냅샷이 생성된 클러스터의 이름입니다. 이 파라미터는 사용자 또는 역할에 클러스터 이름에 대해 * 이외의 값을 지정하는 스냅샷 리소스 요소가 포함된 정책이 있는 경우에 필요합니다.  
+*필수 항목 *여부: 아니요  
+*유형*: 문자열  
+*최대*: `2147483647`  
+*업데이트 필요 사항\*: 바꿔 놓음
+
+`SnapshotCopyGrantName`  
+스냅샷 복사본 권한 부여의 이름입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최대_: `2147483647`  
+_업데이트 필요 사항_: 중단 없음
+
+`SnapshotCopyManual`  
+자동 스냅샷 대신 새로 복사된 수동 스냅샷에 스냅샷 보존 기간을 적용할지 여부를 나타냅니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`SnapshotCopyRetentionPeriod`  
+자동 스냅샷이 원본 AWS 리전에서 복사된 후 대상 AWS 리전에 보존할 기간(일)입니다.  
+기본적으로 이렇게 하면 복사된 자동 스냅샷의 보존 기간만 변경됩니다.  
+대상 AWS 리전에 복사된 자동 스냅샷의 보존 기간을 줄이면 Amazon Redshift는 대상 AWS 리전에 복사되었으며 새 보존 기간을 벗어난 기존 자동 스냅샷을 모두 삭제합니다.  
+제약 조건: 자동 스냅샷의 경우 1개 이상, 35개 이하여야 합니다.  
+이 옵션을 지정하면 `manual` 새로 복사된 수동 스냅샷에만 새 보존 기간이 적용됩니다.  
+값을 -1로 지정하면 새로 복사된 수동 스냅샷이 무기한 보존됩니다.  
+제약 조건: 수동 스냅샷의 경우 일 수는 -1 또는 1에서 3,653 사이의 정수여야 합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`SnapshotIdentifier`  
+새 클러스터를 생성할 스냅샷의 이름입니다. 이 매개 변수는 대/소문자를 구분하지 않습니다. 이 매개 변수 또는 를 지정해야 하지만 `snapshotArn`둘 다 지정해서는 안 됩니다.  
+예: `my-snapshot-id`  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최대_: `2147483647`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Tags`  
+태그 인스턴스 목록입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`VpcSecurityGroupIds`  
+클러스터와 연결할 Virtual Private Cloud(VPC) 보안 그룹 목록입니다.  
+기본값: 기본 VPC 보안 그룹이 클러스터와 연결되어 있습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`리소스 이름이 반환됩니다. 예를 들어:
+
+`{ "Ref": "myCluster" }`
+
+Amazon Redshift 클러스터의 경우 `myCluster`클러스터 `Ref` 의 이름을 반환합니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`DeferMaintenanceIdentifier` 유지 관리 기간의 고유 식별자입니다.
+
+`Endpoint.Address`  
+Amazon Redshift 클러스터의 연결 엔드포인트입니다. 예를 들면 다음과 같습니다 `examplecluster.cg034hpkmmjt.us-east-1.redshift.amazonaws.com`.
+
+`Endpoint.Port`  
+Amazon Redshift 클러스터가 연결을 수락하는 포트 번호입니다. 예를 들면 다음과 같습니다 `5439`.
+
+`Id`  
+클러스터의 고유 식별자입니다. 이 식별자를 사용하여 삭제 또는 수정과 같은 후속 클러스터 작업을 위해 클러스터를 참조합니다. 식별자는 Amazon Redshift 콘솔에도 표시됩니다.  
+본보기: `myexamplecluster`
+
+## 예제
+
+### 단일 노드 클러스터
+
+다음 예제에서는 단일 노드 Redshift 클러스터에 대해 설명합니다. 마스터 사용자 암호는 동일한 템플릿에 있는 입력 매개 변수에서 참조됩니다.
+
+#### JSON (영문)
+
+```
+{
+"myCluster": {
+  "Type": "AWS::Redshift::Cluster",
+  "Properties": {
+    "DBName": "mydb",
+    "MasterUsername": "master",
+    "MasterUserPassword": { "Ref" : "MasterUserPassword" },
+    "NodeType": "ds2.xlarge",
+    "ClusterType": "single-node",
+    "Tags": [{
+        "Key": "foo",
+        "Value": "bar"
+     }
+    ]
+  }
+}
+```
+
+## 참고 항목
+
+- 전체 예제 템플릿은 Amazon Redshift 템플릿 코드 조각 단원을 참조하십시오.
+- Redshift API 참조*의 CreateCluster*.

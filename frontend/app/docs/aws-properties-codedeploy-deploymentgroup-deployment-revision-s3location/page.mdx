@@ -1,0 +1,58 @@
+# AWS::CodeDeploy::D eploymentGroup S3Location
+
+`S3Location` 는 Amazon Simple Storage Service(Amazon S3)에 저장된 애플리케이션 개정의 위치를 지정하는 CodeDeploy DeploymentGroup Revision 속성의 속성입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Bucket" : String,
+  "BundleType" : String,
+  "ETag" : String,
+  "Key" : String,
+  "Version" : String
+}
+```
+
+## 속성
+
+`Bucket`  
+애플리케이션 개정이 저장된 Amazon S3 버킷의 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`BundleType` 응용 프로그램 수정 버전의 파일 형식입니다. 다음 중 하나여야 합니다.
+
+- JSON (영문)
+- tar: tar 아카이브 파일입니다.
+- tgz: 압축된 tar 아카이브 파일입니다.
+- zip: zip 아카이브 파일입니다.
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열  
+  _허용되는 값_: `JSON | tar | tgz | zip`  
+  _업데이트 필요 사항_: 중단 없음
+
+`ETag`  
+애플리케이션 개정에 대한 번들 아티팩트를 나타내는 Amazon S3 객체의 ETag입니다.  
+ETag가 입력 매개 변수로 지정되지 않은 경우 개체의 ETag 유효성 검사를 건너뜁니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Key`  
+애플리케이션 개정에 대한 번들 아티팩트를 나타내는 Amazon S3 객체의 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Version`  
+애플리케이션 개정에 대한 번들 아티팩트를 나타내는 Amazon S3 객체의 특정 버전입니다.  
+버전을 지정하지 않으면 시스템은 기본적으로 최신 버전을 사용합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
