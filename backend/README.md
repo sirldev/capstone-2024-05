@@ -23,17 +23,56 @@
     - app폴더로 이동 후
     - uvicorn main:app --reload
 
+### ENV
+
+DB_URL
+
+ACCESS_TOKEN_EXPIRE_MINUTES
+
+SECRET_KEY
+
+ALGORITHM
+
+PINECONE_APIKEY
+
+OPENAI_APIKEY
+
 ### 서버 디렉토리 구조
 
-    - [출처](https://taptorestart.tistory.com/entry/FastAPI-%EB%94%94%EB%A0%89%ED%84%B0%EB%A6%AC-%EA%B5%AC%EC%A1%B0%EB%A5%BC-%EC%96%B4%EB%96%BB%EA%B2%8C-%ED%95%98%EB%8A%94-%EA%B2%8C-%EC%A2%8B%EC%9D%84%EA%B9%8C)
-    - fastAPI 개발자의 제안사항이다.
-    - /api : 엔드포인트별로 파일 구분
-        - endpoints: items.py, login.py, users.py, utils.py
-    - /core: 공통 파일 config.py, security.py, celery_app.py
-    - /crud: 기본 get, create, update, remove base.py, crud_item.py, crud_user.py
-    - /db: 데이터베이스 관련 파일 base.py, base_class.py, init_db.py, session.py
-    - /models: 데이터베이스 테이블과 매칭되는 모델 item.py, user.py
-    - /schemas: 스프링의 DTO와 비슷 item.py, user.py, msg.py, token.py
-    - /tests: 테스트 파일
-
-    위 내용을 참고하여 구조화 했다. (개발과정에서 수정될 가능성이 매우 높다.)
+    - /app
+        - /api : API 코드가 모여있는 폴더입니다.
+            - /routes : domain별로 구분하여 개발 중입니다.
+                - templates.py
+                - users.pu
+            - main.py
+        - /db : 데이터베이스 관련 코드가 모여있는 폴더입니다.
+            - database.py : 현재 운영중인 DB를 연결하는 코드입니다.
+                - DB의존성 주입을 위한 get_db 메서드가 있습니다.
+                    - 세션 생성, 운영, 종료를 처리해주는 함수입니다.
+                    - DB사용 시에는 이 메서드 사용해주시면 됩니다.
+                    - api 메서드 파라미터에 db: Session = Depends(get_db) 작성해주시고 db 객체 사용해주시면 됩니다.
+            - models.py
+        - /retrieval
+            - init_vector_db.py
+            - markdown_splitter.py
+            - rag_prototype.py
+            - rag.py
+            - settings.py
+        - /static
+            - /examples
+                - example-error.json
+                - example-valid.json
+            - style.css
+        - /templates
+            - item.html
+            - main.html
+            - template-validation-fail.html
+            - template-validation-success.html
+        - /utils
+            - gpt.py
+            - setup.py
+        - main.py
+    - .env
+        : 데이터베이스 URL을 저장해야합니다. 연락주시면(현승) 별도로 전달드리겠습니다. (DB_URL)
+    - README.md
+    - requirements.txt

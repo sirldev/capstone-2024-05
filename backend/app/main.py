@@ -1,50 +1,46 @@
-import os
-import sys
-from typing import Union, List
+import json
+import subprocess
+from typing import List, Union
 
-from fastapi import FastAPI, Request, HTTPException, Depends
+# for db
+from db import models
+from db.database import engine
+from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from langchain.chat_models import ChatOpenAI
 from pydantic import BaseModel
-
 from retrieval.rag import retrieve_doc
-from utils.gpt import gpt_generate_no_rag, gpt_genereate
-from utils.setup import setup_db, setup_embedding, setup_pinecone
-
-import typer
-import subprocess
-import json
-
-
 from sqlalchemy.orm import Session
+from utils.gpt import gpt_genereate
+from utils.setup import setup_embedding, setup_pinecone
 
-from db import crud, models, schemas
-from db.database import SessionLocal, engine
+app = FastAPI()
+models.Base.metadata.create_all(bind=engine)
+db = None
+pc_index = None
+embedding = None
+llm = None
 
-# sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
+
+class HashTagBase(BaseModel):
+    tag: str
 
 
+###### retrieval code ######
 class Instruction(BaseModel):
     instruction_sentence: str
 
 
 class Answer(BaseModel):
     template_file: Union[str, None]
-
-
-app = FastAPI()
-db = None
-pc_index = None
-embedding = None
-
-
-###### retrieval code ######
+    reference_documents: Union[List[str], None]
 
 
 @app.on_event("startup")
 def startup_event():
-    global db, pc_index, embedding
+    global db, pc_index, embedding, llm
 
     # mysql
     # db = setup_db()
@@ -54,20 +50,18 @@ def startup_event():
 
     # openai
     embedding = setup_embedding()
+    llm = ChatOpenAI()
 
 
-# @app.post("/generate", response_model=Answer)
-# async def generate(instruction: Instruction):
-#     inst_sentence = instruction.instruction_sentence
+@app.post("/generate", response_model=Answer)
+async def generate(instruction: Instruction):
+    inst_sentence = instruction.instruction_sentence
 
-#     retrieved_doc = retrieve_doc(
-#         question=inst_sentence, vector_db=pc_index, embedding=embedding, top_k=1
-#     )
+    retrieved_doc = retrieve_doc(question=inst_sentence, pc_index=pc_index, embedding=embedding, llm=llm)
 
-#     # template_file = gpt_genereate(instruction=instruction, retrieved_doc=retrieved_doc)
-#     template_file = gpt_generate_no_rag(instruction=instruction)
+    template_file, documents_list = gpt_genereate(instruction=instruction, retrieved_doc=retrieved_doc)
 
-#     return Answer(template_file=template_file)
+    return Answer(template_file=template_file, reference_documents=documents_list)
 
 
 ###### template validate code ######
@@ -79,14 +73,6 @@ templates = Jinja2Templates(directory="templates")
 @app.get("/", response_class=HTMLResponse)
 def read_root(request: Request):
     return templates.TemplateResponse(request=request, name="main.html")
-
-
-@app.get("/items/{id}", response_class=HTMLResponse)
-async def read_item(request: Request, id: int):
-
-    return templates.TemplateResponse(
-        request=request, name="item.html", context={"id": id}
-    )
 
 
 @app.get("/template_validation/{file_name}", response_class=HTMLResponse)
@@ -130,29 +116,6 @@ def validation_template(request: Request, file_name: str):
         )
 
 
-###### Template Hub API Section ######
-@app.get("/api/")
-def root():
-    return {"message": "This is backend side API section"}
+from api.router import api_router
 
-
-# 종속성 만들기 : 요청 당 독립적인 데이터베이스 세션/연결이 필요하고 요청이 완료되면 닫음
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
-
-
-@app.get("/items/", response_model=List[schemas.Item])
-def read_items(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    items = crud.get_items(db, skip=skip, limit=limit)
-    return items
-
-
-@app.post("/items/", response_model=schemas.Item)
-def create_item_for_user(
-    user_id: int, item: schemas.ItemCreate, db: Session = Depends(get_db)
-):
-    return crud.create_user_item(db=db, item=item, user_id=user_id)
+app.include_router(api_router)

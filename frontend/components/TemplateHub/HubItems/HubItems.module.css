@@ -1,0 +1,127 @@
+.wrapper {
+  position: relative;
+  box-sizing: border-box;
+  padding-top: rem(80px);
+
+  background-color: light-dark(
+    var(--mantine-color-white),
+    var(--mantine-color-dark-8)
+  );
+}
+
+.inner {
+  position: relative;
+  padding-top: rem(40px);
+  padding-bottom: rem(180px);
+
+  @media (max-width: $mantine-breakpoint-sm) {
+    padding-bottom: rem(80px);
+    padding-top: rem(80px);
+  }
+}
+
+.title {
+  font-family:
+    Greycliff CF,
+    var(--mantine-font-family);
+  font-size: rem(32px);
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0;
+  padding: 0;
+  color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+
+  @media (max-width: $mantine-breakpoint-sm) {
+    font-size: rem(42px);
+    line-height: 1.2;
+  }
+}
+
+.description {
+  margin-top: var(--mantine-spacing-xl);
+  font-size: rem(24px);
+
+  @media (max-width: $mantine-breakpoint-sm) {
+    font-size: rem(18px);
+  }
+}
+
+.controls {
+  margin-top: calc(var(--mantine-spacing-xl) * 2);
+
+  @media (max-width: $mantine-breakpoint-sm) {
+    margin-top: var(--mantine-spacing-xl);
+  }
+}
+
+.control {
+  height: rem(54px);
+  padding-left: rem(38px);
+  padding-right: rem(38px);
+
+  @media (max-width: $mantine-breakpoint-sm) {
+    height: rem(54px);
+    padding-left: rem(18px);
+    padding-right: rem(18px);
+    flex: 1;
+  }
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-radius: var(--mantine-radius-md);
+  height: rem(90px);
+  background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-7));
+  transition:
+    box-shadow 150ms ease,
+    transform 100ms ease;
+
+  @mixin hover {
+    box-shadow: var(--mantine-shadow-md);
+    transform: scale(1.05);
+  }
+}
+
+.card {
+  border: rem(1px) solid light-dark(var(--mantine-color-gray-1), var(--mantine-color-dark-5));
+  display: flex;
+  flex-direction: column;
+  position: relative; /* 포지셔닝 컨텍스트를 설정 */
+  height: 100%;
+  transition:
+    box-shadow 150ms ease,
+    transform 100ms ease;
+    
+  @mixin hover {
+    box-shadow: var(--mantine-shadow-md);
+    transform: scale(1.05);
+  }
+}
+
+.userName {
+  
+  margin-top: auto; /* 나머지 요소들을 위로 밀고 자신은 아래에 위치 */
+  margin-left: auto; /* 왼쪽 내용을 밀고 자신은 오른쪽에 위치 */
+}
+
+.cardTitle {
+  /* &::before {
+    content: '';
+    display: block;
+    background-color: var(--mantine-color-blue-filled);
+    width: rem(45px);
+    height: rem(2px);
+    margin-bottom: var(--mantine-spacing-sm);
+  } */
+}
+
+.badges {
+  display: flex;       /* flexbox 사용 */
+  flex-wrap: wrap;     /* 요소들이 한 줄에 담기지 않으면 다음 줄로 넘어가게 함 */
+  gap: 10px;           /* 배지 사이의 수직 및 수평 간격 설정 */
+  margin: 0px;        /* 컨테이너의 외부 여백 설정 */
+}

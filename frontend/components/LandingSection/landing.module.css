@@ -8,9 +8,9 @@
 }
 
 .inner {
-    position: relative;
-    padding-top: rem(200px);
-    padding-bottom: rem(120px);
+  position: relative;
+  padding-top: rem(200px);
+  padding-bottom: rem(0px);
 
     @media (max-width: $ mantine-breakpoint-sm) {
         padding-bottom: rem(80px);
@@ -21,12 +21,12 @@
 .title {
     font-family: Greycliff CF,
     var(--mantine-font-family);
-    font-size: rem(62px);
-    font-weight: 900;
-    line-height: 1.1;
-    margin: 0;
-    padding: 0;
-    color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+  font-size: rem(52px);
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0;
+  padding: 0;
+  color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
 
     @media (max-width: $ mantine-breakpoint-sm) {
         font-size: rem(42px);

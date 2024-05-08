@@ -1,8 +1,14 @@
+// 'use client'
+
 import '@mantine/core/styles.css';
 import '@mantine/nprogress/styles.css';
 import '@/app/globals.css';
 
 import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import { usePathname } from 'next/navigation';
+import './globals.css';
+import Header from '@/components/Header';
 
 import { ColorSchemeScript, MantineProvider, createTheme } from '@mantine/core';
 
@@ -23,6 +29,9 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // const pathname = usePathname();
+  // const showHeader = !pathname.includes('/login'); // 로그인 페이지가 아닐 때 헤더 표시
+
   return (
     <html lang="en">
       <head>
