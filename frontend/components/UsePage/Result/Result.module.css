@@ -9,8 +9,9 @@
 
 .inner {
   position: relative;
-  padding-top: rem(200px);
+  padding-top: rem(0px);
   padding-bottom: rem(0px);
+  padding-left: rem(0px);
 
   @media (max-width: $mantine-breakpoint-sm) {
     padding-bottom: rem(80px);

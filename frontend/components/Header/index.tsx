@@ -1,21 +1,33 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Container, Group, Burger, Text } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import classes from './header.module.css';
 import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
 
 const links = [
   { link: '/', label: 'About' },
-  { link: '/pricing', label: 'Template Generator' },
-  { link: '/learn', label: 'Template Hub' },
-  //   { link: '/community', label: 'Community' },
+  { link: '/generator', label: 'Template Generator' },
+  { link: '/hub', label: 'Template Hub' },
+  { link: '/login', label: 'Login' },
 ];
 
 export default function Header() {
+
+  // useEffect(() => {
+  //   setActive(router);
+  // }, [router.pathname]);
+
+  const router = useRouter()
+  const pathname = usePathname()
   const [opened, { toggle }] = useDisclosure(false);
   const [active, setActive] = useState(links[0].link);
+
+  useEffect(() => {
+    setActive(pathname)
+  }, [pathname])
 
   const items = links.map((link) => (
     <Link
@@ -24,7 +36,8 @@ export default function Header() {
       className={classes.link}
       data-active={active === link.link || undefined}
       onClick={(event) => {
-        event.preventDefault();
+        // event.preventDefault();
+        router.push(link.link)
         setActive(link.link);
       }}
     >
@@ -45,11 +58,11 @@ export default function Header() {
           StackOrderFlow
         </Text>
         {/* <div className="font-bold text-[#0076E2]">StackOrderFlow</div> */}
-        <Group gap={5} visibleFrom="xs">
+        <Group gap={5} visibleFrom="sm">
           {items}
         </Group>
 
-        <Burger opened={opened} onClick={toggle} hiddenFrom="xs" size="sm" />
+        <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
       </Container>
     </header>
   );
