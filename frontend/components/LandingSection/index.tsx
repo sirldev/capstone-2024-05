@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { Container, Text, Button, Group } from '@mantine/core';
 // import { GithubIcon } from '@mantinex/dev-icons';
@@ -9,11 +9,11 @@ import Usage from './Usage';
 import { useRouter } from 'next/navigation';
 
 export default function LandingSection() {
-  const router = useRouter()
+  const router = useRouter();
   return (
     <div className={classes.wrapper}>
       <Container size={700} className={classes.inner}>
-        <h1 className={classes.title} >
+        <h1 className={classes.title}>
           {/* A{' '}
           <Text
             component="span"
@@ -24,12 +24,14 @@ export default function LandingSection() {
             fully featured
           </Text>{' '}
           React components and hooks library */}
-          쉽고, 빠르게, 실수없이 <br />AWS를 시작하세요
+          쉽고, 빠르게, 실수없이 <br />
+          AWS를 시작하세요
           {/* <br/> AWS CloudFormation <br/> 템플릿을 생성해보세요. */}
         </h1>
 
         <Text className={classes.description} color="dimmed">
-          필요한 리소스들을 입력하세요. 사용자의 자연어 입력을 분석하여 AWS CloudFormation 템플릿을 자동으로 생성해 줍니다.
+          필요한 리소스들을 입력하세요. 사용자의 자연어 입력을 분석하여 AWS
+          CloudFormation 템플릿을 자동으로 생성해 줍니다.
         </Text>
 
         <Group className={classes.controls}>
@@ -40,7 +42,7 @@ export default function LandingSection() {
             gradient={{ from: 'blue', to: 'cyan' }}
             onClick={(event) => {
               // event.preventDefault();
-              router.push('/generator')
+              router.push('/generator');
               // setActive('/generator');
             }}
           >

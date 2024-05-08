@@ -1,5 +1,5 @@
-import DetailPage from "@/components/Detail";
+import DetailPage from '@/components/Detail';
 
 export default function TemplateHubPage() {
-  return <DetailPage />
+  return <DetailPage />;
 }

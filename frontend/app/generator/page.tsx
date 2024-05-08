@@ -1,5 +1,5 @@
-import UsePage from "@/components/UsePage";
+import UsePage from '@/components/UsePage';
 
 export default function GeneratorPage() {
-  return <UsePage />
+  return <UsePage />;
 }

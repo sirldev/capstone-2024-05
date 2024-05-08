@@ -1,6 +1,20 @@
 'use client';
 
-import { Container, Title, LoadingOverlay, Loader, Textarea, Text, Button, Group, AppShell, Burger, Grid, SimpleGrid, Paper } from '@mantine/core';
+import {
+  Container,
+  Title,
+  LoadingOverlay,
+  Loader,
+  Textarea,
+  Text,
+  Button,
+  Group,
+  AppShell,
+  Burger,
+  Grid,
+  SimpleGrid,
+  Paper,
+} from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import {
   IconGauge,
@@ -8,7 +22,7 @@ import {
   IconUser,
   IconMessage2,
   IconLock,
-  IconArrowRight
+  IconArrowRight,
 } from '@tabler/icons-react';
 import Link from 'next/link';
 // import { GithubIcon } from '@mantinex/dev-icons';
@@ -24,7 +38,6 @@ import { useState } from 'react';
 import Result from './Result';
 
 export default function UsePage() {
-  
   const [currentComponent, setCurrentComponent] = useState('AWSDescription');
   const [visible, setVisible] = useState(false);
 
@@ -61,46 +74,44 @@ export default function UsePage() {
           </Grid>
         </Container> */}
 
+      {currentComponent === 'AWSDescription' ? (
+        <Container size="lg" className={classes.inner}>
+          <Title className={classes.title} mt={0}>
+            어떤 AWS 리소스가 필요하세요?
+          </Title>
 
-        {currentComponent === 'AWSDescription' ? 
-          <Container size="lg" className={classes.inner}>
-          
-            <Title className={classes.title} mt={0}>
-                어떤 AWS 리소스가 필요하세요?
-            </Title> 
-            
-            <Grid grow mt='xl'>
-              <Grid.Col span={8}>
-                <UserInput onButtonClick={handleComponentChange}/>
-              </Grid.Col>
-              <Grid.Col span={4}>
-                <AWSDescription />
-              </Grid.Col>
-            </Grid>
+          <Grid grow mt="xl">
+            <Grid.Col span={8}>
+              <UserInput onButtonClick={handleComponentChange} />
+            </Grid.Col>
+            <Grid.Col span={4}>
+              <AWSDescription />
+            </Grid.Col>
+          </Grid>
 
-            <LoadingOverlay visible={visible} loaderProps={{ children: <Loader color="blue" size="xl" type="dots" /> }} />
-          </Container> :
-          
-          <Container size="lg" className={classes.inner}>
-          
-            <Title className={classes.title} mt={0}>
-              템플릿 생성 완료
-            </Title> 
-            
-            <Grid grow mt='xl'>
-              <Grid.Col span={8}>
-                <Result />
-              </Grid.Col>
-              <Grid.Col span={4}>
-                <References />
-              </Grid.Col>
-            </Grid>
+          <LoadingOverlay
+            visible={visible}
+            loaderProps={{
+              children: <Loader color="blue" size="xl" type="dots" />,
+            }}
+          />
+        </Container>
+      ) : (
+        <Container size="lg" className={classes.inner}>
+          <Title className={classes.title} mt={0}>
+            템플릿 생성 완료
+          </Title>
 
-            
-          </Container>
-        }
-          
-          
+          <Grid grow mt="xl">
+            <Grid.Col span={8}>
+              <Result />
+            </Grid.Col>
+            <Grid.Col span={4}>
+              <References />
+            </Grid.Col>
+          </Grid>
+        </Container>
+      )}
     </div>
   );
 }

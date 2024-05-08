@@ -15,19 +15,18 @@ const links = [
 ];
 
 export default function Header() {
-
   // useEffect(() => {
   //   setActive(router);
   // }, [router.pathname]);
 
-  const router = useRouter()
-  const pathname = usePathname()
+  const router = useRouter();
+  const pathname = usePathname();
   const [opened, { toggle }] = useDisclosure(false);
   const [active, setActive] = useState(links[0].link);
 
   useEffect(() => {
-    setActive(pathname)
-  }, [pathname])
+    setActive(pathname);
+  }, [pathname]);
 
   const items = links.map((link) => (
     <Link
@@ -37,7 +36,7 @@ export default function Header() {
       data-active={active === link.link || undefined}
       onClick={(event) => {
         // event.preventDefault();
-        router.push(link.link)
+        router.push(link.link);
         setActive(link.link);
       }}
     >

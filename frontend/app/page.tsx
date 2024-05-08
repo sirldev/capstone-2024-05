@@ -121,6 +121,5 @@ export default function Home() {
 
     <LandingSection />
     // <UsePage />
-
   );
 }

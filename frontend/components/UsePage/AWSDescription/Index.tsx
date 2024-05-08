@@ -1,5 +1,19 @@
-import { Title, SimpleGrid, Text, Button, ThemeIcon, Grid, rem, Container } from '@mantine/core';
-import { IconReceiptOff, IconFlame, IconCircleDotted, IconFileCode } from '@tabler/icons-react';
+import {
+  Title,
+  SimpleGrid,
+  Text,
+  Button,
+  ThemeIcon,
+  Grid,
+  rem,
+  Container,
+} from '@mantine/core';
+import {
+  IconReceiptOff,
+  IconFlame,
+  IconCircleDotted,
+  IconFileCode,
+} from '@tabler/icons-react';
 import classes from './AWSDesciption.module.css';
 
 const features = [
@@ -22,8 +36,7 @@ const features = [
   {
     icon: IconFlame,
     title: 'DynamoDB',
-    description:
-      '관리형 NoSQL 데이터베이스',
+    description: '관리형 NoSQL 데이터베이스',
   },
 ];
 
@@ -48,18 +61,18 @@ export function AWSDescription() {
   ));
 
   return (
-        <Container className={classes.wrapper} >
+    <Container className={classes.wrapper}>
+      <Title className={classes.title} order={2}>
+        AWS 란?
+      </Title>
+      <Text c="dimmed">
+        AWS는 가상 서버부터 인공 지능에 이르기까지 다양한 서비스와 도구를
+        제공하여, 사용자가 IT 인프라를 구축하고 관리할 수 있게 지원합니다.
+      </Text>
 
-            <Title className={classes.title} order={2}>
-                AWS 란?
-            </Title>
-            <Text c="dimmed">
-                AWS는 가상 서버부터 인공 지능에 이르기까지 다양한 서비스와 도구를 제공하여, 사용자가 IT 인프라를 구축하고 관리할 수 있게 지원합니다.
-            </Text>
-
-            <SimpleGrid cols={{ base: 1, sm: 1, md: 1 }} spacing={20} mt={20}>
-                {items}
-            </SimpleGrid>
-        </Container>
+      <SimpleGrid cols={{ base: 1, sm: 1, md: 1 }} spacing={20} mt={20}>
+        {items}
+      </SimpleGrid>
+    </Container>
   );
 }

@@ -12,7 +12,6 @@ import Header from '@/components/Header';
 
 import { ColorSchemeScript, MantineProvider, createTheme } from '@mantine/core';
 
-import Header from '@/components/Header';
 import { NavigationProgress } from '@mantine/nprogress';
 
 export const metadata: Metadata = {

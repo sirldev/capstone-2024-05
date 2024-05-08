@@ -1,5 +1,5 @@
-import TemplateHub from "@/components/TemplateHub";
+import TemplateHub from '@/components/TemplateHub';
 
 export default function TemplateHubPage() {
-  return <TemplateHub />
+  return <TemplateHub />;
 }

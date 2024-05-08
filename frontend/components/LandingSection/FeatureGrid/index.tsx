@@ -92,14 +92,13 @@ export default function FeaturesGrid() {
     <Container className={classes.wrapper}>
       <Title className={classes.title}>
         <Text
-              component="span"
-              variant="gradient"
-              gradient={{ from: 'blue', to: 'cyan' }}
-              inherit
-            >
-              Feature
+          component="span"
+          variant="gradient"
+          gradient={{ from: 'blue', to: 'cyan' }}
+          inherit
+        >
+          Feature
         </Text>{' '}
-        
       </Title>
 
       <Container size={700} p={0}>
@@ -118,17 +117,15 @@ export default function FeaturesGrid() {
       </SimpleGrid>
       {/*  */}
 
-      
-
       <Title className={classes.title} mt={60}>
-      <Text
-            component="span"
-            variant="gradient"
-            gradient={{ from: 'blue', to: 'cyan' }}
-            inherit
-          >
-            Differences
-          </Text>{' '}
+        <Text
+          component="span"
+          variant="gradient"
+          gradient={{ from: 'blue', to: 'cyan' }}
+          inherit
+        >
+          Differences
+        </Text>{' '}
       </Title>
 
       <Container size={700} p={0}>
