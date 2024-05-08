@@ -49,10 +49,11 @@ export default function LandingSection() {
 
           {/* <Button
             component="a"
-            href="https://github.com/mantinedev/mantine"
+            href="https://github.com/kookmin-sw/capstone-2024-05"
             size="xl"
             variant="default"
             className={classes.control}
+            target="_blank"
             // leftSection={<GithubIcon size={20} />}
           >
             GitHub

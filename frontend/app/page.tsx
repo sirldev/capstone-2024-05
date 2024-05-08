@@ -1,5 +1,5 @@
-import CommonTypeWriter from '@/components/CommonTypeWriter';
 import LandingSection from '@/components/LandingSection';
+
 import UsePage from '@/components/UsePage';
 import Image from 'next/image';
 import { Router } from 'next/router';
