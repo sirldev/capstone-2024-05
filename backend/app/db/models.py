@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKey, Integer, String, DateTime, Table
+from sqlalchemy import Column, ForeignKey, Integer, String, DateTime, Table, ARRAY
 from sqlalchemy.dialects.postgresql import JSON
 
 from .database import Base
@@ -24,6 +24,7 @@ class PromptAns(Base):
     prompt = Column(String, nullable=False)
     template = Column(JSON, nullable=False)
     description = Column(String, nullable=False)
+    documents = Column(ARRAY(String), nullable=False)
     created = Column(DateTime, default=datetime.now, nullable=False)
     uploaded = Column(
         DateTime, nullable=True
@@ -44,15 +45,8 @@ class HashTag(Base):
 
 # association table HashTag and PromptAns
 PromptAns_HashTag = Table(
-    "PromptAns-HashTag",
+    "promptAns-hashtag",
     Base.metadata,
     Column("prompt_ans_id", Integer, ForeignKey("promptAns.id")),
     Column("hashtag_id", Integer, ForeignKey("hashtags.id")),
-)
-# association table PromptAns and Document from other DBMS
-PromptAns_Documents = Table(
-    "PromptAns-Documents",
-    Base.metadata,
-    Column("prompt_ans_id", Integer, ForeignKey("promptAns.id")),
-    Column("document_id", Integer),  # 이 값은 Pinecone 에서 가져와야합니다.
 )
