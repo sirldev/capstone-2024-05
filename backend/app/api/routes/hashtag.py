@@ -72,6 +72,8 @@ resources = [
 # 해시태그를 사전에 만들어놓기 위한 코드입니다.
 @router.get("/store_default_to_db")
 def store_default_to_db(request: Request, db: Session = Depends(get_db)):
+    if request.body.text != "재생성하지마세요":
+        return "재생성하지마세요"
     for resource in resources:
         isntance = HashTag(tag=resource)
         db.add(isntance)
