@@ -1,0 +1,34 @@
+# AWS::CloudFront::ResponseHeadersPolicy AccessControlAllow메서드
+
+CloudFront에서 HTTP 응답 헤더의 값으로 포함하는 HTTP 메서드 목록 `Access-Control-Allow-Methods` 입니다.
+
+HTTP 응답 헤더에 대한 자세한 `Access-Control-Allow-Methods` 내용은 MDN Web Docs의 Access-Control-Allow-Methods를 참조하십시오.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Items" : [ String, ... ]
+}
+```
+
+## 속성
+
+`Items` HTTP 메서드 목록입니다. 유효한 값은 다음과 같습니다.
+
+- `GET`
+- `DELETE`
+- `HEAD`
+- `OPTIONS`
+- `PATCH`
+- `POST`
+- `PUT`
+- `ALL`
+  `ALL` 는 나열된 모든 HTTP 메서드를 포함하는 특수 값입니다.  
+  _필수 항목 여부_: 예  
+  _유형_: 문자열 목록  
+  _업데이트 필요 사항_: 중단 없음

@@ -1,0 +1,36 @@
+# AWS::경로53::D NSSEC
+
+이 `AWS::Route53::DNSSEC` 리소스는 호스팅 영역에서 DNSSEC 서명을 활성화하는 데 사용됩니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::Route53::DNSSEC",
+  "Properties" : {
+      "HostedZoneId" : String
+    }
+}
+```
+
+## 속성
+
+`HostedZoneId`  
+호스팅 영역을 식별하는 데 사용되는 고유 문자열(ID)입니다. 예를 들면 다음과 같습니다 `Z00001111A1ABCaaABC11`.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 intrinsic 함수에 전달하면 `Ref` `Ref`호스팅 영역 ID가 반환됩니다. 예를 들어:
+
+`{ "Ref": "Z00001111A1ABCaaABC11" }`
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.

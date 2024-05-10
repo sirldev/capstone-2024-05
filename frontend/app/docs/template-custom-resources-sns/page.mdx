@@ -1,0 +1,246 @@
+# Amazon Simple Notification Service 지원 사용자 지정 리소스
+
+Amazon SNS 주제를 사용자 지정 리소스와 연결할 때 Amazon SNS 알림을 사용하여 사용자 지정 프로비저닝 로직을 호출합니다. 사용자 지정 리소스와 Amazon SNS를 사용하면 스택에 새 리소스를 추가하고 스택에 동적 데이터를 주입하는 등의 시나리오를 활성화할 수 있습니다. 예를 들어, 스택을 생성할 때 AWS CloudFormation `create` 은 Amazon Elastic Compute Cloud 인스턴스에서 실행 중인 애플리케이션이 모니터링하는 주제로 요청을 보낼 수 있습니다. Amazon SNS 알림은 애플리케이션이 추가 프로비저닝 작업(예: 허용 목록에 있는 탄력적 IP 주소 풀 검색)을 수행하도록 트리거합니다. 작업이 완료되면 애플리케이션은 스택 작업을 진행하도록 AWS CloudFormation에 알리는 응답(및 모든 출력 데이터)을 보냅니다.
+
+## 연습: Amazon Simple Notification Service를 사용하여 사용자 지정 리소스 생성
+
+이 연습에서는 사용자 지정 리소스 프로세스를 단계별로 진행하면서 사용자 지정 리소스 스택 생성, 업데이트 및 삭제의 결과로 보내고 받는 이벤트 및 메시지의 순서를 설명합니다.
+
+### 1단계: 스택 생성
+
+1. 템플릿 개발자는 사용자 지정 리소스가 포함된 AWS CloudFormation 스택을 생성합니다. 아래 템플릿 예제에서는 `Custom::SeleniumTester` 사용자 지정 리소스에 대한 사용자 지정 리소스 유형 이름을 사용합니다`MySeleniumTest`.
+
+   사용자 지정 리소스 종류는 _서비스 토큰_, 선택적 *공급자별 속성 *및 `Fn::GetAtt` 사용자 지정 리소스 공급자에 의해 정의된 선택적 특성으로 선언됩니다. 이러한 속성과 특성은 템플릿 개발자에서 사용자 지정 리소스 공급자로 또는 그 반대로 정보를 전달하는 데 사용할 수 있습니다. 사용자 지정 리소스 종류 이름은 영숫자여야 하며 최대 길이는 60자일 수 있습니다.
+
+   다음 예제에서는 사용자 지정 속성과 반환 특성이 모두 있는 템플릿을 보여 줍니다.
+
+   ```
+   {
+      "AWSTemplateFormatVersion" : "2010-09-09",
+      "Resources" : {
+         "MySeleniumTest" : {
+            "Type": "Custom::SeleniumTester",
+            "Version" : "1.0",
+            "Properties" : {
+               "ServiceToken": "arn:aws:sns:us-west-2:123456789012:CRTest",
+               "seleniumTester" : "SeleniumTest()",
+               "endpoints" : [ "http://mysite.com", "http://myecommercesite.com/", "http://search.mysite.com" ],
+               "frequencyOfTestsPerHour" : [ "3", "2", "4" ]
+            }
+         }
+      },
+      "Outputs" : {
+         "topItem" : {
+            "Value" : { "Fn::GetAtt" : ["MySeleniumTest", "resultsPage"] }
+         },
+         "numRespondents" : {
+            "Value" : { "Fn::GetAtt" : ["MySeleniumTest", "lastUpdate"] }
+         }
+      }
+   }
+   ```
+
+   **메모**  
+   액세스할 때 액세스한 데이터의 이름과 값은 `Fn::GetAtt` AWS CloudFormation에 대한 공급자의 응답 중에 사용자 지정 리소스 공급자에 의해 반환됩니다. 사용자 지정 리소스 공급자가 타사인 경우 템플릿 개발자는 사용자 지정 리소스 공급자로부터 이러한 반환 값의 이름을 가져와야 합니다.
+
+1. AWS CloudFormation은 스택에 대한 정보, 스택 템플릿의 사용자 지정 리소스 속성 및 응답에 대한 S3 URL이 포함된`"RequestType" : "Create"` Amazon SNS 알림을 리소스 공급자에게 보냅니다.
+
+   알림을 보내는 데 사용되는 SNS 주제는 속성의 템플릿에 포함됩니다 `ServiceToken` . 하드 코딩된 값을 사용하지 않기 위해 템플릿 개발자는 스택이 시작될 때 값이 입력되도록 템플릿 파라미터를 사용할 수 있습니다.
+
+   다음 예제에서는 사용자 지정 리소스 유형 이름, `Create`, `Custom::SeleniumTester` 를 `LogicalResourceId` 사용하여 만든 사용자 지정 리소스 요청을 보여 `MySeleniumTester` 줍니다.
+
+   ```
+   {
+      "RequestType" : "Create",
+      "ResponseURL" : "http://pre-signed-S3-url-for-response",
+      "StackId" : "arn:aws:cloudformation:us-west-2:123456789012:stack/stack-name/guid",
+      "RequestId" : "unique id for this create request",
+      "ResourceType" : "Custom::SeleniumTester",
+      "LogicalResourceId" : "MySeleniumTester",
+      "ResourceProperties" : {
+         "seleniumTester" : "SeleniumTest()",
+         "endpoints" : [ "http://mysite.com", "http://myecommercesite.com/", "http://search.mysite.com" ],
+         "frequencyOfTestsPerHour" : [ "3", "2", "4" ]
+      }
+   }
+   ```
+
+1. 사용자 지정 리소스 공급자는 템플릿 개발자가 보낸 데이터를 처리하고 `Create` 요청이 성공했는지 여부를 확인합니다. 그런 다음 리소스 공급자는 AWS CloudFormation에서 보낸 S3 URL을 사용하여 `SUCCESS` 또는 `FAILED`.
+
+   응답 유형에 따라 AWS CloudFormation에서 예상하는 응답 필드가 다릅니다. 처리 중인 RequestType에 대한 참조 항목의 응답 섹션을 참조하세요.
+
+   만들기 또는 업데이트 요청에 대한 응답으로 사용자 지정 리소스 공급자는 응답의 데이터 필드에 데이터 요소를 반환할 수 있습니다. 이는 이름 값 페어이며, _이름은_ `Fn::GetAtt` 스택 템플릿에서 사용자 지정 리소스와 함께 사용되는 속성에 해당합니다. _값은_ 템플릿 개발자가 속성 이름을 가진 리소스를`Fn::GetAtt` 호출할 때 반환되는 데이터입니다.
+
+   다음은 사용자 지정 리소스 응답의 예입니다.
+
+   ```
+   {
+      "Status" : "SUCCESS",
+      "PhysicalResourceId" : "Tester1",
+      "StackId" : "arn:aws:cloudformation:us-west-2:123456789012:stack/stack-name/guid",
+      "RequestId" : "unique id for this create request",
+      "LogicalResourceId" : "MySeleniumTester",
+      "Data" : {
+         "resultsPage" : "http://www.myexampledomain/test-results/guid",
+         "lastUpdate" : "2012-11-14T03:30Z",
+      }
+   }
+   ```
+
+   `StackId`, `RequestId`및 `LogicalResourceId` 필드는 요청에서 그대로 복사해야 합니다.
+
+1. AWS CloudFormation은 스택 상태를 `CREATE_COMPLETE` 또는 `CREATE_FAILED` 로 선언합니다. 스택이 성공적으로 생성되면 템플릿 개발자는 를 사용하여 생성된 사용자 지정 리소스의 출력 값을 사용할 수 있습니다`Fn::GetAtt`.
+
+For example, the custom resource template used for illustration used `Fn::GetAtt` to copy resource outputs into the stack outputs:
+
+```
+"Outputs" : {
+   "topItem" : {
+      "Value" : { "Fn::GetAtt" : ["MySeleniumTest", "resultsPage"] }
+   },
+   "numRespondents" : {
+      "Value" : { "Fn::GetAtt" : ["MySeleniumTest", "lastUpdate"] }
+   }
+}
+```
+
+요청과 관련된 요청 및 응답 개체에 대한 자세한 `Create` 내용은 사용자 지정 리소스 참조의 Create를 참조하십시오.
+
+### 2단계: 스택 업데이트
+
+기존 스택을 업데이트하려면 아래 예제와 같이 스택의 리소스 속성에 대한 업데이트를 지정하는 템플릿을 제출해야 합니다. AWS CloudFormation에서는 템플릿에 지정된 변경 사항이 있는 리소스만 업데이트합니다. 스택 업데이트에 대한 자세한 내용은 AWS CloudFormation 스택 업데이트 섹션을 참조하세요.
+
+기본 물리적 리소스를 대체해야 하는 사용자 지정 리소스를 업데이트할 수 있습니다. AWS CloudFormation 템플릿에서 사용자 지정 리소스를 업데이트하면 AWS CloudFormation에서 해당 사용자 지정 리소스에 업데이트 요청을 보냅니다. 사용자 지정 리소스에 교체가 필요한 경우 새 사용자 지정 리소스는 새 물리적 ID로 응답을 보내야 합니다. AWS CloudFormation에서 응답을 수신하면 `PhysicalResourceId` 이전 사용자 지정 리소스와 새 사용자 지정 리소스를 비교합니다. 두 리소스가 서로 다른 경우 AWS CloudFormation은 3단계: 스택 삭제에 표시된 대로 업데이트를 대체로 인식하고 이전 리소스에 삭제 요청을 보냅니다.
+
+**메모**  
+사용자 지정 리소스를 변경하지 않은 경우 AWS CloudFormation은 스택 업데이트 중에 해당 리소스에 요청을 보내지 않습니다.
+
+1. 템플릿 개발자는 사용자 지정 리소스가 포함된 스택에 대한 업데이트를 시작합니다. 업데이트하는 동안 템플릿 개발자는 스택 템플릿에서 새 속성을 지정할 수 있습니다.
+
+   다음은 `Update` 사용자 지정 리소스 유형을 사용하는 스택 템플릿의 예입니다.
+
+   ```
+   {
+      "AWSTemplateFormatVersion" : "2010-09-09",
+      "Resources" : {
+         "MySeleniumTest" : {
+            "Type": "Custom::SeleniumTester",
+            "Version" : "1.0",
+            "Properties" : {
+               "ServiceToken": "arn:aws:sns:us-west-2:123456789012:CRTest",
+               "seleniumTester" : "SeleniumTest()",
+               "endpoints" : [ "http://mysite.com", "http://myecommercesite.com/", "http://search.mysite.com",
+                  "http://mynewsite.com" ],
+               "frequencyOfTestsPerHour" : [ "3", "2", "4", "3" ]
+            }
+         }
+      },
+      "Outputs" : {
+         "topItem" : {
+            "Value" : { "Fn::GetAtt" : ["MySeleniumTest", "resultsPage"] }
+         },
+         "numRespondents" : {
+            "Value" : { "Fn::GetAtt" : ["MySeleniumTest", "lastUpdate"] }
+         }
+      }
+   }
+   ```
+
+1. AWS CloudFormation은 필드에 이전 리소스 속성이 포함되어 있고 ResourceProperties에 업데이트된(있는 경우) 리소스 속성이 포함되어`"RequestType" : "Update"` 있다는 점을 제외하고는 호출 `Create` 과 유사한 정보가 포함된 `OldResourceProperties`Amazon SNS 알림을 리소스 공급자에게 보냅니다.
+
+   다음은 요청의 예입니다 `Update` .
+
+   ```
+   {
+      "RequestType" : "Update",
+      "ResponseURL" : "http://pre-signed-S3-url-for-response",
+      "StackId" : "arn:aws:cloudformation:us-west-2:123456789012:stack/stack-name/guid",
+      "RequestId" : "uniqueid for this update request",
+      "LogicalResourceId" : "MySeleniumTester",
+      "ResourceType" : "Custom::SeleniumTester",
+      "PhysicalResourceId" : "Tester1",
+      "ResourceProperties" : {
+         "seleniumTester" : "SeleniumTest()",
+         "endpoints" : [ "http://mysite.com", "http://myecommercesite.com/", "http://search.mysite.com",
+            "http://mynewsite.com" ],
+         "frequencyOfTestsPerHour" : [ "3", "2", "4", "3" ]
+      },
+      "OldResourceProperties" : {
+         "seleniumTester" : "SeleniumTest()",
+         "endpoints" : [ "http://mysite.com", "http://myecommercesite.com/", "http://search.mysite.com" ],
+         "frequencyOfTestsPerHour" : [ "3", "2", "4" ]
+      }
+   }
+   ```
+
+1. 사용자 지정 리소스 공급자는 AWS CloudFormation에서 전송한 데이터를 처리합니다. 사용자 지정 리소스는 업데이트를 수행하고 `SUCCESS` S3 `FAILED` URL에 또는 응답을 보냅니다 . 그런 다음 AWS CloudFormation은 `PhysicalResourceIDs` 이전 사용자 지정 리소스와 새 사용자 지정 리소스를 비교합니다. 서로 다른 경우 AWS CloudFormation에서는 업데이트에 교체가 필요하다는 것을 인식하고 이전 리소스에 삭제 요청을 보냅니다. 다음 예제에서는 요청에 대한 사용자 지정 리소스 공급자 응답을 보여 줍니다 `Update` .
+
+   ```
+   {
+      "Status" : "SUCCESS",
+      "StackId" : "arn:aws:cloudformation:us-west-2:123456789012:stack/stack-name/guid",
+      "RequestId" : "uniqueid for this update request",
+      "LogicalResourceId" : "MySeleniumTester",
+      "PhysicalResourceId" : "Tester2"
+   }
+   ```
+
+   `StackId`, `RequestId`및 `LogicalResourceId` 필드는 요청에서 그대로 복사해야 합니다.
+
+1. AWS CloudFormation은 스택 상태를 `UPDATE_COMPLETE` 또는 `UPDATE_FAILED` 로 선언합니다. 업데이트가 실패하면 스택이 롤백됩니다. 스택이 성공적으로 업데이트되면 템플릿 개발자는 를 사용하여 생성된 사용자 지정 리소스의 새 출력 값에 액세스할 수 있습니다`Fn::GetAtt`.
+
+요청과 관련된 요청 및 응답 개체에 대한 자세한 `Update` 내용은 Custom Resource Reference의 Update를 참조하십시오.
+
+### 3단계: 스택 삭제
+
+1. 템플릿 개발자는 사용자 지정 리소스가 포함된 스택을 삭제합니다. AWS CloudFormation은 SNS 주제와 함께 스택 템플릿에 지정된 현재 속성을 가져오고 사용자 지정 리소스 공급자에 대한 요청을 준비합니다.
+
+1. AWS CloudFormation에서는 스택에 대한 최신 정보, 스택 템플릿의 사용자 지정 리소스 속성 및 응답에 대한 S3 URL이 포함된`"RequestType" : "Delete"` Amazon SNS 알림을 리소스 공급자에게 보냅니다.
+
+   스택을 삭제하거나 사용자 지정 리소스를 제거 또는 교체하는 업데이트를 수행할 때마다 AWS CloudFormation 에서는 `PhysicalResourceId` 이전 사용자 지정 리소스와 새 사용자 지정 리소스를 비교합니다. 두 리소스가 서로 다른 경우 AWS CloudFormation에서는 다음 요청 예제와 같이 업데이트를 대체로 인식하고 이전 리소스()에 대한 삭제 요청을 보냅니다`OldPhysicalResource` `Delete` .
+
+   ```
+   {
+      "RequestType" : "Delete",
+      "ResponseURL" : "http://pre-signed-S3-url-for-response",
+      "StackId" : "arn:aws:cloudformation:us-west-2:123456789012:stack/stack-name/guid",
+      "RequestId" : "unique id for this delete request",
+      "ResourceType" : "Custom::SeleniumTester",
+      "LogicalResourceId" : "MySeleniumTester",
+      "PhysicalResourceId" : "Tester1",
+      "ResourceProperties" : {
+         "seleniumTester" : "SeleniumTest()",
+         "endpoints" : [ "http://mysite.com", "http://myecommercesite.com/", "http://search.mysite.com",
+            "http://mynewsite.com" ],
+         "frequencyOfTestsPerHour" : [ "3", "2", "4", "3" ]
+      }
+   }
+   ```
+
+   `DescribeStackResource`, `DescribeStackResources` `ListStackResources` 사용자 정의 이름이 지정된 경우 해당 이름을 표시합니다.
+
+1. 사용자 지정 리소스 공급자는 AWS CloudFormation에서 전송한 데이터를 처리하고 `Delete` 요청이 성공했는지 여부를 확인합니다. 그런 다음 리소스 공급자는 AWS CloudFormation에서 보낸 S3 URL을 사용하여 `SUCCESS` 또는 `FAILED`. 사용자 지정 리소스가 있는 스택을 성공적으로 삭제하려면 사용자 지정 리소스 공급자가 삭제 요청에 성공적으로 응답해야 합니다.
+
+   다음은 요청에 대한 사용자 지정 리소스 공급자 응답의 예입니다 `Delete` .
+
+   ```
+   {
+      "Status" : "SUCCESS",
+      "StackId" : "arn:aws:cloudformation:us-west-2:123456789012:stack/stack-name/guid",
+      "RequestId" : "unique id for this delete request",
+      "LogicalResourceId" : "MySeleniumTester",
+      "PhysicalResourceId" : "Tester1"
+   }
+   ```
+
+   `StackId`, `RequestId`및 `LogicalResourceId` 필드는 요청에서 그대로 복사해야 합니다.
+
+1. AWS CloudFormation은 스택 상태를 `DELETE_COMPLETE` 또는 `DELETE_FAILED`로 선언합니다.
+
+요청과 관련된 요청 및 응답 개체에 대한 자세한 `Delete` 내용은 사용자 지정 리소스 참조의 삭제를 참조하세요.
+
+### 참고 항목
+
+- AWS CloudFormation 사용자 지정 리소스 참조
+- AWS::CloudFormation::사용자 지정 리소스
+- Fn::GetAtt

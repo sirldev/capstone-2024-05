@@ -1,0 +1,59 @@
+# 스택 세트 삭제
+
+AWS CloudFormation StackSets 시작하기 연습을 마치면 이 단원의 절차에 따라 이 연습의 일부로 생성한 스택 세트 및 기타 리소스를 삭제할 수 있습니다. 스택 세트를 삭제하려면 먼저 스택 세트의 모든 스택 인스턴스를 삭제해야 합니다. 모든 스택 인스턴스를 삭제하는 방법에 대한 자세한 내용은 스택 세트에서 스택 인스턴스 삭제 섹션을 참조하세요.
+
+## AWS Management Console을 사용하여 스택 세트 삭제
+
+1. [StackSets**] \*\* 페이지에서 스택 세트 생성에서 생성한 스택 세트를 선택합니다. 이 연습에서는 라는 스택 세트를 생성했습니다`my-awsconfig-stackset`.
+
+1. 스택 세트를 선택한 상태에서 **[Actions**] 메뉴에서 **[Delete StackSet**]를 선택합니다 .
+
+1. 스택 세트를 삭제할 것인지 확인하는 메시지가 표시되면 **[Delete StackSet**]를 선택합니다.
+
+## AWS CLI를 사용하여 스택 세트 삭제
+
+위임된 관리자 역할을 하는 경우 `--call-as` StackSets 명령을 실행할 때마다`DELEGATED_ADMIN` 매개 변수를 다음으로 설정해야 합니다.
+
+```
+--call-as DELEGATED_ADMIN
+```
+
+1. 다음 명령을 실행합니다. 확인 메시지가 표시되면 **y를 입력한 다음 **Enter **키를 누릅니다**.
+
+   ```
+   aws cloudformation delete-stack-set --stack-set-name my-awsconfig-stackset
+   ```
+
+1. 명령을 실행하여 스택 세트가 삭제되었는지 확인합니다 `list-stack-sets` . list-stack-sets 명령의 결과에는 스택의 상태가 표시되어야 합니다`DELETED`.
+
+   ```
+   aws cloudformation list-stack-sets
+   ```
+
+## 서비스 역할 삭제(선택 사항)
+
+스택 세트 생성에 필요한 StackSets의 서비스 역할을 삭제합니다.
+
+**자체 관리형 스택 세트**의 경우, 이 가이드의 연습에 대한 스택 세트 작업의 사전 조건의 일부로 생성한 역할은 `AWSCloudFormationStackSetAdministrationRole` 관리자 계정 및 `AwsCloudFormationStackSetExecutionRole` 각 대상 계정에 이름이 지정됩니다.
+
+**서비스 관리형 스택 세트의 경우**, 이 가이드의 연습에 대한 스택 세트 작업을 위한 사전 조건의 일부로 StackSets에 의해 자동으로 생성된 역할 에는 `CloudFormationStackSetsOrgAdmin` 조직 관리 계정 및 `CloudFormationStackSetsOrgMember` 각 대상 계정에 접미사가 있습니다.
+
+역할 삭제에 대한 자세한 내용은 IAM 사용 설명서의 역할 및 인스턴스 프로파일 삭제를 참조하세요\*\*.
+
+**AWS Management Console을 사용하여 서비스 역할을 삭제하려면**
+
+1. AWS Management Console에 로그인한 후 some-address에서 IAM 콘솔을 엽니다.
+
+1. 탐색 창에서 **[Roles**]를 선택한 후 삭제하려는 역할 옆의 확인란을 입력합니다.
+
+1. 페이지 상단의 **[Role actions**] 메뉴에서 **[Delete role**]을 선택합니다.
+
+1. 확인 대화 상자에서 [**Yes, Delete**]를 선택합니다. 확실하다면 서비스에서 마지막으로 액세스한 데이터가 아직 로드 중이더라도 삭제를 진행할 수 있습니다.
+
+**AWS CLI를 사용하여 서비스 역할을 삭제하려면**
+
+- 다음 명령을 실행합니다. 확인 메시지가 표시되면 **y를 입력한 다음 **Enter **키를 누릅니다**.
+
+  ```
+  aws iam delete-role --role-name role name
+  ```

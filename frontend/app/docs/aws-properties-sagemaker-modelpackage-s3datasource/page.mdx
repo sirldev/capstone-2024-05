@@ -1,0 +1,69 @@
+# AWS::SageMaker::모델 패키지 S3데이터 소스
+
+S3 데이터 소스에 대해 설명합니다.
+
+입력 버킷은 훈련 작업과 동일한 AWS 리전에 있어야 합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "S3DataType" : String,
+  "S3Uri" : String
+}
+```
+
+## 속성
+
+`S3DataType`  
+를 선택하면 `S3Prefix` `S3Uri` 키 이름 접두사를 식별합니다. SageMaker는 모델 훈련을 위해 지정된 키 이름 접두사와 일치하는 모든 객체를 사용합니다.  
+를 선택하면 `ManifestFile` `S3Uri` SageMaker에서 모델 교육에 사용할 객체 키 목록이 포함된 매니페스트 파일인 객체를 식별합니다.  
+를 선택하면 `AugmentedManifestFile`S3Uri는 JSON 줄 형식의 증강 매니페스트 파일인 객체를 식별합니다. 이 파일에는 모델 학습에 사용할 데이터가 포함되어 있습니다. `AugmentedManifestFile` 채널의 입력 모드가 인 경우에만 사용할 수 있습니다 `Pipe`.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_허용되는 값_: `AugmentedManifestFile | ManifestFile | S3Prefix`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`S3Uri`  
+에 지정된 값에 따라 `S3DataType`키 이름 접두사 또는 매니페스트를 식별합니다. 예를 들어:
+
+- 키 이름 접두사는 다음과 같을 수 있습니다 `s3://bucketname/exampleprefix` .
+- 매니페스트는 다음과 같을 수 있습니다 `s3://bucketname/example.manifest` .
+
+  매니페스트는 요소 배열로 구성된 JSON 파일인 S3 객체입니다. 첫 번째 요소는 하나 이상의 접미사가 뒤에 오는 접두사입니다. SageMaker는 접두사에 접미사 요소를 추가하여 . `S3Uri` 접두사는 사용자가 `S3Uri` 다른 S3 버킷에서 소싱된 `S3Uri` 매니페스트를 지정할 수 없도록 비어 있지 않은 유효한 것이어야 합니다.
+
+  다음 코드 예제에서는 유효한 매니페스트 형식을 보여 줍니다.
+
+  `[ {"prefix": "s3://customer_bucket/some/prefix/"},`
+
+  ` "relative/path/to/custdata-1",`
+
+  ` "relative/path/custdata-2",`
+
+  ` ...`
+
+  ` "relative/path/custdata-N"`
+
+  `]`
+
+  이 JSON은 다음 목록과 동일합니다 `S3Uri` .
+
+  `s3://customer_bucket/some/prefix/relative/path/to/custdata-1`
+
+  `s3://customer_bucket/some/prefix/relative/path/custdata-2`
+
+  `...`
+
+  `s3://customer_bucket/some/prefix/relative/path/custdata-N`
+
+`S3Uri` 이 매니페스트의 전체 집합은 이 데이터 소스의 채널에 대한 입력 데이터입니다. 각각이 가리키는 객체는 `S3Uri` SageMaker가 사용자를 대신하여 작업을 수행하는 데 사용하는 IAM 역할에서 읽을 수 있어야 합니다.
+입력 버킷은 훈련 작업과 동일한 AWS 리전에 위치해야 합니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최대_: `1024`  
+_패턴_: `^(https|s3)://([^/]+)/?(.*)$`  
+_업데이트 필요 사항_: 바꿔 놓음

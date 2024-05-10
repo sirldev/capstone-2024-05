@@ -1,0 +1,37 @@
+# AWS::VpcLattice::규칙 HttpMatch
+
+들어오는 요청에 적용할 수 있는 조건에 대해 설명합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "HeaderMatches" : [ HeaderMatch, ... ],
+  "Method" : String,
+  "PathMatch" : PathMatch
+}
+```
+
+## 속성
+
+`HeaderMatches`  
+헤더가 일치합니다. 규칙 작업을 적용하기 전에 들어오는 요청을 요청 헤더 값을 기반으로 하는 규칙과 일치시킵니다.  
+*필수 항목 *여부: 아니요  
+_형식_: HeaderMatch 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`Method`  
+HTTP 메서드 형식입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`PathMatch`  
+경로가 일치합니다.  
+*필수 항목 *여부: 아니요  
+_형식_: PathMatch  
+_업데이트 필요 사항_: 중단 없음

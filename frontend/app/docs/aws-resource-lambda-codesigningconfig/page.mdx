@@ -1,0 +1,62 @@
+# AWS::람다::CodeSigningConfig
+
+코드 서명 구성에 대한 세부 정보입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::Lambda::CodeSigningConfig",
+  "Properties" : {
+      "AllowedPublishers" : AllowedPublishers,
+      "CodeSigningPolicies" : CodeSigningPolicies,
+      "Description" : String
+    }
+}
+```
+
+## 속성
+
+`AllowedPublishers`  
+허용된 게시자 목록입니다.  
+_필수 항목 여부_: 예  
+_형식_: AllowedPublishers  
+_업데이트 필요 사항_: 중단 없음
+
+`CodeSigningPolicies`  
+코드 서명 정책은 서명 불일치 또는 만료에 대한 유효성 검사 실패 작업을 제어합니다.  
+*필수 항목 *여부: 아니요  
+_형식_: CodeSigningPolicies  
+_업데이트 필요 사항_: 중단 없음
+
+`Description`  
+코드 서명 구성 설명입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `0`  
+_최대_: `256`  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`리소스 이름이 반환됩니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`CodeSigningConfigArn` 코드 서명 구성의 Amazon 리소스 이름(ARN)입니다.
+
+`CodeSigningConfigId` 코드 서명 구성 ID입니다.

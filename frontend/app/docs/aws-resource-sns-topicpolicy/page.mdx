@@ -1,0 +1,41 @@
+# AWS::SNS::주제 정책
+
+리소스 `AWS::SNS::TopicPolicy` 는 Amazon SNS 주제를 정책과 연결합니다. 예제 코드 조각은 _AWS CloudFormation 사용 설명서의 Amazon SNS 정책 선언을 참조하세요_.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::SNS::TopicPolicy",
+  "Properties" : {
+      "PolicyDocument" : Json,
+      "Topics" : [ String, ... ]
+    }
+}
+```
+
+## 속성
+
+`PolicyDocument`  
+지정된 SNS 주제에 추가할 수 있는 권한이 포함된 정책 문서입니다.  
+_필수 항목 여부_: 예  
+_형식_: Json  
+_업데이트 필요 사항_: 중단 없음
+
+`Topics`  
+정책을 추가하려는 주제의 Amazon 리소스 이름(ARN)입니다. 이 함수를 사용하여 리소스를 지정할 수 `Ref` 있습니다 `AWS::SNS::Topic` .  
+_필수 항목 여부_: 예  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### Fn::GetAtt
+
+####
+
+`Id` 속성 설명을 사용할 수 없습니다.

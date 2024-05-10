@@ -1,0 +1,51 @@
+# AWS::KinesisAnalyticsV2::애플리케이션 병렬 처리 구성
+
+Flink 기반 Kinesis Data Analytics 애플리케이션이 여러 작업을 동시에 실행하는 방법에 대한 파라미터를 설명합니다. 병렬 처리에 대한 자세한 내용은 Apache Flink 설명서의 병렬 실행을 참조하십시오.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "AutoScalingEnabled" : Boolean,
+  "ConfigurationType" : String,
+  "Parallelism" : Integer,
+  "ParallelismPerKPU" : Integer
+}
+```
+
+## 속성
+
+`AutoScalingEnabled`  
+Managed Service for Apache Flink 서비스가 처리량 증가에 대응하여 애플리케이션의 병렬 처리를 늘릴 수 있는지 여부를 설명합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`ConfigurationType`  
+애플리케이션이 Managed Service for Apache Flink 서비스에 대한 기본 병렬 처리를 사용하는지 여부를 설명합니다. `CUSTOM` 응용 프로그램의 `AutoScalingEnabled`, `Parallelism`또는 `ParallelismPerKPU` 속성을 변경하려면 이 속성을 로 설정해야 합니다 .  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_허용되는 값_: `CUSTOM | DEFAULT`  
+_업데이트 필요 사항_: 중단 없음
+
+`Parallelism`  
+Java 기반 Kinesis Data Analytics 애플리케이션이 수행할 수 있는 초기 병렬 작업 수를 설명합니다. Kinesis Data Analytics 서비스는 ParallelismConfiguration:AutoScalingEnabled가 로 설정된 경우 이 수를 자동으로 늘릴 수 있습니다`true`.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_최소_: `1`  
+_업데이트 필요 사항_: 중단 없음
+
+`ParallelismPerKPU`  
+Java 기반 Kinesis Data Analytics 애플리케이션이 애플리케이션에서 사용하는 Kinesis Processing Unit(KPU)당 수행할 수 있는 병렬 작업 수를 설명합니다. KPU에 대한 자세한 내용은 Amazon Kinesis Data Analytics 요금을 참조하십시오.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_최소_: `1`  
+_업데이트 필요 사항_: 중단 없음
+
+## 참고 항목
+
+- Amazon Kinesis Data Analytics API 참조\* \*의 ParallelismConfiguration

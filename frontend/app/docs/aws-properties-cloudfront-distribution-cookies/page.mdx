@@ -1,0 +1,50 @@
+# AWS::CloudFront::D istribution 쿠키
+
+이 필드는 더 이상 사용되지 않습니다. 이 필드 대신 캐시 정책 또는 오리진 요청 정책을 사용하는 것이 좋습니다.
+
+캐시 키에 쿠키를 포함하려면 캐시 정책을 사용합니다. 자세한 내용은 _Amazon CloudFront 개발자 안내서의 캐시 정책 생성을 참조하세요_.
+
+오리진에 쿠키를 전송하되 캐시 키에 포함하지 않으려면 오리진 요청 정책을 사용합니다. 자세한 내용은 _Amazon CloudFront 개발자 안내서의 오리진 요청 정책 생성을 참조하세요_.
+
+CloudFront에서 오리진에 쿠키를 전달할지 여부와 전달하려는 경우 어떤 쿠키를 전달할지를 지정하는 복합 유형입니다. 오리진에 쿠키를 전달하는 방법에 대한 자세한 내용은 Amazon CloudFront 개발자 안내서의 CloudFront 쿠키 전달, 캐시 및 로그 방법을 참조하십시오\*\*.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Forward" : String,
+  "WhitelistedNames" : [ String, ... ]
+}
+```
+
+## 속성
+
+`Forward`  
+이 필드는 더 이상 사용되지 않습니다. 이 필드 대신 캐시 정책 또는 오리진 요청 정책을 사용하는 것이 좋습니다.  
+캐시 키에 쿠키를 포함하려면 캐시 정책을 사용합니다. 자세한 내용은 *Amazon CloudFront 개발자 안내서*의 캐시 정책 생성을 참조하세요.  
+오리진에 쿠키를 전송하되 캐시 키에 포함하지 않으려면 오리진 요청 정책을 사용합니다. 자세한 내용은 *Amazon CloudFront 개발자 안내서*의 오리진 요청 정책 생성을 참조하세요.  
+이 캐시 동작에 대해 오리진에 전달할 쿠키(all, none 또는 복합 형식에 지정된 쿠키 목록)를 지정합니다 `WhitelistedNames` .  
+Amazon S3는 쿠키를 처리하지 않습니다. 캐시 동작이 Amazon S3 오리진에 요청을 전달하는 경우 요소에 대해 none을 지정합니다 `Forward` .  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_허용되는 값_: `all | none | whitelist`  
+_업데이트 필요 사항_: 중단 없음
+
+`WhitelistedNames`  
+이 필드는 더 이상 사용되지 않습니다. 이 필드 대신 캐시 정책 또는 오리진 요청 정책을 사용하는 것이 좋습니다.  
+캐시 키에 쿠키를 포함하려면 캐시 정책을 사용합니다. 자세한 내용은 *Amazon CloudFront 개발자 안내서*의 캐시 정책 생성을 참조하세요.  
+오리진에 쿠키를 전송하되 캐시 키에 포함하지 않으려면 오리진 요청 정책을 사용합니다. 자세한 내용은 _Amazon CloudFront 개발자 안내서의 오리진 요청 정책 생성을 참조하세요_.  
+의 값을 지정하는 경우 필수 `whitelist` 입니다`Forward`. CloudFront에서 이 캐시 동작에 대해 오리진에 전달할 쿠키의 수를 지정하는 복합 유형이며, 선택한 쿠키를 전달하려는 경우 해당 쿠키의 이름을 지정합니다.  
+`all` 의 값으로 `none` or 을 지정하는 경우 를 `Forward`생략합니다`WhitelistedNames`. [from to]의 값을 변경 `Forward` `whitelist` `all` `none` 하고 요소 및 해당 하위 요소를 삭제하지 않는 `WhitelistedNames` 경우 , CloudFront에서는 해당 요소를 자동으로 삭제합니다.  
+각 캐시 동작에 대해 화이트리스트에 추가할 수 있는 쿠키 이름 수에 대한 현재 제한은 * AWS General Reference*의 CloudFront 제한을 참조하십시오.  
+_필수_: 조건부  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+## 참고 항목
+
+- Amazon CloudFront API Reference\* \*의 CookiePreference

@@ -1,0 +1,25 @@
+# AWS::KinesisFirehose::D eliveryStream 재시도 옵션
+
+Kinesis Data Firehose가 지정된 HTTP 엔드포인트 대상으로 데이터를 전송할 수 없거나 지정된 HTTP 엔드포인트 대상으로부터 유효한 수신 확인을 받지 못한 경우의 재시도 동작에 대해 설명합니다. Kinesis Firehose는 Datadog, MongoDB 및 New Relic을 포함하여 지원되는 타사 서비스 공급자가 소유한 모든 사용자 지정 HTTP 엔드포인트 또는 HTTP 엔드포인트를 지원합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "DurationInSeconds" : Integer
+}
+```
+
+## 속성
+
+`DurationInSeconds`  
+Kinesis Data Firehose가 재시도에 소비하는 총 시간입니다. 이 기간은 HTTPS 엔드포인트를 통해 사용자 지정 대상으로 데이터를 전송하려는 초기 시도가 실패한 후에 시작됩니다. Kinesis Data Firehose가 각 시도 후 지정된 대상의 승인을 기다리는 기간은 포함되지 않습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_최소_: `0`  
+_최대_: `7200`  
+_업데이트 필요 사항_: 중단 없음

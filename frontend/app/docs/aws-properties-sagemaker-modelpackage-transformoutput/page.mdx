@@ -1,0 +1,59 @@
+# AWS::SageMaker::ModelPackage 변환 출력
+
+변환 작업의 결과를 설명합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Accept" : String,
+  "AssembleWith" : String,
+  "KmsKeyId" : String,
+  "S3OutputPath" : String
+}
+```
+
+## 속성
+
+`Accept`  
+출력 데이터를 지정하는 데 사용되는 MIME 유형입니다. Amazon SageMaker는 각 http 호출에 MIME 유형을 사용하여 변환 작업에서 데이터를 전송합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최대_: `256`  
+_패턴_: `.*`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`AssembleWith`  
+변환 작업의 결과를 단일 S3 객체로 어셈블하는 방법을 정의합니다. 가장 편리한 형식을 선택하십시오. 결과를 이진 형식으로 결합하려면 를 지정하십시오`None`. 변환된 모든 레코드의 끝에 줄 바꿈 문자를 추가하려면 를 지정합니다`Line`.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `Line | None`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`KmsKeyId`  
+Amazon SageMaker가 Amazon S3 서버 측 암호화를 사용하여 저장된 모델 아티팩트를 암호화하는 데 사용하는 AWS Key Management Service(AWS KMS) 키입니다. 다음 `KmsKeyId` 형식 중 하나일 수 있습니다.
+
+- 키 ID: `1234abcd-12ab-34cd-56ef-1234567890ab`
+- 키 ARN: `arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab`
+- 별칭 이름: `alias/ExampleAlias`
+- 별칭 이름 ARN: `arn:aws:kms:us-west-2:111122223333:alias/ExampleAlias`
+  KMS 키 ID를 제공하지 않으면 Amazon SageMaker는 역할 계정에 대해 Amazon S3의 기본 KMS 키를 사용합니다. 자세한 내용은 *Amazon Simple Storage Service 개발자 가이드*의 KMS 관리형 암호화 키를 참조하십시오.  
+  KMS 키 정책은 CreateModel 요청에서 지정한 IAM 역할에 권한을 부여해야 합니다. 자세한 내용은 * AWS Key Management Service 개발자 안내서*의 AWS KMS에서 키 정책 사용을 참조하십시오.  
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열  
+  _최대_: `2048`  
+  _패턴_: `.*`  
+  _업데이트 필요 사항_: 바꿔 놓음
+
+`S3OutputPath`  
+Amazon SageMaker에서 변환 작업의 결과를 저장할 Amazon S3 경로입니다. 예를 들어, `s3://bucket-name/key-name-prefix`.  
+변환 작업의 입력으로 사용되는 모든 S3 객체에 대해 배치 변환은 변환된 데이터를 .`out` suffix 출력 접두사의 위치에 있는 해당 하위 폴더에 있습니다. 예를 들어, 에 저장된 입력 데이터의 경우 `s3://bucket-name/input-name-prefix/dataset01/data.csv`배치 변환은 변환된 데이터를 에 저장합니다 `s3://bucket-name/output-name-prefix/input-name-prefix/data.csv.out`. 일괄 처리 변환은 부분적으로 처리된 개체를 업로드하지 않습니다. 여러 레코드가 포함된 입력 S3 객체의 경우 .`out` 변환 작업이 전체 파일에서 성공한 경우에만 파일을 만듭니다. 입력에 여러 S3 객체가 포함된 경우 배치 변환 작업은 나열된 S3 객체를 처리하고 성공적으로 처리된 객체에 대한 출력만 업로드합니다. 변환 작업에서 객체가 실패하는 경우 배치 변환은 작업을 실패한 것으로 표시하여 조사를 요청합니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최대_: `1024`  
+_패턴_: `^(https|s3)://([^/]+)/?(.*)$`  
+_업데이트 필요 사항_: 바꿔 놓음

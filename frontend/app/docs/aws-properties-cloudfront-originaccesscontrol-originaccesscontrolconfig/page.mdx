@@ -1,0 +1,63 @@
+# AWS::CloudFront::OriginAccessControl OriginAccessControlConfig
+
+CloudFront에서 새 오리진 액세스 제어를 생성합니다. 오리진 액세스 제어를 생성한 후 CloudFront 배포의 오리진에 추가하여 CloudFront에서 인증된(서명된) 요청을 오리진에 전송하도록 할 수 있습니다.
+
+이렇게 하면 오리진에 대한 퍼블릭 액세스를 차단하여 최종 사용자(사용자)가 CloudFront를 통해서만 오리진의 콘텐츠에 액세스할 수 있습니다.
+
+CloudFront 오리진 액세스 제어 사용에 대한 자세한 내용은 _Amazon CloudFront 개발자 안내서의 AWS 오리진에 대한 액세스 제한을 참조하세요_.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Description" : String,
+  "Name" : String,
+  "OriginAccessControlOriginType" : String,
+  "SigningBehavior" : String,
+  "SigningProtocol" : String
+}
+```
+
+## 속성
+
+`Description`  
+원본 액세스 제어에 대한 설명입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Name`  
+원본 액세스 제어를 식별하기 위한 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`OriginAccessControlOriginType`  
+이 오리진 액세스 제어의 대상인 오리진 유형입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_허용되는 값_: `mediastore | s3`  
+_업데이트 필요 사항_: 중단 없음
+
+`SigningBehavior`  
+CloudFront에서 서명(인증 정보 추가)할 요청을 지정합니다. `always` 가장 일반적인 사용 사례에 대해 지정합니다. 자세한 내용은 *Amazon CloudFront 개발자 안내서*의 오리진 액세스 제어 고급 설정을 참조하십시오.  
+이 필드는 다음 값 중 하나를 가질 수 있습니다.
+
+- `always` – CloudFront는 모든 오리진 요청에 서명하여 `Authorization` 최종 사용자 요청의 헤더가 있는 경우 이를 덮어씁니다.
+- `never` – CloudFront는 오리진 요청에 서명하지 않습니다. 이 값은 이 오리진 액세스 제어를 사용하는 모든 배포의 모든 오리진에 대한 오리진 액세스 제어를 끕니다.
+- `no-override` – 최종 사용자 요청에 헤더가 포함되어 있지 않은 경우 `Authorization` CloudFront는 오리진 요청에 서명합니다. 최종 사용자 요청에 헤더가 포함된 경우 `Authorization` , CloudFront는 오리진 요청에 서명하지 않고 대신 `Authorization` 최종 사용자 요청의 헤더 ** 를 전달합니다.경고: 최종 사용자 요청에서 헤더`Authorization`를 전달하려면 * 이 오리진 액세스 제어와 연결된 오리진을 사용하는 모든 캐시 동작에 대한 캐시 정책에 헤더*를 추가해야 `Authorization`합니다.**
+  _필수 항목 여부_: 예  
+  _유형_: 문자열  
+  _허용되는 값_: `always | never | no-override`  
+  _업데이트 필요 사항_: 중단 없음
+
+`SigningProtocol`  
+CloudFront에서 요청에 서명(인증)하는 방법을 결정하는 원본 액세스 제어의 서명 프로토콜입니다. 유일하게 유효한 값은 `sigv4`입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_허용되는 값_: `sigv4`  
+_업데이트 필요 사항_: 중단 없음

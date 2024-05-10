@@ -1,0 +1,474 @@
+# 자체 관리 권한 부여
+
+자체 관리형 권한을 사용하면 StackSets가 계정 및 AWS 리전에 배포하는 데 필요한 AWS Identity and Access Management(IAM) 역할을 생성할 수 있습니다. 이러한 역할은 스택 세트를 관리하는 계정과 스택 인스턴스를 배포하는 계정 간에 신뢰할 수 있는 관계를 설정하는 데 필요합니다. StackSets는 이 권한 모델을 사용하여 IAM 역할을 생성할 수 있는 권한이 있는 모든 AWS 계정에 배포할 수 있습니다.
+
+**항목**
+
+- 자체 관리 권한
+- 스택 세트 작업에 대한 기본 권한 설정
+- 스택 세트 작업에 대한 고급 권한 옵션 설정
+- 혼동된 대리자 문제를 완화하기 위해 전역 키 설정
+
+## 자체 관리 권한
+
+서비스 관리형 스택 세트를 **생성하는 데 필요한 권한을 설정하려면 ** AWS Organizations를 사용하여 신뢰할 수 있는 액세스 활성화 섹션을 참조하세요.
+
+자체 관리형 권한이 **있는 스택 세트를 생성하기 전에 ** 각 계정에서 IAM 역할을 생성하여 관리자와 대상 계정 간에 신뢰 관계를 설정해야 합니다.
+
+1. 어떤 AWS 계정이 _관리자 계정인지 확인합니다_.
+
+   스택 세트는 이 관리자 계정에 생성됩니다. _대상 계정_ 은 스택 세트에 속하는 개별 스택을 생성하는 계정입니다.
+
+1. 스택 세트에 대한 권한을 구성하는 방법을 결정합니다.
+
+   가장 간단한(그리고 가장 허용적인) 권한 구성은 관리자 계정의 *모든 사용자 및 그룹에 해당 계정을 통해 관리되는 *모든 스택 세트를 _ 생성하고 업데이트할 수 있는 기능을 _ 제공하는 것입니다 . 보다 세밀한 제어가 필요한 경우 권한을 설정하여 다음을 지정할 수 있습니다.
+
+   - 어떤 사용자 및 그룹이 어떤 대상 계정에서 스택 세트 작업을 수행할 수 있는지.
+   - 사용자 및 그룹이 스택 세트에 포함할 수 있는 리소스입니다.
+   - 특정 사용자 및 그룹이 수행할 수 있는 스택 세트 작업입니다.
+
+1. 관리자 및 대상 계정에서 필요한 IAM 서비스 역할을 생성하여 원하는 권한을 정의합니다.
+   **중요하다**  
+   관리자 계정의 역할 이름은 **AWSCloudFormationStackSetAdministrationRole**이어야 합니다. 각 대상 계정의 역할 이름은 **AWSCloudFormationStackSetExecutionRole로 지정해야 합니다**.
+
+## 스택 세트 작업에 대한 기본 권한 설정
+
+가장 간단한(그리고 가장 허용적인) 권한 구성은 관리자 계정의 *모든 사용자 및 그룹에 해당 계정을 통해 관리되는 *모든 스택 세트를 _ 생성하고 업데이트할 수 있는 기능을 _ 제공하는 것입니다 . 이렇게 하려면 관리자 및 모든 대상 계정에 대한 IAM 서비스 역할을 생성합니다. 관리자 계정에 대한 권한이 있는 모든 사용자는 대상 계정의 스택을 생성, 업데이트 또는 삭제할 수 있는 권한을 갖게 됩니다.
+
+관리자 계정과 대상 계정에는 계정 간에 신뢰 관계를 생성하고 템플릿에 설명된 리소스를 생성하고 관리할 수 있는 권한을 대상 계정에 부여하는 서비스 역할이 구성되어 있어야 합니다.
+
+이러한 방식으로 권한을 구조화하면 사용자가 스택 세트를 생성하거나 업데이트할 때 관리자 역할을 전달하지 않습니다.
+
+**관리자 계정의 모든 사용자가 모든 대상 계정에서 스택 세트 작업을 수행할 수 있는 권한 설정**
+
+1. 관리자 계정에서 AWSCloudFormationStackSetAdministrationRole**이라는 IAM 역할을 생성합니다**. 역할에는 정확한 이름이 있어야 합니다. 다음 AWS CloudFormation 템플릿에서 스택을 생성하여 이 작업을 수행할 수 있으며, 이 템플릿에서 생성된 역할은 관리자 계정에서 다음 정책을 활성화합니다.
+
+   ```
+   {
+       "Version": "2012-10-17",
+       "Statement": [
+           {
+               "Action": [
+                   "sts:AssumeRole"
+               ],
+               "Resource": [
+                   "arn:aws:iam::*:role/AWSCloudFormationStackSetExecutionRole"
+               ],
+               "Effect": "Allow"
+           }
+       ]
+   }
+   ```
+
+   다음 신뢰 관계는 앞의 템플릿에 의해 생성됩니다.
+
+   ```
+   {
+     "Version": "2012-10-17",
+     "Statement": [
+       {
+         "Effect": "Allow",
+         "Principal": {
+           "Service": "cloudformation.amazonaws.com"
+         },
+         "Action": "sts:AssumeRole"
+       }
+     ]
+   }
+   ```
+
+   기본적으로 비활성화된 리전에 상주하는 대상 계정에 스택 인스턴스를 배포하려면 해당 리전에 대한 리전 서비스 보안 주체도 포함해야 합니다. 기본적으로 사용하지 않도록 설정된 각 지역에는 자체 지역 서비스 주체가 있습니다.
+
+   엔드포인트 목록을 포함하여 리전 엔드포인트에 대한 자세한 내용은 _AWS 일반 참조 안내서의 리전 엔드포인트를 참조하세요_.
+
+   다음 예제에는 기본적으로 비활성화되어 있는 아시아 태평양(홍콩) 지역에 대한`cloudformation.ap-east-1.amazonaws.com` 지역 서비스 주체()가 포함되어 있습니다.
+
+   ```
+   {
+     "Version": "2012-10-17",
+     "Statement": [
+       {
+         "Effect": "Allow",
+         "Principal": {
+           "Service": [
+               "cloudformation.amazonaws.com",
+               "cloudformation.ap-east-1.amazonaws.com"
+            ]
+         },
+         "Action": "sts:AssumeRole"
+       }
+     ]
+   }
+   ```
+
+   자세한 내용은 스택 세트 작업을 위한 사전 조건 섹션을 참조하세요.
+
+1. 각 대상 계정에서 관리자 계정을 신뢰하는 **AWSCloudFormationStackSetExecutionRole**이라는 서비스 역할을 생성합니다 . 역할에는 정확한 이름이 있어야 합니다. 다음 AWS CloudFormation 템플릿에서 스택을 생성하여 이 작업을 수행할 수 있으며, 이 템플릿은 일부 주소에서 온라인으로 사용할 수 있습니다. 이 템플릿을 사용하면 대상 계정이 신뢰 관계를 가져야 하는 관리자 계정의 이름을 입력하라는 메시지가 표시됩니다.
+   **중요하다**  
+   이 템플릿은 관리자 액세스 권한을 부여합니다. 템플릿을 사용하여 대상 계정 실행 역할을 생성한 후에는 정책 설명의 권한 범위를 StackSets를 사용하여 생성하는 리소스 유형으로 지정해야 합니다.
+
+   대상 계정 서비스 역할에는 AWS CloudFormation 템플릿에 지정된 모든 작업을 수행할 수 있는 권한이 필요합니다. 예를 들어 템플릿이 S3 버킷을 생성하는 경우 S3에 대한 새 객체를 생성할 수 있는 권한이 필요합니다. 대상 계정에는 항상 스택을 생성, 업데이트, 삭제 및 설명할 수 있는 권한이 포함된 전체 AWS CloudFormation 권한이 필요합니다. 이 템플릿에 의해 생성된 역할은 대상 계정에서 다음 정책을 활성화합니다.
+
+   ```
+   {
+       "Version": "2012-10-17",
+       "Statement": [
+           {
+               "Effect": "Allow",
+               "Action": "*",
+               "Resource": "*"
+           }
+       ]
+   }
+   ```
+
+   StackSets가 작동하려면 각 대상 계정에 대한 정책 설명에 S3 서비스 작업 및 리소스를 추가해야 합니다 `AWSCloudFormationStackSetExecutionRole` . StackSets는 이러한 권한을 사용하여 대상 계정 및 관리자 계정의 스택 인스턴스 상태를 알립니다.
+
+   대상 계정에서 CloudFormation 이외의 서비스 리소스를 사용하는 스택을 생성하려면 해당 서비스 작업 및 리소스를 `AWSCloudFormationStackSetExecutionRole` 각 대상 계정의 정책 설명에 추가해야 합니다. 다음 예제에서는 StackSets에 필요한 권한이 있는 정책 설명을 보여 줍니다.
+
+   ```
+   {
+       "Version": "2012-10-17",
+       "Statement": [
+           {
+               "Effect": "Allow",
+               "Action":
+                  [
+                    "cloudformation:*",
+                    "s3:*"
+                  ],
+               "Resource": "*"
+           }
+         ]
+   }
+   ```
+
+   템플릿에 의해 생성되는 신뢰 관계는 다음과 같습니다. 관리자 계정의 ID는 admin_account_id로 표시됩니다\*\*.
+
+   ```
+   {
+     "Version": "2012-10-17",
+     "Statement": [
+       {
+         "Effect": "Allow",
+         "Principal": {
+           "AWS": "arn:aws:iam::admin_account_id:root"
+         },
+         "Action": "sts:AssumeRole"
+       }
+     ]
+   }
+   ```
+
+   기존 대상 계정 실행 역할의 신뢰 관계를 구성하여 관리자 계정의 특정 역할을 신뢰할 수 있습니다. 관리자 계정에서 역할을 삭제하고 이를 대체할 새 역할을 생성하는 경우 이전 예제에서 admin_account_id로 표시된 새 관리자 계정 역할과 대상 계정 신뢰 관계를 구성해야 합니다 \*\* .
+
+## 스택 세트 작업에 대한 고급 권한 옵션 설정
+
+사용자 및 그룹이 단일 관리자 계정을 통해 생성하는 스택 세트를 보다 세밀하게 제어해야 하는 경우 IAM 역할을 사용하여 다음을 지정할 수 있습니다.
+
+- 어떤 사용자 및 그룹이 어떤 대상 계정에서 스택 세트 작업을 수행할 수 있는지.
+- 사용자 및 그룹이 스택 세트에 포함할 수 있는 리소스입니다.
+- 특정 사용자 및 그룹이 수행할 수 있는 스택 세트 작업입니다.
+
+### 대상 계정 액세스를 제어하기 위한 권한 설정
+
+사용자 지정 관리자 역할을 사용하여 어떤 사용자 및 그룹이 어떤 대상 계정에서 스택 세트 작업을 수행할 수 있는지 제어할 수 있습니다. 관리자 계정의 어떤 사용자가 어떤 대상 계정에서 스택 세트 작업을 수행할 수 있는지 제어할 수 있습니다. 이렇게 하려면 관리자 계정 자체에서 **AWSCloudFormationStackSetAdministrationRole** 서비스 역할을 생성하는 대신 각 대상 계정과 특정 사용자 지정 관리 역할 간에 신뢰 관계를 생성합니다 . 그런 다음 특정 사용자 및 그룹을 활성화하여 특정 대상 계정에서 스택 세트 작업을 수행할 때 사용자 지정 관리 역할을 사용합니다.
+
+예를 들어 관리자 계정 내에서 역할 A와 역할 B를 만들 수 있습니다. 역할 A에게 계정 1부터 계정 8까지 액세스할 수 있는 권한을 부여할 수 있습니다. 역할 B에게 계정 16을 통해 대상 계정 9에 액세스할 수 있는 권한을 부여할 수 있습니다.
+
+필요한 권한 설정에는 사용자 지정 관리자 역할 정의, 대상 계정에 대한 서비스 역할 생성, 스택 세트 작업을 수행할 때 사용자 지정 관리자 역할을 전달할 수 있는 권한 부여가 포함됩니다.
+
+일반적으로 필요한 권한이 있는 경우 작동 방식은 다음과 같습니다. 스택 세트를 생성할 때 사용자는 사용자 지정 관리자를 지정해야 합니다. 사용자에게 역할을 AWS CloudFormation에 전달할 수 있는 권한이 있어야 합니다. 또한 사용자 지정된 관리자 역할은 스택 세트에 지정된 대상 계정과 신뢰 관계가 있어야 합니다. AWS CloudFormation은 스택 세트를 생성하고 사용자 지정 관리자 역할을 스택 세트와 연결합니다. 스택 세트를 업데이트할 때 사용자는 이전에 이 스택 세트에 사용된 것과 동일한 사용자 지정 관리자 역할인 경우에도 사용자 지정 관리자 역할을 명시적으로 지정해야 합니다. AWS CloudFormation에서는 위의 요구 사항에 따라 해당 역할을 사용하여 스택을 업데이트합니다.
+
+**사용자 및 그룹이 특정 대상 계정에서 스택 세트 작업을 수행할 수 있는 권한 설정**
+
+1. 각 스택 세트에 대해 대상 계정에서 AWSCloudFormationStackSetExecutionRole** 서비스 역할을** 수임할 수 있는 권한이 있는 사용자 지정 관리자 역할을 생성합니다.
+
+   다음 권한 정책을 사용하여 사용자 지정 이름으로 IAM 서비스 역할을 생성합니다.
+
+   ```
+   {
+       "Version": "2012-10-17",
+       "Statement": [
+           {
+               "Action": [
+                   "sts:AssumeRole"
+               ],
+               "Resource": [
+                   "arn:aws:iam::target_account_id:role/AWSCloudFormationStackSetExecutionRole"
+               ],
+               "Effect": "Allow"
+           }
+       ]
+   }
+   ```
+
+   또는 모든 대상 계정을 지정하려면 다음 권한 정책을 사용합니다.
+
+   ```
+   {
+       "Version": "2012-10-17",
+       "Statement": [
+           {
+               "Action": [
+                   "sts:AssumeRole"
+               ],
+               "Resource": [
+                   "arn:aws:iam::*:role/AWSCloudFormationStackSetExecutionRole"
+               ],
+               "Effect": "Allow"
+           }
+       ]
+   }
+   ```
+
+   신뢰 관계를 정의하기 위해 역할을 생성할 때 다음 신뢰 정책을 제공해야 합니다.
+
+   ```
+   {
+     "Version": "2012-10-17",
+     "Statement": [
+       {
+         "Effect": "Allow",
+         "Principal": {
+           "Service": "cloudformation.amazonaws.com"
+         },
+         "Action": "sts:AssumeRole"
+       }
+     ]
+   }
+   ```
+
+   기본적으로 비활성화된 리전에 상주하는 대상 계정에 스택 인스턴스를 배포하려면 해당 리전에 대한 리전 서비스 보안 주체도 포함해야 합니다. 기본적으로 사용할 수 없는 각 지역에는 자체 지역 서비스 주체가 있습니다.
+
+   엔드포인트 목록을 포함하여 리전 엔드포인트에 대한 자세한 내용은 _AWS 일반 참조 안내서의 리전 엔드포인트를 참조하세요_.
+
+   다음 예제에는 기본적으로 비활성화되어 있는 아시아 태평양(홍콩) 지역에 대한`cloudformation.ap-east-1.amazonaws.com` 지역 서비스 주체()가 포함되어 있습니다.
+
+   ```
+   {
+     "Version": "2012-10-17",
+     "Statement": [
+       {
+         "Effect": "Allow",
+         "Principal": {
+           "Service": [
+               "cloudformation.amazonaws.com",
+               "cloudformation.ap-east-1.amazonaws.com"
+            ]
+         },
+         "Action": "sts:AssumeRole"
+       }
+     ]
+   }
+   ```
+
+   자세한 내용은 스택 세트 작업을 위한 사전 조건 섹션을 참조하세요.
+
+1. 각 대상 계정에서 이 계정에 사용할 사용자 지정 관리 역할을 신뢰하는 **AWSCloudFormationStackSetExecutionRole**이라는 서비스 역할을 생성합니다 .
+   **중요하다**  
+   정책 설명의 권한 범위를 StackSets를 사용하여 생성하는 리소스 유형으로 지정해야 합니다.
+
+   대상 계정 서비스 역할에는 AWS CloudFormation 템플릿에 지정된 모든 작업을 수행할 수 있는 권한이 필요합니다. 예를 들어 템플릿이 S3 버킷을 생성하는 경우 S3에서 새 객체를 생성할 수 있는 권한이 필요합니다. 대상 계정에는 항상 스택을 생성, 업데이트, 삭제 및 설명할 수 있는 권한이 포함된 전체 AWS CloudFormation 권한이 필요합니다.
+
+   다음 예제에서는 StackSets가 작동할 수 있는 최소* 권한이 있는 정책 설명을 보여 * 줍니다 . AWS CloudFormation 이외의 서비스에서 리소스를 사용하는 대상 계정에 스택을 생성하려면 각 대상 계정에 대한 **AWSCloudFormationStackSetExecutionRole** 권한 정책 설명에 해당 서비스 작업 및 리소스를 추가해야 합니다.
+
+   ```
+   {
+       "Version": "2012-10-17",
+       "Statement": [
+           {
+               "Effect": "Allow",
+               "Action":
+                  [
+                    "cloudformation:*",
+                    "s3:*"
+                  ],
+               "Resource": "*"
+           }
+         ]
+   }
+   ```
+
+   신뢰 관계를 정의하기 위해 역할을 생성할 때 다음 신뢰 정책을 제공해야 합니다.
+
+   ```
+   {
+     "Version": "2012-10-17",
+     "Statement": [
+       {
+         "Effect": "Allow",
+         "Principal": {
+         "AWS": "arn:aws:iam::admin_account_id:role/customized_admin_role"
+         },
+         "Action": "sts:AssumeRole"
+       }
+     ]
+   }
+   ```
+
+1. 사용자가 스택 세트 작업을 수행할 때 사용자 지정된 관리자 역할을 전달할 수 있도록 허용합니다.
+
+   특정 스택 세트를 생성하거나 업데이트할 때 적절한 사용자 지정 관리자 역할을 전달할 수 있도록 허용하는 IAM 권한 정책을 사용자 또는 그룹에 연결합니다. 자세한 내용은 사용자에게 AWS 서비스에 역할을 전달할 수 있는 권한 부여를 참조하세요. 아래 예에서 *customized_admin_role*는 사용자가 전달해야 하는 관리자 역할을 나타냅니다.
+
+   ```
+   {
+       "Version": "2012-10-17",
+       "Statement": [{
+           "Effect": "Allow",
+           "Action": [
+               "iam:GetRole",
+               "iam:PassRole"
+           ],
+           "Resource": "arn:aws:iam::*:role/customized_admin_role"
+       }]
+   }
+   ```
+
+### 스택 리소스 포함을 제어하기 위한 권한 설정
+
+사용자 지정 실행 역할을 사용하여 사용자 및 그룹이 스택 세트에 포함할 수 있는 스택 리소스를 제어합니다. 예를 들어, 생성하는 스택 세트에 Amazon S3 관련 리소스만 포함할 수 있는 그룹을 설정하고 다른 팀은 DynamoDB 리소스만 포함할 수 있습니다. 이렇게 하려면 각 그룹에 대한 사용자 지정된 관리자 역할과 각 리소스 집합에 대한 사용자 지정 실행 역할 간에 신뢰 관계를 생성합니다. 사용자 지정 실행 역할은 스택 세트에 포함할 수 있는 스택 리소스를 정의합니다. 사용자 지정 관리자 역할은 관리자 계정에 상주하는 반면, 사용자 지정 실행 역할은 정의된 리소스를 사용하여 스택 세트를 생성하려는 각 대상 계정에 상주합니다. 그런 다음 스택 세트 작업을 수행할 때 사용자 지정된 관리 역할을 사용할 특정 사용자 및 그룹을 활성화합니다.
+
+예를 들어 관리자 계정에서 사용자 지정된 관리자 역할 A, B 및 C를 만들 수 있습니다. 역할 A를 사용할 수 있는 권한이 있는 사용자 및 그룹은 사용자 지정 실행 역할 X에 구체적으로 나열된 스택 리소스가 포함된 스택 세트를 생성할 수 있지만, 역할 Y 또는 Z의 스택 리소스 또는 실행 역할에 포함되지 않은 리소스는 생성할 수 없습니다.
+
+스택 세트를 업데이트할 때 사용자는 이전에 이 스택 세트에 사용된 것과 동일한 사용자 지정 관리자 역할인 경우에도 사용자 지정 관리자 역할을 명시적으로 지정해야 합니다. AWS CloudFormation은 사용자에게 해당 스택 세트에 대한 작업을 수행할 수 있는 권한이 있는 한 지정된 사용자 지정 관리자 역할을 사용하여 업데이트를 수행합니다.
+
+마찬가지로 사용자는 사용자 지정 실행 역할을 지정할 수도 있습니다. 사용자 지정 실행 역할을 지정하는 경우 AWS CloudFormation에서는 위의 요구 사항에 따라 해당 역할을 사용하여 스택을 업데이트합니다. 사용자가 사용자 지정 실행 역할을 지정하지 않은 경우, AWS CloudFormation은 사용자에게 해당 스택 세트에 대한 작업을 수행할 수 있는 권한이 있는 한 이전에 스택 세트와 연결된 사용자 지정 실행 역할을 사용하여 업데이트를 수행합니다.
+
+**사용자 및 그룹이 특정 스택 세트에 포함할 수 있는 리소스에 대한 권한 설정**
+
+1. 스택 세트를 생성하려는 대상 계정에서 사용자 및 그룹이 스택 세트에 포함할 수 있도록 하려는 서비스 및 리소스에 권한을 부여하는 사용자 지정 실행 역할을 생성합니다.
+
+   다음 예제에서는 Amazon DynamoDB 테이블을 생성할 수 있는 권한과 함께 스택 세트에 대한 최소 권한을 제공합니다.
+
+   ```
+   {
+       "Version": "2012-10-17",
+       "Statement": [
+           {
+               "Effect": "Allow",
+               "Action":
+                  [
+                    "cloudformation:*",
+                    "s3:*",
+                  ],
+               "Resource": "*"
+           },
+     {
+               "Effect": "Allow",
+               "Action":
+                  [
+                    "dynamoDb:createTable"
+     ],
+               "Resource": "*"
+           }
+       ]
+   }
+   ```
+
+   신뢰 관계를 정의하기 위해 역할을 생성할 때 다음 신뢰 정책을 제공해야 합니다.
+
+   ```
+   {
+     "Version": "2012-10-17",
+     "Statement": [
+       {
+         "Effect": "Allow",
+         "Principal": {
+         "AWS": "arn:aws:iam::admin_account_id:role/customized_admin_role"
+         },
+         "Action": "sts:AssumeRole"
+       }
+     ]
+   }
+   ```
+
+1. 대상 계정 액세스를 제어하기 위한 권한 설정특정 대상 계정에서 스택 세트 작업을 수행할 수 있는 사용자 및 그룹이 수행할 수 있는 권한 설정에 설명된 대로 관리자 계정에서 사용자 지정 관리자 역할을 생성합니다. 사용자 지정된 관리자 역할과 사용할 사용자 지정 실행 역할 간의 신뢰 관계를 포함합니다.
+
+   다음 예제에는 대상 계정에 대해 정의된 `sts::AssumeRole`AWSCloudFormationStackSetExecutionRole**과 사용자 지정 실행 역할** 모두에 대한 정책이 포함되어 있습니다.
+
+```
+{
+  "Version": "2012-10-17",
+   "Statement": [
+    {
+      "Sid": "Stmt1487980684000",
+      "Effect": "Allow",
+      "Action": [
+        "sts:AssumeRole"
+      ],
+      "Resource": [
+        "arn:aws:iam::*:role/AWSCloudFormationStackSetExecutionRole",
+        "arn:aws:iam::*:role/custom_execution_role"
+      ]
+    }
+  ]
+}
+```
+
+### 특정 스택 세트 작업에 대한 권한 설정
+
+또한 사용자 및 그룹이 스택 세트 또는 스택 인스턴스 생성, 업데이트 또는 삭제와 같은 특정 스택 세트 작업을 수행할 수 있는 권한을 설정할 수 있습니다. 자세한 내용은 IAM 사용 설명서의 AWS CloudFormation에 사용되는 작업, 리소스 및 조건 키를 참조하세요\*\*.
+
+## 혼동된 대리자 문제를 완화하기 위해 전역 키 설정
+
+혼동된 대리자 문제는 작업을 수행할 수 있는 권한이 없는 엔터티가 더 많은 권한이 있는 엔터티가 작업을 수행하도록 강제할 수 있는 보안 문제입니다. AWS에서 교차 서비스 가장으로 인해 혼동된 대리자 문제가 발생할 수 있습니다. 서비스 간 가장은 한 서비스(_호출 서비스_)가 다른 서비스(호출된 서비스)를 호출 _ 할 때 발생할 수 있습니다_. 호출 서비스는 액세스 권한이 없어야 하는 방식으로 다른 고객의 리소스에 대해 작업을 수행하기 위해 해당 권한을 사용하도록 조작할 수 있습니다. 이를 방지하기 위해 AWS는 계정의 리소스에 대한 액세스 권한이 부여된 서비스 보안 주체를 통해 모든 서비스의 데이터를 보호하는 데 도움이 되는 도구를 제공합니다.
+
+리소스 정책에서 some-address 및 some-address 전역 조건 컨텍스트 키를 사용하여 AWS CloudFormation StackSets가 리소스에 다른 서비스에 부여하는 권한을 제한하는 것이 좋습니다. 전역 조건 컨텍스트 키를 모두 사용하는 경우 `aws:SourceAccount` 값과 값의 계정 `aws:SourceArn` 은 동일한 정책 설명에서 사용될 때 동일한 계정 ID를 사용해야 합니다.
+
+혼동된 대리자 문제로부터 보호하는 가장 효과적인 방법은 `aws:SourceArn` 리소스의 전체 ARN과 함께 전역 조건 컨텍스트 키를 사용하는 것입니다. 리소스의 전체 ARN을 모르거나 여러 리소스를 지정하는 경우 ARN의 알 수 없는 부분에 `aws:SourceArn` 대해 와일드카드()와 함께 전역 컨텍스트 조건 키를`*` 사용합니다. 예를 들어, `arn:aws:cloudformation::123456789012:*`. 가능하면 `aws:SourceArn`더 구체적이므로 를 사용합니다. `aws:SourceAccount` 올바른 ARN 또는 ARN 패턴을 확인할 수 없는 경우에만 사용합니다.
+
+StackSets가 **관리자** 계정에서 관리** 역할을 맡으면 **StackSets는 관리자** 계정 ID와 StackSets Amazon 리소스 이름(ARN)을 채웁니다 ** . 따라서 혼동 된 대리자 문제를 방지하기 위해 전역 키 `aws:SourceAccount` 및 `aws:SourceArn` 신뢰 관계에 대한 조건을 정의할 수 있습니다. 다음 예제에서는 `aws:SourceArn` `aws:SourceAccount` StackSets에서 및 전역 조건 컨텍스트 키를 사용하여 혼동된 대리자 문제를 방지하는 방법을 보여 줍니다.
+
+** 및 에 `aws:SourceAccount` `aws:SourceArn`**대한 전역 키 예  
+StackSets를 사용할 때 혼동되는 `aws:SourceAccount` `aws:SourceArn` `AWSCloudFormationStackSetAdministrationRole` 대리자 문제를 방지하기 위해 전역 키와 신뢰 정책을 정의합니다.
+
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "Service": "cloudformation.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole",
+            "Condition": {
+                "StringEquals": {
+                    "aws:SourceAccount": "111122223333"
+                },
+                "StringLike": {
+                    "aws:SourceArn": "arn:aws:cloudformation:*:111122223333:stackset/*"
+                }
+            }
+        }
+    ]
+}
+```
+
+**예 StackSets ARN**  
+보다 세밀한 제어를 위해 연결된 StackSets ARN을 지정합니다.
+
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "Service": "cloudformation.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole",
+            "Condition": {
+                "StringEquals": {
+                    "aws:SourceAccount": "111122223333",
+                    "aws:SourceArn": [
+                        "arn:aws:cloudformation:STACKSETS-REGION:111122223333:stackset/STACK-SET-ID-1",
+                        "arn:aws:cloudformation:STACKSETS-REGION:111122223333:stackset/STACK-SET-ID-2",
+                     ]
+                }
+            }
+        }
+    ]
+}
+```

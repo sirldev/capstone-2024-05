@@ -1,0 +1,191 @@
+# AWS::ApiGatewayV2::경로
+
+리소스는 `AWS::ApiGatewayV2::Route` API에 대한 경로를 만듭니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::ApiGatewayV2::Route",
+  "Properties" : {
+      "ApiId" : String,
+      "ApiKeyRequired" : Boolean,
+      "AuthorizationScopes" : [ String, ... ],
+      "AuthorizationType" : String,
+      "AuthorizerId" : String,
+      "ModelSelectionExpression" : String,
+      "OperationName" : String,
+      "RequestModels" : Json,
+      "RequestParameters" : Json,
+      "RouteKey" : String,
+      "RouteResponseSelectionExpression" : String,
+      "Target" : String
+    }
+}
+```
+
+## 속성
+
+`ApiId`  
+API 식별자입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ApiKeyRequired`  
+경로에 API 키가 필요한지 여부를 지정합니다. WebSocket API에 대해서만 지원됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`AuthorizationScopes`  
+이 경로에서 지원하는 권한 부여 범위입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`AuthorizationType`  
+경로에 대한 권한 부여 유형입니다. WebSocket API의 경우 유효한 값은 `NONE` 오픈 액세스, `AWS_IAM` AWS IAM 권한 사용 및 `CUSTOM` Lambda 권한 부여자 사용에 대한 값입니다. HTTP API의 경우 유효한 값은 `NONE` 오픈 액세스, `JWT` JSON 웹 토큰 사용, `AWS_IAM` AWS IAM 권한 사용 및 `CUSTOM` Lambda 권한 부여자 사용에 대한 값입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`AuthorizerId`  
+`Authorizer` 이 경로와 연결할 리소스의 식별자입니다. 권한 부여자 식별자는 권한 부여자를 생성할 때 API Gateway에서 생성됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`ModelSelectionExpression`  
+배관에 대한 모델 선택 표현식입니다. WebSocket API에 대해서만 지원됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`OperationName`  
+경로의 작업 이름입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`RequestModels`  
+경로에 대한 요청 모델입니다. WebSocket API에 대해서만 지원됩니다.  
+*필수 항목 *여부: 아니요  
+_형식_: Json  
+_업데이트 필요 사항_: 중단 없음
+
+`RequestParameters`  
+경로에 대한 요청 매개 변수입니다. WebSocket API에 대해서만 지원됩니다.  
+*필수 항목 *여부: 아니요  
+_형식_: Json  
+_업데이트 필요 사항_: 중단 없음
+
+`RouteKey`  
+경로의 경로 키입니다. HTTP API의 경우 경로 키는 `$default`이거나 HTTP 메서드와 리소스 경로의 조합일 수 있습니다(예: `GET /pets`.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`RouteResponseSelectionExpression`  
+경로에 대한 경로 응답 선택 표현식입니다. WebSocket API에 대해서만 지원됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Target`  
+경로의 대상입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`Route 리소스 ID(예: )를 반환합니다 `abcd123`.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`RouteId` 경로 ID입니다.
+
+## 예제
+
+### HTTP API 라우트 생성 예시
+
+다음 예제에서는 `route` 이미 `MyRoute` 라는 리소스 가 `MyAPI` 있는 HTTP API에 대해 `integration` 호출되는 리소스를 `MyIntegration` 만듭니다. 라우팅은 `POST` 에 대한 요청을 수락합니다`/signup`.
+
+#### JSON (영문)
+
+```
+"MyRoute": {
+    "Type": "AWS::ApiGatewayV2::Route",
+        "Properties": {
+            "ApiId": {
+                "Ref": "MyAPI"
+            },
+            "RouteKey": "POST /signup",
+            "Target": {
+                "Fn::Join": [
+                    "/",
+                    [
+                        "integrations",
+                        {
+                            "Ref": "MyIntegration"
+                        }
+                    ]
+                ]
+            }
+        }
+    }
+```
+
+### WebSocket API 라우팅 생성 예제
+
+다음 예제에서는 `route` 이미 `MyRoute` 라는 리소스 가 `MyAPI` 있는 WebSocket API에 대해 `integration` 호출된 리소스를 `MyIntegration` 생성합니다. 경로의 경로 키 값은 입니다`routekey1`.
+
+#### JSON (영문)
+
+```
+{
+    "MyRoute": {
+        "Type": "AWS::ApiGatewayV2::Route",
+        "DependsOn": [
+            "MyIntegration"
+        ],
+        "Properties": {
+            "ApiId": {
+                "Ref": "MyApi"
+            },
+            "RouteKey": "routekey1",
+            "AuthorizationType": "NONE",
+            "Target": {
+                "Fn::Join": [
+                    "/",
+                    [
+                        "integrations",
+                        {
+                            "Ref": "MyIntegration"
+                        }
+                    ]
+                ]
+            }
+        }
+    }
+}
+```
+
+## 참고 항목
+
+- Amazon API Gateway 버전 2 API 참조*의 CreateRoute *

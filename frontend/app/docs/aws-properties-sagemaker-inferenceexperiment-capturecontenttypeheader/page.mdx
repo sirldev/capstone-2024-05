@@ -1,0 +1,32 @@
+# AWS::SageMaker::InferenceExperiment CaptureContentType헤더
+
+다른 헤더를 처리하는 방법을 지정하는 구성입니다. 헤더가 지정되지 않은 경우 SageMaker는 데이터를 캡처할 때 기본적으로 base64로 인코딩합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "CsvContentTypes" : [ String, ... ],
+  "JsonContentTypes" : [ String, ... ]
+}
+```
+
+## 속성
+
+`CsvContentTypes`  
+SageMaker가 CSV로 처리하고 그에 따라 캡처할 모든 콘텐츠 유형 헤더의 목록입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_최대_: `10`  
+_업데이트 필요 사항_: 중단 없음
+
+`JsonContentTypes`  
+SageMaker가 JSON으로 처리하고 그에 따라 캡처할 모든 콘텐츠 유형 헤더의 목록입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_최대_: `10`  
+_업데이트 필요 사항_: 중단 없음

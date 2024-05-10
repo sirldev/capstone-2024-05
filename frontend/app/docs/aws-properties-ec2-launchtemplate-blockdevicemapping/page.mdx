@@ -1,0 +1,50 @@
+# AWS::EC2::LaunchTemplate 블록 디바이스 매핑
+
+Amazon EC2 시작 템플릿에 대한 블록 디바이스 매핑에 대한 정보입니다.
+
+`BlockDeviceMapping` 은 AWS::EC2::LaunchTemplate LaunchTemplateData의 속성입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "DeviceName" : String,
+  "Ebs" : Ebs,
+  "NoDevice" : String,
+  "VirtualName" : String
+}
+```
+
+## 속성
+
+`DeviceName`  
+장치 이름(예: /dev/sdh 또는 xvdh)입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Ebs`  
+인스턴스가 시작될 때 EBS 볼륨을 자동으로 설정하는 데 사용되는 파라미터입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Ebs  
+_업데이트 필요 사항_: 중단 없음
+
+`NoDevice`  
+블록 장치 매핑에서 장치를 생략하려면 빈 문자열을 지정합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`VirtualName`  
+가상 디바이스 이름(ephemeralN)입니다. 인스턴스 스토어 볼륨은 0부터 시작하여 번호가 매겨집니다. 2개의 사용 가능한 인스턴스 스토어 볼륨이 있는 인스턴스 유형은 ephemeral0 및 ephemeral1에 대한 매핑을 지정할 수 있습니다. 사용 가능한 인스턴스 스토어 볼륨의 수는 인스턴스 유형에 따라 다릅니다. 인스턴스에 연결한 후에는 볼륨을 탑재해야 합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+## 참고 항목
+
+- Amazon EC2 API 참조\* \*의 LaunchTemplateBlockDeviceMappingRequest

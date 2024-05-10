@@ -1,0 +1,51 @@
+# AWS::ApiGatewayV2::ApiGatewayManagedOverrides 경로 재정의
+
+이 `RouteOverrides` 속성은 API Gateway 관리형 경로에 대한 경로 구성을 재정의합니다. 이 속성을 제거하면 API Gateway가 기본값을 복원합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "AuthorizationScopes" : [ String, ... ],
+  "AuthorizationType" : String,
+  "AuthorizerId" : String,
+  "OperationName" : String,
+  "Target" : String
+}
+```
+
+## 속성
+
+`AuthorizationScopes`  
+이 경로에서 지원하는 권한 부여 범위입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`AuthorizationType`  
+경로에 대한 권한 부여 유형입니다. 자세한 내용은 AuthorizationType을 참조하세요.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`AuthorizerId`  
+`Authorizer` 이 경로와 연결할 리소스의 식별자입니다. 권한 부여자 식별자는 권한 부여자를 생성할 때 API Gateway에서 생성됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`OperationName`  
+경로의 작업 이름입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Target`  
+HTTP 통합의 경우 정규화된 URL을 지정합니다. Lambda 통합의 경우 함수 ARN을 지정합니다. 통합 유형은 각각 HTTP_PROXY 또는 AWS_PROXY입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음

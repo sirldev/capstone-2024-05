@@ -1,0 +1,121 @@
+# AWS::KinesisFirehose::D eliveryStream ExtendedS3DestinationConfiguration
+
+`ExtendedS3DestinationConfiguration` 속성 유형은 Amazon Kinesis Data Firehose 전송 스트림에 대한 Amazon S3 대상을 구성합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "BucketARN" : String,
+  "BufferingHints" : BufferingHints,
+  "CloudWatchLoggingOptions" : CloudWatchLoggingOptions,
+  "CompressionFormat" : String,
+  "DataFormatConversionConfiguration" : DataFormatConversionConfiguration,
+  "DynamicPartitioningConfiguration" : DynamicPartitioningConfiguration,
+  "EncryptionConfiguration" : EncryptionConfiguration,
+  "ErrorOutputPrefix" : String,
+  "Prefix" : String,
+  "ProcessingConfiguration" : ProcessingConfiguration,
+  "RoleARN" : String,
+  "S3BackupConfiguration" : S3DestinationConfiguration,
+  "S3BackupMode" : String
+}
+```
+
+## 속성
+
+`BucketARN`  
+Amazon S3 버킷의 Amazon 리소스 이름(ARN)입니다. 제약 조건은 _Amazon Kinesis Data Firehose API Reference의 ExtendedS3DestinationConfiguration을 참조하십시오_.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `2048`  
+_패턴_: `arn:.*`  
+_업데이트 필요 사항_: 중단 없음
+
+`BufferingHints`  
+버퍼링 옵션입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: BufferingHints  
+_업데이트 필요 사항_: 중단 없음
+
+`CloudWatchLoggingOptions`  
+전송 스트림에 대한 Amazon CloudWatch 로깅 옵션.  
+*필수 항목 *여부: 아니요  
+_유형_: CloudWatchLoggingOptions  
+_업데이트 필요 사항_: 중단 없음
+
+`CompressionFormat`  
+압축 형식입니다. 값을 지정하지 않으면 기본값은 `UNCOMPRESSED`입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `GZIP | HADOOP_SNAPPY | Snappy | UNCOMPRESSED | ZIP`  
+_업데이트 필요 사항_: 중단 없음
+
+`DataFormatConversionConfiguration`  
+데이터를 Amazon S3에 쓰기 전에 JSON 형식에서 Parquet 또는 ORC 형식으로 변환하기 위한 직렬화기, 역직렬화 및 스키마입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: DataFormatConversionConfiguration  
+_업데이트 필요 사항_: 중단 없음
+
+`DynamicPartitioningConfiguration`  
+파티션 키를 기반으로 분할하여 스트리밍 데이터에서 대상 데이터 집합을 만드는 동적 분할 메커니즘의 구성입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: DynamicPartitioningConfiguration  
+_업데이트 필요 사항_: 중단 없음
+
+`EncryptionConfiguration`  
+Kinesis Data Firehose 전송 스트림에 대한 암호화 구성입니다. 기본값은 `NoEncryption`입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: EncryptionConfiguration  
+_업데이트 필요 사항_: 중단 없음
+
+`ErrorOutputPrefix`  
+Kinesis Data Firehose가 실패한 레코드를 평가하여 S3에 기록하기 전에 추가하는 접두사입니다. 이 접두사는 버킷 이름 바로 뒤에 나타납니다. 이 접두사를 지정하는 방법에 대한 자세한 내용은 Amazon S3 객체에 대한 사용자 지정 접두사 단원을 참조하십시오.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `0`  
+_최대_: `1024`  
+_패턴_: `.*`  
+_업데이트 필요 사항_: 중단 없음
+
+`Prefix`  
+`YYYY/MM/DD/HH` 시간 형식 접두사는 전송된 Amazon S3 파일에 자동으로 사용됩니다. 자세한 내용은 _Amazon Kinesis Data Firehose API Reference의 ExtendedS3DestinationConfiguration을 참조하십시오_.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `0`  
+_최대_: `1024`  
+_패턴_: `.*`  
+_업데이트 필요 사항_: 중단 없음
+
+`ProcessingConfiguration`  
+Kinesis Data Firehose 전송 스트림에 대한 데이터 처리 구성입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: ProcessingConfiguration  
+_업데이트 필요 사항_: 중단 없음
+
+`RoleARN`  
+AWS 자격 증명의 Amazon 리소스 이름(ARN)입니다. 제약 조건은 _Amazon Kinesis Data Firehose API Reference의 ExtendedS3DestinationConfiguration을 참조하십시오_.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `512`  
+_패턴_: `arn:.*`  
+_업데이트 필요 사항_: 중단 없음
+
+`S3BackupConfiguration`  
+Amazon S3의 백업 구성입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: S3DestinationConfiguration  
+_업데이트 필요 사항_: 중단 없음
+
+`S3BackupMode`  
+Amazon S3 백업 모드입니다. 전송 스트림을 생성한 후 Amazon S3 백업이 비활성화된 경우 이를 업데이트하여 Amazon S3 백업을 활성화할 수 있습니다. 백업이 활성화된 경우 전송 스트림을 업데이트하여 비활성화할 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `Disabled | Enabled`  
+_업데이트 필요 사항_: 중단 없음

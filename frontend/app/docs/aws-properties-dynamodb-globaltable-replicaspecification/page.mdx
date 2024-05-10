@@ -1,0 +1,87 @@
+# AWS::D ynamoDB::GlobalTable 복제본 사양
+
+전역 테이블의 단일 복제본과 관련된 설정을 정의합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ContributorInsightsSpecification" : ContributorInsightsSpecification,
+  "DeletionProtectionEnabled" : Boolean,
+  "GlobalSecondaryIndexes" : [ ReplicaGlobalSecondaryIndexSpecification, ... ],
+  "KinesisStreamSpecification" : KinesisStreamSpecification,
+  "PointInTimeRecoverySpecification" : PointInTimeRecoverySpecification,
+  "ReadProvisionedThroughputSettings" : ReadProvisionedThroughputSettings,
+  "Region" : String,
+  "SSESpecification" : ReplicaSSESpecification,
+  "TableClass" : String,
+  "Tags" : [Tag, ... ]
+}
+```
+
+## 속성
+
+`ContributorInsightsSpecification`  
+지정된 복제본에 대해 CloudWatch Contributor Insights를 활성화하거나 비활성화하는 데 사용되는 설정입니다. 지정하지 않으면 기본적으로 복제본에 대해 기여자 인사이트를 사용하지 않도록 설정됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: ContributorInsightsSpecification  
+_업데이트 필요 사항_: 중단 없음
+
+`DeletionProtectionEnabled`  
+복제본이 삭제되지 않도록 보호되는지 여부를 확인합니다. 사용하도록 설정하면 사용자 또는 프로세스에서 테이블을 삭제할 수 없습니다. 이 설정은 기본적으로 비활성화되어 있습니다. 자세한 내용은 _Amazon DynamoDBDeveloper 안내서의 삭제 방지 사용을 참조하세요_.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`GlobalSecondaryIndexes`  
+이 복제본의 global secondary indexes에 대한 추가 설정을 정의합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: ReplicaGlobalSecondaryIndexSpecification 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`KinesisStreamSpecification`  
+지정된 복제본에 대한 Kinesis Data Streams 구성을 정의합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: KinesisStreamSpecification  
+_업데이트 필요 사항_: 중단 없음
+
+`PointInTimeRecoverySpecification`  
+특정 시점 복구를 사용하도록 설정하는 데 사용되는 설정입니다. 지정하지 않으면 기본적으로 복제본에 대해 특정 시점 복구를 사용하지 않도록 설정됩니다.  
+*필수 항목 *여부: 아니요  
+_형식_: PointInTimeRecoverySpecification  
+_업데이트 필요 사항_: 중단 없음
+
+`ReadProvisionedThroughputSettings`  
+복제본 테이블에 대한 읽기 용량 설정을 정의합니다.  
+*필수 항목 *여부: 아니요  
+_형식_: ReadProvisionedThroughputSettings  
+_업데이트 필요 사항_: 중단 없음
+
+`Region`  
+이 복제본이 있는 지역입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`SSESpecification`  
+복제본에 대한 고객 관리형 키를 지정할 수 있습니다. 서버 쪽 암호화에 고객 관리형 키를 사용하는 경우 이 속성에는 모든 복제본에 값이 있어야 합니다.  
+*필수 항목 *여부: 아니요  
+_형식_: ReplicaSSESpecification  
+_업데이트 필요 사항_: 중단 없음
+
+`TableClass`  
+지정된 테이블의 테이블 클래스입니다. 유효한 값은 `STANDARD` 및 `STANDARD_INFREQUENT_ACCESS`입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Tags`  
+이 복제본에 적용할 키-값 쌍의 배열입니다.  
+자세한 내용은 태그를 참조하십시오.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 중단 없음

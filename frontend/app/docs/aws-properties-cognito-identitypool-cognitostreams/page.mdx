@@ -1,0 +1,37 @@
+# AWS::Cognito::IdentityPool CognitoStreams
+
+`CognitoStreams` 는 Amazon Cognito 스트림에 대한 구성 옵션을 정의하는 AWS::Cognito::IdentityPool 리소스의 속성입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "RoleArn" : String,
+  "StreamingStatus" : String,
+  "StreamName" : String
+}
+```
+
+## 속성
+
+`RoleArn`  
+Amazon Cognito가 스트림에 게시하기 위해 수임할 수 있는 역할의 Amazon 리소스 이름(ARN)입니다. 이 역할은 Amazon Cognito 스트림에서 호출할 수 있도록 Amazon Cognito(cognito-sync)에 대한 액세스 권한을 부여해야 `PutRecord` 합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`StreamingStatus`  
+Amazon Cognito 스트림의 상태입니다. 유효한 값은 `ENABLED` 또는 `DISABLED`입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`StreamName`  
+업데이트를 수신할 Amazon Cognito 스트림의 이름입니다. 이 스트림은 개발자 계정에 있어야 하며 자격 증명 풀과 동일한 리전에 있어야 합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음

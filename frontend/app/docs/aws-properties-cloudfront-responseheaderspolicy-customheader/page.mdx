@@ -1,0 +1,37 @@
+# AWS::CloudFront::ResponseHeadersPolicy 사용자 지정 헤더
+
+HTTP 응답 헤더 이름 및 해당 값입니다. CloudFront는 이 응답 헤더 정책과 연결된 캐시 동작과 일치하는 요청에 대해 보내는 HTTP 응답에 이 헤더를 포함합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Header" : String,
+  "Override" : Boolean,
+  "Value" : String
+}
+```
+
+## 속성
+
+`Header`  
+HTTP 응답 헤더 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Override`  
+CloudFront가 오리진에서 수신한 것과 동일한 이름의 응답 헤더를 여기에 지정된 헤더로 재정의할지 여부를 결정하는 부울입니다.  
+_필수 항목 여부_: 예  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`Value`  
+HTTP 응답 헤더의 값입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음

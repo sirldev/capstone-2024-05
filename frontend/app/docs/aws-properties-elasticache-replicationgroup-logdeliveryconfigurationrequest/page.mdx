@@ -1,0 +1,44 @@
+# AWS::ElastiCache::ReplicationGroup LogDeliveryConfigurationRequest
+
+로그의 대상, 형식 및 유형을 지정합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "DestinationDetails" : DestinationDetails,
+  "DestinationType" : String,
+  "LogFormat" : String,
+  "LogType" : String
+}
+```
+
+## 속성
+
+`DestinationDetails`  
+CloudWatch Logs 대상 또는 Kinesis Data Firehose 대상의 구성 세부 정보입니다.  
+_필수 항목 여부_: 예  
+_유형_: DestinationDetails  
+_업데이트 필요 사항_: 중단 없음
+
+`DestinationType`  
+CloudWatch Logs 또는 Kinesis Data Firehose를 대상 유형으로 지정합니다. 유효한 값은 `cloudwatch-logs` 또는 `kinesis-firehose`입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`LogFormat`  
+유효한 값은 `json` 또는 `text`입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`LogType`  
+유효한 값은 `slow-log`slow-log 또는 를 참조하는 입니다 `engine-log`.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음

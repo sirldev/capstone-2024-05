@@ -1,0 +1,30 @@
+# AWS::KinesisFirehose::D eliveryStream 역직렬 변환기
+
+Kinesis Data Firehose가 JSON에서 입력 데이터를 변환하는 데 사용할 디시리얼라이저입니다. 그런 다음 Kinesis Data Firehose는 `Serializer`. Kinesis Data Firehose는 Apache Hive JSON SerDe와 OpenX JSON SerDe라는 두 가지 유형의 디시리얼라이저를 지원합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "HiveJsonSerDe" : HiveJsonSerDe,
+  "OpenXJsonSerDe" : OpenXJsonSerDe
+}
+```
+
+## 속성
+
+`HiveJsonSerDe`  
+네이티브 Hive/HCatalog JsonSerDe. Kinesis Data Firehose에서 데이터를 역직렬화하는 데 사용되며, 이는 데이터를 Parquet 또는 ORC 형식으로 직렬화하기 위해 JSON 형식에서 데이터를 변환하는 것을 의미합니다. 이 deserializer는 필요한 기능을 제공하는 디시리얼라이저에 따라 선택할 수 있는 두 가지 deserializer 중 하나입니다. 다른 옵션은 OpenX SerDe입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: HiveJsonSerDe  
+_업데이트 필요 사항_: 중단 없음
+
+`OpenXJsonSerDe`  
+The OpenX SerDe. Kinesis Data Firehose에서 데이터를 역직렬화하는 데 사용되며, 이는 데이터를 Parquet 또는 ORC 형식으로 직렬화하기 위해 JSON 형식에서 데이터를 변환하는 것을 의미합니다. 이 deserializer는 필요한 기능을 제공하는 디시리얼라이저에 따라 선택할 수 있는 두 가지 deserializer 중 하나입니다. 다른 옵션은 네이티브 Hive/HCatalog JsonSerDe입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: OpenXJsonSerDe  
+_업데이트 필요 사항_: 중단 없음

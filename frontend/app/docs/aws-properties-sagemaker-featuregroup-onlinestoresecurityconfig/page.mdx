@@ -1,0 +1,40 @@
+# AWS::SageMaker::FeatureGroup OnlineStoreSecurityConfig
+
+에 대한 보안 구성입니다 `OnlineStore`.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "KmsKeyId" : String
+}
+```
+
+## 속성
+
+`KmsKeyId`  
+SageMaker Feature Store가 Amazon S3 서버 측 암호화를 사용하여 저장된 Amazon S3 객체를 암호화하는 데 사용하는 AWS Key Management Service(KMS) 키 ARN입니다.  
+호출자(사용자 또는 IAM 역할) 는 `CreateFeatureGroup` 다음과 같은 권한이 있어야 합니다. `OnlineStore` `KmsKeyId`
+
+- `"kms:Encrypt"`
+- `"kms:Decrypt"`
+- `"kms:DescribeKey"`
+- `"kms:CreateGrant"`
+- `"kms:RetireGrant"`
+- `"kms:ReEncryptFrom"`
+- `"kms:ReEncryptTo"`
+- `"kms:GenerateDataKey"`
+- `"kms:ListAliases"`
+- `"kms:ListGrants"`
+- `"kms:RevokeGrant"`
+  모든 DataPlane 작업(, , )에 대한 호출자(사용자 또는 IAM 역할)`PutRecord` `GetRecord` `DeleteRecord` 는 에 대한 다음 권한이 있어야 합니다`KmsKeyId`.
+- `"kms:Decrypt"`
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열  
+  _최대_: `2048`  
+  _패턴_: `.*`  
+  _업데이트 필요 사항_: 바꿔 놓음

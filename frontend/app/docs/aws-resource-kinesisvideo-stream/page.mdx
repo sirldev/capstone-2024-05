@@ -1,0 +1,90 @@
+# AWS::KinesisVideo::스트림
+
+새 Kinesis 비디오 스트림을 지정합니다.
+
+새 스트림을 생성하면 Kinesis Video Streams가 버전 번호를 할당합니다. 스트림의 메타데이터를 변경하면 Kinesis Video Streams가 버전을 업데이트합니다.
+
+`CreateStream` 는 비동기 작업입니다.
+
+서비스 작동 방식에 대한 자세한 내용은 작동 방식을 참조하십시오.
+
+작업에 대한 권한이 있어야 합니다 `KinesisVideo:CreateStream` .
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::KinesisVideo::Stream",
+  "Properties" : {
+      "DataRetentionInHours" : Integer,
+      "DeviceName" : String,
+      "KmsKeyId" : String,
+      "MediaType" : String,
+      "Name" : String,
+      "Tags" : [Tag, ... ]
+    }
+}
+```
+
+## 속성
+
+`DataRetentionInHours`  
+스트림이 데이터를 보존하는 기간(시간)입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_최소_: `0`  
+_업데이트 필요 사항_: 중단 없음
+
+`DeviceName`  
+스트림과 연결된 장치의 이름입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `128`  
+_패턴_: `[a-zA-Z0-9_.-]+`  
+_업데이트 필요 사항_: 중단 없음
+
+`KmsKeyId`  
+Kinesis Video Streams가 스트림의 데이터를 암호화하는 데 사용하는 AWS Key Management Service(AWS KMS) 키의 ID입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `2048`  
+_패턴_: `.+`  
+_업데이트 필요 사항_: 중단 없음
+
+`MediaType`  
+스트림의 입니다 `MediaType` .  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `128`  
+_패턴_: `[w-.+]+/[w-.+]+(,[w-.+]+/[w-.+]+)*`  
+_업데이트 필요 사항_: 중단 없음
+
+`Name`  
+스트림의 이름입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Tags`  
+이 리소스에 적용할 키-값 쌍의 배열입니다.  
+자세한 내용은 태그를 참조하십시오.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+### Fn::GetAtt
+
+####
+
+`Arn` 스트림의 Amazon 리소스 이름(ARN)입니다.

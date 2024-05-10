@@ -1,0 +1,32 @@
+# AWS::CloudWatch::MetricStream MetricStreamStatistics구성
+
+이 구조는 스트리밍할 추가 통계 목록과 이러한 추가 통계를 스트리밍할 메트릭을 지정합니다.
+
+메트릭 이름 및 네임스페이스의 조합과 일치하는 모든 메트릭은 차원에 관계없이 추가 통계와 함께 스트리밍됩니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "AdditionalStatistics" : [ String, ... ],
+  "IncludeMetrics" : [ MetricStreamStatisticsMetric, ... ]
+}
+```
+
+## 속성
+
+`AdditionalStatistics`  
+에 나열된 지표에 대해 스트리밍할 추가 통계입니다 `IncludeMetrics`.  
+_필수 항목 여부_: 예  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`IncludeMetrics`  
+추가 통계를 스트리밍할 메트릭을 정의하는 배열입니다.  
+_필수 항목 여부_: 예  
+_유형_: MetricStreamStatisticsMetric 목록  
+_업데이트 필요 사항_: 중단 없음

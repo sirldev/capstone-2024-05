@@ -1,0 +1,124 @@
+# AWS::EC2::P refixList
+
+관리되는 접두사 목록을 지정합니다. 접두사 목록에 하나 이상의 항목을 추가할 수 있습니다. 각 항목은 CIDR 블록과 설명(선택 사항)으로 구성됩니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::EC2::PrefixList",
+  "Properties" : {
+      "AddressFamily" : String,
+      "Entries" : [ Entry, ... ],
+      "MaxEntries" : Integer,
+      "PrefixListName" : String,
+      "Tags" : [Tag, ... ]
+    }
+}
+```
+
+## 속성
+
+`AddressFamily`  
+IP 주소 유형입니다.  
+유효한 값 : `IPv4` | `IPv6`  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Entries`  
+접두사 목록에 대한 하나 이상의 항목입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 항목 목록  
+_최대_: `100`  
+_업데이트 필요 사항_: 중단 없음
+
+`MaxEntries`  
+접두사 목록의 최대 항목 수입니다.  
+_필수 항목 여부_: 예  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`PrefixListName`  
+접두사 목록의 이름입니다.  
+제약 조건: 최대 255자까지 입력할 수 있습니다. 이름은 로 시작할 수 없습니다 `com.amazonaws`.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Tags`  
+접두사 목록의 태그입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`접두사 목록의 ID가 반환됩니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`Arn`  
+접두사 목록의 ARN입니다. 예를 들어, `arn:aws:ec2:us-east-1:123456789012:prefix-list/pl-0123123123123abcd`.
+
+`OwnerId`  
+접두사 목록 소유자의 ID입니다. 예를 들어, `123456789012`.
+
+`PrefixListId`  
+접두사 목록의 ID입니다. 예를 들어, `pl-0123123123123abcd`.
+
+`Version`  
+접두사 목록의 버전입니다. 예를 들어, `1`.
+
+## 예제
+
+### 접두사 목록 만들기
+
+다음 예제에서는 최대 10개의 항목이 있는 IPv4 접두사 목록을 만들고 접두사 목록에 2개의 항목을 만듭니다.
+
+#### JSON (영문)
+
+```
+{
+    "Resources": {
+        "NewPrefixList": {
+            "Type": "AWS::EC2::PrefixList",
+            "Properties": {
+                "PrefixListName": "vpc-1-servers",
+                "AddressFamily": "IPv4",
+                "MaxEntries": 10,
+                "Entries": [
+                    {
+                        "Cidr": "10.0.0.5/32",
+                        "Description": "Server 1"
+                    },
+                    {
+                        "Cidr": "10.0.0.10/32",
+                        "Description": "Server 2"
+                    }
+                ],
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "VPC-1-Servers"
+                    }
+                ]
+            }
+        }
+    }
+}
+```

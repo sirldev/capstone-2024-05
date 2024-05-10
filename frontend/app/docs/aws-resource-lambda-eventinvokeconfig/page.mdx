@@ -1,0 +1,87 @@
+# AWS::람다::EventInvokeConfig
+
+리소스는 `AWS::Lambda::EventInvokeConfig` 버전 또는 별칭에 대한 비동기 호출에 대한 옵션을 구성합니다.
+
+기본적으로 Lambda는 함수가 오류를 반환하는 경우 비동기 호출을 두 번 재시도합니다. 최대 6시간 동안 큐에 이벤트를 유지합니다. 이벤트가 모든 처리 시도에 실패하거나 비동기 호출 대기열에 너무 오래 머무르면 Lambda는 이벤트를 폐기합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::Lambda::EventInvokeConfig",
+  "Properties" : {
+      "DestinationConfig" : DestinationConfig,
+      "FunctionName" : String,
+      "MaximumEventAgeInSeconds" : Integer,
+      "MaximumRetryAttempts" : Integer,
+      "Qualifier" : String
+    }
+}
+```
+
+## 속성
+
+`DestinationConfig` 처리를 위해 함수로 전송된 후의 이벤트 대상입니다.
+
+**목적지**
+
+- **함수** - Lambda 함수의 Amazon 리소스 이름(ARN)입니다.
+- **대기열** - 표준 SQS 대기열의 ARN입니다.
+- **주제** - 표준 SNS 주제의 ARN입니다.
+- **이벤트 버스** - Amazon EventBridge 이벤트 버스의 ARN입니다.
+  *필수 항목 *여부: 아니요  
+  _유형_: DestinationConfig  
+  _업데이트 필요 사항_: 중단 없음
+
+`FunctionName`  
+Lambda 함수의 이름입니다.  
+_최소_: `1`  
+_최대_: `64`  
+_패턴_: `([a-zA-Z0-9-_]+)`  
+_필수_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`MaximumEventAgeInSeconds`  
+Lambda가 처리를 위해 함수로 보내는 요청의 최대 보존 기간입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_최소_: `60`  
+_최대_: `21600`  
+_업데이트 필요 사항_: 중단 없음
+
+`MaximumRetryAttempts`  
+함수가 오류를 반환할 때 다시 시도할 최대 횟수입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_최소_: `0`  
+_최대_: `2`  
+_업데이트 필요 사항_: 중단 없음
+
+`Qualifier` 버전 또는 별칭의 식별자입니다.
+
+- **버전** - 버전 번호입니다.
+- **별칭** - 별칭 이름입니다.
+- **최신** - 게시되지 않은 버전을 지정하려면 을 사용합니다 `$LATEST`.
+  _필수 항목 여부_: 예  
+  _유형_: 문자열  
+  _최소_: `1`  
+  _최대_: `128`  
+  _패턴_: `(|[a-zA-Z0-9$_-]+)`  
+  _업데이트 필요 사항_: 바꿔 놓음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref`이 `Ref`리소스에 대한 고유 식별자를 반환합니다.
+
+## 예제
+
+### 비동기 호출 구성
+
+함수 버전에 대한 오류 처리 및 대상 구성Error handling and destination configuration for a version of a function. Node.js 기능과 버전이 포함되어 있습니다.

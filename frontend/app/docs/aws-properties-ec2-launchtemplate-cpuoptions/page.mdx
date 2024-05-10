@@ -1,0 +1,44 @@
+# AWS::EC2::LaunchTemplate CpuOptions
+
+인스턴스에 대한 CPU 옵션을 지정합니다. 자세한 내용은 _Amazon Elastic Compute Cloud 사용 설명서의 CPU 옵션 최적화를 참조하세요_.
+
+`CpuOptions` 은 AWS::EC2::LaunchTemplate LaunchTemplateData의 속성입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "AmdSevSnp" : String,
+  "CoreCount" : Integer,
+  "ThreadsPerCore" : Integer
+}
+```
+
+## 속성
+
+`AmdSevSnp`  
+AMD SEV-SNP에 대해 인스턴스를 활성화할지 여부를 나타냅니다. AMD SEV-SNP는 M6a, R6a 및 C6a 인스턴스 유형에서만 지원됩니다. 자세한 내용은 AMD SEV-SNP를 참조하십시오.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `disabled | enabled`  
+_업데이트 필요 사항_: 중단 없음
+
+`CoreCount`  
+인스턴스의 CPU 코어 수입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`ThreadsPerCore`  
+CPU 코어당 스레드 수입니다. 인스턴스에 대해 다중 스레딩을 비활성화하려면 값을 지정합니다`1`. 그렇지 않으면 기본값을 지정합니다`2`.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+## 참고 항목
+
+- Amazon EC2 사용 설명서*의 CPU 옵션 최적화*.

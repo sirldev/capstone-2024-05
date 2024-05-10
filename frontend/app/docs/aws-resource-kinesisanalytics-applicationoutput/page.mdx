@@ -1,0 +1,52 @@
+# AWS::KinesisAnalytics::애플리케이션 출력
+
+Amazon Kinesis Analytics 애플리케이션에 외부 대상을 추가합니다.
+
+Amazon Kinesis Analytics가 애플리케이션 내 인애플리케이션 스트림에서 외부 대상(예: Amazon Kinesis 스트림, Amazon Kinesis Firehose 전송 스트림 또는 Amazon Lambda 함수)으로 데이터를 전송하도록 하려면 이 작업을 사용하여 애플리케이션에 관련 구성을 추가합니다. 응용 프로그램에 대해 하나 이상의 출력을 구성할 수 있습니다. 각 출력 구성은 인애플리케이션 스트림과 외부 대상을 매핑합니다.
+
+출력 구성 중 하나를 사용하여 오류를 분석할 수 있도록 애플리케이션 내 오류 스트림에서 외부 대상으로 데이터를 전달할 수 있습니다. 자세한 내용은 응용 프로그램 출력 이해(대상)를 참조하십시오.
+
+이 작업을 사용하여 스트리밍 원본을 추가하는 것을 포함하여 모든 구성 업데이트는 새 버전의 애플리케이션을 생성합니다. 이 작업을 사용하여 `DescribeApplication` 현재 애플리케이션 버전을 찾을 수 있습니다.
+
+구성할 수 있는 응용 프로그램 입력 및 출력 수에 대한 제한은 Limits를 참조하십시오.
+
+이 작업을 수행하려면 작업을 수행할 수 있는 권한이 필요합니다 `kinesisanalytics:AddApplicationOutput` .
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::KinesisAnalytics::ApplicationOutput",
+  "Properties" : {
+      "ApplicationName" : String,
+      "Output" : Output
+    }
+}
+```
+
+## 속성
+
+`ApplicationName`  
+출력 구성을 추가할 응용 프로그램의 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `128`  
+_패턴_: `[a-zA-Z0-9_.-]+`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Output`  
+각각 하나의 출력 구성을 설명하는 개체의 배열입니다. 출력 구성에서 인애플리케이션 스트림의 이름, 대상(즉, Amazon Kinesis 스트림, Amazon Kinesis Firehose 전송 스트림 또는 AWS Lambda 함수)을 지정하고 대상에 쓸 때 사용할 구성을 기록합니다.  
+_필수 항목 여부_: 예  
+_유형_: 출력  
+_업데이트 필요 사항_: 중단 없음
+
+## 예제
+
+### ApplicationOutput 리소스 추가
+
+다음 예제에서는 리소스를 만듭니다. `ApplicationOutput`

@@ -1,0 +1,30 @@
+# AWS::SageMaker::MonitoringSchedule 기준구성
+
+데이터가 지정된 제약 조건 및 통계를 준수하는지 확인하는 데 사용되는 기준 구성입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ConstraintsResource" : ConstraintsResource,
+  "StatisticsResource" : StatisticsResource
+}
+```
+
+## 속성
+
+`ConstraintsResource`  
+제약 조건 리소스에 대한 Amazon S3 URI입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: ConstraintsResource  
+_업데이트 필요 사항_: 중단 없음
+
+`StatisticsResource`  
+현재 모니터링 작업을 검증해야 하는 Amazon S3의 기준 통계 파일입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: StatisticsResource  
+_업데이트 필요 사항_: 중단 없음

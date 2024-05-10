@@ -1,0 +1,65 @@
+# AWS::KinesisAnalytics::애플리케이션
+
+리소스 `AWS::KinesisAnalytics::Application` 는 Amazon Kinesis Data Analytics 애플리케이션을 생성합니다. 자세한 내용은 Amazon Kinesis Data Analytics 개발자 안내서를 참조하십시오.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::KinesisAnalytics::Application",
+  "Properties" : {
+      "ApplicationCode" : String,
+      "ApplicationDescription" : String,
+      "ApplicationName" : String,
+      "Inputs" : [ Input, ... ]
+    }
+}
+```
+
+## 속성
+
+`ApplicationCode`  
+입력 데이터를 읽고, 변환하고, 출력을 생성하는 하나 이상의 SQL문입니다. 예를 들어, 하나의 인애플리케이션 스트림에서 데이터를 읽고, 공급업체별 광고 클릭 수의 실행 평균을 생성하고, 펌프를 사용하여 다른 인애플리케이션 스트림에 결과 행을 삽입하는 SQL문을 작성할 수 있습니다. 일반적인 패턴에 대한 자세한 내용은 응용 프로그램 코드를 참조하십시오.  
+한 명령문의 출력을 다음 명령문의 입력으로 사용할 수 있는 일련의 SQL문을 제공할 수 있습니다. 중간 결과는 인애플리케이션 스트림과 펌프를 생성하여 저장합니다.  
+응용 프로그램 코드는 에 지정된 이름으로 스트림을 만들어야 합니다`Outputs`. 예를 들어, `Outputs` and라는 `ExampleOutputStream1` 출력 스트림을 정의하는 `ExampleOutputStream2` 경우 애플리케이션 코드는 이러한 스트림을 만들어야 합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `0`  
+_최대_: `102400`  
+_업데이트 필요 사항_: 중단 없음
+
+`ApplicationDescription`  
+응용 프로그램에 대한 요약 설명입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `0`  
+_최대_: `1024`  
+_업데이트 필요 사항_: 중단 없음
+
+`ApplicationName`  
+Amazon Kinesis Analytics 애플리케이션의 이름(예: `sample-app`).  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `128`  
+_패턴_: `[a-zA-Z0-9_.-]+`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Inputs`  
+이 매개 변수를 사용하여 응용 프로그램 입력을 구성합니다.  
+단일 스트리밍 원본에서 입력을 받도록 응용 프로그램을 구성할 수 있습니다. 이 구성에서는 이 스트리밍 소스를 생성된 인애플리케이션 스트림에 매핑합니다. 그런 다음 애플리케이션 코드는 테이블처럼 인애플리케이션 스트림을 쿼리할 수 있습니다(지속적으로 업데이트되는 테이블로 생각할 수 있음).  
+스트리밍 소스의 경우 Amazon 리소스 이름(ARN)과 스트림의 데이터 형식(예: JSON, CSV 등)을 제공합니다. 또한 Amazon Kinesis Analytics가 사용자를 대신하여 이 스트림을 읽을 수 있는 IAM 역할을 제공해야 합니다.  
+인애플리케이션 스트림을 작성하려면 SQL에서 사용되는 스키마화된 버전으로 데이터를 변환하는 스키마를 지정해야 합니다. 스키마에서 스트리밍 소스의 데이터 요소에 필요한 매핑을 제공하여 인앱 스트림의 열을 기록합니다.  
+_필수 항목 여부_: 예  
+_유형_: 입력 목록  
+_업데이트 필요 사항_: 중단 없음
+
+## 예제
+
+### Amazon Kinesis Data Analytics 애플리케이션 생성
+
+다음 예제에서는 Kinesis Data Analytics 애플리케이션을 생성 및 구성하는 방법을 보여 줍니다.

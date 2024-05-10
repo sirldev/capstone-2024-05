@@ -1,0 +1,36 @@
+# AWS::ApiGateway::D eployment AccessLogSetting
+
+`AccessLogSetting` 속성 유형은 이 단계에서 로깅 액세스에 대한 설정을 지정합니다.
+
+`AccessLogSetting` 은 StageDescription 속성 유형의 속성입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "DestinationArn" : String,
+  "Format" : String
+}
+```
+
+## 속성
+
+`DestinationArn`  
+액세스 로그를 수신하기 위한 CloudWatch Logs 로그 그룹 또는 Kinesis Data Firehose 전송 스트림의 Amazon 리소스 이름(ARN)입니다. Kinesis Data Firehose 전송 스트림을 지정하는 경우 스트림 이름은 로 시작해야 합니다`amazon-apigateway-`.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Format`  
+선택한 $context 변수에 의해 지정된 데이터 액세스 로그의 한 줄 형식입니다. 형식에는 최소한 `$context.requestId`.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+## 참고 항목
+
+- Amazon API Gateway REST API 참조*의 accessLogSettings *

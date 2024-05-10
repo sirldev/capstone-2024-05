@@ -1,0 +1,35 @@
+# AWS::Cognito::UserPoolRiskConfigurationAttachment AccountTakeoverActionType
+
+계정 탈취 작업 유형입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "EventAction" : String,
+  "Notify" : Boolean
+}
+```
+
+## 속성
+
+`EventAction` 계정 탈취 조치에 대한 응답으로 수행할 조치입니다. 유효한 값은 다음과 같습니다.
+
+- `BLOCK` 이 작업을 선택하면 요청이 차단됩니다.
+- `MFA_IF_CONFIGURED` 사용자가 구성한 경우 MFA 챌린지를 표시하고, 그렇지 않으면 요청을 허용합니다.
+- `MFA_REQUIRED` 사용자가 구성한 경우 MFA 챌린지를 표시하고, 그렇지 않으면 요청을 차단합니다.
+- `NO_ACTION` 사용자가 로그인할 수 있도록 허용합니다.
+  _필수 항목 여부_: 예  
+  _유형_: 문자열  
+  _허용되는 값_: `BLOCK | MFA_IF_CONFIGURED | MFA_REQUIRED | NO_ACTION`  
+  _업데이트 필요 사항_: 중단 없음
+
+`Notify`  
+알림을 보낼지 여부를 지정하는 플래그입니다.  
+_필수 항목 여부_: 예  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음

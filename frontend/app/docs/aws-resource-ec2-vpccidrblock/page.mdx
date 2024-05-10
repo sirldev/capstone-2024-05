@@ -1,0 +1,189 @@
+# AWS::EC2::VPCCidrBlock
+
+CIDR 블록을 VPC에 연결합니다. 단일 IPv6 CIDR 블록만 VPC에 연결할 수 있습니다. IPv6 CIDR 블록 크기는 /56으로 고정되어 있습니다.
+
+CIDR 블록을 VPC와 연결하는 방법 및 해당 제한 사항에 대한 자세한 내용은 Amazon VPC 사용 설명서의 VPC 및 서브넷 크기 조정을 참조하십시오\*\*.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::EC2::VPCCidrBlock",
+  "Properties" : {
+      "AmazonProvidedIpv6CidrBlock" : Boolean,
+      "CidrBlock" : String,
+      "Ipv4IpamPoolId" : String,
+      "Ipv4NetmaskLength" : Integer,
+      "Ipv6CidrBlock" : String,
+      "Ipv6IpamPoolId" : String,
+      "Ipv6NetmaskLength" : Integer,
+      "Ipv6Pool" : String,
+      "VpcId" : String
+    }
+}
+```
+
+## 속성
+
+`AmazonProvidedIpv6CidrBlock`  
+VPC에 대해 접두사 길이가 /56인 Amazon 제공 IPv6 CIDR 블록을 요청합니다. IPv6 주소의 범위나 CIDR 블록의 크기는 지정할 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`CidrBlock`  
+VPC와 연결할 IPv4 CIDR 블록입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Ipv4IpamPoolId`  
+IPv4 IPAM 풀에서 할당된 CIDR을 VPC에 연결합니다. Amazon VPC IP 주소 관리자(IPAM)에 대한 자세한 내용은 IPAM이란 무엇입니까?를 참조하십시오. 의*Amazon VPC IPAM 사용 설명서*.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Ipv4NetmaskLength`  
+Amazon VPC IP 주소 관리자(IPAM) 풀에서 연결하려는 IPv4 CIDR의 넷마스크 길이입니다. IPAM에 대한 자세한 내용은 IPAM이란?을 참조하세요. 의*Amazon VPC IPAM 사용 설명서*.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Ipv6CidrBlock`  
+IPv6 주소 풀의 IPv6 CIDR 블록입니다. 요청에서도 지정해야 합니다 `Ipv6Pool` .  
+Amazon에서 IPv6 CIDR 블록을 선택하도록 하려면 이 파라미터를 생략합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Ipv6IpamPoolId`  
+IPv6 IPAM 풀에서 할당된 CIDR을 VPC에 연결합니다. Amazon VPC IP 주소 관리자(IPAM)에 대한 자세한 내용은 IPAM이란 무엇입니까?를 참조하십시오. 의*Amazon VPC IPAM 사용 설명서*.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Ipv6NetmaskLength`  
+Amazon VPC IP 주소 관리자(IPAM) 풀에서 연결하려는 IPv6 CIDR의 넷마스크 길이입니다. IPAM에 대한 자세한 내용은 IPAM이란?을 참조하세요. 의*Amazon VPC IPAM 사용 설명서*.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Ipv6Pool`  
+IPv6 CIDR 블록을 할당할 IPv6 주소 풀의 ID입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`VpcId`  
+VPC의 ID입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`VPC CIDR 블록의 연결 ID가 반환됩니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+## 예제
+
+### Amazon에서 제공하는 IPv6 CIDR 블록 연결
+
+다음 예제에서는 Amazon에서 제공한 IPv6 CIDR 블록(접두사 길이 /56)을 TestVPCIpv6 VPC와 연결합니다.
+
+#### JSON (영문)
+
+```
+"Ipv6VPCCidrBlock": {
+   "Type": "AWS::EC2::VPCCidrBlock",
+   "Properties": {
+      "AmazonProvidedIpv6CidrBlock": true,
+      "VpcId": { "Ref" : "TestVPCIpv6" }
+   }
+}
+```
+
+### IPv4 CIDR 블록과 Amazon에서 제공하는 IPv6 CIDR 블록 연결
+
+다음 예제에서는 IPv4 CIDR 블록 및 Amazon에서 제공하는 IPv6 CIDR 블록을 VPC와 연결합니다. 또한 VPC와 연결된 IPv4 CIDR 블록 연결 ID 및 IPv6 CIDR 블록 목록도 출력합니다.
+
+#### JSON (영문)
+
+```
+{
+    "Resources": {
+        "VPC": {
+            "Type": "AWS::EC2::VPC",
+            "Properties": {
+                "CidrBlock": "10.0.0.0/24"
+            }
+        },
+        "VpcCidrBlock": {
+            "Type": "AWS::EC2::VPCCidrBlock",
+            "Properties": {
+                "VpcId": {
+                    "Ref": "VPC"
+                },
+                "CidrBlock": "192.0.0.0/24"
+            }
+        },
+        "VpcCidrBlockIpv6": {
+            "Type": "AWS::EC2::VPCCidrBlock",
+            "Properties": {
+                "VpcId": {
+                    "Ref": "VPC"
+                },
+                "AmazonProvidedIpv6CidrBlock": true
+            }
+        }
+    },
+    "Outputs": {
+        "VpcId": {
+            "Value": {
+                "Ref": "VPC"
+            }
+        },
+        "PrimaryCidrBlock": {
+            "Value": {
+                "Fn::GetAtt": [
+                    "VPC",
+                    "CidrBlock"
+                ]
+            }
+        },
+        "Ipv6CidrBlock": {
+            "Value": {
+                "Fn::Select": [
+                    0,
+                    {
+                        "Fn::GetAtt": [
+                            "VPC",
+                            "Ipv6CidrBlocks"
+                        ]
+                    }
+                ]
+            }
+        },
+        "CidrBlockAssociation": {
+            "Value": {
+                "Fn::Select": [
+                    0,
+                    {
+                        "Fn::GetAtt": [
+                            "VPC",
+                            "CidrBlockAssociations"
+                        ]
+                    }
+                ]
+            }
+        }
+    }
+}
+```

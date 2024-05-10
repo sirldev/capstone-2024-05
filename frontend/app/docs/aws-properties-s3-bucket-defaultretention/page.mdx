@@ -1,0 +1,46 @@
+# AWS::S3::버킷 DefaultRetention
+
+지정된 버킷에 배치된 새 객체에 대한 기본 객체 잠금 보존 설정을 지정하기 위한 container 요소입니다.
+
+**메모**  
+설정에는 `DefaultRetention` 모드와 마침표가 모두 필요합니다.
+기간은 `DefaultRetention` 또는 중 `Days` 하나일 수 `Years` 있지만 하나를 선택해야 합니다. `Days` 동시에 and를 `Years` 지정할 수 없습니다 .
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Days" : Integer,
+  "Mode" : String,
+  "Years" : Integer
+}
+```
+
+## 속성
+
+`Days`  
+기본 보존 기간으로 지정할 일 수입니다. 객체 잠금이 켜져 있는 경우 또는 를 지정하고 지정해야 합니다 `Mode` `Days` `Years`.  
+_필수_: 조건부  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`Mode`  
+지정된 버킷에 배치된 새 객체에 적용할 기본 객체 잠금 보존 모드입니다. 객체 잠금이 켜져 있는 경우 또는 를 지정하고 지정해야 합니다 `Mode` `Days` `Years`.  
+_필수_: 조건부  
+_유형_: 문자열  
+_허용되는 값_: `COMPLIANCE | GOVERNANCE`  
+_업데이트 필요 사항_: 중단 없음
+
+`Years`  
+기본 보존 기간으로 지정할 기간(년)입니다. 객체 잠금이 켜져 있는 경우 또는 를 지정하고 지정해야 합니다 `Mode` `Days` `Years`.  
+_필수_: 조건부  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+## 참고 항목
+
+- AWS::S3::버킷 예제

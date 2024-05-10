@@ -1,0 +1,30 @@
+# AWS::KinesisFirehose::D eliveryStream 직렬 변환기
+
+Amazon S3에 데이터를 쓰기 전에 Kinesis Data Firehose가 데이터를 대상 형식으로 변환하는 데 사용할 직렬 변환기입니다. Kinesis Data Firehose는 ORC SerDe와 Parquet SerDe라는 두 가지 유형의 시리얼라이저를 지원합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "OrcSerDe" : OrcSerDe,
+  "ParquetSerDe" : ParquetSerDe
+}
+```
+
+## 속성
+
+`OrcSerDe`  
+데이터를 Amazon S3에 저장하기 전에 ORC 형식으로 변환하는 데 사용할 직렬 변환기입니다. 자세한 내용은 Apache ORC를 참조하세요.  
+*필수 항목 *여부: 아니요  
+_형식_: OrcSerDe  
+_업데이트 필요 사항_: 중단 없음
+
+`ParquetSerDe`  
+데이터를 Amazon S3에 저장하기 전에 Parquet 형식으로 변환하는 데 사용할 직렬 변환기입니다. 자세한 내용은 Apache Parquet을 참조하세요.  
+*필수 항목 *여부: 아니요  
+_형식_: ParquetSerDe  
+_업데이트 필요 사항_: 중단 없음

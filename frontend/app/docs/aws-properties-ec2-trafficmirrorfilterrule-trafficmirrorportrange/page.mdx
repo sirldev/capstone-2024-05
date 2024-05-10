@@ -1,0 +1,30 @@
+# AWS::EC2::TrafficMirrorFilterRule 트래픽 미러포트 범위
+
+트래픽 미러 포트 범위에 대해 설명합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "FromPort" : Integer,
+  "ToPort" : Integer
+}
+```
+
+## 속성
+
+`FromPort`  
+트래픽 미러 포트 범위의 시작입니다. 이는 TCP 및 UDP 프로토콜에 적용됩니다.  
+_필수 항목 여부_: 예  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`ToPort`  
+트래픽 미러 포트 범위의 끝입니다. 이는 TCP 및 UDP 프로토콜에 적용됩니다.  
+_필수 항목 여부_: 예  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음

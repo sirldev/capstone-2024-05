@@ -1,0 +1,119 @@
+# AWS::Redshift::클러스터 파라미터 그룹
+
+파라미터 그룹을 설명합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::Redshift::ClusterParameterGroup",
+  "Properties" : {
+      "Description" : String,
+      "ParameterGroupFamily" : String,
+      "ParameterGroupName" : String,
+      "Parameters" : [ Parameter, ... ],
+      "Tags" : [Tag, ... ]
+    }
+}
+```
+
+## 속성
+
+`Description`  
+파라미터 그룹에 대한 설명입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최대_: `2147483647`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ParameterGroupFamily`  
+이 클러스터 파라미터 그룹이 호환되는 클러스터 파라미터 그룹 패밀리의 이름입니다. 사용자 지정 파라미터 그룹을 생성한 다음 클러스터를 연결할 수 있습니다. 자세한 내용은 Amazon Redshift 파라미터 그룹 섹션을 참조하세요.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최대_: `2147483647`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ParameterGroupName`  
+클러스터 파라미터 그룹의 이름입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최대_: `2147483647`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Parameters`  
+수정할 매개 변수의 배열입니다. 단일 요청에서 최대 20개의 매개 변수를 수정할 수 있습니다.  
+수정할 각 매개 변수에 대해 최소한 매개 변수 이름과 매개 변수 값을 제공해야 합니다. 파라미터의 다른 이름-값 쌍은 선택 사항입니다.  
+워크로드 관리(WLM) 구성의 경우 wlm_json_configuration 파라미터에 모든 이름-값 페어를 제공해야 합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 매개 변수 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`Tags`  
+클러스터 파라미터 그룹에 대한 태그 목록입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`리소스 이름이 반환됩니다. 예를 들어:
+
+`{ "Ref": "myClusterParameterGroup" }`
+
+Amazon Redshift 클러스터 파라미터 그룹 `myClusterParameterGroup`의 `Ref` 경우 클러스터 파라미터 그룹의 이름을 반환합니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+## 예제
+
+### 단일 매개 변수
+
+다음 예제에서는 하나의 파라미터가 지정된 파라미터 그룹에 대해 설명합니다.
+
+#### JSON (영문)
+
+```
+"myClusterParameterGroup" : {
+  "Type" : "AWS::Redshift::ClusterParameterGroup",
+  "Properties" : {
+    "Description" : "My parameter group",
+    "ParameterGroupFamily" : "redshift-1.0",
+    "Parameters" : [ {
+      "ParameterName" : "enable_user_activity_logging",
+      "ParameterValue" : "true"
+    }]
+  }
+}
+```
+
+### 워크로드 관리 구성
+
+다음 예제에서는 매개 변수를 사용하여 워크로드 관리 구성을 수정합니다 `wlm_json_configuration` . 매개 변수 값은 따옴표(")로 묶인 문자열로 전달되어야 하는 JSON 개체입니다.
+
+#### JSON (영문)
+
+```
+"RedshiftClusterParameterGroup": {
+  "Type": "AWS::Redshift::ClusterParameterGroup",
+  "Properties": {
+    "Description": "Cluster parameter group",
+    "ParameterGroupFamily": "redshift-1.0",
+    "Parameters": [{
+      "ParameterName": "wlm_json_configuration",
+      "ParameterValue": "[{\"user_group\":[\"example_user_group1\"],\"query_group\":[\"example_query_group1\"],\"query_concurrency\":7},{\"query_concurrency\":5}]"
+    }],
+    "Tags": [
+      {
+        "Key": "foo",
+        "Value": "bar"
+      }
+    ]
+  }
+}
+```

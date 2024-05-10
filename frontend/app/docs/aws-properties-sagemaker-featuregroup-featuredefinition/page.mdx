@@ -1,0 +1,34 @@
+# AWS::SageMaker::FeatureGroup 기능 정의
+
+기능 목록입니다. 및 를 포함해야 합니다 `FeatureName` `FeatureType`. 유효한 기능 `FeatureType`s는 `Integral`, `Fractional` 및 `String`입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "FeatureName" : String,
+  "FeatureType" : String
+}
+```
+
+## 속성
+
+`FeatureName`  
+기능의 이름입니다. 형식은 문자열이어야 합니다. `FeatureName` `is_deleted`, `write_time`, `api_invocation_time`.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `64`  
+_패턴_: `^a-zA-Z0-9{0,63}`  
+_업데이트 필요 사항_: 중단 없음
+
+`FeatureType`  
+기능의 값 형식입니다. 유효한 값은 Integral, Fractional 또는 String입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_허용되는 값_: `Fractional | Integral | String`  
+_업데이트 필요 사항_: 중단 없음

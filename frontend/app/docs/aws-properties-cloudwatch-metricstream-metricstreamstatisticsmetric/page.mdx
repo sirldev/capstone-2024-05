@@ -1,0 +1,30 @@
+# AWS::CloudWatch::MetricStream MetricStreamStatisticsMetric
+
+스트림에 추가 통계가 포함될 하나의 메트릭에 대한 메트릭 이름과 네임스페이스를 지정하는 구조입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "MetricName" : String,
+  "Namespace" : String
+}
+```
+
+## 속성
+
+`MetricName`  
+메트릭의 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Namespace`  
+메트릭의 네임스페이스입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음

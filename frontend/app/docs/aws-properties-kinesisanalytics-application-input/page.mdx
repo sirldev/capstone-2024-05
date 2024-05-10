@@ -1,0 +1,65 @@
+# AWS::KinesisAnalytics::애플리케이션 입력
+
+애플리케이션 입력을 구성할 때 스트리밍 소스, 생성된 인애플리케이션 스트림 이름 및 둘 사이의 매핑을 지정합니다. 자세한 내용은 응용 프로그램 입력 구성을 참조하십시오.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "InputParallelism" : InputParallelism,
+  "InputProcessingConfiguration" : InputProcessingConfiguration,
+  "InputSchema" : InputSchema,
+  "KinesisFirehoseInput" : KinesisFirehoseInput,
+  "KinesisStreamsInput" : KinesisStreamsInput,
+  "NamePrefix" : String
+}
+```
+
+## 속성
+
+`InputParallelism`  
+만들 인애플리케이션 스트림의 수를 설명합니다.  
+소스의 데이터는 이러한 인애플리케이션 입력 스트림으로 라우팅됩니다.  
+ 응용 프로그램 입력 구성을 참조하십시오.  
+*필수 항목 *여부: 아니요  
+_형식_: InputParallelism  
+_업데이트 필요 사항_: 중단 없음
+
+`InputProcessingConfiguration`  
+입력에 대한 InputProcessingConfiguration입니다. 입력 프로세서는 애플리케이션의 SQL 코드가 실행되기 전에 스트림에서 수신되는 레코드를 변환합니다. 현재 사용할 수 있는 유일한 입력 처리 구성은 InputLambdaProcessor입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: InputProcessingConfiguration  
+_업데이트 필요 사항_: 중단 없음
+
+`InputSchema`  
+스트리밍 소스의 데이터 형식 및 각 데이터 요소가 생성 중인 인애플리케이션 스트림의 해당 열에 매핑되는 방법에 대해 설명합니다.  
+참조 데이터 원본의 형식을 설명하는 데도 사용됩니다.  
+_필수 항목 여부_: 예  
+_형식_: InputSchema  
+_업데이트 필요 사항_: 중단 없음
+
+`KinesisFirehoseInput`  
+스트리밍 소스가 Amazon Kinesis Firehose 전송 스트림인 경우 전송 스트림의 ARN과 Amazon Kinesis Analytics가 사용자를 대신하여 스트림에 액세스할 수 있도록 하는 IAM 역할을 식별합니다.  
+참고: or 중 하나는 `KinesisStreamsInput` `KinesisFirehoseInput` 필수입니다.  
+_필수_: 조건부  
+_유형_: KinesisFirehoseInput  
+_업데이트 필요 사항_: 중단 없음
+
+`KinesisStreamsInput`  
+스트리밍 소스가 Amazon Kinesis 스트림인 경우 스트림의 Amazon 리소스 이름(ARN)과 Amazon Kinesis Analytics가 사용자를 대신하여 스트림에 액세스할 수 있도록 하는 IAM 역할을 식별합니다.  
+참고: or 중 하나는 `KinesisStreamsInput` `KinesisFirehoseInput` 필수입니다.  
+_필수_: 조건부  
+_유형_: KinesisStreamsInput  
+_업데이트 필요 사항_: 중단 없음
+
+`NamePrefix`  
+인애플리케이션 스트림을 만들 때 사용할 이름 접두사입니다. 접두사 "MyInApplicationStream"을 지정한다고 가정합니다. 그런 다음 Amazon Kinesis Analytics 는 `InputParallelism` 이름이 "MyInApplicationStream_001", "MyInApplicationStream_002" 등인 하나 이상의 인애플리케이션 스트림을 생성합니다(지정한 개수에 따라).  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `32`  
+_업데이트 필요 사항_: 중단 없음

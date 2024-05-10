@@ -1,0 +1,206 @@
+# AWS::SNS::구독
+
+`AWS::SNS::Subscription` 리소스는 엔드포인트에서 Amazon SNS 주제를 구독합니다. 구독을 만들려면 끝점의 소유자가 구독을 확인해야 합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::SNS::Subscription",
+  "Properties" : {
+      "DeliveryPolicy" : Json,
+      "Endpoint" : String,
+      "FilterPolicy" : Json,
+      "FilterPolicyScope" : String,
+      "Protocol" : String,
+      "RawMessageDelivery" : Boolean,
+      "RedrivePolicy" : Json,
+      "Region" : String,
+      "SubscriptionRoleArn" : String,
+      "TopicArn" : String
+    }
+}
+```
+
+## 속성
+
+`DeliveryPolicy`  
+구독에 할당된 배달 정책 JSON입니다. 구독자가 HTTP/S 끝점이 주제를 구독하는 경우 메시지 전달 재시도 전략을 정의할 수 있도록 합니다. 자세한 내용은 `GetSubscriptionAttributes` _Amazon SNS API 참조_ 및 Amazon SNS 개발자 안내서*의 메시지 전송 재시도를 참조하세요*.  
+*필수 항목 *여부: 아니요  
+_형식_: Json  
+_업데이트 필요 사항_: 중단 없음
+
+`Endpoint`  
+구독의 끝점입니다. 끝점 값은 지정하는 프로토콜에 따라 달라집니다. 자세한 내용은 `Endpoint`Amazon SNS API Reference`Subscribe`에서 작업의 _ 파라미터 를 참조하십시오_.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`FilterPolicy`  
+구독에 할당된 필터 정책 JSON입니다. 구독자가 원치 않는 메시지를 필터링할 수 있습니다. 자세한 내용은 `GetSubscriptionAttributes` _Amazon SNS API 참조_ 및 Amazon SNS 개발자 안내서*의 메시지 필터링을 참조하십시오*.  
+*필수 항목 *여부: 아니요  
+_형식_: Json  
+_업데이트 필요 사항_: 중단 없음
+
+`FilterPolicyScope` 이 특성을 사용하면 다음 문자열 값 형식 중 하나를 사용하여 필터링 범위를 선택할 수 있습니다.
+
+- `MessageAttributes` (기본값) - 필터가 메시지 속성에 적용됩니다.
+- `MessageBody` - 필터가 메시지 본문에 적용됩니다.
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열  
+  _업데이트 필요 사항_: 중단 없음
+
+`Protocol`  
+구독의 프로토콜입니다. 자세한 내용은 `Protocol`Amazon SNS API Reference`Subscribe`에서 작업의 _ 파라미터 를 참조하십시오_.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`RawMessageDelivery`  
+로 설정하면 `true`원시 메시지 배달을 사용할 수 있습니다. 원시 메시지에는 JSON 형식이 포함되어 있지 않으며 Amazon SQS 및 HTTP/S 엔드포인트로 전송할 수 있습니다. 자세한 내용은 `GetSubscriptionAttributes`Amazon SNS API Reference*를 참조하십시오*.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`RedrivePolicy`  
+지정된 경우 전송 불가 메시지를 지정된 Amazon SQS 배달 못한 편지 대기열로 보냅니다. 클라이언트 오류(예: 구독한 엔드포인트에 연결할 수 없는 경우) 또는 서버 오류(예: 구독된 엔드포인트를 구동하는 서비스를 사용할 수 없게 된 경우)로 인해 배달할 수 없는 메시지는 추가 분석 또는 재처리를 위해 배달 못 한 편지 큐에 보관됩니다.  
+리드라이브 정책 및 배달 못한 편지 대기열에 대한 자세한 내용은 Amazon SQS 개발자 안내서의 Amazon SQS 배달 못한 편지 대기열을 참조하십시오\**.  
+*필수 항목 *여부: 아니요  
+*형식*: Json  
+*업데이트 필요 사항\*: 중단 없음
+
+`Region`  
+지역 간 구독의 경우 주제가 있는 지역입니다.  
+리전을 지정하지 않으면 AWS CloudFormation에서는 호출자의 리전을 기본값으로 사용합니다.  
+리소스의 속성만 업데이트하는 업데이트 작업을 수행하는 경우 `Region` `AWS::SNS::Subscription` 다음 중 하나를 수행하지 않는 한 해당 작업이 실패합니다.
+
+- `Region` 보낸 사람을 `NULL` 호출자 지역으로 업데이트합니다.
+- 호출자 영역에서 `Region` 로 업데이트합니다`NULL`.
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열  
+  _업데이트 필요 사항_: 중단 없음
+
+`SubscriptionRoleArn` 이 속성은 Amazon Kinesis Data Firehose 전송 스트림 구독에만 적용됩니다. 다음을 포함하는 IAM 역할의 ARN을 지정합니다.
+
+- Amazon Kinesis Data Firehose 전송 스트림에 쓸 수 있는 권한
+- 신뢰할 수 있는 엔터티로 등재된 Amazon SNS
+  이 속성에 유효한 ARN을 지정하려면 Kinesis Data Firehose 전송 스트림 구독이 필요합니다. 자세한 내용은 Amazon SNS 개발자 안내서의 Amazon Kinesis Data Firehose 전송 스트림으로 팬아웃을 참조하세요*.*  
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열  
+  _업데이트 필요 사항_: 중단 없음
+
+`TopicArn`  
+구독할 주제의 ARN입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+## 예제
+
+### 필수 특성이 있는 구독 만들기Create a subscription with mandatory attributes
+
+다음 예제에서는 엔드포인트, 프로토콜 및 주제 ARN만 사용하여 구독을 생성합니다.
+
+#### JSON (영문)
+
+```
+"MySubscription" : {
+  "Type" : "AWS::SNS::Subscription",
+  "Properties" : {
+    "Endpoint" : "test@example.com",
+    "Protocol" : "email",
+    "TopicArn" : { "Ref" : "MySNSTopic" }
+  }
+}
+```
+
+### 선택적 특성이 있는 구독 만들기Create a subscription with optional attributes
+
+다음 예에서는 필터 정책, 배달 정책 및 원시 메시지 배달이 활성화된 구독을 만듭니다.
+
+**메모**  
+구독 속성은 독립 실행형 Amazon SNS 구독에서만 설정할 수 있습니다(주제에 중첩된 구독에는 설정할 수 없음).
+
+#### JSON (영문)
+
+```
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Resources": {
+        "CarSalesTopic": {
+            "Type": "AWS::SNS::Topic"
+        },
+        "ERPSubscription": {
+            "Type": "AWS::SNS::Subscription",
+            "Properties": {
+                "TopicArn": {
+                    "Ref": "CarSalesTopic"
+                },
+                "Endpoint": {
+                    "Fn::GetAtt": ["ERPIntegrationQueue", "Arn"]
+                },
+                "Protocol": "sqs",
+                "RawMessageDelivery": "true"
+            }
+        },
+        "CRMSubscription": {
+            "Type": "AWS::SNS::Subscription",
+            "Properties": {
+                "TopicArn": {
+                    "Ref": "CarSalesTopic"
+                },
+                "Endpoint": {
+                    "Fn::GetAtt": ["CRMIntegrationQueue", "Arn"]
+                },
+                "Protocol": "sqs",
+                "RawMessageDelivery": "true",
+                "FilterPolicy": {
+                    "buyer-class": [
+                        "vip"
+                    ]
+                }
+            }
+        },
+        "SCMSubscription": {
+            "Type": "AWS::SNS::Subscription",
+            "Properties": {
+                "TopicArn": {
+                    "Ref": "CarSalesTopic"
+                },
+                "Endpoint": {
+                    "Ref": "myHttpEndpoint"
+                },
+                "Protocol": "https",
+                "DeliveryPolicy": {
+                    "healthyRetryPolicy": {
+                        "numRetries": 20,
+                        "minDelayTarget": 10,
+                        "maxDelayTarget": 30,
+                        "numMinDelayRetries": 3,
+                        "numMaxDelayRetries": 17,
+                        "numNoDelayRetries": 0,
+                        "backoffFunction": "exponential"
+                    }
+                }
+            }
+        },
+        "ERPIntegrationQueue": {
+            "Type": "AWS::SQS::Queue",
+            "Properties": {}
+        },
+        "CRMIntegrationQueue": {
+            "Type": "AWS::SQS::Queue",
+            "Properties": {}
+        }
+    },
+    "Parameters": {
+        "myHttpEndpoint": {
+            "Type": "String"
+        }
+    }
+}
+```

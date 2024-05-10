@@ -1,0 +1,52 @@
+# AWS::SageMaker::D evice
+
+리소스 `AWS::SageMaker::Device` 는 기존 SageMaker Edge Manager DeviceFleet에 디바이스를 등록할 수 있는 Amazon SageMaker 리소스 유형입니다. 각 장치는 CFN 사양에 개별적으로 나열되어야 합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::SageMaker::Device",
+  "Properties" : {
+      "Device" : Device,
+      "DeviceFleetName" : String,
+      "Tags" : [Tag, ... ]
+    }
+}
+```
+
+## 속성
+
+`Device`  
+만들려는 Edge 디바이스입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 장치  
+_업데이트 필요 사항_: 중단 없음
+
+`DeviceFleetName`  
+장치가 속한 플릿의 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `63`  
+_패턴_: `^a-zA-Z0-9{0,62}$`  
+_업데이트 필요 사항_: 중단 없음
+
+`Tags`  
+장치를 분류하고 구성하는 데 도움이 되는 메타데이터를 포함하는 키-값 쌍의 배열입니다. 각 태그는 사용자가 정의하는 키와 값으로 구성됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_최대_: `50`  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`DeviceFleetName이 반환됩니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.

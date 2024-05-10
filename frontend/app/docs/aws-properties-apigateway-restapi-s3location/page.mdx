@@ -1,0 +1,51 @@
+# AWS::ApiGateway::RestApi S3위치
+
+`S3Location` 는 JSON에서 RESTful API 세트를 정의하는 OpenAPI(이전의 Swagger) 파일의 Amazon S3 위치를 지정하는 AWS::ApiGateway::RestApi 리소스의 속성입니다.
+
+**메모**  
+2016년 1월 1일, Swagger 스펙이 OpenAPI 이니셔티브에 기부되어 OpenAPI 스펙의 기초가 되었습니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Bucket" : String,
+  "ETag" : String,
+  "Key" : String,
+  "Version" : String
+}
+```
+
+## 속성
+
+`Bucket`  
+OpenAPI 파일이 저장된 S3 버킷의 이름입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`ETag`  
+OpenAPI 파일의 Amazon S3 ETag(파일 체크섬)입니다. 값을 지정하지 않으면 API Gateway는 OpenAPI 파일의 ETag 검증을 건너뜁니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Key`  
+OpenAPI 파일의 파일 이름(Amazon S3 객체 이름)입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Version`  
+버전 관리를 사용하는 버킷의 경우 특정 버전의 OpenAPI 파일입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+## 참고 항목
+
+- Amazon API Gateway REST API 참조*의 RestApi *

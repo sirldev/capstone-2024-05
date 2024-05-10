@@ -1,0 +1,82 @@
+# AWS::람다::버전
+
+리소스는 `AWS::Lambda::Version` 함수의 현재 코드 및 구성에서 버전을 만듭니다. 버전을 사용하여 변경되지 않는 함수 코드 및 구성의 스냅샷을 만듭니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::Lambda::Version",
+  "Properties" : {
+      "CodeSha256" : String,
+      "Description" : String,
+      "FunctionName" : String,
+      "ProvisionedConcurrencyConfig" : ProvisionedConcurrencyConfiguration
+    }
+}
+```
+
+## 속성
+
+`CodeSha256`  
+해시 값이 지정된 값과 일치하는 경우에만 버전을 게시합니다. 이 옵션을 사용하면 함수 코드를 마지막으로 업데이트한 이후 변경된 경우 버전을 게시하지 않을 수 있습니다. 이 속성에 대한 업데이트는 지원되지 않습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Description`  
+함수 구성의 설명을 재정의할 버전에 대한 설명입니다. 이 속성에 대한 업데이트는 지원되지 않습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `0`  
+_최대_: `256`  
+_업데이트 필요 사항_: 중단 없음
+
+`FunctionName` Lambda 함수의 이름입니다.
+
+**이름 형식**
+
+- **함수 이름** - `MyFunction`.
+- **함수 ARN** - `arn:aws:lambda:us-west-2:123456789012:function:MyFunction`.
+- **부분 ARN** - `123456789012:function:MyFunction`.
+  길이 제약은 전체 ARN에만 적용됩니다. 함수 이름만 지정하면 길이가 64자로 제한됩니다.  
+  _필수 항목 여부_: 예  
+  _유형_: 문자열  
+  _최소_: `1`  
+  _최대_: `140`  
+  _패턴_: `(arn:(aws[a-zA-Z-]*)?:lambda:)?([a-z]{2}(-gov)?-[a-z]+-d{1}:)?(d{12}:)?(function:)?([a-zA-Z0-9-_]+)(:($LATEST|[a-zA-Z0-9-_]+))?`  
+  _업데이트 필요 사항_: 바꿔 놓음
+
+`ProvisionedConcurrencyConfig`  
+함수 버전에 대해 프로비저닝된 동시성 구성을 지정합니다. 이 속성에 대한 업데이트는 지원되지 않습니다.  
+*필수 항목 *여부: 아니요  
+_형식_: ProvisionedConcurrencyConfiguration  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`버전의 ARN을 반환합니다 `arn:aws:lambda:us-west-2:123456789012:function:helloworld:1`.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`Version` 버전 번호입니다.
+
+## 예제
+
+### 기능 버전
+
+프로비저닝된 동시성이 있는 버전을 게시합니다.

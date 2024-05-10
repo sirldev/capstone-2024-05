@@ -1,0 +1,91 @@
+# AWS::EC2::Launch템플릿 EBS
+
+Amazon EC2 시작 템플릿의 EBS 볼륨에 대한 블록 디바이스에 대한 파라미터입니다.
+
+`Ebs` 는 AWS::EC2::LaunchTemplate BlockDeviceMapping의 속성입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "DeleteOnTermination" : Boolean,
+  "Encrypted" : Boolean,
+  "Iops" : Integer,
+  "KmsKeyId" : String,
+  "SnapshotId" : String,
+  "Throughput" : Integer,
+  "VolumeSize" : Integer,
+  "VolumeType" : String
+}
+```
+
+## 속성
+
+`DeleteOnTermination`  
+인스턴스 종료 시 EBS 볼륨이 삭제되는지 여부를 나타냅니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`Encrypted`  
+EBS 볼륨이 암호화되었는지 여부를 나타냅니다. 암호화된 볼륨은 Amazon EBS 암호화를 지원하는 인스턴스에만 연결할 수 있습니다. 스냅샷에서 볼륨을 생성하는 경우 암호화 값을 지정할 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`Iops`  
+IOPS(초당 I/O 작업 수)입니다. `gp3`, `io1`및 `io2` volumes의 경우 볼륨에 대해 프로비저닝된 IOPS 수를 나타냅니다. `gp2` 볼륨의 경우 이는 볼륨의 기준 성능과 볼륨이 버스팅을 위해 I/O 크레딧을 누적하는 속도를 나타냅니다.  
+다음은 각 볼륨 유형에 대해 지원되는 값입니다.
+
+- `gp3`: 3,000-16,000 IOPS
+- `io1`: 100-64,000 초당 이력
+- `io2`: 100-64,000 초당 이력
+  볼륨 `io1` 의 `io2` 경우 Nitro 시스템에 구축된 인스턴스에 대해서만 64,000 IOPS를 보장합니다. 다른 인스턴스 패밀리는 최대 32,000 IOPS의 성능을 보장합니다.  
+  이 매개변수는 `io1`, `io2`및 `gp3` volumes에 대해서만 지원됩니다. 이 매개변수는 `gp2`, `st1`, `sc1`또는 `standard` 볼륨에 대해 지원되지 않습니다.  
+  *필수 항목 *여부: 아니요  
+  _유형_: Integer  
+  _업데이트 필요 사항_: 중단 없음
+
+`KmsKeyId`  
+암호화에 사용되는 대칭 AWS Key Management Service(AWS KMS) CMK의 ARN입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`SnapshotId`  
+스냅샷의 ID입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Throughput`  
+볼륨을 프로비저닝할 처리량으로 `gp3` , 최대 1,000MiB/s입니다.  
+유효 범위: 최소값 125. 최대값은 1000입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`VolumeSize` 볼륨의 크기(GiB)입니다. 스냅샷 ID 또는 볼륨 크기를 지정해야 합니다. 다음은 각 볼륨 유형에 대해 지원되는 볼륨 크기입니다.
+
+- `gp2` 및 `gp3`: 1-16,384
+- `io1` 및 `io2`: 4-16,384
+- `st1` 및 `sc1`: 125-16,384
+- `standard`: 1-1,024
+  *필수 항목 *여부: 아니요  
+  _유형_: Integer  
+  _업데이트 필요 사항_: 중단 없음
+
+`VolumeType`  
+볼륨 유형입니다. 자세한 내용은 _Amazon Elastic Compute Cloud 사용 설명서의 Amazon EBS 볼륨 유형을 참조하세요_.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `gp2 | gp3 | io1 | io2 | sc1 | st1 | standard`  
+_업데이트 필요 사항_: 중단 없음
+
+## 참고 항목
+
+- Amazon EC2 API 참조\* \*의 LaunchTemplateEbsBlockDeviceRequest

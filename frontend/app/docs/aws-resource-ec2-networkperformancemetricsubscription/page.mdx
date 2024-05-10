@@ -1,0 +1,57 @@
+# AWS::EC2::NetworkPerformanceMetric구독
+
+인프라 성능 구독에 대해 설명합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::EC2::NetworkPerformanceMetricSubscription",
+  "Properties" : {
+      "Destination" : String,
+      "Metric" : String,
+      "Source" : String,
+      "Statistic" : String
+    }
+}
+```
+
+## 속성
+
+`Destination`  
+구독의 대상인 리전 또는 가용성 영역입니다. 예를 들어, `eu-west-1`.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Metric`  
+구독에 사용되는 메트릭입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_허용되는 값_: `aggregate-latency`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Source`  
+구독의 원본인 Region or Availability Zone입니다. 예를 들어, `us-east-1`.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Statistic`  
+구독에 사용되는 통계입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_허용되는 값_: `p50`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` , `Ref` `primaryIdentifier`, , `source` `destination` 및 , 속성 으로 구성된 속성을 `metric`반환 `statistic` 하며 각 값은 파이프(|)로 구분됩니다. 예를 들어, `{ "Ref": "us-east-1|us-east-2|aggregate-latency|p50" }`.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.

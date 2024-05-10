@@ -1,0 +1,30 @@
+# AWS::Cognito::UserPool 사용자 지정 이메일 발신자
+
+사용자 지정 이메일 발신자 AWS Lambda 트리거입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "LambdaArn" : String,
+  "LambdaVersion" : String
+}
+```
+
+## 속성
+
+`LambdaArn`  
+Amazon Cognito가 사용자에게 이메일 알림을 보내기 위해 트리거하는 AWS Lambda 함수의 Amazon 리소스 이름(ARN)입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`LambdaVersion`  
+Lambda 버전은 Amazon Cognito가 사용자 지정 이메일 발신자 AWS Lambda 함수에 전달하는 "이벤트" 정보에서 "요청" 속성의 서명을 나타냅니다. 유일하게 지원되는 값은 `V1_0`입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음

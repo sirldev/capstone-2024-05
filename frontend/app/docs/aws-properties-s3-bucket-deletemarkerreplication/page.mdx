@@ -1,0 +1,29 @@
+# AWS::S3::버킷 DeleteMarkerReplication
+
+Amazon S3에서 삭제 마커를 복제할지 여부를 지정합니다. 복제 구성에서 a를 지정하는 경우 `Filter` 요소 도 포함해야 합니다 `DeleteMarkerReplication` . 요소가 `Filter` 포함된 `Tag` 경우 Amazon S3는 태그 기반 규칙에 대한 삭제 마커 복제를 지원하지 않으므로 를 `DeleteMarkerReplication` `Status` Disabled로 설정해야 합니다. 구성 예는 기본 규칙 구성을 참조하십시오.
+
+삭제 마커 복제에 대한 자세한 내용은 기본 규칙 구성을 참조하십시오.
+
+**메모**  
+이전 버전의 복제 구성을 사용하는 경우 Amazon S3는 삭제 마커의 복제를 다르게 처리합니다. 자세한 내용은 이전 버전과의 호환성을 참조하십시오.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Status" : String
+}
+```
+
+## 속성
+
+`Status`  
+삭제 마커를 복제할지 여부를 나타냅니다. 기본적으로 비활성화되어 있습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `Disabled | Enabled`  
+_업데이트 필요 사항_: 중단 없음

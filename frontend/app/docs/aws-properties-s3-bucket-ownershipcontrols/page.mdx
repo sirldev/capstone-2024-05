@@ -1,0 +1,79 @@
+# AWS::S3::버킷 소유권 컨트롤
+
+객체 소유권 규칙에 대한 컨테이너 요소를 지정합니다.
+
+S3 객체 소유권은 ACL(액세스 제어 목록)을 비활성화하고 버킷의 모든 객체에 대한 소유권을 가져와 Amazon S3에 저장된 데이터에 대한 액세스 관리를 간소화하는 데 사용할 수 있는 Amazon S3 버킷 수준 설정입니다. 자세한 내용은 _Amazon S3 사용 설명서의 객체 소유권 제어 및 ACL 비활성화를 참조하세요_.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Rules" : [ OwnershipControlsRule, ... ]
+}
+```
+
+## 속성
+
+`Rules`  
+객체 소유권 규칙에 대한 컨테이너 요소를 지정합니다.  
+_필수 항목 여부_: 예  
+_형식_: OwnershipControlsRule 목록  
+_업데이트 필요 사항_: 중단 없음
+
+## 예제
+
+### 객체 소유권 - BucketOwnerEnforced
+
+다음 예에서는 로 설정된 객체 소유권을 보여 줍니다 `BucketOwnerEnforced`.
+
+#### JSON (영문)
+
+```
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Resources": {
+        "S3Bucket": {
+            "Type": "AWS::S3::Bucket",
+            "Properties": {
+                "OwnershipControls": {
+                    "Rules": [
+                        {
+                            "ObjectOwnership": "BucketOwnerEnforced"
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}
+```
+
+### 객체 소유권 - BucketOwnerPreferred
+
+다음 예에서는 로 설정된 객체 소유권을 보여 줍니다 `BucketOwnerPreferred`.
+
+#### JSON (영문)
+
+```
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Resources": {
+        "S3Bucket": {
+            "Type": "AWS::S3::Bucket",
+            "Properties": {
+                "OwnershipControls": {
+                    "Rules": [
+                        {
+                            "ObjectOwnership": "BucketOwnerPreferred"
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}
+```

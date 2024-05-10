@@ -1,0 +1,69 @@
+# AWS::SageMaker::D eviceFleet
+
+리소스 `AWS::SageMaker::DeviceFleet` 는 SageMaker Edge Manager 디바이스를 관리하는 DeviceFleet을 생성할 수 있는 Amazon SageMaker 리소스 유형입니다. 장치를 별도로 등록해야 합니다 `DeviceFleet` .
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::SageMaker::DeviceFleet",
+  "Properties" : {
+      "Description" : String,
+      "DeviceFleetName" : String,
+      "OutputConfig" : EdgeOutputConfig,
+      "RoleArn" : String,
+      "Tags" : [Tag, ... ]
+    }
+}
+```
+
+## 속성
+
+`Description`  
+함대에 대한 설명입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`DeviceFleetName`  
+디바이스 플릿의 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `63`  
+_패턴_: `^a-zA-Z0-9{0,62}$`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`OutputConfig`  
+플릿에서 수집한 샘플 데이터를 저장하기 위한 출력 구성입니다.  
+_필수 항목 여부_: 예  
+_형식_: EdgeOutputConfig  
+_업데이트 필요 사항_: 중단 없음
+
+`RoleArn`  
+AWS 사물 인터넷(IoT)에 액세스할 수 있는 Amazon 리소스 이름(ARN)입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `20`  
+_최대_: `2048`  
+_패턴_: `^arn:aws[a-z-]*:iam::d{12}:role/?[a-zA-Z_0-9+=,.@-_/]+$`  
+_업데이트 필요 사항_: 중단 없음
+
+`Tags`  
+디바이스 플릿을 분류하고 구성하는 데 도움이 되는 메타데이터가 포함된 키-값 페어의 배열입니다. 각 태그는 사용자가 정의하는 키와 값으로 구성됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_최대_: `50`  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`DeviceFleetName이 반환됩니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.

@@ -1,0 +1,25 @@
+# AWS::S3::StorageLens ActivityMetrics
+
+이 리소스는 Amazon S3 Storage Lens 활동 지표를 활성화합니다. 활동 지표는 요청(예: 모든 요청, Get 요청, Put 요청), 업로드 또는 다운로드된 바이트 수, 오류 등 스토리지 요청 방법에 대한 세부 정보를 표시합니다.
+
+자세한 내용은 Amazon S3 사용 설명서*의 S3 Storage Lens를 사용한 스토리지 활동 및 사용량 평가를 참조하세요*. 전체 지표 목록은 _Amazon S3 사용 설명서의 S3 Storage Lens 지표 용어집을 참조하세요_.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "IsEnabled" : Boolean
+}
+```
+
+## 속성
+
+`IsEnabled`  
+활동 메트릭을 사용할 수 있는지 여부를 나타내는 속성입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음

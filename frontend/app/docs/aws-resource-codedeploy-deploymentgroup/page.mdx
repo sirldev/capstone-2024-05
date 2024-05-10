@@ -1,0 +1,733 @@
+# AWS::CodeDeploy::D eploymentGroup
+
+이 `AWS::CodeDeploy::DeploymentGroup` 리소스는 다른 배포 옵션과 함께 애플리케이션 개정이 배포되는 인스턴스를 지정하는 AWS CodeDeploy 배포 그룹을 생성합니다. 자세한 내용은 _CodeDeploy API 참조의 CreateDeploymentGroup을 참조하세요_.
+
+**메모**  
+CodeDeploy를 통한 Amazon ECS 블루/그린 배포는 리소스를 사용하지 않습니다 `AWS::CodeDeploy::DeploymentGroup` . Amazon ECS 블루/그린 배포를 수행하려면 후크를 사용합니다 `AWS::CodeDeploy::BlueGreen` . 자세한 내용은 AWS CloudFormation을 사용하여 CodeDeploy를 통해 Amazon ECS 블루/그린 배포 수행을 참조하세요.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::CodeDeploy::DeploymentGroup",
+  "Properties" : {
+      "AlarmConfiguration" : AlarmConfiguration,
+      "ApplicationName" : String,
+      "AutoRollbackConfiguration" : AutoRollbackConfiguration,
+      "AutoScalingGroups" : [ String, ... ],
+      "BlueGreenDeploymentConfiguration" : BlueGreenDeploymentConfiguration,
+      "Deployment" : Deployment,
+      "DeploymentConfigName" : String,
+      "DeploymentGroupName" : String,
+      "DeploymentStyle" : DeploymentStyle,
+      "Ec2TagFilters" : [ EC2TagFilter, ... ],
+      "Ec2TagSet" : EC2TagSet,
+      "ECSServices" : [ ECSService, ... ],
+      "LoadBalancerInfo" : LoadBalancerInfo,
+      "OnPremisesInstanceTagFilters" : [ TagFilter, ... ],
+      "OnPremisesTagSet" : OnPremisesTagSet,
+      "OutdatedInstancesStrategy" : String,
+      "ServiceRoleArn" : String,
+      "Tags" : [Tag, ... ],
+      "TriggerConfigurations" : [ TriggerConfig, ... ]
+    }
+}
+```
+
+## 속성
+
+`AlarmConfiguration`  
+배포 그룹과 연결된 Amazon CloudWatch 경보에 대한 정보입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: AlarmConfiguration  
+_업데이트 필요 사항_: 중단 없음
+
+`ApplicationName`  
+ 이 배포 그룹을 연결할 기존 CodeDeploy 애플리케이션의 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `100`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`AutoRollbackConfiguration`  
+ 배포 그룹과 연결된 자동 롤백 구성에 대한 정보입니다. 이 속성을 지정하는 경우 속성을 지정하지 마세요 `Deployment` .  
+*필수 항목 *여부: 아니요  
+_형식_: AutoRollbackConfiguration  
+_업데이트 필요 사항_: 중단 없음
+
+`AutoScalingGroups`  
+ 새 인스턴스가 생성될 때 CodeDeploy가 자동으로 개정을 배포하는 연결된 오토 스케일링 목록입니다. 중복은 허용되지 않습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`BlueGreenDeploymentConfiguration`  
+배포 그룹에 대한 블루/그린 배포 옵션에 대한 정보입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: BlueGreenDeploymentConfiguration  
+_업데이트 필요 사항_: 중단 없음
+
+`Deployment`  
+ 이 배포 그룹에 배포할 응용 프로그램 수정 버전입니다. 이 속성을 지정하면 프로비저닝 프로세스가 완료되는 즉시 대상 응용 프로그램 수정 버전이 배포됩니다. 이 속성을 지정하는 경우 속성을 지정하지 마세요 `AutoRollbackConfiguration` .  
+*필수 항목 *여부: 아니요  
+_유형_: 배포  
+_업데이트 필요 사항_: 중단 없음
+
+`DeploymentConfigName`  
+ 배포 구성 이름 또는 미리 정의된 구성 이름입니다. 사전 정의된 구성을 사용하면 애플리케이션 개정을 한 번에 하나의 인스턴스()에 배포`CodeDeployDefault.OneAtATime`하거나, 한 번에 절반의 인스턴스(`CodeDeployDefault.HalfAtATime`) 또는 한 번에 모든 인스턴스에`CodeDeployDefault.AllAtOnce` 배포할 수 있습니다(). 자세한 내용과 유효한 값은 _AWS CodeDeploy 사용 설명서의 배포 구성 작업을 참조하십시오_.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `100`  
+_업데이트 필요 사항_: 중단 없음
+
+`DeploymentGroupName`  
+ 배포 그룹의 이름입니다. 이름을 지정하지 않으면 AWS CloudFormation에서 고유한 물리적 ID를 생성하고 해당 ID를 배포 그룹 이름으로 사용합니다. 자세한 내용은 이름 유형을 참조하십시오.  
+ 이름을 지정하면 이 리소스를 대체해야 하는 업데이트를 수행할 수 없습니다. 중단이 필요 없거나 약간의 중단이 필요한 업데이트를 수행할 수 있습니다. 리소스를 바꿔야 하는 경우 새 이름을 지정합니다.
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `100`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`DeploymentStyle`  
+ 실행할 배포 유형과 부하 분산 장치 뒤에서 배포 트래픽을 라우팅할지 여부를 결정하는 속성입니다.  
+ 블루/그린 배포 유형으로 이 속성을 지정하는 경우 `AutoScalingGroups`, `LoadBalancerInfo`또는 `Deployment` 속성을 지정하지 마세요 .  
+ 블루/그린 배포의 경우 AWS CloudFormation은 Lambda 컴퓨팅 플랫폼에서의 배포만 지원합니다. hook를 사용하여 Amazon ECS 블루/그린 배포를 수행할 수 있습니다 `AWS::CodeDeploy::BlueGreen ` . 자세한 내용은 AWS CloudFormation을 사용하여 CodeDeploy를 통해 Amazon ECS 블루/그린 배포 수행을 참조하세요.
+*필수 항목 *여부: 아니요  
+_형식_: DeploymentStyle  
+_업데이트 필요 사항_: 중단 없음
+
+`Ec2TagFilters`  
+ 배포 그룹에 포함하려는 Amazon EC2 인스턴스에 이미 적용된 Amazon EC2 태그입니다. CodeDeploy에는 이 배포 그룹에서 지정한 태그로 식별되는 모든 Amazon EC2 인스턴스가 포함됩니다. 중복은 허용되지 않습니다.  
+ `EC2TagFilters` 또는 를 지정할 수 `Ec2TagSet`있지만 둘 다 지정할 수는 없습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: EC2TagFilter 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`Ec2TagSet`  
+Amazon EC2 인스턴스에 적용된 태그 그룹에 대한 정보입니다. 배포 그룹에는 모든 태그 그룹으로 식별된 Amazon EC2 인스턴스만 포함됩니다. 와 같은 호출에서 사용할 수 없습니다`ec2TagFilter`.  
+*필수 항목 *여부: 아니요  
+_유형_: EC2TagSet  
+_업데이트 필요 사항_: 중단 없음
+
+`ECSServices`  
+ 배포 그룹의 대상 Amazon ECS 서비스입니다. 이는 Amazon ECS 컴퓨팅 플랫폼을 사용하는 배포 그룹에만 적용됩니다. 대상 Amazon ECS 서비스는 형식을 사용하여 Amazon ECS 클러스터 및 서비스 이름 페어로 지정됩니다`<clustername>:<servicename>`.  
+*필수 항목 *여부: 아니요  
+_유형_: ECSService 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`LoadBalancerInfo`  
+배포에 사용할 부하 분산 장치에 대한 정보입니다. 자세한 내용은 AWS CodeDeploy 사용 설명서의 CodeDeploy와 Elastic Load Balancing 통합을 참조하십시오\**.  
+*필수 항목 *여부: 아니요  
+*형식*: LoadBalancerInfo  
+*업데이트 필요 사항\*: 중단 없음
+
+`OnPremisesInstanceTagFilters`  
+ 배포 그룹에 포함하려는 온프레미스 인스턴스에 이미 적용된 온프레미스 인스턴스 태그입니다. CodeDeploy에는 이 배포 그룹에서 지정한 태그로 식별되는 모든 온프레미스 인스턴스가 포함됩니다. 온프레미스 인스턴스를 CodeDeploy에 등록하려면 *AWS CodeDeploy 사용 설명서*의 CodeDeploy용 온프레미스 인스턴스 작업을 참조하십시오. 중복은 허용되지 않습니다.  
+ `OnPremisesInstanceTagFilters` 또는 를 지정할 수 `OnPremisesInstanceTagSet`있지만 둘 다 지정할 수는 없습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: TagFilter 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`OnPremisesTagSet`  
+온프레미스 인스턴스에 적용된 태그 그룹에 대한 정보입니다. 배포 그룹에는 모든 태그 그룹으로 식별된 온-프레미스 인스턴스만 포함됩니다.  
+ `OnPremisesInstanceTagFilters` 또는 를 지정할 수 `OnPremisesInstanceTagSet`있지만 둘 다 지정할 수는 없습니다.  
+*필수 항목 *여부: 아니요  
+_형식_: OnPremisesTagSet  
+_업데이트 필요 사항_: 중단 없음
+
+`OutdatedInstancesStrategy`  
+속성 설명을 사용할 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`ServiceRoleArn`  
+사용자를 대신하여 AWS 서비스를 호출할 수 있는 권한을 CodeDeploy에 부여하는 서비스 역할 Amazon 리소스 이름(ARN)입니다. 자세한 내용은 AWS CodeDeploy 사용 설명서의 AWS CodeDeploy에 대한 서비스 역할 만들기를 참조하십시오\**.  
+ 경우에 따라 서비스 역할의 정책에 대한 종속성을 추가해야 할 수도 있습니다. 자세한 내용은 DependsOn 속성의 IAM 역할 정책을 참조하세요.
+*필수 항목 여부*: 예  
+*유형*: 문자열  
+*업데이트 필요 사항\*: 중단 없음
+
+`Tags`  
+속성 설명을 사용할 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`TriggerConfigurations`  
+배포 그룹과 연결된 트리거에 대한 정보입니다. 중복은 허용되지 않습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: TriggerConfig 목록  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+리소스의 논리적 ID를 `AWS::CodeDeploy::DeploymentGroup` 내장 함수에 `Ref` 전달하면 함수는 배포 그룹 이름(예: )을 반환합니다`mydeploymentgroup-a123d0d1`.
+
+함수 사용에 대한 자세한 `Ref` 내용은 Ref를 참조하세요.
+
+## 예제
+
+### GitHub의 개정
+
+다음 예제에서는 Auto Scaling 그룹과 연결된 배포 그룹을 생성하고 GitHub 리포지토리에 저장된 애플리케이션 개정을 사용합니다. 리포지토리 정보를 입력 매개변수로 지정합니다.
+
+#### JSON (영문)
+
+```
+"DeploymentGroup" : {
+    "Type" : "AWS::CodeDeploy::DeploymentGroup",
+    "Properties" : {
+        "ApplicationName" : {"Ref" : "ApplicationName"},
+        "AutoScalingGroups" : [{"Ref" : "CodeDeployAutoScalingGroups" } ],
+        "Deployment" : {
+            "Description" : "A sample deployment",
+            "IgnoreApplicationStopFailures" : "true",
+            "Revision" : {
+                "RevisionType" : "GitHub",
+                "GitHubLocation" : {
+                    "CommitId" : {"Ref" : "CommitId"},
+                    "Repository" : {"Ref" : "Repository"}
+                }
+            }
+        },
+        "ServiceRoleArn" : {
+            "Fn::GetAtt" : [
+                "RoleArn",
+                "Arn"
+            ]
+        }
+    }
+}
+```
+
+### Amazon EC2 인스턴스 연결
+
+다음 예제에서는 인스턴스 태그를 사용하여 Amazon EC2 인스턴스를 배포 그룹과 연결하는 배포 그룹을 생성합니다. 배포 그룹은 Amazon S3 버킷에 저장된 애플리케이션 개정을 사용합니다.
+
+#### JSON (영문)
+
+```
+"DeploymentGroup": {
+    "Type": "AWS::CodeDeploy::DeploymentGroup",
+    "Properties": {
+        "ApplicationName": {
+            "Ref": "Application"
+        },
+        "Deployment": {
+            "Description": "First time",
+            "IgnoreApplicationStopFailures": "true",
+            "Revision": {
+                "RevisionType": "S3",
+                "S3Location": {
+                    "Bucket": {
+                        "Ref": "Bucket"
+                    },
+                    "Key": {
+                        "Ref": "Key"
+                    },
+                    "BundleType": "Zip",
+                    "ETag": {
+                        "Ref": "ETag"
+                    },
+                    "Version": {
+                        "Ref": "Version"
+                    }
+                }
+            }
+        },
+        "Ec2TagFilters": [
+            {
+                "Key": {
+                    "Ref": "TagKey"
+                },
+                "Value": {
+                    "Ref": "TagValue"
+                },
+                "Type": "KEY_AND_VALUE"
+            }
+        ],
+        "ServiceRoleArn": {
+            "Fn::GetAtt": [
+                "RoleArn",
+                "Arn"
+            ]
+        }
+    }
+}
+```
+
+### 배포 스타일
+
+다음 예제에서는 배포 유형을 사용하여 배포 그룹을 만듭니다 `BLUE_GREEN` .
+
+#### JSON (영문)
+
+```
+"CodeDeployDeploymentGroup": {
+    "Type": "AWS::CodeDeploy::DeploymentGroup",
+    "Properties": {
+        "ApplicationName": {
+            "Ref": "CodeDeployApplication"
+        },
+        "DeploymentConfigName": "CodeDeployDefault.LambdaCanary10Percent5Minutes",
+        "DeploymentStyle": {
+            "DeploymentType": "BLUE_GREEN",
+            "DeploymentOption": "WITH_TRAFFIC_CONTROL"
+        },
+        "ServiceRoleArn": {
+            "Fn::GetAtt": [
+                "CodeDeployServiceRole",
+                "Arn"
+            ]
+        }
+    }
+}
+```
+
+### 알람 및 트리거
+
+다음 예제에서는 배포 그룹에 대한 청구 경보 및 알림 트리거를 구성합니다.
+
+#### JSON (영문)
+
+```
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Parameters": {
+        "EC2TagKey0": {
+            "Type": "String",
+            "Default": "ec2TagKey0"
+        },
+        "EC2TagValue0": {
+            "Type": "String",
+            "Default": "ec2TagValue0"
+        },
+        "EC2TagKey1": {
+            "Type": "String",
+            "Default": "ec2TagKey1"
+        },
+        "EC2TagValue1": {
+            "Type": "String",
+            "Default": "ec2TagValue1"
+        },
+        "CodeDeployServiceRole": {
+            "Type": "String"
+        },
+        "DeploymentGroupName": {
+            "Type": "String"
+        }
+    },
+    "Resources": {
+        "myAlarm": {
+            "Type": "AWS::CloudWatch::Alarm",
+            "Properties": {
+                "Namespace": "AWS/Billing",
+                "MetricName": "EstimatedCharges",
+                "Statistic": "Maximum",
+                "Period": "21600",
+                "EvaluationPeriods": "1",
+                "Threshold": 1000,
+                "ComparisonOperator": "GreaterThanThreshold"
+            }
+        },
+        "mySNSTopic": {
+            "Type": "AWS::SNS::Topic",
+            "Properties": {}
+        },
+        "Application": {
+            "Type": "AWS::CodeDeploy::Application"
+        },
+        "DeploymentConfig": {
+            "Type": "AWS::CodeDeploy::DeploymentConfig",
+            "Properties": {
+                "MinimumHealthyHosts": {
+                    "Type": "FLEET_PERCENT",
+                    "Value": "25"
+                }
+            }
+        },
+        "DeploymentGroup": {
+            "Type": "AWS::CodeDeploy::DeploymentGroup",
+            "Properties": {
+                "AlarmConfiguration": {
+                    "Alarms": [
+                        {
+                            "Name": {
+                                "Ref": "myAlarm"
+                            }
+                        }
+                    ]
+                },
+                "ApplicationName": {
+                    "Ref": "Application"
+                },
+                "DeploymentConfigName": {
+                    "Ref": "DeploymentConfig"
+                },
+                "DeploymentGroupName": {
+                    "Ref": "DeploymentGroupName"
+                },
+                "Ec2TagFilters": [
+                    {
+                        "Key": {
+                            "Ref": "EC2TagKey0"
+                        },
+                        "Value": {
+                            "Ref": "EC2TagValue0"
+                        },
+                        "Type": "KEY_AND_VALUE"
+                    },
+                    {
+                        "Key": {
+                            "Ref": "EC2TagKey1"
+                        },
+                        "Type": "KEY_ONLY"
+                    },
+                    {
+                        "Value": {
+                            "Ref": "EC2TagValue1"
+                        },
+                        "Type": "VALUE_ONLY"
+                    }
+                ],
+                "ServiceRoleArn": {
+                    "Fn::GetAtt": [
+                        "CodeDeployServiceRole",
+                        "Arn"
+                    ]
+                },
+                "TriggerConfigurations": [
+                    {
+                        "TriggerEvents": [
+                            "DeploymentSuccess",
+                            "DeploymentRollback"
+                        ],
+                        "TriggerName": "MyTarget",
+                        "TriggerTargetArn": {
+                            "Ref": "mySNSTopic"
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}
+```
+
+### 자동 롤백 구성
+
+다음 예제에서는 배포 그룹에 대한 자동 롤백을 구성합니다.
+
+#### JSON (영문)
+
+```
+{
+  "Parameters": {
+    "EC2TagKey0": {
+      "Type": "String",
+      "Default": "ec2TagKey0"
+    },
+    "EC2TagValue0": {
+      "Type": "String",
+      "Default": "ec2TagValue0"
+    },
+    "EC2TagKey1": {
+      "Type": "String",
+      "Default": "ec2TagKey1"
+    },
+    "EC2TagValue1": {
+      "Type": "String",
+      "Default": "ec2TagValue1"
+    },
+    "CodeDeployServiceRole": {
+      "Type": "String"
+    },
+    "DeploymentGroupName": {
+      "Type": "String"
+    }
+  },
+  "Resources": {
+    "myAlarm": {
+      "Type": "AWS::CloudWatch::Alarm",
+      "Properties": {
+        "Namespace": "AWS/Billing",
+        "MetricName": "EstimatedCharges",
+        "Statistic": "Maximum",
+        "Period": "21600",
+        "EvaluationPeriods": "1",
+        "Threshold": 1000,
+        "ComparisonOperator": "GreaterThanThreshold"
+      }
+    },
+    "mySNSTopic": {
+      "Type": "AWS::SNS::Topic",
+      "Properties": {}
+    },
+    "Application": {
+      "Type": "AWS::CodeDeploy::Application"
+    },
+    "DeploymentConfig": {
+      "Type": "AWS::CodeDeploy::DeploymentConfig",
+      "Properties": {
+        "MinimumHealthyHosts": {
+          "Type": "FLEET_PERCENT",
+          "Value": "25"
+        }
+      }
+    },
+    "DeploymentGroup": {
+      "Type": "AWS::CodeDeploy::DeploymentGroup",
+      "Properties": {
+        "AlarmConfiguration": {
+          "Alarms": [
+            {
+              "Name": { "Ref": "myAlarm" }
+            }
+          ]
+        },
+        "ApplicationName": {
+          "Ref": "Application"
+        },
+        "AutoRollbackConfiguration": {
+          "Enabled": "true",
+          "Events": [ "DEPLOYMENT_FAILURE" ]
+        },
+        "DeploymentConfigName": {
+          "Ref": "DeploymentConfig"
+        },
+        "DeploymentGroupName": {
+          "Ref": "DeploymentGroupName"
+        },
+        "Ec2TagFilters": [
+          {
+            "Key": {
+              "Ref": "EC2TagKey0"
+            },
+            "Value": {
+              "Ref": "EC2TagValue0"
+            },
+            "Type": "KEY_AND_VALUE"
+          },
+          {
+            "Key": {
+              "Ref": "EC2TagKey1"
+            },
+            "Type": "KEY_ONLY"
+          },
+          {
+            "Value": {
+              "Ref": "EC2TagValue1"
+            },
+            "Type": "VALUE_ONLY"
+          }
+        ],
+        "ServiceRoleArn": {
+          "Fn::GetAtt": [
+            "CodeDeployServiceRole",
+            "Arn"
+          ]
+        },
+        "TriggerConfigurations": [
+          {
+            "TriggerEvents": [ "DeploymentSuccess", "DeploymentRollback" ],
+            "TriggerName": "MyTarget",
+            "TriggerTargetArn": { "Ref": "mySNSTopic" }
+          }
+        ]
+      }
+    }
+  }
+}
+```
+
+### 로드 밸런서
+
+다음 예제에서는 배포 그룹에 대한 Elastic Load Balancing 로드 밸런서를 구성합니다.
+
+#### JSON (영문)
+
+```
+{
+  "Parameters": {
+    "EC2TagKey0": {
+      "Type": "String",
+      "Default": "ec2TagKey0"
+    },
+    "EC2TagValue0": {
+      "Type": "String",
+      "Default": "ec2TagValue0"
+    },
+    "EC2TagKey1": {
+      "Type": "String",
+      "Default": "ec2TagKey1"
+    },
+    "EC2TagValue1": {
+      "Type": "String",
+      "Default": "ec2TagValue1"
+    },
+    "CodeDeployServiceRole": {
+      "Type": "String"
+    },
+    "DeploymentGroupName": {
+      "Type": "String"
+    },
+    "VpcCidr": {
+      "Type": "String"
+    },
+    "SubnetCidr": {
+      "Type": "String"
+    }
+  },
+  "Resources": {
+    "myVpc": {
+      "Type": "AWS::EC2::VPC",
+      "Properties": {
+        "CidrBlock": { "Ref": "VpcCidr" }
+      }
+    },
+    "mySubnet" : {
+      "Type" : "AWS::EC2::Subnet",
+      "Properties" : {
+        "VpcId" : { "Ref" : "myVpc" },
+        "CidrBlock" : { "Ref": "SubnetCidr" }
+      }
+    },
+    "InternetGateway" : {
+      "Type" : "AWS::EC2::InternetGateway"
+    },
+    "AttachGateway" : {
+      "Type" : "AWS::EC2::VPCGatewayAttachment",
+      "Properties" : {
+        "VpcId" : { "Ref" : "myVpc" },
+        "InternetGatewayId" : { "Ref" : "InternetGateway" }
+      }
+    },
+    "myELB": {
+      "Type": "AWS::ElasticLoadBalancing::LoadBalancer",
+      "Properties": {
+        "Listeners": [{
+          "InstancePort": "8000",
+          "LoadBalancerPort": "80",
+          "Protocol": "HTTP"
+        }],
+        "Subnets": [ { "Ref" : "mySubnet" } ]
+      }
+    },
+    "mySNSTopic": {
+      "Type": "AWS::SNS::Topic",
+      "Properties": {}
+    },
+    "Application": {
+      "Type": "AWS::CodeDeploy::Application"
+    },
+    "DeploymentConfig": {
+      "Type": "AWS::CodeDeploy::DeploymentConfig",
+      "Properties": {
+        "MinimumHealthyHosts": {
+          "Type": "FLEET_PERCENT",
+          "Value": "25"
+        }
+      }
+    },
+    "DeploymentGroup": {
+      "Type": "AWS::CodeDeploy::DeploymentGroup",
+      "Properties": {
+        "ApplicationName": {
+          "Ref": "Application"
+        },
+        "DeploymentConfigName": {
+          "Ref": "DeploymentConfig"
+        },
+        "DeploymentGroupName": {
+          "Ref": "DeploymentGroupName"
+        },
+        "Ec2TagFilters": [
+          {
+            "Key": {
+              "Ref": "EC2TagKey0"
+            },
+            "Value": {
+              "Ref": "EC2TagValue0"
+            },
+            "Type": "KEY_AND_VALUE"
+          },
+          {
+            "Key": {
+              "Ref": "EC2TagKey1"
+            },
+            "Type": "KEY_ONLY"
+          }
+        ],
+        "LoadBalancerInfo": {
+          "ElbInfoList": [{
+            "Name": { "Ref" : "myELB" }
+          }]
+        },
+        "DeploymentStyle": {
+          "DeploymentOption": "WITH_TRAFFIC_CONTROL"
+        },
+        "ServiceRoleArn": {
+          "Fn::GetAtt": [
+            "CodeDeployServiceRole",
+            "Arn"
+          ]
+        },
+        "TriggerConfigurations": [
+          {
+            "TriggerEvents": [ "DeploymentSuccess", "DeploymentFailure" ],
+            "TriggerName": "MyTarget",
+            "TriggerTargetArn": { "Ref": "mySNSTopic" }
+          }
+        ]
+      }
+    }
+  },
+  "Outputs": {
+    "ELB": {
+      "Description": "ELB for DeploymentGroup",
+      "Value" : { "Ref" : "myELB" }
+    }
+  }
+}
+```
+
+### 대상 그룹 정보
+
+다음 예제에서는 배포에 사용할 대상 그룹을 지정합니다. 인스턴스는 대상 그룹에 대상으로 등록되고 트래픽은 대상 그룹으로 라우팅됩니다.
+
+#### JSON (영문)
+
+```
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Resources": {
+        "AppDeploymentGroup": {
+            "Type": "AWS::CodeDeploy::DeploymentGroup",
+            "Properties": {
+                "ApplicationName": "MyApp",
+                "DeploymentStyle": {
+                    "DeploymentOption": "WITH_TRAFFIC_CONTROL"
+                },
+                "LoadBalancerInfo": {
+                    "TargetGroupInfoList": [
+                        {
+                            "Name": { "Fn::GetAtt": ["MyTargetGroup", "TargetGroupName"] }
+                        }
+                    ]
+                },
+                "ServiceRoleArn": "arn:aws:iam::12345678:role/CodeDeployServiceRole"
+            }
+        }
+    }
+}
+```

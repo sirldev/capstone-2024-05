@@ -1,0 +1,125 @@
+# AWS::S3::AccessPoint VpcConfiguration
+
+이 액세스 포인트에 대한 Virtual Private Cloud(VPC) 구성입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "VpcId" : String
+}
+```
+
+## 속성
+
+`VpcId`  
+이 필드를 지정하면 액세스 포인트는 지정된 VPC ID의 연결만 허용합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+## 예제
+
+### VPC로 제한된 S3 액세스 포인트 생성
+
+다음 예제에서는 Virtual Private Cloud(VPC)로 제한된 Amazon S3 액세스 포인트를 생성합니다. 자세한 내용은 _Amazon S3 사용 설명서의 액세스 포인트 사용을 위한 IAM 정책 구성을 참조하세요_.
+
+#### JSON (영문)
+
+```
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Resources": {
+        "S3Bucket": {
+            "Type": "AWS::S3::Bucket"
+        },
+        "S3BucketPolicy": {
+            "Type": "AWS::S3::BucketPolicy",
+            "Properties": {
+                "Bucket": {
+                    "Ref": "S3Bucket"
+                },
+                "PolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Action": "*",
+                            "Effect": "Allow",
+                            "Resource": [
+                                {
+                                    "Fn::GetAtt": [
+                                        "S3Bucket",
+                                        "Arn"
+                                    ]
+                                },
+                                {
+                                    "Fn::Join": [
+                                        "",
+                                        [
+                                            {
+                                                "Fn::GetAtt": [
+                                                    "S3Bucket",
+                                                    "Arn"
+                                                ]
+                                            },
+                                            "/*"
+                                        ]
+                                    ]
+                                }
+                            ],
+                            "Principal": {
+                                "AWS": "*"
+                            },
+                            "Condition": {
+                                "StringEquals": {
+                                    "s3:DataAccessPointAccount": {
+                                        "Ref": "AWS::AccountId"
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        "VPC": {
+            "Type": "AWS::EC2::VPC",
+            "Properties": {
+                "CidrBlock": "10.0.0.0/16"
+            }
+        },
+        "S3AccessPoint": {
+            "Type": "AWS::S3::AccessPoint",
+            "Properties": {
+                "Bucket": {
+                    "Ref": "S3Bucket"
+                },
+                "Name": "my-access-point",
+                "VpcConfiguration": {
+                    "VpcId": {
+                        "Ref": "VPC"
+                    }
+                },
+                "PublicAccessBlockConfiguration": {
+                    "BlockPublicAcls": true,
+                    "IgnorePublicAcls": true,
+                    "BlockPublicPolicy": true,
+                    "RestrictPublicBuckets": true
+                }
+            }
+        }
+    },
+    "Outputs": {
+        "S3AccessPointArn": {
+            "Value": {
+                "Ref": "S3AccessPoint"
+            },
+            "Description": "ARN of the sample Amazon S3 access point."
+        }
+    }
+}
+```

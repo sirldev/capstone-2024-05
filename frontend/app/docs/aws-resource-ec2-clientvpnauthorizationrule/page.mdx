@@ -1,0 +1,81 @@
+# AWS::EC2::ClientVpn권한 부여 규칙
+
+Client VPN 엔드포인트에 추가할 수신 권한 부여 규칙을 지정합니다. 수신 권한 부여 규칙은 네트워크에 대한 액세스 권한을 부여하는 방화벽 규칙 역할을 합니다. 클라이언트가 AWS 또는 온프레미스 네트워크의 리소스에 액세스할 수 있도록 수신 권한 부여 규칙을 구성해야 합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::EC2::ClientVpnAuthorizationRule",
+  "Properties" : {
+      "AccessGroupId" : String,
+      "AuthorizeAllGroups" : Boolean,
+      "ClientVpnEndpointId" : String,
+      "Description" : String,
+      "TargetNetworkCidr" : String
+    }
+}
+```
+
+## 속성
+
+`AccessGroupId`  
+액세스 권한을 부여할 그룹의 ID(예: Active Directory 그룹 또는 IdP(ID 공급자) 그룹)입니다. `AuthorizeAllGroups` 지정 `false` 되거나 지정되지 않은 경우 필수입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`AuthorizeAllGroups`  
+모든 클라이언트에 액세스 권한을 부여할지 여부를 나타냅니다. `true` VPN 연결을 성공적으로 설정한 모든 클라이언트에게 네트워크에 대한 액세스 권한을 부여하도록 지정합니다. `true` `AccessGroupId` 지정하지 않은 경우로 설정해야 합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ClientVpnEndpointId`  
+Client VPN 엔드포인트의 ID입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Description`  
+권한 부여 규칙에 대한 간략한 설명입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`TargetNetworkCidr`  
+액세스 권한이 부여되는 네트워크의 IPv4 주소 범위(CIDR 표기법)입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+## 예제
+
+### 클라이언트 VPN 엔드포인트에 권한 부여 규칙 추가
+
+다음 예제에서는 모든 사용자에게 인터넷에 대한 액세스 권한을 부여하는 권한 부여 규칙을 추가합니다.
+
+#### JSON (영문)
+
+```
+"myAuthRule": {
+    "Type": "AWS::EC2::ClientVpnAuthorizationRule",
+    "Properties": {
+        "ClientVpnEndpointId": {
+            "Ref": "myClientVpnEndpoint"
+        },
+        "AuthorizeAllGroups": true,
+        "TargetNetworkCidr": "0.0.0.0/0",
+        "Description": "myAuthRule"
+    }
+}
+```
+
+## 참고 항목
+
+- AWS Client VPN 관리자 안내서*의 Client VPN 시작하기 *
+- AWS Client VPN 관리자 안내서*의 권한 부여 규칙 *

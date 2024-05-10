@@ -1,0 +1,37 @@
+# AWS::KinesisAnalytics::ApplicationOutput LambdaOutput
+
+애플리케이션 출력을 구성할 때 AWS Lambda 함수를 대상으로 식별합니다. 함수 Amazon 리소스 이름(ARN)과 Amazon Kinesis Analytics가 사용자를 대신하여 함수에 쓰는 데 사용할 수 있는 IAM 역할 ARN을 제공합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ResourceARN" : String,
+  "RoleARN" : String
+}
+```
+
+## 속성
+
+`ResourceARN`  
+쓸 대상 Lambda 함수의 Amazon 리소스 이름(ARN)입니다.  
+최신 버전보다 이전 버전의 Lambda 함수를 지정하려면 Lambda 함수 ARN에 Lambda 함수 버전을 포함합니다. Lambda ARN에 대한 자세한 내용은 ARN 예제: AWS Lambda 단원을 참조하십시오
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `2048`  
+_패턴_: `arn:.*`  
+_업데이트 필요 사항_: 중단 없음
+
+`RoleARN`  
+Amazon Kinesis Analytics가 사용자를 대신하여 대상 함수에 쓰기 위해 수임할 수 있는 IAM 역할의 ARN입니다. 이 역할에 필요한 권한을 부여해야 합니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `2048`  
+_패턴_: `arn:.*`  
+_업데이트 필요 사항_: 중단 없음

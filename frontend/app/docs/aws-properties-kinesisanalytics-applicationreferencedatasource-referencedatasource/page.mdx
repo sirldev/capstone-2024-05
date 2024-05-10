@@ -1,0 +1,39 @@
+# AWS::KinesisAnalytics::ApplicationReferenceDataSource 참조 데이터 소스
+
+소스 정보(S3 버킷 이름 및 객체 키 이름), 생성된 결과 인애플리케이션 테이블 이름, Amazon S3 객체의 데이터 요소를 인애플리케이션 테이블에 매핑하는 데 필요한 스키마를 제공하여 참조 데이터 원본을 설명합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ReferenceSchema" : ReferenceSchema,
+  "S3ReferenceDataSource" : S3ReferenceDataSource,
+  "TableName" : String
+}
+```
+
+## 속성
+
+`ReferenceSchema`  
+스트리밍 소스의 데이터 형식과 각 데이터 요소가 인애플리케이션 스트림에서 생성된 해당 열에 매핑되는 방식에 대해 설명합니다.  
+_필수 항목 여부_: 예  
+_형식_: ReferenceSchema  
+_업데이트 필요 사항_: 중단 없음
+
+`S3ReferenceDataSource`  
+참조 데이터가 포함된 S3 버킷 및 객체를 식별합니다. 또한 Amazon Kinesis Analytics가 사용자를 대신하여 이 객체를 읽기 위해 수임할 수 있는 IAM 역할을 식별합니다. Amazon Kinesis Analytics 애플리케이션은 참조 데이터를 한 번만 로드합니다. 데이터가 변경 되면 `UpdateApplication` 작업을 호출하여 응용 프로그램으로 데이터를 다시 로드하도록 트리거합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: S3ReferenceDataSource  
+_업데이트 필요 사항_: 중단 없음
+
+`TableName`  
+만들 응용 프로그램 내 테이블의 이름입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `32`  
+_업데이트 필요 사항_: 중단 없음

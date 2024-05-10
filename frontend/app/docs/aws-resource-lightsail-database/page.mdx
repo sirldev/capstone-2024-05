@@ -1,0 +1,195 @@
+# AWS::Lightsail::D atabase
+
+`AWS::Lightsail::Database` 리소스는 Amazon Lightsail 데이터베이스를 지정합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::Lightsail::Database",
+  "Properties" : {
+      "AvailabilityZone" : String,
+      "BackupRetention" : Boolean,
+      "CaCertificateIdentifier" : String,
+      "MasterDatabaseName" : String,
+      "MasterUsername" : String,
+      "MasterUserPassword" : String,
+      "PreferredBackupWindow" : String,
+      "PreferredMaintenanceWindow" : String,
+      "PubliclyAccessible" : Boolean,
+      "RelationalDatabaseBlueprintId" : String,
+      "RelationalDatabaseBundleId" : String,
+      "RelationalDatabaseName" : String,
+      "RelationalDatabaseParameters" : [ RelationalDatabaseParameter, ... ],
+      "RotateMasterUserPassword" : Boolean,
+      "Tags" : [Tag, ... ]
+    }
+}
+```
+
+## 속성
+
+`AvailabilityZone`  
+데이터베이스의 가용 영역입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 업데이트가 지원되지 않습니다.
+
+`BackupRetention`  
+데이터베이스에 대해 자동화된 백업 보존을 사용할 수 있는지 여부를 나타내는 부울 값입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 일부 중단
+
+`CaCertificateIdentifier`  
+데이터베이스와 연결된 인증서입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`MasterDatabaseName`  
+이 매개 변수의 의미는 사용하는 데이터베이스 엔진에 따라 다릅니다.  
+ **MySQL을** 사용합니다.  
+Lightsail 데이터베이스 리소스가 생성될 때 생성할 데이터베이스의 이름입니다. 이 매개 변수를 지정하지 않으면 데이터베이스 리소스에 데이터베이스가 만들어지지 않습니다.  
+제약 조건:
+
+- 1-64자의 문자 또는 숫자를 포함해야 합니다.
+- 문자로 시작해야 합니다. 후속 문자는 문자, 밑줄 또는 숫자(0-9)일 수 있습니다.
+- 지정된 데이터베이스 엔진에서 예약한 단어일 수 없습니다.
+
+  MySQL의 예약어에 대한 자세한 내용은 MySQL 5.6, MySQL 5.7 및 MySQL 8.0의 키워드 및 예약어 문서를 참조하세요.
+  \*\*\*\*PostgreSQL의  
+  Lightsail 데이터베이스 리소스가 생성될 때 생성할 데이터베이스의 이름입니다. 이 매개 변수를 지정하지 않으면 데이터베이스 리소스에 명명된 데이터베이스 `postgres` 가 만들어집니다.  
+  제약 조건:
+
+- 1-63자의 문자 또는 숫자를 포함해야 합니다.
+- 문자로 시작해야 합니다. 후속 문자는 문자, 밑줄 또는 숫자(0-9)일 수 있습니다.
+- 지정된 데이터베이스 엔진에서 예약한 단어일 수 없습니다.
+
+  PostgreSQL의 예약어에 대한 자세한 내용은 PostgreSQL 9.6, PostgreSQL 10, PostgreSQL 11 및 PostgreSQL 12에 대한 SQL 키워드 문서를 참조하세요.
+  _필수 항목 여부_: 예  
+  _유형_: 문자열  
+  _업데이트 필요 사항_: 업데이트가 지원되지 않습니다.
+
+`MasterUsername`  
+기본 사용자의 이름입니다.  
+ **MySQL을** 사용합니다.  
+제약 조건:
+
+- MySQL에 필요합니다.
+- 1-16자의 문자 또는 숫자여야 합니다. 밑줄을 포함할 수 있습니다.
+- 첫 번째 문자는 문자여야 합니다.
+- 선택한 데이터베이스 엔진의 예약어일 수 없습니다.
+
+  MySQL 5.6 또는 5.7의 예약어에 대한 자세한 내용은 MySQL 5.6, MySQL 5.7 또는 MySQL 8.0의 키워드 및 예약어 문서를 참조하세요.
+  \*\*\*\*PostgreSQL의  
+  제약 조건:
+
+- PostgreSQL에 필요합니다.
+- 1-63자의 문자 또는 숫자여야 합니다. 밑줄을 포함할 수 있습니다.
+- 첫 번째 문자는 문자여야 합니다.
+- 선택한 데이터베이스 엔진의 예약어일 수 없습니다.
+
+  MySQL 5.6 또는 5.7의 예약어에 대한 자세한 내용은 PostgreSQL 9.6, PostgreSQL 10, PostgreSQL 11 및 PostgreSQL 12의 키워드 및 예약어 문서를 참조하세요.
+  _필수 항목 여부_: 예  
+  _유형_: 문자열  
+  _업데이트 필요 사항_: 업데이트가 지원되지 않습니다.
+
+`MasterUserPassword`  
+데이터베이스의 기본 사용자에 대한 암호입니다. 암호에는 /, " 또는 @를 제외한 인쇄 가능한 모든 ASCII 문자가 포함될 수 있습니다. 공백을 포함할 수 없습니다.  
+`MasterUserPassword` 및 `RotateMasterUserPassword` 매개 변수는 동일한 템플릿에서 함께 사용할 수 없습니다.
+**MySQL을** 사용합니다.  
+제약 조건: 8-41자를 포함해야 합니다.  
+ \**\*\*PostgreSQL의  
+제약 조건: 8-128자를 포함해야 합니다.  
+*필수 항목 *여부: 아니요  
+*유형*: 문자열  
+*업데이트 필요 사항\*: 중단 없음
+
+`PreferredBackupWindow`  
+데이터베이스에 대한 자동 백업이 생성되는 일별 시간 범위(예: `16:00-16:30`).  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`PreferredMaintenanceWindow`  
+데이터베이스에 대해 시스템 유지 관리가 발생할 수 있는 주간 시간 범위로, 형식은 다음과 같습니다. `ddd:hh24:mi-ddd:hh24:mi` 예를 들어, `Tue:17:00-Tue:17:30`.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`PubliclyAccessible`  
+인터넷의 모든 사용자가 데이터베이스에 액세스할 수 있는지 여부를 나타내는 부울 값입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`RelationalDatabaseBlueprintId`  
+데이터베이스의 블루프린트 ID(예: `mysql_8_0`).  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 업데이트가 지원되지 않습니다.
+
+`RelationalDatabaseBundleId`  
+데이터베이스의 번들 ID(예: `medium_1_0`).  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 업데이트가 지원되지 않습니다.
+
+`RelationalDatabaseName`  
+인스턴스의 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`RelationalDatabaseParameters`  
+데이터베이스에 대한 매개 변수 배열입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: RelationalDatabaseParameter 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`RotateMasterUserPassword`  
+기본 사용자 암호를 Lightsail에서 생성된 새롭고 강력한 암호로 변경할지 여부를 나타내는 부울 값입니다.  
+`RotateMasterUserPassword` 및 `MasterUserPassword` 매개 변수는 동일한 템플릿에서 함께 사용할 수 없습니다.
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`Tags`  
+이 리소스에 적용할 키-값 쌍의 배열입니다.  
+자세한 내용은 _AWS CloudFormation 사용 설명서의 태그를 참조하세요_.  
+`Value` of `Tags` 는 Lightsail 리소스의 선택 사항입니다.
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref`이 `Ref`리소스에 대한 고유 식별자를 반환합니다.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`DatabaseArn`  
+데이터베이스의 Amazon 리소스 이름(ARN)입니다(예 `arn:aws:lightsail:us-east-2:123456789101:RelationalDatabase/244ad76f-8aad-4741-809f-12345EXAMPLE`: ).
+
+## 발언
+
+_가용 영역_
+
+데이터베이스 생성 요청을 수행할 때 가용 영역을 지정할 수 있습니다. 지정하지 않으면 데이터베이스가 마지막으로 생성한 Lightsail 리소스와 동일한 가용 영역에 생성됩니다.
+
+_데이터베이스 업데이트_
+
+모든 데이터베이스 업데이트 작업은 즉시 수행됩니다. 그러나 매개 변수 업데이트는 `ApplyMethod` 업데이트되는 특정 매개 변수의 값을 기반으로 적용됩니다.

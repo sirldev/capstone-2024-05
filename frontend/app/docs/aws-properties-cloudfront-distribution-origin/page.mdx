@@ -1,0 +1,111 @@
+# AWS::CloudFront::D istribution 오리진
+
+원점.
+
+오리진은 콘텐츠가 저장되고 CloudFront가 최종 사용자에게 제공할 콘텐츠를 가져오는 위치입니다. 원점을 지정하려면:
+
+- 정적 웹 사이트 호스팅으로 구성되지 않은 Amazon S3 버킷을 지정하는 데`S3OriginConfig` 사용합니다.
+- 다음을 포함한 다른 모든 종류의 원본을 지정하는 데`CustomOriginConfig` 사용합니다.
+- 정적 웹 사이트 호스팅으로 구성된 Amazon S3 버킷
+- Elastic Load Balancing 로드 밸런서
+- AWS Elemental MediaPackage 엔드포인트
+- AWS Elemental MediaStore 컨테이너
+- Amazon EC2 인스턴스 또는 다른 종류의 호스트에서 실행되는 기타 HTTP 서버
+
+현재 배포당 지정할 수 있는 최대 오리진 수는 *Amazon CloudFront 개발자 안내서*의 웹 배포에 대한 일반 할당량 (이전에는 할당량을 제한이라고 함)을 참조하십시오.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ConnectionAttempts" : Integer,
+  "ConnectionTimeout" : Integer,
+  "CustomOriginConfig" : CustomOriginConfig,
+  "DomainName" : String,
+  "Id" : String,
+  "OriginAccessControlId" : String,
+  "OriginCustomHeaders" : [ OriginCustomHeader, ... ],
+  "OriginPath" : String,
+  "OriginShield" : OriginShield,
+  "S3OriginConfig" : S3OriginConfig
+}
+```
+
+## 속성
+
+`ConnectionAttempts`  
+CloudFront가 오리진에 연결을 시도하는 횟수입니다. 최소 숫자는 1이고, 최대값은 3이며, 기본값(달리 지정하지 않은 경우)은 3입니다.  
+사용자 지정 오리진(정적 웹 사이트 호스팅으로 구성된 Amazon S3 버킷 포함)의 경우 이 값은 오리진 응답 제한 시간(Origin Response Timeout)의 경우 CloudFront가 오리진으로부터 응답을 받으려고 시도하는 횟수도 지정합니다.  
+자세한 내용은 _Amazon CloudFront 개발자 안내서의 오리진 연결 시도를 참조하십시오_.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`ConnectionTimeout`  
+CloudFront가 오리진에 대한 연결을 설정하려고 할 때 대기하는 시간(초)입니다. 최소 제한 시간은 1초이고, 최대 제한 시간은 10초이며, 기본값(달리 지정하지 않은 경우)은 10초입니다.  
+자세한 내용은 _Amazon CloudFront 개발자 안내서의 오리진 연결 제한 시간을 참조하십시오_.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`CustomOriginConfig`  
+이 유형을 사용하여 Amazon S3 버킷이 아닌 오리진을 지정할 수 있습니다(한 가지 예외 없음). Amazon S3 버킷이 정적 웹 사이트 호스팅으로 구성된 경우 이 유형을 사용합니다. Amazon S3 버킷이 정적 웹 사이트 호스팅으로 구성되지 않은 경우 이 유형을 대신 사용합니다 `S3OriginConfig` .  
+_필수_: 조건부  
+_유형_: CustomOriginConfig  
+_업데이트 필요 사항_: 중단 없음
+
+`DomainName`  
+오리진의 도메인 이름입니다.  
+자세한 내용은 _Amazon CloudFront 개발자 안내서의 오리진 도메인 이름을 참조하십시오_.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Id`  
+오리진의 고유 식별자입니다. 이 값은 분포 내에서 고유해야 합니다.  
+이 값을 사용하여 `TargetOriginId` in `CacheBehavior` a 또는 `DefaultCacheBehavior`.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`OriginAccessControlId`  
+이 오리진에 대한 오리진 액세스 제어의 고유 식별자입니다.  
+자세한 내용은 Amazon CloudFront 개발자 안내서의 Amazon S3 오리진에 대한 액세스 제한을 참조하세요\**.  
+*필수 항목 *여부: 아니요  
+*유형*: 문자열  
+*업데이트 필요 사항\*: 중단 없음
+
+`OriginCustomHeaders`  
+CloudFront가 오리진에 보내는 요청에 추가하는 HTTP 헤더 이름 및 값의 목록입니다.  
+자세한 내용은 Amazon CloudFront 개발자 안내서의 오리진 요청에 사용자 지정 헤더 추가를 참조하십시오\**.  
+*필수 항목 *여부: 아니요  
+*형식*: OriginCustomHeader 목록  
+*업데이트 필요 사항\*: 중단 없음
+
+`OriginPath`  
+CloudFront가 오리진에서 콘텐츠를 요청할 때 CloudFront가 오리진 도메인 이름에 추가하는 선택적 경로입니다.  
+자세한 내용은 _Amazon CloudFront 개발자 안내서의 오리진 경로를 참조하십시오_.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`OriginShield`  
+CloudFront 오리진 쉴드. Origin Shield를 사용하면 오리진의 부하를 줄이는 데 도움이 될 수 있습니다.  
+자세한 내용은 _Amazon CloudFront 개발자 안내서의 Origin Shield 사용을 참조하십시오_.  
+*필수 항목 *여부: 아니요  
+_유형_: 오리진쉴드  
+_업데이트 필요 사항_: 중단 없음
+
+`S3OriginConfig`  
+이 유형을 사용하여 정적 웹 사이트 호스팅으로 구성되지 않은 Amazon S3 버킷인 오리진을 지정합니다. 정적 웹 사이트 호스팅으로 구성된 Amazon S3 버킷을 포함하여 다른 유형의 오리진을 지정하려면 해당 유형을 대신 사용합니다 `CustomOriginConfig` .  
+_필수_: 조건부  
+_유형_: S3OriginConfig  
+_업데이트 필요 사항_: 중단 없음
+
+## 참고 항목
+
+- Amazon CloudFront API Reference\* \*의 오리진

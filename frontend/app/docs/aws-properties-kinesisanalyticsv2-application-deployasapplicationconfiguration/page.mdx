@@ -1,0 +1,23 @@
+# AWS::KinesisAnalyticsV2::애플리케이션 DeployAsApplicationConfiguration
+
+Kinesis Data Analytics Studio 노트북을 내구성 상태의 애플리케이션으로 배포하는 데 필요한 정보입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "S3ContentLocation" : S3ContentBaseLocation
+}
+```
+
+## 속성
+
+`S3ContentLocation`  
+S3 버킷의 Amazon 리소스 이름(ARN), 데이터가 포함된 Amazon S3 객체의 이름, 데이터가 포함된 Amazon S3 객체의 버전 번호를 포함하여 Amazon Data Analytics 애플리케이션이 포함된 Amazon S3 객체에 대한 설명입니다.  
+_필수 항목 여부_: 예  
+_형식_: S3ContentBaseLocation  
+_업데이트 필요 사항_: 중단 없음

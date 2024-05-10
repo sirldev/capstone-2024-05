@@ -1,0 +1,30 @@
+# AWS::CloudFront::RealtimeLogConfig 끝점
+
+실시간 로그 구성에서 실시간 로그 데이터를 전송하는 Amazon Kinesis 데이터 스트림에 대한 정보가 포함되어 있습니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "KinesisStreamConfig" : KinesisStreamConfig,
+  "StreamType" : String
+}
+```
+
+## 속성
+
+`KinesisStreamConfig`  
+실시간 로그 데이터를 전송하는 Amazon Kinesis 데이터 스트림에 대한 정보가 포함되어 있습니다.  
+_필수 항목 여부_: 예  
+_유형_: KinesisStreamConfig  
+_업데이트 필요 사항_: 중단 없음
+
+`StreamType`  
+실시간 로그 데이터를 전송하는 데이터 스트림의 유형입니다. 유일하게 유효한 값은 `Kinesis`입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음

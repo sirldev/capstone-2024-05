@@ -1,0 +1,32 @@
+# AWS::RDS::D B상태 마스터유저시크릿
+
+`MasterUserSecret` 반환 값은 마스터 사용자 암호에 대해 AWS Secrets Manager에서 RDS가 관리하는 보안 암호를 지정합니다.
+
+자세한 내용은 Amazon RDS 사용 설명서*의 AWS Secrets Manager를 사용한 암호 관리 * 및 Amazon Aurora 사용 설명서*의 AWS Secrets Manager를 사용한 암호 관리를 * 참조하세요.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "KmsKeyId" : String,
+  "SecretArn" : String
+}
+```
+
+## 속성
+
+`KmsKeyId`  
+보안 암호를 암호화하는 데 사용되는 AWS KMS 키 식별자입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`SecretArn`  
+보안 암호의 Amazon 리소스 이름(ARN)입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음

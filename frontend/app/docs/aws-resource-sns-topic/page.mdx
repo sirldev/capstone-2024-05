@@ -1,0 +1,151 @@
+# AWS::SNS::주제
+
+리소스 `AWS::SNS::Topic` 는 알림을 게시할 수 있는 주제를 만듭니다.
+
+**메모**  
+하나의 계정은 최대 100,000개의 표준 주제와 1,000개의 FIFO 주제를 생성할 수 있습니다. 자세한 내용은 AWS General Reference의 Amazon SNS 엔드포인트 및 할당량을 참조하세요\*\*.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::SNS::Topic",
+  "Properties" : {
+      "ContentBasedDeduplication" : Boolean,
+      "DataProtectionPolicy" : Json,
+      "DisplayName" : String,
+      "FifoTopic" : Boolean,
+      "KmsMasterKeyId" : String,
+      "SignatureVersion" : String,
+      "Subscription" : [ Subscription, ... ],
+      "Tags" : [Tag, ... ],
+      "TopicName" : String,
+      "TracingConfig" : String
+    }
+}
+```
+
+## 속성
+
+`ContentBasedDeduplication` FIFO 주제에 대한 콘텐츠 기반 중복 제거를 활성화합니다.
+
+- 기본적으로 `ContentBasedDeduplication` 는 로 설정되어 있습니다`false`. FIFO 주제를 생성하고 이 속성이 인 경우 `false` 게시 작업의 파라미터 `MessageDeduplicationId`값을 지정해야 합니다.
+- 로 `ContentBasedDeduplication`설정하면 `true`Amazon SNS는 SHA-256 해시를 사용하여 `MessageDeduplicationId` 메시지 본문을 생성합니다(메시지 속성은 제외).
+
+(선택 사항) 생성된 값을 재정의하려면 작업의 매개 변수 값을 지정할 수 있습니다 `MessageDeduplicationId` `Publish` .
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`DataProtectionPolicy`  
+이 주제에 사용할 정책 문서의 본문입니다.  
+주제당 하나의 정책만 추가할 수 있습니다.  
+정책은 JSON 문자열 형식이어야 합니다.  
+길이 제약: 최대 길이는 30,720입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: Json  
+_업데이트 필요 사항_: 중단 없음
+
+`DisplayName`  
+SMS 구독이 있는 Amazon SNS 주제에 사용할 표시 이름입니다. 표시 이름은 하이픈(-), 밑줄(\_), 공백 및 탭을 포함하여 최대 100자여야 합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`FifoTopic`  
+FIFO 주제를 생성하려면 true로 설정합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`KmsMasterKeyId`  
+Amazon SNS용 AWS 관리형 고객 마스터 키(CMK) 또는 사용자 지정 CMK의 ID입니다. 자세한 내용은 주요 용어를 참조하세요. 더 많은 예제 는 `KeyId`AWS Key Management Service API Reference*를 참조하십시오*.  
+이 특성은 서버 측 암호화에만 적용됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`SignatureVersion`  
+서명 버전은 Amazon SNS에서 전송한 알림, 구독 확인 또는 구독 취소 확인 메시지의 서명을 생성하는 동안 사용되는 해싱 알고리즘에 해당합니다. 기본적으로 `SignatureVersion` 는 로 설정되어 있습니다`1`.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Subscription`  
+이 주제에 대한 Amazon SNS 구독(엔드포인트)입니다.  
+ 자원 `Subscription` 에 특성을 `AWS::SNS::Topic` 지정 하고 연관된 구독 자원을 작성하는 경우, 자원이 삭제될 때 연관된 서브스크립션은 삭제되지 않습니다 `AWS::SNS::Topic` .
+*필수 항목 *여부: 아니요  
+_유형_: 구독 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`Tags`  
+새 주제에 추가할 태그 목록입니다.  
+생성 시 주제에 태그를 지정할 수 있으려면 `sns:CreateTopic` and `sns:TagResource` 권한이 있어야 합니다 .
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`TopicName`  
+만들려는 주제의 이름입니다. 항목 이름은 대문자와 소문자 ASCII 문자, 숫자, 밑줄 및 하이픈만 포함해야 하며 1자에서 256자 사이여야 합니다. FIFO 주제 이름은 로 끝나야 합니다`.fifo`.  
+이름을 지정하지 않으면 AWS CloudFormation에서는 고유한 물리적 ID를 생성하고 해당 ID를 주제 이름으로 사용합니다. 자세한 내용은 이름 형식을 참조하세요.  
+이름을 지정하면 이 리소스를 대체해야 하는 업데이트를 수행할 수 없습니다. 중단이 필요 없거나 약간의 중단이 필요한 업데이트를 수행할 수 있습니다. 리소스를 바꿔야 하는 경우 새 이름을 지정합니다.
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`TracingConfig`  
+Amazon SNS 주제의 추적 모드입니다. 기본적으로 `TracingConfig` 는 로 설정`PassThrough`되며, 주제는 Amazon SNS 게시자로부터 수신한 추적 헤더를 통해 구독으로 전달됩니다. 로 설정된 경우 `Active`추적 헤더의 sampled 플래그가 true인 경우 Amazon SNS는 X-Ray 세그먼트 데이터를 주제 소유자 계정에 제공합니다. 표준 주제에서만 지원됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref`주제 `Ref`ARN을 반환합니다(예: `arn:aws:sns:us-east-1:123456789012:mystack-mytopic-NZJ5JSMVGFIE`).
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`TopicArn` Amazon SNS 주제의 ARN을 반환합니다.
+
+`TopicName` Amazon SNS 주제의 이름을 반환합니다.
+
+## 예제
+
+### 두 개의 Amazon SQS 대기열 구독이 있는 Amazon SNS 주제
+
+#### JSON (영문)
+
+```
+"MySNSTopic" : {
+  "Type" : "AWS::SNS::Topic",
+  "Properties" : {
+    "Subscription" : [{
+      "Endpoint" : { "Fn::GetAtt" : [ "MyQueue1", "Arn" ] },
+      "Protocol" : "sqs"
+    }, {
+      "Endpoint" : { "Fn::GetAtt" : [ "MyQueue2", "Arn" ] },
+      "Protocol" : "sqs"
+    }],
+    "TopicName" : "SampleTopic"
+  }
+}
+```
+
+## 참고 항목
+
+- Amazon SNS 개발자 안내서\* \* 의 AWS CloudFormation 템플릿을 사용하여 Amazon SQS 대기열에 메시지를 전송하는 주제 생성
+- Amazon SNS 개발자 안내서의 _FIFO 주제에 대한 AWS CloudFormation 사용 코드 예제 _

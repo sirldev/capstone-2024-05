@@ -1,0 +1,30 @@
+# AWS::백업::프레임워크 ControlInputParameter
+
+컨트롤에 대한 매개 변수 목록입니다. 컨트롤에는 0개, 1개 또는 둘 이상의 매개 변수가 있을 수 있습니다. 두 개의 매개 변수가 있는 컨트롤의 예는 "백업 계획 빈도가 최소 이고 `daily` 보존 기간이 최소"입니다`1 year`. 첫 번째 매개 변수는 `daily`입니다. 두 번째 매개 변수는 `1 year`입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ParameterName" : String,
+  "ParameterValue" : String
+}
+```
+
+## 속성
+
+`ParameterName`  
+매개 변수의 이름(예: `BackupPlanFrequency`.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`ParameterValue`  
+매개 변수의 값(예: `hourly`.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음

@@ -1,0 +1,37 @@
+# AWS::KinesisAnalytics::ApplicationReferenceDataSource 참조 스키마
+
+ReferenceSchema 속성 유형은 SQL 기반 Amazon Kinesis Data Analytics 애플리케이션에 대한 참조 소스의 데이터 형식을 지정합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "RecordColumns" : [ RecordColumn, ... ],
+  "RecordEncoding" : String,
+  "RecordFormat" : RecordFormat
+}
+```
+
+## 속성
+
+`RecordColumns`  
+RecordColumn 개체의 목록입니다.  
+_필수 항목 여부_: 예  
+_유형_: RecordColumn 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`RecordEncoding`  
+참조 원본에 있는 레코드의 인코딩을 지정합니다. 예를 들어 UTF-8입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`RecordFormat`  
+참조 원본의 레코드 형식을 지정합니다.  
+_필수 항목 여부_: 예  
+_유형_: RecordFormat  
+_업데이트 필요 사항_: 중단 없음

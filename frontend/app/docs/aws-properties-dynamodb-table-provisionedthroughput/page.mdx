@@ -1,0 +1,32 @@
+# AWS::D ynamoDB::테이블 프로비저닝된 처리량
+
+및 에 `ReadCapacityUnits`대한 값으로 구성된 지정된 테이블의 처리량 `WriteCapacityUnits` 입니다. 프로비저닝된 처리량 구조의 내용에 대한 자세한 내용은 Amazon DynamoDB 테이블 ProvisionedThroughput 단원을 참조하십시오.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ReadCapacityUnits" : Integer,
+  "WriteCapacityUnits" : Integer
+}
+```
+
+## 속성
+
+`ReadCapacityUnits`  
+DynamoDB가 `ThrottlingException`. 자세한 내용은 Amazon DynamoDB 개발자 안내서의 읽기 및 쓰기 요구 사항 지정을 참조하십시오\**.  
+읽기/쓰기 용량 모드인 경우 `PAY_PER_REQUEST` 값은 0으로 설정됩니다.  
+*필수 항목 여부*: 예  
+*유형*: Integer  
+*업데이트 필요 사항\*: 중단 없음
+
+`WriteCapacityUnits`  
+DynamoDB가 `ThrottlingException`. 자세한 내용은 Amazon DynamoDB 개발자 안내서의 읽기 및 쓰기 요구 사항 지정을 참조하십시오\**.  
+읽기/쓰기 용량 모드인 경우 `PAY_PER_REQUEST` 값은 0으로 설정됩니다.  
+*필수 항목 여부*: 예  
+*유형*: Integer  
+*업데이트 필요 사항\*: 중단 없음

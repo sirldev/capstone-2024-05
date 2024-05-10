@@ -1,0 +1,28 @@
+# AWS::Route53::HostedZone 쿼리 로깅 구성
+
+DNS 쿼리 로깅 구성에 대한 정보를 포함하는 복합 형식입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "CloudWatchLogsLogGroupArn" : String
+}
+```
+
+## 속성
+
+`CloudWatchLogsLogGroupArn`  
+Amazon Route 53이 로그를 게시하는 CloudWatch Logs 로그 그룹의 Amazon 리소스 이름(ARN)입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+## 참고 항목
+
+- AWS::Route53::HostedZone 주제의 반환 값
+- Amazon Route 53 API 참조*의 QueryLoggingConfig *

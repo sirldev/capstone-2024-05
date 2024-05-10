@@ -1,0 +1,51 @@
+# AWS::S3::StorageLens 버킷 레벨
+
+Amazon S3 Storage Lens에 대한 버킷 수준 스토리지 지표의 속성입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ActivityMetrics" : ActivityMetrics,
+  "AdvancedCostOptimizationMetrics" : AdvancedCostOptimizationMetrics,
+  "AdvancedDataProtectionMetrics" : AdvancedDataProtectionMetrics,
+  "DetailedStatusCodesMetrics" : DetailedStatusCodesMetrics,
+  "PrefixLevel" : PrefixLevel
+}
+```
+
+## 속성
+
+`ActivityMetrics`  
+S3 Storage Lens에 대한 버킷 수준 활동 지표의 속성입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: ActivityMetrics  
+_업데이트 필요 사항_: 중단 없음
+
+`AdvancedCostOptimizationMetrics`  
+S3 Storage Lens에 대한 버킷 수준 고급 비용 최적화 지표의 속성입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: AdvancedCostOptimizationMetrics  
+_업데이트 필요 사항_: 중단 없음
+
+`AdvancedDataProtectionMetrics`  
+S3 Storage Lens에 대한 버킷 수준 고급 데이터 보호 지표의 속성입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: AdvancedDataProtectionMetrics  
+_업데이트 필요 사항_: 중단 없음
+
+`DetailedStatusCodesMetrics`  
+S3 Storage Lens에 대한 버킷 수준 세부 상태 코드 지표의 속성입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: DetailedStatusCodesMetrics  
+_업데이트 필요 사항_: 중단 없음
+
+`PrefixLevel`  
+S3 Storage Lens에 대한 버킷 수준 접두사 수준 스토리지 지표의 속성입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: PrefixLevel  
+_업데이트 필요 사항_: 중단 없음

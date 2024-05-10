@@ -1,0 +1,89 @@
+# AWS::EC2::TransitGatewayPeeringAttachment
+
+지정된 Transit Gateway(요청자)와 피어 Transit Gateway(수락자) 간의 Transit Gateway 피어링 연결을 요청합니다. 피어 transit gateway는 사용자 계정 또는 다른 AWS 계정에 있을 수 있습니다.
+
+피어링 연결을 생성한 후에는 수락자 Transit Gateway의 소유자가 연결 요청을 수락해야 합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::EC2::TransitGatewayPeeringAttachment",
+  "Properties" : {
+      "PeerAccountId" : String,
+      "PeerRegion" : String,
+      "PeerTransitGatewayId" : String,
+      "Tags" : [Tag, ... ],
+      "TransitGatewayId" : String
+    }
+}
+```
+
+## 속성
+
+`PeerAccountId`  
+Transit Gateway를 소유하는 AWS 계정의 ID입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`PeerRegion`  
+transit gateway의 리전입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`PeerTransitGatewayId`  
+전송 게이트웨이의 ID입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Tags`  
+Transit Gateway 피어링 연결에 대한 태그입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`TransitGatewayId`  
+Transit Gateway 피어링 연결의 ID입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`transit gateway 피어링 연결의 ID를 반환합니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`CreationTime` Transit Gateway 피어링 연결이 생성된 시간입니다.
+
+`State`  
+transit gateway 피어링 연결의 상태입니다. `initiating` 상태는 더 이상 사용되지 않습니다.
+
+`Status` Transit Gateway 피어링 연결의 상태입니다.
+
+`Status.Code` 상태 코드입니다.
+
+`Status.Message` 상태 메시지입니다.
+
+`TransitGatewayAttachmentId` Transit Gateway 피어링 연결의 ID입니다.
+
+## 참고 항목
+
+- CreateTransitGatewayPeeringAttachment(_Amazon EC2 API 참조)_

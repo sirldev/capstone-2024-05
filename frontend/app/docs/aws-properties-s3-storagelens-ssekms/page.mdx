@@ -1,0 +1,23 @@
+# AWS::S3::StorageLens SSEKMS
+
+AWS Key Management Service 키(SSE-KMS)를 사용하여 전달된 S3 Storage Lens 지표 내보내기 파일을 암호화하는 서버 측 암호화를 사용하도록 지정합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "KeyId" : String
+}
+```
+
+## 속성
+
+`KeyId`  
+S3 Storage Lens 지표 내보내기 파일을 암호화하는 데 사용할 고객 관리형 AWS KMS 키의 Amazon 리소스 이름(ARN)을 지정합니다. Amazon S3는 대칭 암호화 키만 지원합니다. 자세한 내용은 _AWS Key Management Service 개발자 안내서의 특수 용도 키를 참조하세요_.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음

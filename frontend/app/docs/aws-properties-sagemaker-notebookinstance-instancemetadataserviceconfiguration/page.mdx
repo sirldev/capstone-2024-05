@@ -1,0 +1,25 @@
+# AWS::SageMaker::노트북 인스턴스 InstanceMetadataService구성
+
+노트북 인스턴스의 IMDS 구성에 대한 정보
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "MinimumInstanceMetadataServiceVersion" : String
+}
+```
+
+## 속성
+
+`MinimumInstanceMetadataServiceVersion`  
+노트북 인스턴스가 지원하는 최소 IMDS 버전을 나타냅니다. 의 일부로 전달될 때 `CreateNotebookInstance`값을 선택하지 않으면 기본값은 IMDSv1입니다. 즉, IMDSv1과 IMDSv2가 모두 지원됩니다. 의 일부로 전달되면 `UpdateNotebookInstance`기본값이 없습니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최대_: `1`  
+_패턴_: `1|2`  
+_업데이트 필요 사항_: 중단 없음

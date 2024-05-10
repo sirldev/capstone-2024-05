@@ -1,0 +1,37 @@
+# AWS::Route53RecoveryControl::SafetyRule 규칙 구성
+
+어설션 규칙에 대한 규칙 구성입니다. 즉, 특정 어설션 제어(라우팅 제어)에 대해 설정하는 기준으로, 트랜잭션이 완료된 후 사용 가능해야 하는 제어 수를 지정합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Inverted" : Boolean,
+  "Threshold" : Integer,
+  "Type" : String
+}
+```
+
+## 속성
+
+`Inverted`  
+규칙의 논리적 부정입니다. 규칙이 일반적으로 true로 평가되는 경우 false로 평가되고 그 반대의 경우도 마찬가지입니다.  
+_필수 항목 여부_: 예  
+_유형_: Boolean  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Threshold`  
+규칙 유형을 지정할 때의 N 값입니다 `ATLEAST` . 즉, `Threshold` 형식을 지정할 때 설정해야 하는 컨트롤의 수입니다 `ATLEAST` .  
+_필수 항목 여부_: 예  
+_유형_: Integer  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Type`  
+규칙은 `ATLEAST`, `AND`또는 `OR`.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음

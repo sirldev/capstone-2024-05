@@ -1,0 +1,44 @@
+# AWS::Lambda::EventSourceMapping DocumentDBEventSourceConfig
+
+DocumentDB 이벤트 원본에 대한 특정 구성 설정입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "CollectionName" : String,
+  "DatabaseName" : String,
+  "FullDocument" : String
+}
+```
+
+## 속성
+
+`CollectionName`  
+ 데이터베이스 내에서 사용할 컬렉션의 이름입니다. 컬렉션을 지정하지 않으면 Lambda가 모든 컬렉션을 사용합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `57`  
+_패턴_: `(^(?!(systemx2e)))(^[_a-zA-Z0-9])([^$]*)`  
+_업데이트 필요 사항_: 중단 없음
+
+`DatabaseName`  
+ DocumentDB 클러스터 내에서 사용할 데이터베이스의 이름입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `63`  
+_패턴_: `[^ /.$x22]*`  
+_업데이트 필요 사항_: 중단 없음
+
+`FullDocument`  
+ 문서 업데이트 작업 중에 DocumentDB가 이벤트 스트림으로 보내는 내용을 결정합니다. UpdateLookup으로 설정된 경우 DocumentDB는 전체 문서의 복사본과 함께 변경 내용을 설명하는 델타를 보냅니다. 그렇지 않으면 DocumentDB는 변경 내용이 포함된 부분 문서만 보냅니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `Default | UpdateLookup`  
+_업데이트 필요 사항_: 중단 없음

@@ -1,0 +1,37 @@
+# AWS::EC2::NetworkInsightsAccessScope 액세스 범위 경로 요청
+
+경로를 설명합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Destination" : PathStatementRequest,
+  "Source" : PathStatementRequest,
+  "ThroughResources" : [ ThroughResourcesStatementRequest, ... ]
+}
+```
+
+## 속성
+
+`Destination`  
+대상입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: PathStatementRequest  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Source`  
+소스.  
+*필수 항목 *여부: 아니요  
+_유형_: PathStatementRequest  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ThroughResources`  
+through 리소스.  
+*필수 항목 *여부: 아니요  
+_유형_: ThroughResourcesStatementRequest 목록  
+_업데이트 필요 사항_: 바꿔 놓음

@@ -1,0 +1,35 @@
+# AWS::SageMaker::ModelPackage 유효성 검사 프로필
+
+모델 패키지의 유효성을 검사하는 과정에서 사용되는 입력 및 대상 인스턴스 유형과 같은 데이터를 포함합니다.
+
+검증 프로필에 제공된 데이터는 AWS Marketplace에서 구매자가 사용할 수 있습니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ProfileName" : String,
+  "TransformJobDefinition" : TransformJobDefinition
+}
+```
+
+## 속성
+
+`ProfileName`  
+모델 패키지에 대한 프로필의 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `63`  
+_패턴_: `^a-zA-Z0-9{0,62}$`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`TransformJobDefinition`  
+ `TransformJobDefinition` 모델 패키지의 유효성 검사에 사용되는 변환 작업을 설명하는 개체입니다.  
+_필수 항목 여부_: 예  
+_형식_: TransformJobDefinition  
+_업데이트 필요 사항_: 바꿔 놓음

@@ -1,0 +1,35 @@
+# AWS::S3::Bucket ObjectLockConfiguration
+
+지정된 버킷에 객체 잠금 구성을 배치합니다. 객체 잠금 구성에 지정된 규칙은 지정된 버킷에 배치된 모든 새 객체에 기본적으로 적용됩니다. 자세한 내용은 개체 잠금을 참조하십시오.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ObjectLockEnabled" : String,
+  "Rule" : ObjectLockRule
+}
+```
+
+## 속성
+
+`ObjectLockEnabled`  
+이 버킷에 객체 잠금 구성이 활성화되어 있는지 여부를 나타냅니다. 버킷에 `ObjectLockEnabled` 적용할 때 활성화 `ObjectLockConfiguration` 합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `Enabled`  
+_업데이트 필요 사항_: 중단 없음
+
+`Rule`  
+지정된 객체에 대한 객체 잠금 규칙을 지정합니다. 버킷에 적용할 때 이 규칙을 활성화 `ObjectLockConfiguration` 합니다. 객체 잠금이 켜져 있는 경우 버킷 설정에는 둘 다 필요 `Mode` 하고 기간은 둘 중 하나 `Days` 또는 `Years`이어야 합니다. `Days` 동시에 and를 `Years` 지정할 수 없습니다 . 자세한 내용은 ObjectLockRule 및 DefaultRetention을 참조하세요.  
+_필수_: 조건부  
+_형식_: ObjectLockRule  
+_업데이트 필요 사항_: 중단 없음
+
+## 참고 항목
+
+- AWS::S3::버킷 예제

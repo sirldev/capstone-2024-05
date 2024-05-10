@@ -1,0 +1,28 @@
+# AWS::SageMaker::엔드포인트 Variant속성
+
+끝점에 대한 프로덕션 변형 속성 유형을 지정합니다.
+
+RetainAllVariantProperties 옵션을 로 설정하여 끝점을 업데이트하는 경우 `true` `VarientProperty` ExcludeRetainedVariantProperties 에 나열된 개체가 끝점의 기존 변형 속성을 재정의합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "VariantPropertyType" : String
+}
+```
+
+## 속성
+
+`VariantPropertyType` variant 속성의 형식입니다. 지원되는 값은 다음과 같습니다.
+
+- `DesiredInstanceCount`: ProductionVariants의 InitialInstanceCount 값을 사용하여 기존 변형 인스턴스 수를 재정의합니다.
+- `DesiredWeight`: ProductionVariants의 InitialVariantWeight 값을 사용하여 기존 변형 가중치를 재정의합니다.
+- `DataCaptureConfig`: (현재 지원되지 않습니다.)
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열  
+  _업데이트 필요 사항_: 중단 없음

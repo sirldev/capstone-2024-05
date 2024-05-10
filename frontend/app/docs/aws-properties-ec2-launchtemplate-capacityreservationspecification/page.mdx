@@ -1,0 +1,35 @@
+# AWS::EC2::LaunchTemplate CapacityReservation사양
+
+인스턴스의 용량 예약 대상 옵션을 지정합니다. 한 번에 하나의 옵션만 지정할 수 있습니다.
+
+`CapacityReservationSpecification` 은 AWS::EC2::LaunchTemplate LaunchTemplateData의 속성입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "CapacityReservationPreference" : String,
+  "CapacityReservationTarget" : CapacityReservationTarget
+}
+```
+
+## 속성
+
+`CapacityReservationPreference` 인스턴스의 용량 예약 기본 설정을 나타냅니다. 가능한 기본 설정은 다음과 같습니다.
+
+- `open` - 인스턴스는 `open` 일치하는 속성(인스턴스 유형, 플랫폼, 가용 영역)이 있는 모든 용량 예약에서 실행할 수 있습니다.
+- `none` - 인스턴스는 용량 예약을 사용할 수 있더라도 용량 예약에서 실행되지 않습니다. 인스턴스는 온디맨드 용량으로 실행됩니다.
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열  
+  _허용되는 값_: `none | open`  
+  _업데이트 필요 사항_: 중단 없음
+
+`CapacityReservationTarget`  
+대상 용량 예약 또는 용량 예약 그룹에 대한 정보입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: CapacityReservationTarget  
+_업데이트 필요 사항_: 중단 없음

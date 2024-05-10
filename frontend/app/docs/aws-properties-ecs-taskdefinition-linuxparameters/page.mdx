@@ -1,0 +1,74 @@
+# AWS::ECS::태스크 정의 Linux파라미터
+
+컨테이너에 적용되는 Linux 관련 옵션(예: Linux KernelCapabilities)입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Capabilities" : KernelCapabilities,
+  "Devices" : [ Device, ... ],
+  "InitProcessEnabled" : Boolean,
+  "MaxSwap" : Integer,
+  "SharedMemorySize" : Integer,
+  "Swappiness" : Integer,
+  "Tmpfs" : [ Tmpfs, ... ]
+}
+```
+
+## 속성
+
+`Capabilities`  
+Docker에서 제공하는 기본 구성에 추가되거나 삭제된 컨테이너에 대한 Linux 기능입니다.  
+Fargate 시작 유형을 사용하는 태스크의 경우 `capabilities` 모든 플랫폼 버전에서 지원되지만 `add` 플랫폼 버전 1.4.0 이상을 사용하는 경우에만 파라미터가 지원됩니다.
+*필수 항목 *여부: 아니요  
+_형식_: KernelCapabilities  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Devices`  
+컨테이너에 노출할 모든 호스트 디바이스입니다. 이 파라미터는 `Devices` Docker Remote API의 컨테이너 만들기 섹션과 `--device` docker run 옵션에 매핑됩니다.  
+Fargate 시작 유형을 사용하는 태스크를 사용하는 경우 파라미터가 `devices` 지원되지 않습니다.
+*필수 항목 *여부: 아니요  
+_유형_: 장치 목록  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`InitProcessEnabled`  
+ `init` 컨테이너 내에서 신호를 전달하고 프로세스를 거두는 프로세스를 실행합니다. 이 매개 변수는 `--init` docker run 옵션에 매핑됩니다. 이 파라미터를 사용하려면 컨테이너 인스턴스에 Docker Remote API 버전 1.25 이상이 필요합니다. 컨테이너 인스턴스에서 Docker Remote API 버전을 확인하려면 컨테이너 인스턴스에 로그인하고 다음 명령을 실행합니다. `sudo docker version --format '{{.Server.APIVersion}}'`  
+_필수 항목 여부_: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`MaxSwap`  
+컨테이너가 사용할 수 있는 총 스왑 메모리 양(MiB)입니다. 이 매개 변수는 docker run 옵션으로 변환되며 `--memory-swap` , 여기서 값은 컨테이너 메모리와 값의 합계가 됩니다 `maxSwap` .  
+`maxSwap` 의 값을 `0` 지정하면 컨테이너는 swap을 사용하지 않습니다. 허용되는 값은 `0` 또는 양의 정수입니다. `maxSwap` 매개 변수를 생략하면 컨테이너는 실행 중인 컨테이너 인스턴스에 대한 스왑 구성을 사용합니다. 사용할 매개 변수 `maxSwap` 에 대한 값을 설정해야 `swappiness` 합니다.  
+Fargate 시작 유형을 사용하는 태스크를 사용하는 경우 파라미터가 `maxSwap` 지원되지 않습니다.  
+Amazon Linux 2023에서 작업을 사용하는 경우 파라미터가 `swappiness` 지원되지 않습니다.
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`SharedMemorySize`  
+볼륨의 크기(MiB)에 대한 값입니다 `/dev/shm` . 이 매개 변수는 `--shm-size` docker run 옵션에 매핑됩니다.  
+Fargate 시작 유형을 사용하는 태스크를 사용하는 경우 `sharedMemorySize` 파라미터가 지원되지 않습니다.
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Swappiness`  
+이를 통해 컨테이너의 메모리 스왑 동작을 조정할 수 있습니다. `swappiness` 값이 `0` 있으면 반드시 필요한 경우가 아니면 스와핑이 발생하지 않습니다. `swappiness` 값이 `100` 되면 페이지가 매우 적극적으로 스왑됩니다. 허용되는 값은 와 사이의 정수입니다 `0` `100`. `swappiness` 매개 변수를 지정하지 않으면 기본값이 `60` 사용됩니다. 에 대한 값을 지정하지 않으면 `maxSwap` 이 매개변수는 무시됩니다. 이 매개 변수는 `--memory-swappiness` docker run 옵션에 매핑됩니다.  
+Fargate 시작 유형을 사용하는 태스크를 사용하는 경우 파라미터가 `swappiness` 지원되지 않습니다.  
+Amazon Linux 2023에서 작업을 사용하는 경우 파라미터가 `swappiness` 지원되지 않습니다.
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Tmpfs`  
+tmpfs 마운트의 컨테이너 경로, 마운트 옵션 및 크기(MiB)입니다. 이 매개 변수는 `--tmpfs` docker run 옵션에 매핑됩니다.  
+Fargate 시작 유형을 사용하는 태스크를 사용하는 경우 파라미터가 `tmpfs` 지원되지 않습니다.
+*필수 항목 *여부: 아니요  
+_유형_: Tmpfs 목록  
+_업데이트 필요 사항_: 바꿔 놓음

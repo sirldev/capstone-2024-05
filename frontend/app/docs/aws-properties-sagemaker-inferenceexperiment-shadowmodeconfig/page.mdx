@@ -1,0 +1,33 @@
+# AWS::SageMaker::InferenceExperiment 섀도우 모드 구성
+
+`ShadowMode` 모든 추론 요청을 받을 프로덕션 변형과 Amazon SageMaker가 추론 요청의 백분율을 복제하는 섀도우 변형을 지정하는 추론 실험 유형의 구성입니다. 섀도우 변형의 경우 Amazon SageMaker가 복제하는 요청의 비율도 지정합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ShadowModelVariants" : [ ShadowModelVariantConfig, ... ],
+  "SourceModelVariantName" : String
+}
+```
+
+## 속성
+
+`ShadowModelVariants`  
+섀도우 베리언트 구성 목록입니다.  
+_필수 항목 여부_: 예  
+_유형_: ShadowModelVariantConfig 목록  
+_최대_: `1`  
+_업데이트 필요 사항_: 중단 없음
+
+`SourceModelVariantName`  
+ 모든 추론 요청을 받는 프로덕션 변형의 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최대_: `63`  
+_패턴_: `^a-zA-Z0-9?`  
+_업데이트 필요 사항_: 중단 없음

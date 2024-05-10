@@ -1,0 +1,37 @@
+# AWS::백업::백업 선택 조건ResourceType
+
+조건 유형(예: ), 키 및 값으로 구성된 트리플렛 배열을 포함하는 객체를 지정합니다 `STRINGEQUALS`. 조건은 백업 계획에 할당된 선택 항목의 자원을 필터링하는 데 사용됩니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ConditionKey" : String,
+  "ConditionType" : String,
+  "ConditionValue" : String
+}
+```
+
+## 속성
+
+`ConditionKey`  
+키-값 페어의 키입니다. 예를 들어, in `"Department": "accounting"`은 `"Department"` 키입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ConditionType`  
+ `STRINGEQUALS`선택 항목의 리소스를 필터링하는 데 사용되는 키-값 페어에 적용되는 작업(예: )입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ConditionValue`  
+키-값 페어의 값입니다. 예를 들어, in `"Department": "accounting"`은 `"accounting"` 값입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음

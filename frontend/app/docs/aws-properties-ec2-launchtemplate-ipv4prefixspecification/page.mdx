@@ -1,0 +1,25 @@
+# AWS::EC2::LaunchTemplate Ipv4접두사 사양
+
+네트워크 인터페이스의 IPv4 접두사를 지정합니다.
+
+`Ipv4PrefixSpecification` 는 AWS::EC2::LaunchTemplate NetworkInterface의 속성입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Ipv4Prefix" : String
+}
+```
+
+## 속성
+
+`Ipv4Prefix`  
+IPv4 접두사입니다. 자세한 내용은 _Amazon Elastic Compute Cloud 사용 설명서의 Amazon EC2 네트워크 인터페이스에 접두사 할당을 참조하세요_.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음

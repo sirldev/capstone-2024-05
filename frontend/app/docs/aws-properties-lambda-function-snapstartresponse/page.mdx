@@ -1,0 +1,32 @@
+# AWS::람다::함수 SnapStartResponse
+
+함수의 SnapStart 설정입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ApplyOn" : String,
+  "OptimizationStatus" : String
+}
+```
+
+## 속성
+
+`ApplyOn`  
+로 설정하면 `PublishedVersions`Lambda는 함수 버전을 게시할 때 실행 환경의 스냅샷을 생성합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `None | PublishedVersions`  
+_업데이트 필요 사항_: 중단 없음
+
+`OptimizationStatus`  
+정규화된 Amazon 리소스 이름(ARN)을 제공하면 이 응답 요소는 지정된 함수 버전에 대해 SnapStart가 활성화되었는지 여부를 나타냅니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `Off | On`  
+_업데이트 필요 사항_: 중단 없음

@@ -1,0 +1,20 @@
+# `AWS::CloudFormation::Interface ParameterLabel`
+
+`ParameterLabel` 는 `AWS::CloudFormation::Interface` 파라미터의 논리적 ID 대신 AWS CloudFormation 콘솔에 표시되는 파라미터의 표시 이름 또는 설명을 지정하는 리소스의 속성입니다.
+
+## 통사론
+
+### JSON (영문)
+
+```
+{
+  "ParameterLogicalID" : Label
+}
+```
+
+## 속성
+
+`ParameterLogicalID`  
+매개 변수의 레이블입니다. 레이블은 스택이 생성되거나 업데이트될 때 CloudFormation 콘솔이 파라미터 지정(Specify Parameters) 페이지에 표시하는 표시 이름 또는 설명을 정의합니다 \**\*\* . `ParameterLogicalID` 키는 템플릿의 섹션에 선언된 유효한 파라미터의 대/소문자를 구분하는 논리적 ID여야 합니다 `Parameters` .  
+*필수 항목 *여부: 아니요  
+*유형\*: `AWS::CloudFormation::Interface Label`

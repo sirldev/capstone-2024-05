@@ -1,0 +1,113 @@
+# AWS::람다::계층 버전
+
+리소스는 `AWS::Lambda::LayerVersion` ZIP 아카이브에서 Lambda 계층을 생성합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::Lambda::LayerVersion",
+  "Properties" : {
+      "CompatibleArchitectures" : [ String, ... ],
+      "CompatibleRuntimes" : [ String, ... ],
+      "Content" : Content,
+      "Description" : String,
+      "LayerName" : String,
+      "LicenseInfo" : String
+    }
+}
+```
+
+## 속성
+
+`CompatibleArchitectures`  
+호환되는 명령 집합 아키텍처 목록입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_최대_: `2`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`CompatibleRuntimes`  
+호환되는 함수 런타임 목록입니다. ListLayers 및 ListLayerVersions를 사용하여 필터링하는 데 사용됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_최대_: `15`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Content`  
+함수 계층 아카이브입니다.  
+_필수 항목 여부_: 예  
+_유형_: 콘텐츠  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Description`  
+버전에 대한 설명입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `0`  
+_최대_: `256`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`LayerName`  
+계층의 이름 또는 Amazon 리소스 이름(ARN)입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `140`  
+_패턴_: `(arn:[a-zA-Z0-9-]+:lambda:[a-zA-Z0-9-]+:d{12}:layer:[a-zA-Z0-9-_]+)|[a-zA-Z0-9-_]+`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`LicenseInfo` 계층의 소프트웨어 라이선스입니다. 다음 중 하나일 수 있습니다.
+
+- SPDX 라이센스 식별자입니다. 예를 들어, `MIT`.
+- 인터넷에서 호스팅되는 라이선스의 URL입니다. 예를 들어, 'some-address
+- 라이선스의 전체 텍스트입니다.
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열  
+  _최대_: `512`  
+  _업데이트 필요 사항_: 바꿔 놓음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`계층 버전의 ARN을 반환합니다 `arn:aws:lambda:us-west-2:123456789012:layer:my-layer:1`.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+####
+
+`LayerVersionArn` 속성 설명을 사용할 수 없습니다.
+
+## 예제
+
+### 레이어 버전
+
+라는 레이어를 만듭니다 `my-layer`.
+
+#### JSON (영문)
+
+```
+"MyLayer": {
+    "Type": "AWS::Lambda::LayerVersion",
+    "Properties": {
+        "CompatibleRuntimes": [
+            "python3.6",
+            "python3.7"
+        ],
+        "Content": {
+            "S3Bucket": "my-bucket-us-west-2-123456789012",
+            "S3Key": "layer.zip"
+        },
+        "Description": "My layer",
+        "LayerName": "my-layer",
+        "LicenseInfo": "MIT"
+    }
+}
+```

@@ -1,0 +1,45 @@
+# AWS::SageMaker::CodeRepository GitConfig
+
+AWS 계정의 Git 리포지토리에 대한 구성 세부 정보를 지정합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Branch" : String,
+  "RepositoryUrl" : String,
+  "SecretArn" : String
+}
+```
+
+## 속성
+
+`Branch`  
+Git 리포지토리의 기본 분기입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `1024`  
+_패턴_: `[^ ~^:?*[]+`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`RepositoryUrl`  
+Git 리포지토리가 있는 URL입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_패턴_: '^some-address  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`SecretArn`  
+git 리포지토리에 액세스하는 데 사용되는 자격 증명이 포함된 AWS Secrets Manager 보안 암호의 Amazon 리소스 이름(ARN)입니다. 보안 암호의 스테이징 레이블은 다음과 같아야 `AWSCURRENT` 하며 다음 형식이어야 합니다.  
+ `{"username": UserName, "password": Password}`  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `2048`  
+_패턴_: `arn:aws[a-z-]*:secretsmanager:[a-z0-9-]*:[0-9]{12}:secret:.*`  
+_업데이트 필요 사항_: 중단 없음

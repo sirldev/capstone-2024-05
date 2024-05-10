@@ -1,0 +1,47 @@
+# AWS::Rekognition::P roject
+
+이 `AWS::Rekognition::Project` 유형은 Amazon Rekognition Custom Labels 프로젝트를 생성합니다. 프로젝트는 Amazon Rekognition Custom Labels 모델의 버전을 생성하고 관리하는 데 필요한 리소스 그룹입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::Rekognition::Project",
+  "Properties" : {
+      "ProjectName" : String
+    }
+}
+```
+
+## 속성
+
+`ProjectName`  
+만들 프로젝트의 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `255`  
+_패턴_: `[a-zA-Z0-9_.-]+`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref`프로젝트 `Ref`이름이 반환됩니다. 예를 들어:
+
+`{ "Ref": "CircuitBoardProject" }`
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt` 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다. 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`Arn` 프로젝트의 Amazon 리소스 이름을 반환합니다.

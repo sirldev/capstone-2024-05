@@ -1,0 +1,27 @@
+# AWS::KinesisAnalyticsV2::애플리케이션 InputProcessingConfiguration
+
+SQL 기반 Amazon Kinesis Data Analytics 애플리케이션의 경우 애플리케이션 코드에서 처리하기 전에 스트림의 레코드를 사전 처리하는 데 사용되는 프로세서를 설명합니다. 현재 사용할 수 있는 유일한 입력 프로세서는 Amazon Lambda입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "InputLambdaProcessor" : InputLambdaProcessor
+}
+```
+
+## 속성
+
+`InputLambdaProcessor`  
+애플리케이션 코드에서 처리하기 전에 스트림의 레코드를 사전 처리하는 데 사용되는 InputLambdaProcessor입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: InputLambdaProcessor  
+_업데이트 필요 사항_: 중단 없음
+
+## 참고 항목
+
+- Amazon Kinesis Data Analytics API 참조\* \*의 InputProcessingConfiguration

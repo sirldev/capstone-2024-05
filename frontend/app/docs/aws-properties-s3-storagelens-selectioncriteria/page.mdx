@@ -1,0 +1,37 @@
+# AWS::S3::StorageLens 선택 기준
+
+이 리소스에는 Amazon S3 Storage Lens 선택 기준에 대한 세부 정보가 포함되어 있습니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Delimiter" : String,
+  "MaxDepth" : Integer,
+  "MinStorageBytesPercentage" : Double
+}
+```
+
+## 속성
+
+`Delimiter`  
+이 속성에는 사용 중인 S3 Storage Lens 구분 기호의 세부 정보가 포함되어 있습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`MaxDepth`  
+이 속성에는 S3 Storage Lens가 지표를 수집할 최대 깊이에 대한 세부 정보가 포함되어 있습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`MinStorageBytesPercentage`  
+이 속성에는 S3 Storage Lens가 최대 지표를 수집할 최소 스토리지 바이트 백분율 임계값에 대한 세부 정보가 포함되어 있습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 더블  
+_업데이트 필요 사항_: 중단 없음

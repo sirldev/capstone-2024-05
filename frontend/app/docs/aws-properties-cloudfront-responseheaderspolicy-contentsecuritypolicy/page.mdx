@@ -1,0 +1,32 @@
+# AWS::CloudFront::ResponseHeadersPolicy 콘텐츠보안정책
+
+CloudFront가 HTTP 응답 헤더에 대한 값으로 포함하는 정책 지시문 및 해당 값 `Content-Security-Policy` 입니다.
+
+HTTP 응답 헤더에 대한 자세한 `Content-Security-Policy` 내용은 MDN Web Docs의 Content-Security-Policy를 참조하십시오.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ContentSecurityPolicy" : String,
+  "Override" : Boolean
+}
+```
+
+## 속성
+
+`ContentSecurityPolicy`  
+CloudFront가 HTTP 응답 헤더에 대한 값으로 포함하는 정책 지시문 및 해당 값 `Content-Security-Policy` 입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Override`  
+CloudFront가 `Content-Security-Policy` 오리진에서 수신한 HTTP 응답 헤더를 이 응답 헤더 정책에 지정된 헤더로 재정의할지 여부를 결정하는 부울입니다.  
+_필수 항목 여부_: 예  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음

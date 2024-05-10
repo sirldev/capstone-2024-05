@@ -1,0 +1,29 @@
+# AWS::Lambda::EventSourceMapping 대상 구성
+
+Lambda가 이벤트를 처리한 후 이벤트의 대상을 지정하는 구성 객체입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "OnFailure" : OnFailure
+}
+```
+
+## 속성
+
+`OnFailure`  
+실패한 호출에 대한 대상 구성입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: OnFailure  
+_업데이트 필요 사항_: 중단 없음
+
+## 예제
+
+### On-Failure 대상 구성
+
+실패한 배치의 레코드를 SQS 대기열로 전송하도록 함수를 구성합니다.

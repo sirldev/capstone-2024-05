@@ -1,0 +1,86 @@
+# AWS::SageMaker::ModelCard 모델 개요
+
+모델에 대한 개요입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "AlgorithmType" : String,
+  "InferenceEnvironment" : InferenceEnvironment,
+  "ModelArtifact" : [ String, ... ],
+  "ModelCreator" : String,
+  "ModelDescription" : String,
+  "ModelId" : String,
+  "ModelName" : String,
+  "ModelOwner" : String,
+  "ModelVersion" : Double,
+  "ProblemType" : String
+}
+```
+
+## 속성
+
+`AlgorithmType`  
+문제를 해결하는 데 사용되는 알고리즘입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`InferenceEnvironment`  
+모델 추론에 대한 개요입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: InferenceEnvironment  
+_업데이트 필요 사항_: 중단 없음
+
+`ModelArtifact`  
+모델 아티팩트의 위치입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`ModelCreator`  
+모델의 작성자입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`ModelDescription`  
+모델에 대한 설명입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`ModelId`  
+SageMaker 모델 ARN 또는 비 SageMaker 모델 ID입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`ModelName`  
+모델의 이름입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`ModelOwner`  
+모델의 소유자입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`ModelVersion`  
+모델의 버전입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 더블  
+_업데이트 필요 사항_: 중단 없음
+
+`ProblemType`  
+모델로 해결되는 문제.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음

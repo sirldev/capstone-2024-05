@@ -1,0 +1,36 @@
+# AWS::CloudFront::OriginRequestPolicy 헤더 구성
+
+CloudFront에서 오리진에 보내는 요청에 HTTP 헤더가 포함되어 있는지 여부(포함되어 있는 경우 어떤 헤더)가 포함되어 있는지를 결정하는 객체입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "HeaderBehavior" : String,
+  "Headers" : [ String, ... ]
+}
+```
+
+## 속성
+
+`HeaderBehavior` CloudFront에서 오리진에 보내는 요청에 HTTP 헤더가 포함되는지 여부를 결정합니다. 유효한 값은 다음과 같습니다.
+
+- `none` – CloudFront에서 오리진에 보내는 요청에는 최종 사용자 요청의 HTTP 헤더가 포함되지 않습니다. 이 필드가 로 설정된 경우에도 `none` a `CachePolicy` _에 나열된 모든 헤더 _ 는 오리진 요청에 포함됩니다.
+- `whitelist` – 유형에 나열된 HTTP 헤더만 `Headers` CloudFront에서 오리진에 보내는 요청에 포함됩니다.
+- `allViewer` – 최종 사용자 요청의 모든 HTTP 헤더는 CloudFront에서 오리진에 보내는 요청에 포함됩니다.
+- `allViewerAndWhitelistCloudFront` – 최종 사용자 요청의 모든 HTTP 헤더와 유형에 나열된 추가 CloudFront 헤더 `Headers` 는 CloudFront에서 오리진에 보내는 요청에 포함됩니다. 추가 헤더는 CloudFront에 의해 추가됩니다.
+- `allExcept` – 최종 사용자 요청의 모든 HTTP 헤더는 CloudFront에서 오리진에 보내는 요청에 포함됩니다(*는 **제외**). `Headers`
+  *필수 항목 여부*: 예  
+  *유형*: 문자열  
+  *허용되는 값*: `allExcept | allViewer | allViewerAndWhitelistCloudFront | none | whitelist`  
+  *업데이트 필요 사항\*: 중단 없음
+
+`Headers`  
+HTTP 헤더 이름 목록을 포함합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음

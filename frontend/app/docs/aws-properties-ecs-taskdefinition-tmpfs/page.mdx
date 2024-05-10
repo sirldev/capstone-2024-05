@@ -1,0 +1,38 @@
+# AWS::ECS::태스크 정의 TMPFS
+
+컨테이너 경로, 탑재 옵션 및 tmpfs 탑재 크기입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ContainerPath" : String,
+  "MountOptions" : [ String, ... ],
+  "Size" : Integer
+}
+```
+
+## 속성
+
+`ContainerPath`  
+tmpfs 볼륨이 마운트될 절대 파일 경로입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`MountOptions`  
+tmpfs 볼륨 탑재 옵션 목록입니다.  
+유효한 값: `"defaults" | "ro" | "rw" | "suid" | "nosuid" | "dev" | "nodev" | "exec" | "noexec" | "sync" | "async" | "dirsync" | "remount" | "mand" | "nomand" | "atime" | "noatime" | "diratime" | "nodiratime" | "bind" | "rbind" | "unbindable" | "runbindable" | "private" | "rprivate" | "shared" | "rshared" | "slave" | "rslave" | "relatime" | "norelatime" | "strictatime" | "nostrictatime" | "mode" | "uid" | "gid" | "nr_inodes" | "nr_blocks" | "mpol"`  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Size`  
+tmpfs 볼륨의 최대 크기(MiB)입니다.  
+_필수 항목 여부_: 예  
+_유형_: Integer  
+_업데이트 필요 사항_: 바꿔 놓음

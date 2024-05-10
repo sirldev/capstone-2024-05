@@ -1,0 +1,47 @@
+# AWS::Kinesis::Stream Stream암호화
+
+지정된 스트림에 대해 AWS KMS key를 사용하여 서버 측 암호화를 활성화하거나 업데이트합니다.
+
+**메모**  
+이 API를 호출할 때 `StreamARN` 또는 `StreamName` 매개 변수 중 하나 또는 둘 다를 사용해야 합니다. `StreamARN` 이 API를 호출할 때 input 매개 변수를 사용하는 것이 좋습니다.
+
+암호화 시작은 비동기 작업입니다. 요청을 받으면 Kinesis Data Streams는 즉시 반환되고 스트림의 상태를 로 설정합니다 `UPDATING`. 업데이트가 완료되면 Kinesis Data Streams는 스트림의 상태를 다시 로 설정합니다 `ACTIVE`. 암호화 업데이트 또는 적용을 완료하는 데 일반적으로 몇 초가 걸리지만 몇 분 정도 걸릴 수 있습니다. 상태가 인 동안 스트림에 대한 데이터를 계속 읽고 쓸 수 있습니다 `UPDATING`. 스트림의 상태가 `ACTIVE`가 되면 스트림에 기록된 레코드에 대한 암호화가 시작됩니다.
+
+API 제한: 연속 24시간 동안 서버 측 암호화를 위한 새 AWS KMS 키를 25번 성공적으로 적용할 수 있습니다.
+
+참고: 스트림이 상태가 된 후 `ACTIVE` 스트림에 기록된 모든 레코드가 암호화되기까지 최대 5초가 걸릴 수 있습니다. 암호화를 활성화한 후 또는 에서 API 응답을 검사하여 암호화가 적용되었는지 확인할 수 있습니다 `PutRecord` `PutRecords`.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "EncryptionType" : String,
+  "KeyId" : String
+}
+```
+
+## 속성
+
+`EncryptionType`  
+사용할 암호화 유형입니다. 유일하게 유효한 값은 `KMS`입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`KeyId`  
+암호화에 사용할 고객 관리형 AWS KMS 키의 GUID입니다. 이 값은 전역적으로 고유한 식별자, 별칭 또는 키에 대해 완전히 지정된 Amazon 리소스 이름(ARN) 또는 접두사 "alias/"가 붙은 별칭 이름일 수 있습니다. 별칭을 지정하여 Kinesis Data Streams가 소유한 마스터 키를 사용할 수도 있습니다 `aws/kinesis`.
+
+- 주요 ARN 예제: `arn:aws:kms:us-east-1:123456789012:key/12345678-1234-1234-1234-123456789012`
+- 별칭 ARN 예: `arn:aws:kms:us-east-1:123456789012:alias/MyAliasName`
+- 전역적으로 고유한 키 ID 예: `12345678-1234-1234-1234-123456789012`
+- 별칭 이름 예: `alias/MyAliasName`
+- Kinesis Data Streams가 소유한 마스터 키: `alias/aws/kinesis`
+  _필수 항목 여부_: 예  
+  _유형_: 문자열  
+  _최소_: `1`  
+  _최대_: `2048`  
+  _업데이트 필요 사항_: 중단 없음

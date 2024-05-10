@@ -1,0 +1,57 @@
+# AWS::ApiGatewayV2::D omainName DomainNameConfiguration
+
+`DomainNameConfiguration` 속성 유형은 API의 도메인 이름에 대한 구성을 지정합니다.
+
+`DomainNameConfiguration` 은 AWS::ApiGatewayV2::D omainName 리소스의 속성입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "CertificateArn" : String,
+  "CertificateName" : String,
+  "EndpointType" : String,
+  "OwnershipVerificationCertificateArn" : String,
+  "SecurityPolicy" : String
+}
+```
+
+## 속성
+
+`CertificateArn`  
+이 도메인 이름에 대해 엣지 최적화 엔드포인트에서 사용할 AWS 관리형 인증서입니다. AWS Certificate Manager가 유일하게 지원되는 소스입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`CertificateName`  
+이 도메인 이름에 대해 엣지 최적화 엔드포인트에서 사용할 인증서의 사용자 친화적인 이름입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`EndpointType`  
+끝점 유형입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`OwnershipVerificationCertificateArn`  
+AWS Certificate Manager에서 발급한 공인 인증서의 Amazon 리소스 이름(ARN)입니다. 이 ARN은 사용자 지정 도메인 소유권을 확인하는 데 사용됩니다. 상호 TLS를 구성하고 ACM에서 가져온 인증서 ARN 또는 사설 CA 인증서 ARN을 regionalCertificateArn으로 사용하는 경우에만 필요합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`SecurityPolicy`  
+이 도메인 이름에 대한 보안 정책의 TLS(전송 계층 보안) 버전입니다. 유효한 값은 `TLS_1_0` 및 `TLS_1_2`입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+## 참고 항목
+
+- Amazon API Gateway 버전 2 API 참조*의 DomainNameConfiguration *

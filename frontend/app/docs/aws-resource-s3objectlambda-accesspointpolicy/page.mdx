@@ -1,0 +1,39 @@
+# AWS::S3Object람다::액세스포인트 정책
+
+리소스는 `AWS::S3ObjectLambda::AccessPointPolicy` 객체 Lambda 액세스 포인트 리소스 정책 문서를 지정합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::S3ObjectLambda::AccessPointPolicy",
+  "Properties" : {
+      "ObjectLambdaAccessPoint" : String,
+      "PolicyDocument" : Json
+    }
+}
+```
+
+## 속성
+
+`ObjectLambdaAccessPoint`  
+Amazon S3 버킷에서 변환된 데이터에 액세스하는 데 사용되는 연결된 AWS Lambda 함수가 있는 액세스 포인트입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`PolicyDocument`  
+객체 Lambda 액세스 포인트 리소스 정책 문서입니다.  
+_필수 항목 여부_: 예  
+_형식_: Json  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.

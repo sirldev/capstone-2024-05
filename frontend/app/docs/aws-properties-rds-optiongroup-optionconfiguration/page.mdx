@@ -1,0 +1,104 @@
+# AWS::RDS::OptionGroup 옵션 구성
+
+`OptionConfiguration` property 형식은 리소스 내에서 개별 옵션과 해당 설정을 지정합니다 `AWS::RDS::OptionGroup` .
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "DBSecurityGroupMemberships" : [ String, ... ],
+  "OptionName" : String,
+  "OptionSettings" : [ OptionSetting, ... ],
+  "OptionVersion" : String,
+  "Port" : Integer,
+  "VpcSecurityGroupMemberships" : [ String, ... ]
+}
+```
+
+## 속성
+
+`DBSecurityGroupMemberships`  
+이 옵션에 사용되는 DBSecurityGroupMembership 이름 문자열 목록입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`OptionName`  
+그룹에 포함할 옵션의 구성입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`OptionSettings`  
+옵션 그룹에 포함할 옵션 설정입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: OptionSetting 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`OptionVersion`  
+옵션의 버전입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Port`  
+옵션의 선택적 포트입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`VpcSecurityGroupMemberships`  
+이 옵션에 사용되는 VpcSecurityGroupMembership 이름 문자열 목록입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+## 예제
+
+###
+
+다음 예제 템플릿은 `OptionName` `OptionVersion` 리소스를 만들 때 and 매개 변수를 `AWS::RDS::OptionGroup` 사용합니다 .
+
+#### JSON (영문)
+
+```
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "APEX has a dependency on XMLDB, so, there must be at least one XMLDB when there is an APEX",
+    "Parameters": {
+        "OptionName": {
+            "Type": "String"
+        },
+        "OptionVersion": {
+            "Type": "String"
+        }
+    },
+    "Resources": {
+        "myOptionGroup": {
+            "Type": "AWS::RDS::OptionGroup",
+            "Properties": {
+                "EngineName": "oracle-ee",
+                "MajorEngineVersion": "11.2",
+                "OptionGroupDescription": "testing creating optionGroup with APEX version",
+                "OptionConfigurations": [
+                    {
+                        "OptionName": "XMLDB"
+                    },
+                    {
+                        "OptionName": {
+                            "Ref": "OptionName"
+                        },
+                        "OptionVersion": {
+                            "Ref": "OptionVersion"
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}
+```

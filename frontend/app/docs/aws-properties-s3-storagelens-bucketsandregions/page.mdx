@@ -1,0 +1,30 @@
+# AWS::S3::StorageLens 버킷및리전
+
+이 리소스에는 Amazon S3 Storage Lens 구성을 위한 버킷 및 리전의 세부 정보가 포함되어 있습니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Buckets" : [ String, ... ],
+  "Regions" : [ String, ... ]
+}
+```
+
+## 속성
+
+`Buckets`  
+이 속성에는 Amazon S3 Storage Lens 구성에 대한 버킷의 세부 정보가 포함되어 있습니다. 버킷 Amazon 리소스 이름(ARN)이어야 합니다. 유효한 값은 _Amazon S3 API Reference의 버킷 ARN 형식을 참조하세요_.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`Regions`  
+이 속성에는 S3 Storage Lens 구성에 대한 리전의 세부 정보가 포함되어 있습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음

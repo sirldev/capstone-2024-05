@@ -1,0 +1,24 @@
+# AWS::Lambda::CodeSigningConfig 허용게시자
+
+코드 패키지에 서명할 수 있는 서명 프로필 목록입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "SigningProfileVersionArns" : [ String, ... ]
+}
+```
+
+## 속성
+
+`SigningProfileVersionArns`  
+각 서명 프로필의 Amazon 리소스 이름(ARN)입니다. 서명 프로필은 코드 패키지에 서명할 수 있는 신뢰할 수 있는 사용자를 정의합니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열 목록  
+_최대_: `20`  
+_업데이트 필요 사항_: 중단 없음

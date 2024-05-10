@@ -1,0 +1,78 @@
+# AWS::AutoScaling::ScalingPolicy PredictiveScalingMetric사양
+
+AWS::AutoScaling::ScalingPolicy PredictiveScalingConfiguration 속성 유형의 속성`MetricSpecifications`에 대한 지표 사양을 지정하는 구조 입니다.
+
+지표 쌍 또는 로드 지표와 조정 지표를 개별적으로 지정해야 합니다. 개별 지표 대신 지표 페어를 지정하면 조정 정책에 대한 지표를 더 간단하게 구성할 수 있습니다. 지표 페어를 선택하면 정책이 로드 지표 및 조정 지표에 사용할 올바른 합계 및 평균 통계를 자동으로 인식합니다.
+
+본보기
+
+- 예측 조정 정책을 생성하고 `ALBRequestCount` 지표 페어의 값과 `1000.0` 대상 값으로 지정합니다. 이 유형의 지표의 경우 해당 대상 그룹에 대한 지표 차원을 제공해야 하므로 오토 스케일링에 연결된 Application Load Balancer 대상 그룹에 대한 리소스 레이블도 제공해야 합니다.
+- 대상 그룹이 분당 수신하는 요청 수는 부하 지표를 제공하고, 대상 그룹 구성원 간의 평균 요청 수는 조정 지표를 제공합니다. CloudWatch에서는 `RequestCount` `RequestCountPerTarget` 각각 및 지표를 나타냅니다.
+- 예측 조정을 최적으로 사용하려면 동적 조정 정책을 사용하여 리소스 사용률의 실시간 변화에 따라 최소 용량과 최대 용량 사이에서 자동으로 조정하는 모범 사례를 준수합니다.
+- Amazon EC2 Auto Scaling은 지난 14일 동안의 로드 지표에 대한 데이터 포인트를 사용하고 예측 조정을 위한 시간별 로드 예측을 생성합니다. (최소 24시간의 데이터가 필요합니다.)
+- 로드 예측을 생성한 후 Amazon EC2 Auto Scaling은 각 인스턴스에서 수신되는 평균 요청 수가 항상 분당 1,000개에 가깝도록 예측 기간의 각 시간에 오토 스케일링의 용량을 줄이거나 늘릴 시기를 결정합니다.
+
+예측 조정과 함께 사용자 지정 지표를 사용하는 방법에 대한 자세한 내용은 Amazon EC2 Auto Scaling 사용 설명서의 사용자 지정 지표를 사용한 고급 예측 조정 정책 구성을 참조하세요\*\*.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "CustomizedCapacityMetricSpecification" : PredictiveScalingCustomizedCapacityMetric,
+  "CustomizedLoadMetricSpecification" : PredictiveScalingCustomizedLoadMetric,
+  "CustomizedScalingMetricSpecification" : PredictiveScalingCustomizedScalingMetric,
+  "PredefinedLoadMetricSpecification" : PredictiveScalingPredefinedLoadMetric,
+  "PredefinedMetricPairSpecification" : PredictiveScalingPredefinedMetricPair,
+  "PredefinedScalingMetricSpecification" : PredictiveScalingPredefinedScalingMetric,
+  "TargetValue" : Double
+}
+```
+
+## 속성
+
+`CustomizedCapacityMetricSpecification`  
+사용자 지정된 용량 메트릭 사양입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: PredictiveScalingCustomizedCapacityMetric  
+_업데이트 필요 사항_: 중단 없음
+
+`CustomizedLoadMetricSpecification`  
+사용자 지정된 부하 메트릭 사양입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: PredictiveScalingCustomizedLoadMetric  
+_업데이트 필요 사항_: 중단 없음
+
+`CustomizedScalingMetricSpecification`  
+사용자 지정된 조정 지표 사양입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: PredictiveScalingCustomizedScalingMetric  
+_업데이트 필요 사항_: 중단 없음
+
+`PredefinedLoadMetricSpecification`  
+사전 정의된 부하 메트릭 사양입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: PredictiveScalingPredefinedLoadMetric  
+_업데이트 필요 사항_: 중단 없음
+
+`PredefinedMetricPairSpecification`  
+Amazon EC2 Auto Scaling이 사용할 적절한 조정 지표 및 로드 지표를 결정하는 데 사용할 사전 정의된 지표 페어 사양입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: PredictiveScalingPredefinedMetricPair  
+_업데이트 필요 사항_: 중단 없음
+
+`PredefinedScalingMetricSpecification`  
+사전 정의된 조정 지표 사양입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: PredictiveScalingPredefinedScalingMetric  
+_업데이트 필요 사항_: 중단 없음
+
+`TargetValue`  
+목표 사용률을 지정합니다.  
+일부 지표는 백분율이 아닌 개수를 기반으로 합니다(예: Application Load Balancer에 대한 요청 수 또는 SQS 대기열의 메시지 수). 조정 정책에서 이러한 지표 중 하나를 지정하는 경우 목표 사용률을 1분 간격 동안 인스턴스당 최적의 평균 요청 또는 메시지 수로 지정합니다.
+_필수 항목 여부_: 예  
+_유형_: 더블  
+_업데이트 필요 사항_: 중단 없음

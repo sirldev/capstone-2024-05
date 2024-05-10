@@ -1,0 +1,28 @@
+# AWS::CodeDeploy::D eploymentGroup 온프레미스태그세트
+
+`OnPremisesTagSet` 속성 유형은 온-프레미스 인스턴스 태그 그룹의 다른 목록을 포함하는 목록을 지정합니다. 인스턴스가 배포 그룹에 포함되려면 목록의 모든 태그 그룹으로 식별되어야 합니다.
+
+태그 및 태그 그룹을 사용하여 Amazon EC2 인스턴스 및 온프레미스 인스턴스를 관리하는 방법에 대한 자세한 내용은 AWS CodeDeploy 사용 설명서의 AWS CodeDeploy에서 배포 그룹에 대한 인스턴스 태깅을 참조하십시오\*\*.
+
+`OnPremisesTagSet` 은 DeploymentGroup 리소스의 속성입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "OnPremisesTagSetList" : [ OnPremisesTagSetListObject, ... ]
+}
+```
+
+## 속성
+
+`OnPremisesTagSetList`  
+온프레미스 인스턴스 태그 그룹의 다른 목록을 포함하는 목록입니다. 인스턴스가 배포 그룹에 포함되려면 목록의 모든 태그 그룹으로 식별되어야 합니다.  
+중복은 허용되지 않습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: OnPremisesTagSetListObject 목록  
+_업데이트 필요 사항_: 중단 없음

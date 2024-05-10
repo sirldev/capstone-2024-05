@@ -1,0 +1,120 @@
+# AWS::S3::버킷 로깅 구성
+
+로그가 저장되는 위치와 Amazon S3가 버킷의 모든 로그 객체 키에 할당하는 접두사를 설명합니다. 예제 및 자세한 내용은 _Amazon S3 API Reference의 PUT 버킷 로깅을 참조하세요_.
+
+**메모**  
+요청을 성공적으로 완료하려면 `AWS::S3::Bucket LoggingConfiguration` IAM `s3:PutObject` 권한이`s3:PutObjectAcl` 있어야 합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "DestinationBucketName" : String,
+  "LogFilePrefix" : String
+}
+```
+
+## 속성
+
+`DestinationBucketName`  
+Amazon S3가 서버 액세스 로그 파일을 저장해야 하는 버킷의 이름입니다. 소유한 모든 버킷에 로그 파일을 저장할 수 있습니다. 기본적으로 로그는 속성이 정의된 버킷에 저장됩니다 `LoggingConfiguration` .  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`LogFilePrefix`  
+모든 로그 객체 키의 접두사입니다. 여러 Amazon S3 버킷의 로그 파일을 단일 버킷에 저장하는 경우 접두사를 사용하여 어떤 로그 파일이 어떤 버킷에서 왔는지 구분할 수 있습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+## 예제
+
+### 특정 S3 버킷에 대한 액세스 요청 기록
+
+다음 예제 템플릿은 두 개의 S3 버킷을 생성합니다. 버킷은 버킷 `LoggingBucket` 의 로그를 저장합니다 `S3Bucket` . 버킷에서 로그를 수신하려면 `S3Bucket` 로깅 버킷에 로그 전달 쓰기 권한이 필요합니다.
+
+#### JSON (영문)
+
+```
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Resources": {
+        "S3Bucket": {
+            "Type": "AWS::S3::Bucket",
+            "Properties": {
+                "LoggingConfiguration": {
+                    "DestinationBucketName": {
+                        "Ref": "LoggingBucket"
+                    },
+                    "LogFilePrefix": "testing-logs"
+                }
+            }
+        },
+        "LoggingBucket": {
+            "Type": "AWS::S3::Bucket"
+        },
+        "S3BucketPolicy": {
+            "Type": "AWS::S3::BucketPolicy",
+            "Properties": {
+                "Bucket": {
+                    "Ref": "LoggingBucket"
+                },
+                "PolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Action": [
+                                "s3:PutObject"
+                            ],
+                            "Effect": "Allow",
+                            "Principal": {
+                                "Service": "logging.s3.amazonaws.com"
+                            },
+                            "Resource": {
+                                "Fn::Join": [
+                                    "",
+                                    [
+                                        "arn:aws:s3:::",
+                                        {
+                                            "Ref": "LoggingBucket"
+                                        },
+                                        "/*"
+                                    ]
+                                ]
+                            },
+                            "Condition": {
+                                "ArnLike": {
+                                    "aws:SourceArn": {
+                                        "Fn::GetAtt": [
+                                            "S3Bucket",
+                                            "Arn"
+                                        ]
+                                    }
+                                },
+                                "StringEquals": {
+                                    "aws:SourceAccount": {
+                                        "Fn::Sub": "${AWS::AccountId}"
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "Outputs": {
+        "BucketName": {
+            "Value": {
+                "Ref": "S3Bucket"
+            },
+            "Description": "Name of the sample Amazon S3 bucket with a logging configuration."
+        }
+    }
+}
+```

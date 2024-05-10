@@ -1,0 +1,44 @@
+# AWS::ApiGatewayV2::Api BodyS3Location
+
+이 `BodyS3Location` 속성은 OpenAPI 정의를 가져올 S3 위치를 지정합니다. HTTP API에 대해서만 지원됩니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Bucket" : String,
+  "Etag" : String,
+  "Key" : String,
+  "Version" : String
+}
+```
+
+## 속성
+
+`Bucket`  
+가져올 OpenAPI 정의가 포함된 S3 버킷입니다. `BodyS3Location` API에 대해 지정하는 경우 필수입니다.  
+_필수_: 조건부  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Etag`  
+S3 객체의 Etag입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Key`  
+S3 객체의 키입니다. `BodyS3Location` API에 대해 지정하는 경우 필수입니다.  
+_필수_: 조건부  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Version`  
+S3 객체의 버전입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음

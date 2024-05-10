@@ -1,0 +1,94 @@
+# AWS::KinesisFirehose::D eliveryStream SplunkDestinationConfiguration
+
+`SplunkDestinationConfiguration` 속성 유형은 Splunk에서 Kinesis Data Firehose 전송 스트림에 대한 대상의 구성을 지정합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "CloudWatchLoggingOptions" : CloudWatchLoggingOptions,
+  "HECAcknowledgmentTimeoutInSeconds" : Integer,
+  "HECEndpoint" : String,
+  "HECEndpointType" : String,
+  "HECToken" : String,
+  "ProcessingConfiguration" : ProcessingConfiguration,
+  "RetryOptions" : SplunkRetryOptions,
+  "S3BackupMode" : String,
+  "S3Configuration" : S3DestinationConfiguration
+}
+```
+
+## 속성
+
+`CloudWatchLoggingOptions`  
+전송 스트림에 대한 Amazon CloudWatch 로깅 옵션.  
+*필수 항목 *여부: 아니요  
+_유형_: CloudWatchLoggingOptions  
+_업데이트 필요 사항_: 중단 없음
+
+`HECAcknowledgmentTimeoutInSeconds`  
+Kinesis Data Firehose가 데이터를 전송한 후 Splunk로부터 승인을 받기 위해 대기하는 시간입니다. 제한 시간이 끝나면 Kinesis Data Firehose는 재시도 설정에 따라 데이터를 다시 전송하려고 시도하거나 오류로 간주합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_최소_: `180`  
+_최대_: `600`  
+_업데이트 필요 사항_: 중단 없음
+
+`HECEndpoint`  
+Kinesis Data Firehose가 데이터를 전송하는 HEC(HTTP Event Collector) 엔드포인트입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `0`  
+_최대_: `2048`  
+_패턴_: `.*`  
+_업데이트 필요 사항_: 중단 없음
+
+`HECEndpointType`  
+이 유형은 `Raw` 또는 일 수 있습니다`Event`.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_허용되는 값_: `Event | Raw`  
+_업데이트 필요 사항_: 중단 없음
+
+`HECToken`  
+새 HEC 끝점을 만들 때 Splunk 클러스터에서 가져오는 GUID입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `0`  
+_최대_: `2048`  
+_패턴_: `.*`  
+_업데이트 필요 사항_: 중단 없음
+
+`ProcessingConfiguration`  
+데이터 처리 구성입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: ProcessingConfiguration  
+_업데이트 필요 사항_: 중단 없음
+
+`RetryOptions`  
+Kinesis Data Firehose가 Splunk에 데이터를 전달할 수 없거나 Splunk로부터 수신 승인을 받지 못한 경우의 재시도 동작입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: SplunkRetryOptions  
+_업데이트 필요 사항_: 중단 없음
+
+`S3BackupMode`  
+Amazon S3로 문서를 전송하는 방법을 정의합니다. 로 설정하면 `FailedEventsOnly`Kinesis Data Firehose가 구성된 Amazon S3 대상에 인덱싱할 수 없는 모든 데이터를 씁니다. 로 설정하면 `AllEvents`Kinesis Data Firehose가 모든 수신 레코드를 Amazon S3로 전송하고 실패한 문서도 Amazon S3에 씁니다. 기본값은 `FailedEventsOnly`입니다.  
+이 백업 모드를 에서 로 업데이트할 수 있습니다 `FailedEventsOnly` `AllEvents`. 에서 로 업데이트할 수 없습니다 `AllEvents` `FailedEventsOnly`.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `AllEvents | FailedEventsOnly`  
+_업데이트 필요 사항_: 중단 없음
+
+`S3Configuration`  
+백업 Amazon S3 위치에 대한 구성입니다.  
+_필수 항목 여부_: 예  
+_유형_: S3DestinationConfiguration  
+_업데이트 필요 사항_: 중단 없음
+
+## 참고 항목
+
+- *Amazon Kinesis Data Firehose API 참조 *의 SplunkDestinationConfiguration.

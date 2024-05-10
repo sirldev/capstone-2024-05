@@ -1,0 +1,44 @@
+# AWS::ApiGatewayV2::ApiGatewayManagedOverrides IntegrationOverrides
+
+이 `IntegrationOverrides` 속성은 API Gateway 관리형 통합에 대한 통합 설정을 재정의합니다. 이 속성을 제거하면 API Gateway가 기본값을 복원합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Description" : String,
+  "IntegrationMethod" : String,
+  "PayloadFormatVersion" : String,
+  "TimeoutInMillis" : Integer
+}
+```
+
+## 속성
+
+`Description`  
+통합에 대한 설명입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`IntegrationMethod`  
+통합의 HTTP 메서드 유형을 지정합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`PayloadFormatVersion`  
+통합으로 전송되는 페이로드의 형식을 지정합니다. HTTP API에 필요합니다. HTTP API의 경우 Lambda 프록시 통합에 대해 지원되는 값은 `1.0` 및 `2.0`입니다. 다른 모든 통합의 경우 `1.0` 유일하게 지원되는 값입니다. 자세한 내용은 HTTP API에 대한 AWS Lambda 프록시 통합 작업을 참조하세요.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`TimeoutInMillis`  
+WebSocket API의 경우 50-29,000밀리초, HTTP API의 경우 50-30,000밀리초 사이의 사용자 지정 제한 시간입니다. 기본 제한 시간은 WebSocket API의 경우 29초, HTTP API의 경우 30초입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음

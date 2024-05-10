@@ -1,0 +1,216 @@
+# AWS::EC2::볼륨
+
+Amazon Elastic Block Store(Amazon EBS) 볼륨을 지정합니다. AWS::EC2::VolumeAttachment를 사용하여 동일한 가용 영역의 인스턴스에 볼륨을 연결할 수 있습니다.
+
+AWS CloudFormation을 사용하여 , `Iops`, 또는 `Size` 를 수정하는 Amazon EBS 볼륨을 업데이트하는 경우 `VolumeType`다른 작업이 발생하기 전에 휴지 기간이 있습니다. 이로 인해 스택이 `UPDATE_IN_PROGRESS` `UPDATE_ROLLBACK_IN_PROGRESS` 오랜 기간 동안 또는 오랜 기간 동안 있다고 보고할 수 있습니다.
+
+Amazon EBS는 Amazon EBS 볼륨 크기 축소를 지원하지 않습니다. AWS CloudFormation은 롤백 시 Amazon EBS 볼륨을 더 작은 크기로 수정하려고 시도하지 않습니다.
+
+Amazon EBS에 휴지 기간이 발생할 수 있는 몇 가지 일반적인 시나리오는 다음과 같습니다.
+
+- Amazon EBS 볼륨을 성공적으로 업데이트하고 업데이트가 성공합니다. 휴지 기간 내에 다른 업데이트를 시도하면 해당 업데이트에 휴지 기간이 적용됩니다.
+- Amazon EBS 볼륨을 성공적으로 업데이트하고 업데이트는 성공하지만 호출의 다른 변경 사항은 `update-stack` 실패합니다. 롤백에는 휴지 기간이 적용됩니다.
+
+휴지 기간에 대한 자세한 내용은 볼륨 수정 시 요구 사항을 참조하세요.
+
+**DeletionPolicy 특성**
+
+스택이 삭제될 때 AWS CloudFormation에서 볼륨을 처리하는 방법을 제어하려면 볼륨에 대한 삭제 정책을 설정합니다. 볼륨을 유지하거나, 볼륨을 삭제하거나, 볼륨의 스냅샷을 생성하도록 선택할 수 있습니다. 자세한 내용은 DeletionPolicy 속성을 참조하세요.
+
+**메모**  
+스냅샷을 생성하는 삭제 정책을 설정하면 볼륨의 모든 태그가 스냅샷에 포함됩니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::EC2::Volume",
+  "Properties" : {
+      "AutoEnableIO" : Boolean,
+      "AvailabilityZone" : String,
+      "Encrypted" : Boolean,
+      "Iops" : Integer,
+      "KmsKeyId" : String,
+      "MultiAttachEnabled" : Boolean,
+      "OutpostArn" : String,
+      "Size" : Integer,
+      "SnapshotId" : String,
+      "Tags" : [Tag, ... ],
+      "Throughput" : Integer,
+      "VolumeType" : String
+    }
+}
+```
+
+## 속성
+
+`AutoEnableIO`  
+볼륨이 I/O 작업에 대해 자동으로 활성화되는지 여부를 나타냅니다. 기본적으로 Amazon EBS는 볼륨의 데이터가 잠재적으로 일치하지 않는다고 판단될 때 연결된 EC2 인스턴스의 볼륨에 대한 I/O를 비활성화합니다. 볼륨의 일관성이 문제가 되지 않고 볼륨이 손상된 경우 즉시 사용할 수 있도록 하려면 I/O를 자동으로 사용하도록 볼륨을 구성할 수 있습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`AvailabilityZone`  
+볼륨을 생성할 가용 영역의 ID입니다. 예를 들어, `us-east-1a`.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 업데이트가 지원되지 않습니다.
+
+`Encrypted`  
+볼륨을 암호화해야 하는지 여부를 나타냅니다. 암호화 상태를 로 설정하면 `true` 볼륨 오리진(새 또는 스냅샷에서), 시작 암호화 상태, 소유권 및 기본적으로 암호화가 활성화되는지 여부에 따라 달라집니다. 자세한 내용은 *Amazon Elastic Compute Cloud 사용 설명서*의 기본적으로 암호화를 참조하세요.  
+암호화된 Amazon EBS 볼륨은 Amazon EBS 암호화를 지원하는 인스턴스에 연결되어야 합니다. 자세한 내용은 지원되는 인스턴스 유형을 참조하세요.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 업데이트가 지원되지 않습니다.
+
+`Iops`  
+IOPS(초당 I/O 작업 수)입니다. `gp3`, `io1`및 `io2` volumes의 경우 볼륨에 대해 프로비저닝된 IOPS 수를 나타냅니다. `gp2` 볼륨의 경우 이는 볼륨의 기준 성능과 볼륨이 버스팅을 위해 I/O 크레딧을 누적하는 속도를 나타냅니다.  
+다음은 각 볼륨 유형에 대해 지원되는 값입니다.
+
+- `gp3`: 3,000-16,000 IOPS
+- `io1`: 100-64,000 초당 이력
+- `io2`: 100-64,000 초당 이력
+  `io1` `io2` 볼륨은 Nitro 시스템에 구축된 인스턴스에서만 최대 64,000 IOPS를 지원합니다. 다른 인스턴스 패밀리는 최대 32,000 IOPS의 성능을 지원합니다.  
+  이 매개변수는 `io1` 및 `io2` 볼륨에 필요합니다. 볼륨의 기본값은 `gp3` 3,000 IOPS입니다. 이 매개변수는 `gp2`, `st1`, `sc1`또는 `standard` 볼륨에 대해 지원되지 않습니다.  
+  _필수_: 조건부  
+  _유형_: Integer  
+  _업데이트 필요 사항_: 중단 없음
+
+`KmsKeyId`  
+Amazon EBS 암호화에 사용할 AWS KMS 키의 식별자입니다. 지정된 경우 `KmsKeyId` 암호화된 상태는 `true`여야 합니다.  
+이 속성을 생략하고 계정이 기본적으로 암호화에 대해 사용하도록 설정되어 있거나 **Encrypted**가 로 설정된 `true` 경우 볼륨은 계정에 지정된 기본 키를 사용하여 암호화됩니다. 계정에 기본 키가 없는 경우 볼륨은 AWS 관리형 키를 사용하여 암호화됩니다.  
+또는 다른 키를 지정하려는 경우 다음 중 하나를 지정할 수 있습니다.
+
+- 키 ID입니다. 예: 1234abcd-12ab-34cd-56ef-1234567890ab.
+- 키 별칭입니다. 키의 별칭을 지정하고 접두사를 붙입니다 `alias/`. 예를 들어, 별칭이 있는 키의 경우 `my_cmk`를 사용합니다 `alias/my_cmk`. 또는 AWS 관리형 키를 지정하려면 `alias/aws/ebs`를 사용합니다.
+- 키 ARN. 예: arn:aws:kms:us-east-1:012345678910:key/1234abcd-12ab-34cd-56ef-1234567890ab.
+- 별칭 ARN. 예: arn:aws:kms:us-east-1:012345678910:alias/ExampleAlias.
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열  
+  _업데이트 필요 사항_: 업데이트가 지원되지 않습니다.
+
+`MultiAttachEnabled`  
+Amazon EBS 다중 연결이 활성화되었는지 여부를 나타냅니다.  
+AWS CloudFormation에서는 현재 다중 연결을 활성화하도록 단일 연결 볼륨을 업데이트하거나, 다중 연결을 활성화한 볼륨을 단일 연결로 업데이트하거나, 다중 연결이 활성화된 볼륨의 크기 또는 초당 I/O 작업 수(IOPS)를 업데이트하는 것을 지원하지 않습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`OutpostArn`  
+Outposts의 Amazon 리소스 이름(ARN)입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Size` 볼륨의 크기(GiB)입니다. 스냅샷 ID 또는 볼륨 크기를 지정해야 합니다. 스냅샷을 지정하는 경우 기본값은 스냅샷 크기입니다. 스냅샷 크기보다 크거나 같은 볼륨 크기를 지정할 수 있습니다.  
+다음은 각 볼륨 유형에 대해 지원되는 볼륨 크기입니다.
+
+- `gp2` 및 `gp3`: 1-16,384
+- `io1` 및 `io2`: 4-16,384
+- `st1` 및 `sc1`: 125-16,384
+- `standard`: 1-1,024
+  _필수_: 조건부  
+  _유형_: Integer  
+  _업데이트 필요 사항_: 중단 없음
+
+`SnapshotId`  
+볼륨을 생성할 스냅샷입니다. 스냅샷 ID 또는 볼륨 크기를 지정해야 합니다.  
+_필수_: 조건부  
+_유형_: 문자열  
+_업데이트 필요 사항_: 업데이트가 지원되지 않습니다.
+
+`Tags`  
+생성하는 동안 볼륨에 적용할 태그입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`Throughput`  
+볼륨을 프로비저닝할 처리량으로, 최대 1,000MiB/s입니다.  
+이 매개변수는 볼륨에만 유효 `gp3` 합니다. 기본값은 125입니다.  
+유효 범위: 최소값 125. 최대값은 1000입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`VolumeType` 볼륨 유형입니다. 이 매개 변수는 다음 값 중 하나일 수 있습니다.
+
+- 범용 SSD: `gp2` | `gp3`
+- 프로비저닝된 IOPS SSD: `io1` | `io2`
+- 처리량 최적화 HDD: `st1`
+- 콜드 HDD: `sc1`
+- 자석: `standard`
+  자세한 내용은 _Amazon Elastic Compute Cloud 사용 설명서의 Amazon EBS 볼륨 유형을 참조하세요_.  
+  기본값: `gp2`  
+  _필수_: 아니요  
+  _유형_: 문자열  
+  _허용되는 값_: `gp2 | gp3 | io1 | io2 | sc1 | st1 | standard`  
+  _업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`리소스 이름이 반환됩니다. 예를 들면 다음과 같습니다 `vol-5cb85026`.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`VolumeId` 볼륨의 ID입니다.
+
+## 예제
+
+### DeletionPolicy를 사용하여 암호화된 Amazon EBS 볼륨
+
+다음 예제에서는 스택이 삭제될 `gp2` 때 볼륨의 스냅샷을 생성하는 DeletionPolicy 속성을 사용하여 암호화된 볼륨을 생성합니다.
+
+#### JSON (영문)
+
+```
+"NewVolume" : {
+   "Type" : "AWS::EC2::Volume",
+   "Properties" : {
+      "Size" : "100",
+      "Encrypted" : "true",
+      "AvailabilityZone" : { "Fn::GetAtt" : [ "Ec2Instance", "AvailabilityZone" ] },
+      "Tags" : [ {
+         "Key" : "MyTag",
+         "Value" : "TagValue"
+      } ]
+   },
+   "DeletionPolicy" : "Snapshot"
+}
+```
+
+### 프로비저닝된 IOPS SSD io1 볼륨
+
+다음 예제에서는 프로비저닝된 IOPS`io1`를 사용하여 100GiB를 생성합니다 `100` .
+
+#### JSON (영문)
+
+```
+"NewVolume" : {
+   "Type" : "AWS::EC2::Volume",
+   "Properties" : {
+      "Size" : "100",
+      "VolumeType" : "io1",
+      "Iops" : "100",
+      "AvailabilityZone" : { "Fn::GetAtt" : [ "EC2Instance", "AvailabilityZone" ] }
+   }
+}
+```
+
+## 참고 항목
+
+- Amazon EC2 API 참조*의 CreateVolume *

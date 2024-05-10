@@ -1,0 +1,53 @@
+# AWS::ECS::서비스 로드 밸런서
+
+이 특성은 `LoadBalancer` 서비스와 함께 사용되는 로드 밸런서에 대한 세부사항을 지정합니다.
+
+서비스가 배포 컨트롤러를 사용하는 경우 `CODE_DEPLOY` 서비스는 Application Load Balancer 또는 Network Load Balancer를 사용해야 합니다. AWS CodeDeploy 배포 그룹을 만들 때 두 개의 대상 그룹(라고 함)을 지정합니다`targetGroupPair`. 각 대상 그룹은 배포의 개별 작업 세트에 바인딩됩니다. 또한 부하 분산 장치에는 최대 2개의 리스너, 즉 프로덕션 트래픽에 대한 필수 리스너와 프로덕션 트래픽을 라우팅하기 전에 서비스의 새 버전을 테스트할 수 있는 선택적 리스너가 있을 수 있습니다.
+
+네트워크 모드를 사용하는 태스크가 있는 서비스 `awsvpc` (예: Fargate 시작 유형의 태스크)는 Application Load Balancer 및 Network Load Balancer만 지원합니다. Classic Load Balancer는 지원되지 않습니다. 또한 이러한 서비스에 대한 대상 그룹을 생성할 때 `ip` 대상 유형으로 선택해야 합니다`instance`. 네트워크 모드를 사용하는 태스크 `awsvpc` 는 Amazon EC2 인스턴스가 아닌 탄력적 네트워크 인터페이스와 연결됩니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ContainerName" : String,
+  "ContainerPort" : Integer,
+  "LoadBalancerName" : String,
+  "TargetGroupArn" : String
+}
+```
+
+## 속성
+
+`ContainerName`  
+부하 분산 장치와 연결할 컨테이너의 이름(컨테이너 정의에 표시되는 대로)입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`ContainerPort`  
+부하 분산 장치와 연결할 컨테이너의 포트입니다. 이 포트 `containerPort` 는 서비스의 작업이 사용 중인 작업 정의의 a와 일치해야 합니다. EC2 시작 유형을 사용하는 태스크의 경우, 태스크가 시작되는 컨테이너 인스턴스는 포트 매핑에서 수신 트래픽을 허용해야 합니다 `hostPort` .  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`LoadBalancerName`  
+Amazon ECS 서비스 또는 작업 세트와 연결할 로드 밸런서의 이름입니다.  
+Application Load Balancer 또는 Network Load Balancer를 사용하는 경우 로드 밸런서 이름 파라미터를 생략해야 합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`TargetGroupArn`  
+서비스 또는 작업 세트와 연결된 Elastic Load Balancing 대상 그룹 또는 그룹의 전체 Amazon 리소스 이름(ARN)입니다.  
+대상 그룹 ARN은 Application Load Balancer 또는 Network Load Balancer를 사용하는 경우에만 지정됩니다.  
+배포 컨트롤러를 사용하는 서비스의 경우 `ECS` 하나 이상의 대상 그룹을 지정할 수 있습니다. 자세한 내용은 _Amazon Elastic Container Service 개발자 안내서의 서비스에 여러 대상 그룹 등록을 참조하세요_.  
+배포 컨트롤러를 사용하는 서비스의 경우 `CODE_DEPLOY` 부하 분산 장치에 대해 두 개의 대상 그룹을 정의해야 합니다. 자세한 내용은 *Amazon Elastic Container Service 개발자 안내서*의 CodeDeploy를 사용한 블루/그린 배포를 참조하세요.  
+서비스의 작업 정의가 `awsvpc` 네트워크 모드를 사용하는 경우 `ip` 대상 유형으로 `instance` 선택해야 합니다. 네트워크 모드를 사용하는 작업은 `awsvpc` Amazon EC2 인스턴스가 아닌 탄력적 네트워크 인터페이스와 연결되기 때문에 대상 그룹을 생성할 때 이 작업을 수행합니다. 이 네트워크 모드는 Fargate 시작 유형에 필요합니다.
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음

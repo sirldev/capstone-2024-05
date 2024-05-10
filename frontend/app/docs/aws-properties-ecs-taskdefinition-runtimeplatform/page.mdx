@@ -1,0 +1,35 @@
+# AWS::ECS::태스크 정의 런타임 플랫폼
+
+Amazon ECS 서비스 또는 태스크의 플랫폼에 대한 정보입니다.
+
+에 대한 자세한 내용은 `RuntimePlatform`Amazon Elastic Container Service 개발자 안내서*의 RuntimePlatform을 참조하십시오*.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "CpuArchitecture" : String,
+  "OperatingSystemFamily" : String
+}
+```
+
+## 속성
+
+`CpuArchitecture`  
+CPU 아키텍처입니다.  
+값을 로 설정하여 ARM 기반 플랫폼에서 Linux 작업을 실행할 수 있습니다`ARM64`. 이 옵션은 Fargate의 Linux Amazon EC2 인스턴스 또는 Linux 컨테이너에서 실행되는 태스크에 사용할 수 있습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `ARM64 | X86_64`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`OperatingSystemFamily`  
+운영 체제입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `LINUX | WINDOWS_SERVER_2004_CORE | WINDOWS_SERVER_2016_FULL | WINDOWS_SERVER_2019_CORE | WINDOWS_SERVER_2019_FULL | WINDOWS_SERVER_2022_CORE | WINDOWS_SERVER_2022_FULL | WINDOWS_SERVER_20H2_CORE`  
+_업데이트 필요 사항_: 바꿔 놓음

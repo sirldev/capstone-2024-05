@@ -1,0 +1,81 @@
+# AWS::EC2::VPCGatewayAttachment
+
+인터넷 게이트웨이 또는 가상 프라이빗 게이트웨이를 VPC에 연결하여 인터넷과 VPC 간의 연결을 활성화합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::EC2::VPCGatewayAttachment",
+  "Properties" : {
+      "InternetGatewayId" : String,
+      "VpcId" : String,
+      "VpnGatewayId" : String
+    }
+}
+```
+
+## 속성
+
+`InternetGatewayId`  
+인터넷 게이트웨이의 ID입니다.  
+둘 중 하나를 지정해야 하지만 `InternetGatewayId` `VpnGatewayId`둘 다 지정해서는 안 됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`VpcId`  
+VPC의 ID입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`VpnGatewayId`  
+가상 프라이빗 게이트웨이의 ID입니다.  
+둘 중 하나를 지정해야 하지만 `InternetGatewayId` `VpnGatewayId`둘 다 지정해서는 안 됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`VPC 게이트웨이 연결의 ID를 반환합니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+## 예제
+
+### VPN 게이트웨이 연결
+
+인터넷 게이트웨이와 VPN 게이트웨이를 모두 VPC에 연결하려면 두 개의 별도 AWS::EC2::VPCGatewayAttachment 리소스를 지정해야 합니다.
+
+#### JSON (영문)
+
+```
+"AttachGateway" : {
+   "Type" : "AWS::EC2::VPCGatewayAttachment",
+   "Properties" : {
+      "VpcId" : { "Ref" : "VPC" },
+      "InternetGatewayId" : { "Ref" : "myInternetGateway" }
+    }
+},
+
+"AttachVpnGateway" : {
+   "Type" : "AWS::EC2::VPCGatewayAttachment",
+   "Properties" : {
+      "VpcId" : { "Ref" : "VPC" },
+      "VpnGatewayId" : { "Ref" : "myVPNGateway" }
+   }
+}
+```
+
+## 참고 항목
+
+- Amazon EC2 API 참조*의 AttachVpnGateway *
+- Amazon VPC 사용 설명서*의 인터넷 게이트웨이 *

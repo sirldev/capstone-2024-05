@@ -1,0 +1,46 @@
+# AWS::CodeDeploy::D eploymentGroup LoadBalancerInfo
+
+`LoadBalancerInfo` 속성 유형은 AWS CodeDeploy 배포 그룹에 사용되는 로드 밸런서 또는 대상 그룹에 대한 정보를 지정합니다. 자세한 내용은 AWS CodeDeploy 사용 설명서의 CodeDeploy와 Elastic Load Balancing 통합을 참조하십시오\*\*.
+
+AWS CloudFormation에서 에 지정된 속성을 사용하려면 `LoadBalancerInfo` `DeploymentStyle.DeploymentOption` 속성을 로 설정해야 합니다`WITH_TRAFFIC_CONTROL`. `DeploymentStyle.DeploymentOption` 로 설정되지 않은 `WITH_TRAFFIC_CONTROL` 경우 AWS CloudFormation에서는 에 지정된 모든 설정을 무시합니다`LoadBalancerInfo`.
+
+**메모**  
+AWS CloudFormation은 AWS Lambda 컴퓨팅 플랫폼에서만 블루/그린 배포를 지원합니다.
+
+`LoadBalancerInfo` 은 DeploymentGroup 리소스의 속성입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ElbInfoList" : [ ELBInfo, ... ],
+  "TargetGroupInfoList" : [ TargetGroupInfo, ... ],
+  "TargetGroupPairInfoList" : [ TargetGroupPairInfo, ... ]
+}
+```
+
+## 속성
+
+`ElbInfoList`  
+배포에서 부하 분산에 사용할 부하 분산 장치에 대한 정보가 포함된 배열입니다. Elastic Load Balancing에서 로드 밸런서는 Classic Load Balancer와 함께 사용됩니다.  
+ 어레이에 둘 이상의 부하 분산 장치를 추가하는 것은 지원되지 않습니다.
+*필수 항목 *여부: 아니요  
+_유형_: ELBInfo 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`TargetGroupInfoList`  
+배포에서 부하 분산에 사용할 대상 그룹에 대한 정보가 포함된 배열입니다. Elastic Load Balancing에서 대상 그룹은 Application Load Balancer와 함께 사용됩니다.  
+ 어레이에 둘 이상의 대상 그룹을 추가하는 것은 지원되지 않습니다.
+_필수_: 조건부  
+_형식_: TargetGroupInfo 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`TargetGroupPairInfoList`  
+속성 설명을 사용할 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: TargetGroupPairInfo 목록  
+_업데이트 필요 사항_: 중단 없음

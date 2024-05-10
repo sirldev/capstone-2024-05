@@ -1,0 +1,33 @@
+# AWS::ECS::태스크 정의 커널기능
+
+이 특성은 `KernelCapabilities` Docker에서 제공하는 기본 구성에 추가되거나 삭제되는 컨테이너에 대한 Linux 기능을 지정합니다. 기본 기능 및 기본이 아닌 사용 가능한 기능에 대한 자세한 내용은 Docker 실행 참조의 런타임 권한 및 Linux 기능을 참조하세요\*\*. 이러한 Linux 기능에 대한 자세한 내용은 capabilities(7) Linux 매뉴얼 페이지를 참조하십시오.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Add" : [ String, ... ],
+  "Drop" : [ String, ... ]
+}
+```
+
+## 속성
+
+`Add`  
+Docker에서 제공하는 기본 구성에 추가된 컨테이너에 대한 Linux 기능입니다. 이 파라미터는 `CapAdd` Docker Remote API의 컨테이너 만들기 섹션과 `--cap-add` docker run 옵션에 매핑됩니다.  
+AWS Fargate에서 시작된 태스크는 커널 기능 추가만 지원합니다 `SYS_PTRACE` .
+유효한 값: `"ALL" | "AUDIT_CONTROL" | "AUDIT_WRITE" | "BLOCK_SUSPEND" | "CHOWN" | "DAC_OVERRIDE" | "DAC_READ_SEARCH" | "FOWNER" | "FSETID" | "IPC_LOCK" | "IPC_OWNER" | "KILL" | "LEASE" | "LINUX_IMMUTABLE" | "MAC_ADMIN" | "MAC_OVERRIDE" | "MKNOD" | "NET_ADMIN" | "NET_BIND_SERVICE" | "NET_BROADCAST" | "NET_RAW" | "SETFCAP" | "SETGID" | "SETPCAP" | "SETUID" | "SYS_ADMIN" | "SYS_BOOT" | "SYS_CHROOT" | "SYS_MODULE" | "SYS_NICE" | "SYS_PACCT" | "SYS_PTRACE" | "SYS_RAWIO" | "SYS_RESOURCE" | "SYS_TIME" | "SYS_TTY_CONFIG" | "SYSLOG" | "WAKE_ALARM"`  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Drop`  
+Docker에서 제공하는 기본 구성에서 제거된 컨테이너에 대한 Linux 기능입니다. 이 파라미터는 `CapDrop` Docker Remote API의 컨테이너 만들기 섹션과 `--cap-drop` docker run 옵션에 매핑됩니다.  
+유효한 값: `"ALL" | "AUDIT_CONTROL" | "AUDIT_WRITE" | "BLOCK_SUSPEND" | "CHOWN" | "DAC_OVERRIDE" | "DAC_READ_SEARCH" | "FOWNER" | "FSETID" | "IPC_LOCK" | "IPC_OWNER" | "KILL" | "LEASE" | "LINUX_IMMUTABLE" | "MAC_ADMIN" | "MAC_OVERRIDE" | "MKNOD" | "NET_ADMIN" | "NET_BIND_SERVICE" | "NET_BROADCAST" | "NET_RAW" | "SETFCAP" | "SETGID" | "SETPCAP" | "SETUID" | "SYS_ADMIN" | "SYS_BOOT" | "SYS_CHROOT" | "SYS_MODULE" | "SYS_NICE" | "SYS_PACCT" | "SYS_PTRACE" | "SYS_RAWIO" | "SYS_RESOURCE" | "SYS_TIME" | "SYS_TTY_CONFIG" | "SYSLOG" | "WAKE_ALARM"`  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 바꿔 놓음

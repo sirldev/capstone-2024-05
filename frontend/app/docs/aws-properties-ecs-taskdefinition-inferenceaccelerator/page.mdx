@@ -1,0 +1,30 @@
+# AWS::ECS::태스크 정의 추론액셀러레이터
+
+Elastic Inference 액셀러레이터에 대한 세부 정보입니다. 자세한 내용은 Amazon Elastic Container Service 개발자 안내서의 Amazon ECS에서 Amazon Elastic Inference 작업을 참조하세요\*\*.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "DeviceName" : String,
+  "DeviceType" : String
+}
+```
+
+## 속성
+
+`DeviceName`  
+Elastic Inference 액셀러레이터 디바이스 이름입니다. `deviceName` 또한 컨테이너 정의에서 ResourceRequirement로 참조되어야 합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`DeviceType`  
+사용할 Elastic Inference 액셀러레이터 유형입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음

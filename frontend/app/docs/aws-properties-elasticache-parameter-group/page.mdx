@@ -1,0 +1,92 @@
+# AWS::ElastiCache::P arameterGroup
+
+이 `AWS::ElastiCache::ParameterGroup` 유형은 새 캐시 파라미터 그룹을 생성합니다. 캐시 파라미터 그룹은 캐시 클러스터에 대한 파라미터를 제어합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::ElastiCache::ParameterGroup",
+  "Properties" : {
+      "CacheParameterGroupFamily" : String,
+      "Description" : String,
+      "Properties" : {Key: Value, ...},
+      "Tags" : [Tag, ... ]
+    }
+}
+```
+
+## 속성
+
+`CacheParameterGroupFamily`  
+이 캐시 파라미터 그룹과 호환되는 캐시 파라미터 그룹 패밀리의 이름입니다.  
+유효한 값은 다음과 같습니다. `memcached1.4` `memcached1.5` | `memcached1.6` | `redis2.6` | `redis2.8` | `redis3.2` | `redis4.0` | `redis5.0` | `redis6.x` | `redis7`  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Description`  
+이 캐시 파라미터 그룹에 대한 설명입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Properties` 매개 변수 이름/값 쌍의 쉼표로 구분된 목록입니다.  
+예를 들어:
+
+```
+"Properties" : {
+   "cas_disabled" : "1",
+   "chunk_size_growth_factor" : "1.02"
+}
+```
+
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 맵  
+_업데이트 필요 사항_: 중단 없음
+
+`Tags`  
+ElastiCache 파라미터 그룹에 추가할 수 있는 태그입니다. 태그는 키/값 쌍으로 구성됩니다. 태그를 사용하여 모든 파라미터 그룹을 분류하고 추적할 수 있습니다. null 값이 있는 태그가 허용됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID가 `Ref` 내장 함수 에 제공되면 `Ref` 리소스 이름을 반환합니다.
+
+함수 사용에 대한 자세한 `Ref` 내용은 Ref를 참조하세요.
+
+## 예제
+
+###
+
+#### JSON (영문)
+
+```
+{
+    "MyParameterGroup": {
+        "Type": "AWS::ElastiCache::ParameterGroup",
+        "Properties": {
+            "Description": "MyNewParameterGroup",
+            "CacheParameterGroupFamily": "memcached1.4",
+            "Properties": {
+                "cas_disabled": "1",
+                "chunk_size_growth_factor": "1.02"
+            }
+        }
+    }
+}
+```
+
+## 참고 항목
+
+- - Amazon ElastiCache API 참조 안내서\*의 CreateCacheParameterGroup
+- - Amazon ElastiCache API 참조 안내서\*의 ModifyCacheParameterGroup
+- Amazon CloudFormation 스택 업데이트

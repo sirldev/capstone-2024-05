@@ -1,0 +1,25 @@
+# AWS::EC2::IPAM IpamOperatingRegion
+
+IPAM의 운영 지역입니다. 운영 리전은 IPAM이 IP 주소 CIDR을 관리할 수 있는 AWS 리전입니다. IPAM은 운영 리전으로 선택한 AWS 리전의 리소스만 검색하고 모니터링합니다.
+
+운영 리전에 대한 자세한 내용은 _Amazon VPC IPAM 사용 설명서의 IPAM 생성을 참조하세요_.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "RegionName" : String
+}
+```
+
+## 속성
+
+`RegionName`  
+운영 리전의 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음

@@ -1,0 +1,52 @@
+# AWS::EC2::VerifiedAccessInstance VerifiedAccessLogs
+
+Verified Access 로그에 대한 옵션을 설명합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "CloudWatchLogs" : CloudWatchLogs,
+  "IncludeTrustContext" : Boolean,
+  "KinesisDataFirehose" : KinesisDataFirehose,
+  "LogVersion" : String,
+  "S3" : S3
+}
+```
+
+## 속성
+
+`CloudWatchLogs`  
+CloudWatch Logs 로깅 대상입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: CloudWatchLogs  
+_업데이트 필요 사항_: 중단 없음
+
+`IncludeTrustContext`  
+ 신뢰 공급자가 보낸 신뢰 데이터를 로그에 포함합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`KinesisDataFirehose`  
+Kinesis 로깅 대상.  
+*필수 항목 *여부: 아니요  
+_유형_: KinesisDataFirehose  
+_업데이트 필요 사항_: 중단 없음
+
+`LogVersion`  
+ 사용할 로깅 버전입니다.  
+유효한 값: `ocsf-0.1` | `ocsf-1.0.0-rc.2`  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`S3`  
+Amazon S3 로깅 옵션.  
+*필수 항목 *여부: 아니요  
+_유형_: S3  
+_업데이트 필요 사항_: 중단 없음

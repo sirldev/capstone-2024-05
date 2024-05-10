@@ -1,0 +1,32 @@
+# AWS::ElasticBeanstalk::ApplicationVersion 소스 번들
+
+이 `SourceBundle` 속성은 AWS::ElasticBeanstalk::ApplicationVersion 리소스의 임베디드 속성입니다. AWS Elastic Beanstalk 애플리케이션 버전에 대한 소스 번들의 Amazon S3 위치를 지정합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "S3Bucket" : String,
+  "S3Key" : String
+}
+```
+
+## 속성
+
+`S3Bucket`  
+데이터가 있는 Amazon S3 버킷입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최대_: `255`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`S3Key`  
+데이터가 있는 Amazon S3 키입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최대_: `1024`  
+_업데이트 필요 사항_: 바꿔 놓음

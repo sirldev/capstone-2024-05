@@ -1,0 +1,84 @@
+# AWS::EC2::NetworkInterfaceAttachment
+
+탄력적 네트워크 인터페이스(ENI)를 Amazon EC2 인스턴스에 연결합니다. 이 리소스 유형을 사용하여 중단 없이 인스턴스에 추가 네트워크 인터페이스를 연결할 수 있습니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::EC2::NetworkInterfaceAttachment",
+  "Properties" : {
+      "DeleteOnTermination" : Boolean,
+      "DeviceIndex" : String,
+      "InstanceId" : String,
+      "NetworkInterfaceId" : String
+    }
+}
+```
+
+## 속성
+
+`DeleteOnTermination`  
+인스턴스가 종료될 때 네트워크 인터페이스를 삭제할지 여부입니다. 기본적으로 이 값은 로 설정됩니다`true`.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`DeviceIndex`  
+연결 순서에서 네트워크 인터페이스의 위치입니다. 예를 들어 첫 번째로 연결된 네트워크 인터페이스의 a는 `DeviceIndex` 0입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`InstanceId`  
+ENI를 연결할 인스턴스의 ID입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`NetworkInterfaceId`  
+첨부할 ENI의 ID입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`리소스 이름이 반환됩니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`AttachmentId` 네트워크 인터페이스 연결의 ID입니다.
+
+## 예제
+
+### 네트워크 인터페이스 연결
+
+다음 예제는 에 연결합니다 `MyNetworkInterface` `MyInstance`.
+
+#### JSON (영문)
+
+```
+"NetworkInterfaceAttachment" : {
+   "Type" : "AWS::EC2::NetworkInterfaceAttachment",
+      "Properties" : {
+         "InstanceId" : {"Ref" : "MyInstance"},
+         "NetworkInterfaceId" : {"Ref" : "MyNetworkInterface"},
+         "DeviceIndex" : "1"
+      }
+}
+```

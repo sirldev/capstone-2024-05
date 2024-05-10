@@ -1,0 +1,36 @@
+# AWS::CodeDeploy::D eploymentConfig MinimumHealthyHosts
+
+`MinimumHealthyHosts` 는 AWS CodeDeploy 배포 중에 정상 상태를 유지해야 하는 인스턴스 수를 정의하는 DeploymentConfig 리소스의 속성입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : String,
+  "Value" : Integer
+}
+```
+
+## 속성
+
+`Type` 최소 정상 인스턴스 유형:
+
+- HOST_COUNT: 정상 인스턴스의 최소 수(절대값)입니다.
+- FLEET_PERCENT: 배포의 총 인스턴스 수에 대한 백분율로 나타낸 정상 인스턴스의 최소 수입니다.
+  9개 인스턴스의 예에서 6개 HOST_COUNT 지정된 경우 한 번에 최대 3개의 인스턴스에 배포합니다. 6개 이상의 인스턴스가 성공적으로 배포되면 배포가 성공한 것입니다. 그렇지 않으면 배포가 실패합니다. FLEET_PERCENT 40으로 지정된 경우 한 번에 최대 5개의 인스턴스에 배포합니다. 4개 이상의 인스턴스가 성공적으로 배포되면 배포가 성공한 것입니다. 그렇지 않으면 배포가 실패합니다.  
+  에 대한 호출에서 `GetDeploymentConfig`CodeDeployDefault.OneAtATime은 최소 정상 인스턴스 유형 MOST_CONCURRENCY과 값 1을 반환합니다. 즉, 한 번에 하나의 인스턴스에만 배포해야 합니다. (유형을 MOST_CONCURRENCY로 설정할 수 없으며 HOST_COUNT 또는 FLEET_PERCENT로만 설정할 수 있습니다.) 또한 CodeDeployDefault.OneAtATime을 사용하면 배포 중에 하나를 제외한 모든 인스턴스가 정상 상태로 유지되도록 합니다. 이렇게 하면 새 배포를 위해 한 번에 하나의 인스턴스를 오프라인으로 전환할 수 있지만 마지막 인스턴스에 대한 배포가 실패하더라도 전체 배포는 여전히 성공합니다.
+  자세한 내용은 _AWS CodeDeploy 사용 설명서의 AWS CodeDeploy_ 인스턴스 상태를 참조하십시오.  
+  _필수 항목 여부_: 예  
+  _유형_: 문자열  
+  _허용되는 값_: `FLEET_PERCENT | HOST_COUNT`  
+  _업데이트 필요 사항_: 바꿔 놓음
+
+`Value`  
+최소 정상 인스턴스 값입니다.  
+_필수 항목 여부_: 예  
+_유형_: Integer  
+_업데이트 필요 사항_: 바꿔 놓음

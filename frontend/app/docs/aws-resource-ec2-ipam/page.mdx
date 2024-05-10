@@ -1,0 +1,85 @@
+# AWS::EC2::IPAM
+
+IPAM은 AWS 리전 및 AWS 조직 전체의 계정에서 IP 주소 할당, 추적, 문제 해결 및 감사를 포함하여 IP 주소 관리 워크플로를 자동화하는 데 사용할 수 있는 VPC 기능입니다. 자세한 내용은 IPAM이란?을 참조하세요. 의 _Amazon VPC IPAM 사용 설명서_.
+
+CloudFormation에서 IPAM을 완전히 관리하는 데 필요한 AWS Identity and Access Management(IAM) 권한이 있습니다. 자세한 내용은 _Amazon VPC IPAM 사용 설명서의 정책 예제를 참조하세요_.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::EC2::IPAM",
+  "Properties" : {
+      "DefaultResourceDiscoveryAssociationId" : String,
+      "DefaultResourceDiscoveryId" : String,
+      "Description" : String,
+      "OperatingRegions" : [ IpamOperatingRegion, ... ],
+      "Tags" : [Tag, ... ]
+    }
+}
+```
+
+## 속성
+
+`DefaultResourceDiscoveryAssociationId`  
+IPAM의 기본 리소스 검색 연결 ID입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`DefaultResourceDiscoveryId`  
+IPAM의 기본 리소스 검색 ID입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Description`  
+IPAM에 대한 설명입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`OperatingRegions`  
+IPAM의 운영 지역입니다. 운영 리전은 IPAM이 IP 주소 CIDR을 관리할 수 있는 AWS 리전입니다. IPAM은 운영 리전으로 선택한 AWS 리전의 리소스만 검색하고 모니터링합니다.  
+운영 리전에 대한 자세한 내용은 _Amazon VPC IPAM 사용 설명서의 IPAM 생성을 참조하세요_.  
+*필수 항목 *여부: 아니요  
+_형식_: IpamOperatingRegion 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`Tags`  
+리소스에 할당된 태그의 키/값 조합입니다. 필터 이름에 태그 키를 사용하고 태그 값을 필터 값으로 사용합니다. 예를 들어, 키와 값이 있는 태그가 있는 모든 리소스를 찾으려면 `Owner` `TeamA` `tag:Owner` 필터 이름과 `TeamA` 필터 값을 지정합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref`IPAM `Ref`ID를 반환합니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`Arn` IPAM의 ARN입니다.
+
+`IpamId` IPAM의 ID입니다.
+
+`PrivateDefaultScopeId` 기본 개인 범위의 ID입니다.
+
+`PublicDefaultScopeId` 기본 공용 범위의 ID입니다.
+
+`ResourceDiscoveryAssociationCount` 자원 발견 연관의 수입니다.
+
+`ScopeCount` 범위의 수입니다.

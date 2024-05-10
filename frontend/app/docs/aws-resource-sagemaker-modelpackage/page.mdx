@@ -1,0 +1,217 @@
+# AWS::SageMaker::모델 패키지
+
+SageMaker 추론을 위해 배포할 수 있는 버전이 지정된 모델입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::SageMaker::ModelPackage",
+  "Properties" : {
+      "AdditionalInferenceSpecifications" : [ AdditionalInferenceSpecificationDefinition, ... ],
+      "AdditionalInferenceSpecificationsToAdd" : [ AdditionalInferenceSpecificationDefinition, ... ],
+      "ApprovalDescription" : String,
+      "CertifyForMarketplace" : Boolean,
+      "ClientToken" : String,
+      "CustomerMetadataProperties" : {Key: Value, ...},
+      "Domain" : String,
+      "DriftCheckBaselines" : DriftCheckBaselines,
+      "InferenceSpecification" : InferenceSpecification,
+      "LastModifiedTime" : String,
+      "MetadataProperties" : MetadataProperties,
+      "ModelApprovalStatus" : String,
+      "ModelMetrics" : ModelMetrics,
+      "ModelPackageDescription" : String,
+      "ModelPackageGroupName" : String,
+      "ModelPackageName" : String,
+      "ModelPackageStatusDetails" : ModelPackageStatusDetails,
+      "ModelPackageVersion" : Integer,
+      "SamplePayloadUrl" : String,
+      "SourceAlgorithmSpecification" : SourceAlgorithmSpecification,
+      "Tags" : [Tag, ... ],
+      "Task" : String,
+      "ValidationSpecification" : ValidationSpecification
+    }
+}
+```
+
+## 속성
+
+`AdditionalInferenceSpecifications`  
+추가 추론 사양 개체의 배열입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: AdditionalInferenceSpecificationDefinition 목록  
+_최대_: `15`  
+_업데이트 필요 사항_: 중단 없음
+
+`AdditionalInferenceSpecificationsToAdd`  
+기존 배열에 추가할 추가 추론 사양 개체의 배열입니다. 추가 추론 사양 객체의 총 수는 15개를 초과할 수 없습니다. 각 추가 추론 사양 개체는 추론 엔드포인트에서 사용할 수 있는 이 모델 패키지를 기반으로 아티팩트를 지정합니다. 일반적으로 컴파일된 아티팩트를 저장하기 위해 SageMaker Neo와 함께 사용됩니다.  
+*필수 항목 *여부: 아니요  
+_형식_: AdditionalInferenceSpecificationDefinition 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`ApprovalDescription`  
+모델 승인이 설정될 때 제공되는 설명입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최대_: `1024`  
+_패턴_: `.*`  
+_업데이트 필요 사항_: 중단 없음
+
+`CertifyForMarketplace`  
+모델 패키지가 AWS Marketplace에 등록되도록 인증되는지 여부입니다. AWS Marketplace에 모델 패키지를 나열하는 방법에 대한 자세한 내용은 AWS Marketplace에 알고리즘 또는 모델 패키지 나열을 참조하십시오.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`ClientToken`  
+이 API에 대한 호출이 idempotent임을 보장하는 고유한 토큰입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`CustomerMetadataProperties`  
+모델 패키지에 대한 메타데이터 속성입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 맵  
+_업데이트 필요 사항_: 중단 없음
+
+`Domain`  
+모델 패키지 및 해당 구성 요소의 기계 학습 도메인입니다. 일반적인 기계 학습 도메인에는 컴퓨터 비전 및 자연어 처리가 포함됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`DriftCheckBaselines`  
+모델 패키지를 사용하여 모델 모니터를 설정할 때 사용할 수 있는 드리프트 체크 기준선을 나타냅니다.  
+*필수 항목 *여부: 아니요  
+_형식_: DriftCheckBaselines  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`InferenceSpecification`  
+학습 작업이 실행된 후 추론 생성을 수행하는 방법을 정의합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: InferenceSpecification  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`LastModifiedTime`  
+모델 패키지가 마지막으로 수정된 시간입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`MetadataProperties`  
+추적 엔터티, 평가판 또는 평가판 구성 요소의 메타데이터 속성입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: MetadataProperties  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ModelApprovalStatus` 모델의 승인 상태입니다. 다음 값 중 하나일 수 있습니다.
+
+- `APPROVED` - 모델이 승인되었습니다.
+- `REJECTED` - 모델이 거부됩니다.
+- `PENDING_MANUAL_APPROVAL` - 모델이 수동 승인을 기다리고 있습니다.
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열  
+  _허용되는 값_: `Approved | PendingManualApproval | Rejected`  
+  _업데이트 필요 사항_: 중단 없음
+
+`ModelMetrics`  
+모델에 대한 메트릭입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: ModelMetrics  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ModelPackageDescription`  
+모델 패키지에 대한 설명입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최대_: `1024`  
+_패턴_: `[p{L}p{M}p{Z}p{S}p{N}p{P}]*`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ModelPackageGroupName`  
+모델이 속한 모델 그룹입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `63`  
+_패턴_: `^a-zA-Z0-9{0,62}$`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ModelPackageName`  
+모델의 이름입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `63`  
+_패턴_: `^a-zA-Z0-9{0,62}$`  
+_업데이트 필요 사항_: 중단 없음
+
+`ModelPackageStatusDetails`  
+모델 패키지의 유효성 검사 및 이미지 스캔 상태를 지정합니다.  
+*필수 항목 *여부: 아니요  
+_형식_: ModelPackageStatusDetails  
+_업데이트 필요 사항_: 중단 없음
+
+`ModelPackageVersion`  
+버전이 지정된 모델의 버전 번호입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_최소_: `1`  
+_업데이트 필요 사항_: 중단 없음
+
+`SamplePayloadUrl`  
+샘플 페이로드가 저장되는 Amazon Simple Storage Service 경로입니다. 이 경로는 단일 gzip 압축 tar 아카이브(접미사 .tar.gz)를 가리켜야 합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`SourceAlgorithmSpecification`  
+모델 패키지를 만드는 데 사용된 알고리즘 목록입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: SourceAlgorithmSpecification  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Tags`  
+모델 패키지와 연결된 태그 목록입니다. 자세한 내용은 * AWS 일반 참조 안내서*의 AWS 리소스 태깅을 참조하세요.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_최대_: `50`  
+_업데이트 필요 사항_: 중단 없음
+
+`Task`  
+모델 패키지가 수행하는 기계 학습 작업입니다. 일반적인 기계 학습 작업에는 개체 감지 및 이미지 분류가 포함됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ValidationSpecification`  
+SageMaker가 모델 패키지를 검증하기 위해 실행하는 배치 변환 작업을 지정합니다.  
+*필수 항목 *여부: 아니요  
+_형식_: ValidationSpecification  
+_업데이트 필요 사항_: 바꿔 놓음
+
+## 반환 값
+
+### 참고문헌
+
+### Fn::GetAtt
+
+####
+
+`CreationTime` 모델 패키지가 만들어진 시간입니다.
+
+`ModelPackageArn` 모델 패키지의 Amazon 리소스 이름(ARN)입니다.
+
+`ModelPackageStatus` 모델 패키지의 상태입니다. 다음 값 중 하나일 수 있습니다.
+
+- `PENDING` - 모델 패키지 만들기가 보류 중입니다.
+- `IN_PROGRESS` - 모델 패키지를 만드는 중입니다.
+- `COMPLETED` - 모델 패키지가 성공적으로 생성되었습니다.
+- `FAILED` - 모델 패키지를 만들지 못했습니다.
+- `DELETING` - 모델 패키지가 삭제되고 있습니다.

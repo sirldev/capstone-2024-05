@@ -1,0 +1,47 @@
+# AWS::KinesisFirehose::D eliveryStream VpcConfiguration
+
+Amazon ES 대상의 VPC에 대한 세부 정보입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "RoleARN" : String,
+  "SecurityGroupIds" : [ String, ... ],
+  "SubnetIds" : [ String, ... ]
+}
+```
+
+## 속성
+
+`RoleARN` 전송 스트림이 대상 VPC에서 엔드포인트를 생성하는 데 사용할 IAM 역할의 ARN입니다. 기존 Kinesis Data Firehose 전송 역할을 사용하거나 새 역할을 지정할 수 있습니다. 두 경우 모두 역할이 Kinesis Data Firehose 서비스 보안 주체를 신뢰하고 다음 권한을 부여하는지 확인합니다.
+
+- `ec2:DescribeVpcs`
+- `ec2:DescribeVpcAttribute`
+- `ec2:DescribeSubnets`
+- `ec2:DescribeSecurityGroups`
+- `ec2:DescribeNetworkInterfaces`
+- `ec2:CreateNetworkInterface`
+- `ec2:CreateNetworkInterfacePermission`
+- `ec2:DeleteNetworkInterface`
+  전송 스트림을 생성한 후 이러한 권한을 취소하면 Kinesis Data Firehose는 필요할 때 더 많은 ENI를 생성하여 확장할 수 없습니다. 따라서 성능이 저하될 수 있습니다.  
+  _필수 항목 여부_: 예  
+  _유형_: 문자열  
+  _업데이트 필요 사항_: 바꿔 놓음
+
+`SecurityGroupIds`  
+Kinesis Data Firehose가 Amazon ES 대상의 VPC에서 ENI를 생성할 때 사용할 보안 그룹의 ID입니다. Amazon ES 도메인에서 사용하는 것과 동일한 보안 그룹을 사용하거나 다른 보안 그룹을 사용할 수 있습니다. 여기에서 다른 보안 그룹을 지정하는 경우 Amazon ES 도메인의 보안 그룹에 대한 아웃바운드 HTTPS 트래픽을 허용하는지 확인합니다. 또한 Amazon ES 도메인의 보안 그룹이 여기에 지정된 보안 그룹의 HTTPS 트래픽을 허용하는지 확인합니다. 전송 스트림과 Amazon ES 도메인 모두에 동일한 보안 그룹을 사용하는 경우 보안 그룹 인바운드 규칙이 HTTPS 트래픽을 허용하는지 확인합니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`SubnetIds`  
+Kinesis Data Firehose가 Amazon ES 대상의 VPC에서 ENI를 생성하는 데 사용하는 서브넷의 ID입니다. 라우팅 테이블과 인바운드 및 아웃바운드 규칙이 여기에 ID가 지정된 서브넷에서 대상 Amazon ES 엔드포인트가 있는 서브넷으로 트래픽이 흐르도록 허용하는지 확인합니다. Kinesis Data Firehose는 여기에 지정된 각 서브넷에 하나 이상의 ENI를 생성합니다. 이러한 ENI를 삭제하거나 수정하지 마십시오.  
+Kinesis Data Firehose가 여기에 지정된 서브넷에 생성하는 ENI의 수는 처리량에 따라 자동으로 확장 및 축소됩니다. Kinesis Data Firehose가 처리량에 맞게 ENI 수를 확장하도록 하려면 할당량이 충분해야 합니다. 필요한 할당량을 계산하는 데 도움이 되도록 Kinesis Data Firehose가 여기에 지정된 각 서브넷에 대해 이 전송 스트림에 대해 최대 3개의 ENI를 생성할 수 있다고 가정합니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 바꿔 놓음

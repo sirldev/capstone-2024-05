@@ -1,0 +1,66 @@
+# AWS::AutoScaling::ScalingPolicy PredictiveScalingConfiguration
+
+`PredictiveScalingConfiguration` 는 Amazon EC2 Auto Scaling에 대한 예측 조정 정책을 지정하는 AWS::AutoScaling::ScalingPolicy 리소스의 속성입니다.
+
+자세한 내용은 Amazon EC2 Auto Scaling 사용 설명서*의 예측 조정을 참조하세요*.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "MaxCapacityBreachBehavior" : String,
+  "MaxCapacityBuffer" : Integer,
+  "MetricSpecifications" : [ PredictiveScalingMetricSpecification, ... ],
+  "Mode" : String,
+  "SchedulingBufferTime" : Integer
+}
+```
+
+## 속성
+
+`MaxCapacityBreachBehavior`  
+예측 용량이 오토 스케일링의 최대 용량에 근접하거나 초과하는 경우 적용해야 하는 동작을 정의합니다. 지정 `HonorMaxCapacity` 하지 않은 경우 기본값은 기본값입니다.  
+가능한 값은 다음과 같습니다.
+
+- `HonorMaxCapacity` - Amazon EC2 Auto Scaling은 최대 용량보다 큰 용량을 확장할 수 없습니다. 최대 용량은 하드 제한으로 적용됩니다.
+- `IncreaseMaxCapacity` - Amazon EC2 Auto Scaling은 예측 용량이 최대 용량에 근접하거나 초과할 때 최대 용량보다 큰 용량으로 확장할 수 있습니다. 상한은 예측된 용량과 에 대한 값에 의해 결정됩니다`MaxCapacityBuffer`.
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열  
+  _허용되는 값_: `HonorMaxCapacity | IncreaseMaxCapacity`  
+  _업데이트 필요 사항_: 중단 없음
+
+`MaxCapacityBuffer`  
+예측 용량이 최대 용량에 가깝거나 초과할 때 사용할 용량 버퍼의 크기입니다. 이 값은 예측 용량에 상대적인 백분율로 지정됩니다. 예를 들어 버퍼가 10이면 10% 버퍼를 의미하며, 예측 용량이 50이고 최대 용량이 40인 경우 유효 최대 용량은 55입니다.  
+0으로 설정하면 Amazon EC2 Auto Scaling이 최대 용량보다 높은 용량을 예상 용량과 같게 조정하되 초과하지 않도록 조정할 수 있습니다.  
+`MaxCapacityBreachBehavior` 속성이 로 설정된 경우 필수`IncreaseMaxCapacity`이며 그렇지 않으면 사용할 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_최소_: `0`  
+_최대_: `100`  
+_업데이트 필요 사항_: 중단 없음
+
+`MetricSpecifications`  
+이 구조에는 예측 조정에 사용할 지표 및 목표 사용률이 포함됩니다.  
+이것은 배열이지만 현재 단일 메트릭 사양만 지원합니다. 즉, 목표 값과 단일 지표 쌍 또는 목표 값과 하나의 조정 지표와 하나의 로드 지표를 지정할 수 있습니다.  
+_필수 항목 여부_: 예  
+_유형_: PredictiveScalingMetricSpecification 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`Mode`  
+예측 조정 모드입니다. 지정 `ForecastOnly` 하지 않은 경우 기본값은 기본값입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `ForecastAndScale | ForecastOnly`  
+_업데이트 필요 사항_: 중단 없음
+
+`SchedulingBufferTime`  
+인스턴스 시작 시간을 앞당길 수 있는 시간(초)입니다. 예를 들어, 예측에서 오전 10:00에 용량을 추가하라고 말하고 5분씩 인스턴스를 사전 시작하도록 선택합니다. 이 경우 인스턴스는 오전 9시 55분에 시작됩니다. 이는 리소스를 프로비전할 시간을 제공하기 위한 것입니다. EC2 인스턴스를 시작하는 데 몇 분 정도 걸릴 수 있습니다. 필요한 실제 시간은 인스턴스의 크기 및 완료할 시작 스크립트가 있는지 여부와 같은 여러 요인에 따라 달라집니다.  
+값은 예측 간격 기간인 3600초(60분)보다 작아야 합니다. 지정하지 않으면 기본값은 300초입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_최소_: `0`  
+_업데이트 필요 사항_: 중단 없음

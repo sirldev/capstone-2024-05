@@ -1,0 +1,44 @@
+# AWS::KinesisFirehose::D eliveryStream DataFormatConversionConfiguration
+
+데이터를 Amazon S3에 쓰기 전에 Kinesis Data Firehose가 JSON 형식에서 Parquet 또는 ORC 형식으로 데이터를 변환하도록 지정합니다. Kinesis Data Firehose는 AWS Glue 테이블의 열 정보 외에도 사용자가 지정한 직렬화 및 역직렬화 프로그램을 사용하여 JSON에서 입력 데이터를 역직렬화한 다음 Parquet 또는 ORC 형식으로 직렬화합니다. 자세한 내용은 Kinesis Data Firehose 레코드 형식 변환 단원을 참조하십시오.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Enabled" : Boolean,
+  "InputFormatConfiguration" : InputFormatConfiguration,
+  "OutputFormatConfiguration" : OutputFormatConfiguration,
+  "SchemaConfiguration" : SchemaConfiguration
+}
+```
+
+## 속성
+
+`Enabled`  
+기본값은 `true`입니다. `false` 구성 세부 정보를 유지하면서 형식 변환을 비활성화하려면 로 설정합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`InputFormatConfiguration`  
+Kinesis Data Firehose가 JSON에서 데이터 형식을 변환하는 데 사용할 역직렬 변환기를 지정합니다. true로 설정된 경우 이 매개 변수가 필요합니다 `Enabled` .  
+*필수 항목 *여부: 아니요  
+_형식_: InputFormatConfiguration  
+_업데이트 필요 사항_: 중단 없음
+
+`OutputFormatConfiguration`  
+Kinesis Data Firehose가 데이터 형식을 Parquet 또는 ORC 형식으로 변환하는 데 사용할 직렬 변환기를 지정합니다. true로 설정된 경우 이 매개 변수가 필요합니다 `Enabled` .  
+*필수 항목 *여부: 아니요  
+_형식_: OutputFormatConfiguration  
+_업데이트 필요 사항_: 중단 없음
+
+`SchemaConfiguration`  
+열 정보가 포함된 AWS Glue Data Catalog 테이블을 지정합니다. true로 설정된 경우 이 매개 변수가 필요합니다 `Enabled` .  
+*필수 항목 *여부: 아니요  
+_형식_: SchemaConfiguration  
+_업데이트 필요 사항_: 중단 없음

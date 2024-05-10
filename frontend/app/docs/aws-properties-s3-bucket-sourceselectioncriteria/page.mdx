@@ -1,0 +1,30 @@
+# AWS::S3::버킷 SourceSelectionCriteria
+
+복제할 원본 개체를 식별하기 위한 추가 필터를 설명하는 컨테이너입니다. 이러한 개체의 복제를 사용하거나 사용하지 않도록 선택할 수 있습니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ReplicaModifications" : ReplicaModifications,
+  "SseKmsEncryptedObjects" : SseKmsEncryptedObjects
+}
+```
+
+## 속성
+
+`ReplicaModifications`  
+복제본에 대한 수정 선택을 위해 지정할 수 있는 필터입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: ReplicaModifications  
+_업데이트 필요 사항_: 중단 없음
+
+`SseKmsEncryptedObjects`  
+ AWS KMS로 암호화된 Amazon S3 객체를 선택하기 위한 필터 정보를 위한 컨테이너입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: SseKmsEncryptedObjects  
+_업데이트 필요 사항_: 중단 없음

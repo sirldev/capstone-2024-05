@@ -1,0 +1,60 @@
+# AWS::Cognito::UserPoolClient Analytics구성
+
+사용자 풀에 대한 지표를 수집하는 데 필요한 Amazon Pinpoint 분석 구성입니다.
+
+**메모**  
+Amazon Pinpoint를 사용할 수 없는 리전에서 사용자 풀은 us-east-1의 Amazon Pinpoint 프로젝트로만 이벤트 전송을 지원합니다. Amazon Pinpoint를 사용할 수 있는 리전에서 사용자 풀은 동일한 리전 내의 Amazon Pinpoint 프로젝트로 이벤트 전송을 지원합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ApplicationArn" : String,
+  "ApplicationId" : String,
+  "ExternalId" : String,
+  "RoleArn" : String,
+  "UserDataShared" : Boolean
+}
+```
+
+## 속성
+
+`ApplicationArn`  
+Amazon Pinpoint 프로젝트의 Amazon 리소스 이름(ARN)입니다. Amazon Pinpoint 프로젝트를 사용하여 선택한 사용자 풀 클라이언트와 통합할 수 있습니다. Amazon Cognito는 앱 ARN이 선언하는 Amazon Pinpoint 프로젝트에 이벤트를 게시합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`ApplicationId`  
+Amazon Pinpoint 애플리케이션의 애플리케이션 ID입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_패턴_: `^[0-9a-fA-F]+$`  
+_업데이트 필요 사항_: 중단 없음
+
+`ExternalId`  
+외부 ID입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `0`  
+_최대_: `131072`  
+_업데이트 필요 사항_: 중단 없음
+
+`RoleArn`  
+Amazon Cognito가 Amazon Pinpoint 분석에 이벤트를 게시할 수 있는 권한을 부여하는 AWS Identity and Access Management 역할의 ARN입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `20`  
+_최대_: `2048`  
+_패턴_: `arn:[w+=/,.@-]+:[w+=/,.@-]+:([w+=/,.@-]*)?:[0-9]+:[w+=/,.@-]+(:[w+=/,.@-]+)?(:[w+=/,.@-]+)?`  
+_업데이트 필요 사항_: 중단 없음
+
+`UserDataShared`  
+`UserDataShared` 인 `true` 경우 Amazon Cognito는 Amazon Pinpoint 분석에 게시하는 이벤트에 사용자 데이터를 포함합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음

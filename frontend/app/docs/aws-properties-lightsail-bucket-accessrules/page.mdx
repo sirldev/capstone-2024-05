@@ -1,0 +1,40 @@
+# AWS::Lightsail::버킷 액세스 규칙
+
+`AccessRules` 은 AWS::Lightsail::Bucket 리소스의 속성입니다. 버킷에 대한 액세스 규칙을 설명합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "AllowPublicOverrides" : Boolean,
+  "GetObject" : String
+}
+```
+
+## 속성
+
+`AllowPublicOverrides`  
+개별 개체에 적용되는 ACL(액세스 제어 목록) 권한이 현재 지정된 옵션을 재정의하는지 여부를 나타내는 부울 값 `GetObject` 입니다.  
+이 경우 PutObjectAcl Amazon S3 API 작업을 사용하여 ACL 또는 ACL을 사용하여 개별 객체를 퍼블릭(읽기 전용) 또는 프라이빗으로 설정할 수 `public-read` 있습니다 `private` .  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`GetObject` 버킷의 모든 객체에 대한 익명 액세스를 지정합니다.  
+다음 옵션을 지정할 수 있습니다.
+
+- `public` - 버킷의 모든 객체를 퍼블릭(읽기 전용)으로 설정하여 인터넷의 모든 사용자가 읽을 수 있도록 합니다.
+
+`GetObject` 값을 로 설정하면 `public`버킷의 모든 객체는 값에 관계없이 기본적으로 public으로 설정됩니다 `allowPublicOverrides` .
+
+- `private` - 버킷의 모든 객체를 프라이빗으로 설정하여 본인 및 액세스 권한을 부여한 모든 사용자만 읽을 수 있도록 합니다.
+
+값이 로 설정`GetObject`되고 `private` 값이 로 설정된 `allowPublicOverrides` 경우`true`, 버킷의 모든 객체는 ACL로 구성되지 않는 한 기본적으로 private으로 설정됩니다 `public-read` . ACL이 있는 개별 개체 `public-read` 는 인터넷의 모든 사용자가 읽을 수 있습니다.
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `private | public`  
+_업데이트 필요 사항_: 중단 없음

@@ -1,0 +1,96 @@
+# AWS::ApiGateway::계정
+
+이 `AWS::ApiGateway::Account` 리소스는 Amazon API Gateway가 Amazon CloudWatch Logs에 API 로그를 기록하는 데 사용하는 IAM 역할을 지정합니다. 다른 역할을 덮어쓰지 않으려면 `AWS::ApiGateway::Account` 계정당 지역당 하나의 리소스 만 있어야 합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::ApiGateway::Account",
+  "Properties" : {
+      "CloudWatchRoleArn" : String
+    }
+}
+```
+
+## 속성
+
+`CloudWatchRoleArn`  
+현재 계정에 대한 Amazon CloudWatch 역할의 ARN입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref`리소스 `Ref`의 ID(예: )가 반환됩니다 `mysta-accou-01234b567890example`.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`Id`  
+계정의 ID입니다. 예를 들면 다음과 같습니다 `abc123`.
+
+## 예제
+
+### 계정을 IAM 역할과 연결
+
+다음 예제에서는 API Gateway가 CloudWatch Logs에 로그를 푸시하기 위해 수임할 수 있는 IAM 역할을 생성합니다. 이 예제에서는 역할을 `AWS::ApiGateway::Account resource`.
+
+#### JSON (영문)
+
+```
+{
+    "CloudWatchRole": {
+        "Type": "AWS::IAM::Role",
+        "Properties": {
+            "AssumeRolePolicyDocument": {
+                "Version": "2012-10-17",
+                "Statement": [
+                    {
+                        "Effect": "Allow",
+                        "Principal": {
+                            "Service": [
+                                "apigateway.amazonaws.com"
+                            ]
+                        },
+                        "Action": "sts:AssumeRole"
+                    }
+                ]
+            },
+            "Path": "/",
+            "ManagedPolicyArns": [
+                "arn:aws:iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs"
+            ]
+        }
+    },
+    "Account": {
+        "Type": "AWS::ApiGateway::Account",
+        "Properties": {
+            "CloudWatchRoleArn": {
+                "Fn::GetAtt": [
+                    "CloudWatchRole",
+                    "Arn"
+                ]
+            }
+        }
+    }
+}
+```
+
+## 참고 항목
+
+- account:update(_Amazon API Gateway REST API 참조)_

@@ -1,0 +1,48 @@
+# AWS::KinesisAnalytics::애플리케이션 참조 데이터 소스
+
+참조 데이터 원본을 기존 응용 프로그램에 추가합니다.
+
+Amazon Kinesis Analytics는 참조 데이터(즉, Amazon S3 객체)를 읽고 애플리케이션 내에 인애플리케이션 테이블을 생성합니다. 요청에서 소스(S3 버킷 이름 및 객체 키 이름), 생성할 인애플리케이션 테이블의 이름, Amazon S3 객체의 데이터가 결과 인애플리케이션 테이블의 열에 매핑되는 방법을 설명하는 데 필요한 매핑 정보를 제공합니다.
+
+개념 정보는 응용 프로그램 입력 구성을 참조하십시오. 응용 프로그램에 추가할 수 있는 데이터 원본에 대한 제한은 제한을 참조하십시오.
+
+이 작업을 수행하려면 작업을 수행할 수 있는 권한이 필요합니다 `kinesisanalytics:AddApplicationOutput` .
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::KinesisAnalytics::ApplicationReferenceDataSource",
+  "Properties" : {
+      "ApplicationName" : String,
+      "ReferenceDataSource" : ReferenceDataSource
+    }
+}
+```
+
+## 속성
+
+`ApplicationName`  
+기존 응용 프로그램의 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `128`  
+_패턴_: `[a-zA-Z0-9_.-]+`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ReferenceDataSource`  
+참조 데이터 원본은 Amazon S3 버킷의 객체일 수 있습니다. Amazon Kinesis Analytics는 객체를 읽고 생성된 인애플리케이션 테이블에 데이터를 복사합니다. S3 버킷, 객체 키 이름 및 생성된 결과 인애플리케이션 테이블을 제공합니다. 또한 Amazon Kinesis Analytics가 사용자를 대신하여 S3 버킷에서 객체를 읽을 수 있도록 수임할 수 있는 필수 권한을 IAM 역할에 제공해야 합니다.  
+_필수 항목 여부_: 예  
+_형식_: ReferenceDataSource  
+_업데이트 필요 사항_: 중단 없음
+
+## 예제
+
+### ApplicationReferenceDataSource 리소스 추가
+
+다음 예제에서는 리소스를 만듭니다. `ApplicationReferenceDataSource`

@@ -1,0 +1,41 @@
+# AWS::VpcLattice::리소스 정책
+
+리소스 정책에 대한 정보를 검색합니다. 리소스 정책은 리소스 소유자가 리소스를 공유할 때 리소스 소유자를 대신하여 생성되는 IAM 정책입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::VpcLattice::ResourcePolicy",
+  "Properties" : {
+      "Policy" : Json,
+      "ResourceArn" : String
+    }
+}
+```
+
+## 속성
+
+`Policy`  
+서비스 네트워크 또는 서비스의 Amazon 리소스 이름(ARN)입니다.  
+_필수 항목 여부_: 예  
+_형식_: Json  
+_업데이트 필요 사항_: 중단 없음
+
+`ResourceArn`  
+IAM 정책입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref`리소스 `Ref`정책의 Amazon 리소스 이름(ARN)을 반환합니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.

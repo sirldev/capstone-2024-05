@@ -1,0 +1,30 @@
+# AWS::CodeDeploy::D eploymentConfig 시간 기반 선형
+
+Lambda 함수 또는 ECS 태스크 세트의 한 버전에서 다른 버전으로 트래픽을 균등하게 증분하고 각 증분 사이에 동일한 시간(분)을 두고 이동하는 구성입니다. 원본 및 대상 Lambda 함수 버전 또는 ECS 작업 세트는 배포의 AppSpec 파일에 지정됩니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "LinearInterval" : Integer,
+  "LinearPercentage" : Integer
+}
+```
+
+## 속성
+
+`LinearInterval`  
+배포의 각 증분 트래픽 이동 사이의 시간(분)입니다 `TimeBasedLinear` .  
+_필수 항목 여부_: 예  
+_유형_: Integer  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`LinearPercentage`  
+배포의 각 증분이 시작될 때 이동되는 트래픽의 백분율입니다 `TimeBasedLinear` .  
+_필수 항목 여부_: 예  
+_유형_: Integer  
+_업데이트 필요 사항_: 바꿔 놓음

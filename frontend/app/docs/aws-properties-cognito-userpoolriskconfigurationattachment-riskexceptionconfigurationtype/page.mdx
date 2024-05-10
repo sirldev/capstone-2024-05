@@ -1,0 +1,32 @@
+# AWS::Cognito::UserPoolRiskConfigurationAttachment RiskExceptionConfigurationType
+
+위험 결정을 재정의할 구성의 유형입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "BlockedIPRangeList" : [ String, ... ],
+  "SkippedIPRangeList" : [ String, ... ]
+}
+```
+
+## 속성
+
+`BlockedIPRangeList`  
+사전 인증 요청을 항상 차단하도록 위험 결정을 재정의합니다. IP 범위는 IP 주소 및 해당 라우팅 접두사를 간략하게 표현한 CIDR 표기법으로 되어 있습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_최대_: `200`  
+_업데이트 필요 사항_: 중단 없음
+
+`SkippedIPRangeList`  
+이 범위 목록의 IP 주소에서는 위험 검색이 수행되지 않습니다. IP 범위는 CIDR 표기법입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_최대_: `200`  
+_업데이트 필요 사항_: 중단 없음

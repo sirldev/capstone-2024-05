@@ -1,0 +1,23 @@
+# AWS::Cognito::IdentityPoolRoleAttachment 규칙 구성 유형
+
+`RulesConfigurationType` 는 사용자를 역할에 매핑하는 데 사용할 규칙을 정의하는 RoleMapping 속성의 하위 속성입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Rules" : [ MappingRule, ... ]
+}
+```
+
+## 속성
+
+`Rules`  
+규칙. ID 공급자당 최대 25개의 규칙을 지정할 수 있습니다.  
+_필수 항목 여부_: 예  
+_유형_: MappingRule 목록  
+_업데이트 필요 사항_: 중단 없음

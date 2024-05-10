@@ -1,0 +1,67 @@
+# AWS::EC2::서브넷 네트워크 Acl연결
+
+서브넷을 네트워크 ACL과 연결합니다. 자세한 내용은 _Amazon EC2 API Reference의 ReplaceNetworkAclAssociation을 참조하십시오_.
+
+`AWS::EC2::SubnetNetworkAclAssociation` 생성 또는 업데이트 작업 중에 리소스가 생성되면 AWS CloudFormation에서는 동일한 키 속성(리소스를 고유하게 식별하는 데 기여하는 속성)을 공유하는 기존 리소스를 채택합니다. 그러나 작업이 실패하고 롤백되는 경우 AWS CloudFormation은 이전에 대역 외 리소스를 삭제합니다. 삭제 정책을 사용하여 이 동작으로부터 보호할 수 `Retain` 있습니다. 자세한 내용은 DeletionPolicy 속성 단원을 참조하십시오.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::EC2::SubnetNetworkAclAssociation",
+  "Properties" : {
+      "NetworkAclId" : String,
+      "SubnetId" : String
+    }
+}
+```
+
+## 속성
+
+`NetworkAclId`  
+네트워크 ACL의 ID입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`SubnetId`  
+서브넷의 ID입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`서브넷 네트워크 ACL 연결의 ID를 반환합니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+####
+
+`AssociationId` 이 개체의 AssociationId 속성 값을 반환합니다.
+
+## 예제
+
+### 서브넷 네트워크 ACL 연결
+
+다음 예제에서는 서브넷 mySubnet을 myNetworkAcl 네트워크 ACL과 연결합니다.
+
+#### JSON (영문)
+
+```
+"mySubnetNetworkAclAssociation" : {
+   "Type" : "AWS::EC2::SubnetNetworkAclAssociation",
+   "Properties" : {
+      "SubnetId" : { "Ref" : "mySubnet" },
+      "NetworkAclId" : { "Ref" : "myNetworkAcl" }
+   }
+}
+```

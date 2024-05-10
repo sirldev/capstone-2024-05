@@ -1,0 +1,70 @@
+# AWS::CloudWatch::InsightRule
+
+Contributor Insights 규칙을 만들거나 업데이트합니다. 규칙은 CloudWatch Logs 로그 그룹의 로그 이벤트를 평가하여 해당 로그 그룹의 로그 이벤트에 대한 기여자 데이터를 찾을 수 있도록 합니다. 자세한 내용은 Amazon CloudWatch 사용 설명서의 Contributor Insights를 사용하여 높은 카디널리티 데이터 분석을 참조하십시오\*\*.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::CloudWatch::InsightRule",
+  "Properties" : {
+      "RuleBody" : String,
+      "RuleName" : String,
+      "RuleState" : String,
+      "Tags" : Tags
+    }
+}
+```
+
+## 속성
+
+`RuleBody`  
+JSON 개체로 표시되는 규칙의 정의입니다. 구문에 대한 자세한 내용은 _Amazon CloudWatch 사용 설명서의 Contributor Insights 규칙 구문을 참조하십시오_.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`RuleName`  
+규칙의 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`RuleState`  
+규칙의 현재 상태입니다. 유효한 값은 `ENABLED` 및 `DISABLED`입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Tags`  
+Contributor Insights 규칙과 연결할 키-값 쌍 목록입니다. 하나의 규칙에 최대 50개의 태그를 연결할 수 있습니다.  
+태그는 리소스를 구성하고 분류하는 데 도움이 될 수 있습니다. 자세한 내용은 Amazon CloudWatch 리소스 태깅 단원을 참조하십시오.  
+태그를 규칙과 연결할 수 있으 려면 권한 `cloudwatch:TagResource` 외에 권한 도 있어야 합니다 `cloudwatch:PutInsightRule` .  
+*필수 항목 *여부: 아니요  
+_유형_: 태그  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`규칙의 ARN이 반환됩니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`Arn`  
+Contributor Insights 규칙의 ARN(예: `arn:aws:cloudwatch:us-west-2:123456789012:insight-rule/MyInsightRuleName`.
+
+`RuleName` Contributor Insights 규칙의 이름입니다.

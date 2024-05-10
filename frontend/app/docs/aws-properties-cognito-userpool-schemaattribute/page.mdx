@@ -1,0 +1,73 @@
+# AWS::Cognito::UserPool 스키마 속성
+
+사용자 풀의 사용자 속성 및 해당 속성 목록입니다. 특성 스키마에는 표준 특성, 접두사가 있는 사용자 지정 특성 `custom:` 및 접두사가 있는 개발자 특성이 `dev:` 포함됩니다 . 자세한 정보는 사용자 풀 속성을 참조하십시오.
+
+개발자 전용 속성은 사용자 풀의 레거시 기능으로, 모든 앱 클라이언트에서 읽기 전용입니다. 개발자 전용 속성은 IAM 인증 API 작업으로만 생성 및 업데이트할 수 있습니다. 대신 앱 클라이언트 읽기/쓰기 권한을 사용합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "AttributeDataType" : String,
+  "DeveloperOnlyAttribute" : Boolean,
+  "Mutable" : Boolean,
+  "Name" : String,
+  "NumberAttributeConstraints" : NumberAttributeConstraints,
+  "Required" : Boolean,
+  "StringAttributeConstraints" : StringAttributeConstraints
+}
+```
+
+## 속성
+
+`AttributeDataType`  
+속성 값의 데이터 형식입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `Boolean | DateTime | Number | String`  
+_업데이트 필요 사항_: 중단 없음
+
+`DeveloperOnlyAttribute`  
+를 사용하는 대신 사용자 풀 클라이언트에서 WriteAttributes를 사용하여 새로운 사용 사례에 맞게 속성을 변경할 수 있는 방법을 제어하는 것이 좋습니다`DeveloperOnlyAttribute`.
+특성 유형이 개발자 전용인지 여부를 지정합니다. 이 속성은 관리자만 수정할 수 있습니다. 사용자는 액세스 토큰을 사용하여 이 특성을 수정할 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`Mutable`  
+속성 값을 변경할 수 있는지 여부를 지정합니다.  
+IdP 속성에서 매핑하는 값을 가진 모든 사용자 풀 속성은 변경 가능해야 하며 파라미터 값은 . `true` Amazon Cognito는 사용자가 IdP를 통해 애플리케이션에 로그인할 때 매핑된 속성을 업데이트합니다. 속성을 변경할 수 없는 경우 Amazon Cognito는 속성을 업데이트하려고 할 때 오류를 발생시킵니다. 자세한 내용은 사용자 풀에 대한 자격 증명 공급자 속성 매핑 지정 단원을 참조하십시오.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`Name`  
+사용자 풀 속성의 이름(예: `username` 또는 `custom:costcenter`.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `20`  
+_패턴_: `[p{L}p{M}p{S}p{N}p{P}]+`  
+_업데이트 필요 사항_: 중단 없음
+
+`NumberAttributeConstraints`  
+숫자 유형의 속성에 대한 제약 조건을 지정합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: NumberAttributeConstraints  
+_업데이트 필요 사항_: 중단 없음
+
+`Required`  
+사용자 풀 속성이 필요한지 여부를 지정합니다. 특성이 필요하고 사용자가 값을 제공하지 않으면 등록 또는 로그인이 실패합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`StringAttributeConstraints`  
+문자열 형식의 특성에 대한 제약 조건을 지정합니다.  
+*필수 항목 *여부: 아니요  
+_형식_: StringAttributeConstraints  
+_업데이트 필요 사항_: 중단 없음

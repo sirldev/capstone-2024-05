@@ -1,0 +1,109 @@
+# AWS::ECS::작업 세트
+
+지정된 클러스터 및 서비스에 작업 세트를 만듭니다. 서비스에서 `EXTERNAL` 배포 컨트롤러 유형을 사용할 때 사용됩니다. 자세한 내용은 _Amazon Elastic Container Service 개발자 안내서의 Amazon ECS 배포 유형을 참조하세요_.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::ECS::TaskSet",
+  "Properties" : {
+      "Cluster" : String,
+      "ExternalId" : String,
+      "LaunchType" : String,
+      "LoadBalancers" : [ LoadBalancer, ... ],
+      "NetworkConfiguration" : NetworkConfiguration,
+      "PlatformVersion" : String,
+      "Scale" : Scale,
+      "Service" : String,
+      "ServiceRegistries" : [ ServiceRegistry, ... ],
+      "TaskDefinition" : String
+    }
+}
+```
+
+## 속성
+
+`Cluster`  
+작업 세트를 생성할 서비스를 호스팅하는 클러스터의 짧은 이름 또는 전체 Amazon 리소스 이름(ARN)입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ExternalId`  
+외부 시스템에서 이 작업 세트를 식별하는 고유한 태그(선택 사항)입니다. 작업 세트가 서비스 검색 레지스트리와 연결된 경우 이 작업 세트의 작업 에는 `ECS_TASK_SET_EXTERNAL_ID` AWS Cloud Map 속성이 제공된 값으로 설정됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`LaunchType`  
+작업 세트의 새 작업이 사용하는 시작 유형입니다. 자세한 내용은 _Amazon Elastic Container Service 개발자 안내서의 Amazon ECS 시작 유형을 참조하세요_.  
+a `launchType` 가 지정되면 `capacityProviderStrategy` 매개 변수를 생략해야 합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `EC2 | EXTERNAL | FARGATE`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`LoadBalancers`  
+작업 세트와 함께 사용할 부하 분산 장치를 나타내는 부하 분산 장치 개체입니다. 지원되는 로드 밸런서 유형은 Application Load Balancer 또는 Network Load Balancer입니다.  
+*필수 항목 *여부: 아니요  
+_Type_: LoadBalancer 목록  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`NetworkConfiguration`  
+작업 세트에 대한 네트워크 구성입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: NetworkConfiguration  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`PlatformVersion`  
+작업 세트의 작업이 사용하는 플랫폼 버전입니다. 플랫폼 버전은 Fargate 시작 유형을 사용하는 태스크에 대해서만 지정됩니다. 지정하지 않으면 `LATEST` 플랫폼 버전이 사용됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Scale`  
+작업 세트에 배치하고 계속 실행할 원하는 작업 수의 부동 소수점 백분율입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 가늠자  
+_업데이트 필요 사항_: 중단 없음
+
+`Service`  
+작업 세트를 생성할 서비스의 짧은 이름 또는 전체 Amazon 리소스 이름(ARN)입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ServiceRegistries`  
+이 작업 세트에 할당할 서비스 검색 레지스트리의 세부 정보입니다. 자세한 내용은 서비스 검색을 참조하세요.  
+*필수 항목 *여부: 아니요  
+_유형_: ServiceRegistry 목록  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`TaskDefinition`  
+사용할 작업 집합의 작업에 대한 작업 정의입니다. 수정 버전을 지정하지 않으면 최신 `ACTIVE` 수정 버전이 사용됩니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`리소스 이름이 반환됩니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`Id` 작업 집합의 ID입니다.

@@ -1,0 +1,38 @@
+# AWS::S3::버킷 NoncurrentVersionTransition
+
+최신이 아닌 객체가 , `STANDARD_IA`, `ONEZONE_IA`, `INTELLIGENT_TIERING`또는 `GLACIER_IR` `GLACIER` 스토리지 클래스로 전환되는 시기를 설명하는 전이 규칙의 컨테이너 `DEEP_ARCHIVE` 입니다. 버킷에서 버전 관리를 사용할 수 있는 경우(또는 버전 관리가 일시 중지된 경우) 이 작업을 설정하여 Amazon S3가 `STANDARD_IA` `ONEZONE_IA` `INTELLIGENT_TIERING` `GLACIER_IR` `GLACIER` 객체 수명 중 특정 기간에 최신이 아닌 객체 버전을 , , , 또는 `DEEP_ARCHIVE` 스토리지 클래스로 전환하도록 요청할 수 있습니다. 이 속성을 지정하는 경우 속성을 지정하지 마세요 `NoncurrentVersionTransitions` .
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "NewerNoncurrentVersions" : Integer,
+  "StorageClass" : String,
+  "TransitionInDays" : Integer
+}
+```
+
+## 속성
+
+`NewerNoncurrentVersions`  
+Amazon S3가 유지할 최신이 아닌 버전 수를 지정합니다. 최신이 아닌 버전이 이렇게 많으면 Amazon S3가 관련 작업을 수행합니다. 최신이 아닌 버전에 대한 자세한 내용은 _Amazon S3 사용 설명서의 수명 주기 구성 요소를 참조하세요_.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`StorageClass`  
+개체를 저장하는 데 사용되는 저장소 클래스입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_허용되는 값_: `DEEP_ARCHIVE | GLACIER | GLACIER_IR | INTELLIGENT_TIERING | ONEZONE_IA | STANDARD_IA`  
+_업데이트 필요 사항_: 중단 없음
+
+`TransitionInDays`  
+Amazon S3가 관련 작업을 수행할 수 있을 때까지 객체가 최신이 아닌 상태일 수를 지정합니다. 현재 날짜가 아닌 날짜 계산에 대한 자세한 내용은 Amazon S3 사용 설명서의 Amazon S3에서 객체가 최신 상태가 아닌 기간을 계산하는 방법을 참조하십시오\**.  
+*필수 항목 여부*: 예  
+*유형*: Integer  
+*업데이트 필요 사항\*: 중단 없음

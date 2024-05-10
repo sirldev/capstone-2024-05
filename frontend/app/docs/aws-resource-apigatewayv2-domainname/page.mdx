@@ -1,0 +1,99 @@
+# AWS::ApiGatewayV2::D omainName
+
+리소스는 `AWS::ApiGatewayV2::DomainName` Amazon API Gateway(API Gateway)에서 API에 대한 사용자 지정 도메인 이름을 지정합니다.
+
+사용자 지정 도메인 이름을 사용하여 보다 직관적이고 기억하기 쉬운 URL을 제공할 수 있습니다. 사용자 지정 도메인 이름 사용에 대한 자세한 내용은 API Gateway 개발자 안내서의 API Gateway에서 API에 대한 사용자 지정 도메인 이름 설정을 참조하십시오\*\*.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::ApiGatewayV2::DomainName",
+  "Properties" : {
+      "DomainName" : String,
+      "DomainNameConfigurations" : [ DomainNameConfiguration, ... ],
+      "MutualTlsAuthentication" : MutualTlsAuthentication,
+      "Tags" : Json
+    }
+}
+```
+
+## 속성
+
+`DomainName`  
+Amazon API Gateway의 API에 대한 사용자 지정 도메인 이름입니다. 대문자는 지원되지 않습니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`DomainNameConfigurations`  
+도메인 이름 구성입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: DomainNameConfiguration 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`MutualTlsAuthentication`  
+사용자 지정 도메인 이름에 대한 상호 TLS 인증 구성입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: MutualTlsAuthentication  
+_업데이트 필요 사항_: 중단 없음
+
+`Tags`  
+도메인 이름과 연결된 태그의 모음입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: Json  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref`는 `Ref`도메인 이름(예: )을 반환합니다 `example.mydomain.com`.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`RegionalDomainName` 이 사용자 지정 도메인 이름에 대한 리전 엔드포인트와 연결된 도메인 이름입니다. 사용자 지정 도메인 이름이 이 리전 도메인 이름을 가리키도록 하는 DNS 레코드를 추가하여 이 연결을 설정합니다.
+
+`RegionalHostedZoneId` 리전 엔드포인트의 리전별 Amazon Route 53 호스팅 영역 ID입니다.
+
+## 예제
+
+### 도메인 이름 생성 예시
+
+다음 예제에서는 `DomainName` 라는 리소스를 만듭니다`MyDomainName`.
+
+#### JSON (영문)
+
+```
+{
+    "MyDomainName": {
+        "Type": "AWS::ApiGatewayV2::DomainName",
+        "Properties": {
+            "DomainName": "mydomainame.us-east-1.com",
+            "DomainNameConfigurations": [
+                {
+                    "EndpointType": "REGIONAL",
+                    "CertificateArn": "arn:aws:acm:us-east-1:123456789012:certificate/1a2b3c4d-aaaa-aaaa-aaaa-1a2b3c4d5e6f",
+                    "CertificateName": "testCertificate"
+                }
+            ]
+        }
+    }
+}
+```
+
+## 참고 항목
+
+- Amazon API Gateway 버전 2 API 참조*의 CreateDomainName *

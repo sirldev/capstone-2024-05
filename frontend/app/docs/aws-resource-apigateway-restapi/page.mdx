@@ -1,0 +1,307 @@
+# AWS::ApiGateway::RestApi
+
+`AWS::ApiGateway::RestApi` 리소스는 REST API를 만듭니다. 자세한 내용은 _Amazon API Gateway REST API Reference의 restapi:create를 참조하세요_.
+
+**메모**  
+2016년 1월 1일, Swagger 스펙이 OpenAPI 이니셔티브에 기부되어 OpenAPI 스펙의 기초가 되었습니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::ApiGateway::RestApi",
+  "Properties" : {
+      "ApiKeySourceType" : String,
+      "BinaryMediaTypes" : [ String, ... ],
+      "Body" : Json,
+      "BodyS3Location" : S3Location,
+      "CloneFrom" : String,
+      "Description" : String,
+      "DisableExecuteApiEndpoint" : Boolean,
+      "EndpointConfiguration" : EndpointConfiguration,
+      "FailOnWarnings" : Boolean,
+      "MinimumCompressionSize" : Integer,
+      "Mode" : String,
+      "Name" : String,
+      "Parameters" : {Key: Value, ...},
+      "Policy" : Json,
+      "Tags" : [Tag, ... ]
+    }
+}
+```
+
+## 속성
+
+`ApiKeySourceType`  
+사용량 계획에 따라 요청을 측정하기 위한 API 키의 소스입니다. 유효한 값은 다음과 같습니다 `HEADER` . 요청 헤더 `X-API-Key` 에서 API 키를 읽습니다`AUTHORIZER`.을 클릭하여 사용자 지정 권한 부여자 에서 API 키를 읽습니다 `UsageIdentifierKey` .  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`BinaryMediaTypes`  
+RestApi에서 지원하는 이진 미디어 유형 목록입니다. 기본적으로 RestApi는 UTF-8로 인코딩된 텍스트 페이로드만 지원합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`Body`  
+JSON 형식의 RESTful API 세트를 정의하는 OpenAPI 사양입니다.
+*필수 항목 *여부: 아니요  
+_형식_: Json  
+_업데이트 필요 사항_: 중단 없음
+
+`BodyS3Location`  
+JSON 형식의 RESTful API 세트를 정의하는 OpenAPI 파일을 가리키는 Amazon Simple Storage Service(Amazon S3) 위치입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: S3Location  
+_업데이트 필요 사항_: 중단 없음
+
+`CloneFrom`  
+복제하려는 RestApi의 ID입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Description`  
+RestApi에 대한 설명입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`DisableExecuteApiEndpoint`  
+클라이언트가 기본 끝점을 사용하여 API를 호출할 수 있는지 여부를 지정합니다 `execute-api` . 기본적으로 클라이언트는 기본 'some-address 엔드포인트'를 사용하여 API를 호출할 수 있습니다. 클라이언트가 사용자 지정 도메인 이름을 사용하여 API를 호출하도록 요구하려면 기본 엔드포인트를 비활성화합니다  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`EndpointConfiguration`  
+API의 엔드포인트 유형 목록입니다. API를 작성할 때 이 특성을 사용하십시오. 기존 API를 가져올 때 특성을 사용하여 엔드포인트 구성 유형을 지정하십시오 `Parameters` .  
+*필수 항목 *여부: 아니요  
+_형식_: EndpointConfiguration  
+_업데이트 필요 사항_: 중단 없음
+
+`FailOnWarnings`  
+경고가 발생할 때 API 업데이트(`true`) 또는 롤백()하지 않을지(`false`) 여부를 나타내는 쿼리 매개 변수입니다. 기본값은 `false`입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`MinimumCompressionSize`  
+API에서 압축(0에서 10485760(10M) 바이트 사이의 음수가 아닌 바이트 포함)을 활성화하거나 압축을 비활성화(null 값 포함)하는 데 사용되는 nullable 정수입니다. 압축이 활성화되면 페이로드 크기가 이 값보다 작으면 페이로드에 압축 또는 압축 해제가 적용되지 않습니다. 0으로 설정하면 모든 페이로드 크기에 대해 압축할 수 있습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`Mode`  
+이 특성은 OpenAPI를 사용하여 REST API를 정의하는 경우에만 적용됩니다. `Mode` API Gateway가 리소스 업데이트를 처리하는 방법을 결정합니다.  
+유효한 값은 `overwrite` 또는 `merge`입니다.  
+의 경우 `overwrite`새 API 정의가 기존 API 정의를 대체합니다. 기존 API 식별자는 변경되지 않습니다.  
+ 의 경우 `merge`새 API 정의가 기존 API와 병합됩니다.  
+이 특성을 지정하지 않으면 기본값이 선택됩니다. 2021년 3월 29일 이전에 만든 REST API의 경우 기본값은 `overwrite`입니다. 2021년 3월 29일 이후에 생성된 REST API의 경우 새 API 정의가 우선하지만 엔드포인트 구성 및 이진 미디어 유형과 같은 모든 컨테이너 유형은 기존 API와 병합됩니다.  
+기본 모드를 사용하여 `RestApi` OpenAPI를 사용하는 것 외에도 최상위 속성을 정의합니다. 일반적으로 API Gateway의 OpenAPI 확장을 사용하여 이러한 속성을 모델링하는 것이 좋습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Name`  
+RestApi의 이름입니다. REST API가 OpenAPI 스펙을 기반으로 하지 않는 경우 이름이 필요합니다.  
+_필수_: 조건부  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Parameters`  
+사용자 지정 헤더 매개 변수를 요청의 일부로 사용할 수 있습니다. 예를 들어, 가져온 API에서 DocumentationParts를 제외하려면 `ignore=documentation` `parameters` 의 AWS CLI 명령에서와 같이 값으로 설정합니다`aws apigateway import-rest-api --parameters ignore=documentation --body 'file:///path/to/imported-api-body.json'`.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 맵  
+_업데이트 필요 사항_: 중단 없음
+
+`Policy`  
+리소스에 대한 권한이 포함된 정책 문서입니다 `RestApi` . 정책에 대한 ARN을 설정하려면 `!Join` intrinsic 함수를 `""` 구분 기호로 사용하고 `"execute-api:/"` 및 값을 사용합니다`"*"`.  
+*필수 항목 *여부: 아니요  
+_형식_: Json  
+_업데이트 필요 사항_: 중단 없음
+
+`Tags`  
+문자열의 키-값 맵입니다. 유효한 문자 집합은 [a-zA-Z+-=._:/]입니다. 태그 키는 최대 128자까지 가능하며 로 시작할 수 없습니다`aws:`. 태그 값은 최대 256자까지 가능합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref`는 `Ref` ID`RestApi`를 반환합니다`a1bcdef2gh`.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`RestApiId` 연결된 RestApi의 문자열 식별자입니다.
+
+`RootResourceId`  
+리소스의 루트 리소스 ID `RestApi` (예: `a0bc123d4e`)입니다.
+
+## 예제
+
+### OpenAPI 사양 기반
+
+다음 예제에서는 OpenAPI 사양에 따라 API Gateway RestApi 리소스를 생성합니다.
+
+#### JSON (영문)
+
+```
+{
+    "MyRestApi": {
+        "Type": "AWS::ApiGateway::RestApi",
+        "Properties": {
+            "Body": {
+                "OpenAPI specification": null
+            },
+            "Description": "A test API",
+            "Name": "MyRestAPI"
+        }
+    }
+}
+```
+
+### 끝점 유형 사용
+
+다음 예제에서는 엔드포인트 유형의 API Gateway RestApi 리소스를 생성합니다.
+
+#### JSON (영문)
+
+```
+{
+  "Parameters": {
+    "apiName": {
+      "Type": "String"
+    },
+    "type": {
+      "Type": "String"
+    }
+  },
+  "Resources": {
+    "MyRestApi": {
+      "Type": "AWS::ApiGateway::RestApi",
+      "Properties": {
+        "EndpointConfiguration": {
+          "Types": [
+            {
+              "Ref": "type"
+            }
+          ]
+        },
+        "Name": {
+          "Ref": "apiName"
+        }
+      }
+    }
+  }
+}
+```
+
+### REGIONAL 엔드포인트 유형 사용
+
+다음 예제에서는 엔드포인트 유형이 REGIONAL인 API Gateway RestApi 리소스를 가져옵니다.
+
+#### JSON (영문)
+
+```
+{
+    "Resources": {
+        "RestApi": {
+            "Type": "AWS::ApiGateway::RestApi",
+            "Properties": {
+                "Body": {
+                    "swagger": 2,
+                    "info": {
+                        "version": "0.0.1",
+                        "title": "test"
+                    },
+                    "basePath": "/pete",
+                    "schemes": [
+                        "https"
+                    ],
+                    "definitions": {
+                        "Empty": {
+                            "type": "object"
+                        }
+                    }
+                },
+                "Name": "myApi",
+                "Parameters": {
+                    "endpointConfigurationTypes": "REGIONAL"
+                }
+            }
+        }
+    }
+}
+```
+
+### ApiKeySourceType 사용
+
+다음 예제에서는 ApiKeySourceType, BinaryMediaTypes 및 MinimumCompressionSize를 사용하여 API Gateway RestApi 리소스를 생성합니다.
+
+#### JSON (영문)
+
+```
+{
+    "Parameters": {
+        "apiKeySourceType": {
+            "Type": "String"
+        },
+        "apiName": {
+            "Type": "String"
+        },
+        "binaryMediaType1": {
+            "Type": "String"
+        },
+        "binaryMediaType2": {
+            "Type": "String"
+        },
+        "minimumCompressionSize": {
+            "Type": "String"
+        }
+    },
+    "Resources": {
+        "MyRestApi": {
+            "Type": "AWS::ApiGateway::RestApi",
+            "Properties": {
+                "ApiKeySourceType": {
+                    "Ref": "apiKeySourceType"
+                },
+                "BinaryMediaTypes": [
+                    {
+                        "Ref": "binaryMediaType1"
+                    },
+                    {
+                        "Ref": "binaryMediaType2"
+                    }
+                ],
+                "MinimumCompressionSize": {
+                    "Ref": "minimumCompressionSize"
+                },
+                "Name": {
+                    "Ref": "apiName"
+                }
+            }
+        }
+    }
+}
+```
+
+## 참고 항목
+
+- restapi:create(_Amazon API Gateway REST API 참조)_
+- 자습서: API Gateway 개발자 안내서*의 프라이빗 REST API 빌드 *

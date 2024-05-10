@@ -1,0 +1,38 @@
+# AWS::EC2::FlowLog 대상 옵션
+
+흐름 로그의 대상 옵션에 대해 설명합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "FileFormat" : String,
+  "HiveCompatiblePartitions" : Boolean,
+  "PerHourPartition" : Boolean
+}
+```
+
+## 속성
+
+`FileFormat`  
+흐름 로그의 형식입니다. 기본값은 `plain-text`입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_허용되는 값_: `parquet | plain-text`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`HiveCompatiblePartitions`  
+Amazon S3에 저장된 흐름 로그에 대해 Hive 호환 접두사를 사용할지 여부를 나타냅니다. 기본값은 `false`입니다.  
+_필수 항목 여부_: 예  
+_유형_: Boolean  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`PerHourPartition`  
+시간당 흐름 로그를 분할할지 여부를 나타냅니다. 이렇게 하면 쿼리에 대한 비용과 응답 시간이 줄어듭니다. 기본값은 `false`입니다.  
+_필수 항목 여부_: 예  
+_유형_: Boolean  
+_업데이트 필요 사항_: 바꿔 놓음

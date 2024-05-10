@@ -1,0 +1,108 @@
+# AWS::EC2::SpotFleet
+
+스팟 집합 요청을 지정합니다.
+
+스팟 집합 요청은 총 목표 용량과 온디맨드 목표 용량을 지정합니다. Amazon EC2는 총 용량과 온디맨드 용량의 차이를 계산하고 그 차이를 스팟 용량으로 시작합니다.
+
+인스턴스 유형, AMI, 가용 영역 또는 서브넷에 따라 달라지는 여러 시작 사양을 포함하는 단일 요청을 제출할 수 있습니다.
+
+기본적으로 스팟 집합은 단위당 가격이 가장 낮은 스팟 인스턴스 풀에서 스팟 인스턴스를 요청합니다. 각 시작 사양에는 애플리케이션 워크로드에 대한 인스턴스 유형의 값을 반영하는 자체 인스턴스 가중치가 포함될 수 있습니다.
+
+또는 스팟 집합이 시작 사양에 포함된 스팟 풀에 목표 용량을 분산하도록 지정할 수 있습니다. 스팟 집합의 스팟 인스턴스가 서로 다른 스팟 풀에 있는지 확인하면 집합의 가용성을 개선할 수 있습니다.
+
+스팟 집합 요청 및 집합에서 시작한 인스턴스에 대한 태그를 지정할 수 있습니다. 스팟 집합 요청에서 다른 리소스 유형에는 태그를 지정할 수 없는데, 그 이유는 `spot-fleet-request` 및 `instance` 리소스 유형만 지원되기 때문입니다.
+
+자세한 내용은 Linux 인스턴스용 Amazon EC2 사용 설명서*의 스팟 집합을 참조하십시오*.
+
+**중요하다**  
+RequestSpotFleet API는 투자 계획이 없는 레거시 API이므로 사용하지 않는 것이 좋습니다. 스팟 인스턴스 요청 옵션은 어떤 것을 사용하는 것이 가장 좋습니까?를 참조하십시오. 의 _Linux 인스턴스용 Amazon EC2 사용 설명서_.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::EC2::SpotFleet",
+  "Properties" : {
+      "SpotFleetRequestConfigData" : SpotFleetRequestConfigData
+    }
+}
+```
+
+## 속성
+
+`SpotFleetRequestConfigData`  
+스팟 집합 요청의 구성을 설명합니다.  
+_필수 항목 여부_: 예  
+_유형_: SpotFleetRequestConfigData  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 intrinsic 함수에 전달하면 `Ref` `Ref`스팟 집합의 ID를 반환합니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`Id` 스팟 집합의 ID입니다.
+
+## 예제
+
+### 스팟 플릿 생성
+
+다음 예제에서는 두 개의 시작 사양이 있는 스팟 집합을 지정합니다. 가중치 적용 용량은 동일하므로 Amazon EC2는 각 사양에 대해 동일한 수의 인스턴스를 시작합니다. 자세한 내용은 _Linux 인스턴스용 Amazon EC2 사용 설명서의 스팟 집합 작동 방식을 참조하십시오_.
+
+#### JSON (영문)
+
+```
+"SpotFleet": {
+  "Type": "AWS::EC2::SpotFleet",
+  "Properties": {
+    "SpotFleetRequestConfigData": {
+     "IamFleetRole": { "Fn::GetAtt": [ "IAMFleetRole", "Arn"] },
+     "SpotPrice": "1000",
+     "TargetCapacity": { "Ref": "TargetCapacity" },
+     "LaunchSpecifications": [
+     {
+         "EbsOptimized": "false",
+         "InstanceType": { "Ref": "InstanceType" },
+         "ImageId": { "Fn::FindInMap": [ "AWSRegionArch2AMI", { "Ref": "AWS::Region" },
+                      { "Fn::FindInMap": [ "AWSInstanceType2Arch", { "Ref": "InstanceType" }, "Arch" ] }
+                     ]},
+          "SubnetId": { "Ref": "Subnet1" },
+          "WeightedCapacity": "8"
+     },
+     {
+         "EbsOptimized": "true",
+         "InstanceType": { "Ref": "InstanceType" },
+         "ImageId": { "Fn::FindInMap": [ "AWSRegionArch2AMI", { "Ref": "AWS::Region" },
+                      { "Fn::FindInMap": [ "AWSInstanceType2Arch", { "Ref": "InstanceType" }, "Arch" ] }
+                     ]},
+          "Monitoring": { "Enabled": "true" },
+          "SecurityGroups": [ { "GroupId": { "Fn::GetAtt": [ "SG0", "GroupId" ] } } ],
+          "SubnetId": { "Ref": "Subnet0" },
+          "IamInstanceProfile": { "Arn": { "Fn::GetAtt": [ "RootInstanceProfile", "Arn" ] } },
+          "WeightedCapacity": "8"
+         }
+         ]
+     }
+   }
+}
+```
+
+## 참고 항목
+
+- AWS::ApplicationAutoScaling::ScalableTarget
+- AWS::애플리케이션자동 크기 조정::크기 조정 정책

@@ -1,0 +1,38 @@
+# AWS::AutoScalingPlans::ScalingPlan 애플리케이션 소스
+
+`ApplicationSource` 는 AWS Auto Scaling(Auto Scaling Plans)과 함께 사용할 애플리케이션 소스를 지정하는 ScalingPlan의 속성입니다. 응용 프로그램 원본당 하나의 크기 조정 계획을 만들 수 있습니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "CloudFormationStackARN" : String,
+  "TagFilters" : [ TagFilter, ... ]
+}
+```
+
+## 속성
+
+`CloudFormationStackARN`  
+CloudFormation 스택의 Amazon 리소스 이름(ARN)입니다.  
+또는 를 지정해야 합니다 `CloudFormationStackARN` `TagFilters`.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_패턴_: `[u0020-uD7FFuE000-uFFFDuD800uDC00-uDBFFuDFFFrnt]*`  
+_업데이트 필요 사항_: 중단 없음
+
+`TagFilters`  
+태그 필터 집합(키 및 값)입니다. 지정된 각 태그 필터에는 선택 사항으로 값이 있는 키가 포함되어야 합니다. 각 크기 조정 계획에는 최대 50개의 키가 포함될 수 있으며 각 키에는 최대 20개의 값이 포함될 수 있습니다.  
+태그는 AWS Auto Scaling 콘솔에서 크기 조정 계획을 구성할 때 반환할 리소스를 지정하는 데 사용하는 구문의 일부입니다. CloudFormation을 사용하여 크기 조정 계획을 생성할 때 유효한 태그 필터 값을 지정할 필요가 없습니다. `Key` and `Values` 속성은 값 조합이 크기 조정 계획에서 고유하다면 모든 값을 수락할 수 있습니다. 그러나 AWS Auto Scaling 콘솔을 사용하여 조정 계획을 편집하려면 유효한 값을 지정해야 합니다.  
+또는 를 지정해야 합니다 `CloudFormationStackARN` `TagFilters`.  
+*필수 항목 *여부: 아니요  
+_유형_: TagFilter 목록  
+_업데이트 필요 사항_: 중단 없음
+
+## 참고 항목
+
+- AWS Auto Scaling 사용 설명서

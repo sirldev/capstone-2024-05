@@ -1,0 +1,41 @@
+# AWS::SQS::QueueInlinePolicy
+
+`AWS::SQS::QueueInlinePolicy` 리소스는 하나의 Amazon SQS 대기열을 하나의 정책과 연결합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::SQS::QueueInlinePolicy",
+  "Properties" : {
+      "PolicyDocument" : Json,
+      "Queue" : String
+    }
+}
+```
+
+## 속성
+
+`PolicyDocument`  
+ 지정된 Amazon SQS 대기열에 대한 권한이 포함된 정책 문서입니다. Amazon SQS 정책에 대한 자세한 내용은 Amazon SQS 개발자 안내서의 Amazon SQS 액세스 정책 언어로 사용자 지정 정책 사용을 참조하세요\**.  
+*필수 항목 여부*: 예  
+*형식*: Json  
+*업데이트 필요 사항\*: 중단 없음
+
+`Queue`  
+정책을 추가하려는 대기열의 URL입니다. 이 함수를 사용하여 리소스를 지정할 수 `Ref` 있습니다 `AWS::SQS::Queue` .  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`정책이 추가된 주제의 ARN을 반환합니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.

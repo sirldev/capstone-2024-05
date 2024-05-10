@@ -1,0 +1,136 @@
+# AWS::EC2::EC2플릿
+
+플릿 또는 인스턴스 그룹을 시작하기 위한 구성 정보를 지정합니다. EC2 집합은 온디맨드 인스턴스, 예약 인스턴스 및 스팟 인스턴스 구매 모델을 함께 사용하여 여러 가용 영역에서 여러 인스턴스 유형을 시작할 수 있습니다. EC2 플릿을 사용하면 별도의 온디맨드 및 스팟 용량 목표를 정의하고, 애플리케이션에 가장 적합한 인스턴스 유형을 지정하고, Amazon EC2가 각 구매 모델 내에서 플릿 용량을 분배하는 방법을 지정할 수 있습니다. 자세한 내용은 _Linux 인스턴스용 Amazon EC2 사용 설명서의 EC2 집합 시작을 참조하십시오_.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::EC2::EC2Fleet",
+  "Properties" : {
+      "Context" : String,
+      "ExcessCapacityTerminationPolicy" : String,
+      "LaunchTemplateConfigs" : [ FleetLaunchTemplateConfigRequest, ... ],
+      "OnDemandOptions" : OnDemandOptionsRequest,
+      "ReplaceUnhealthyInstances" : Boolean,
+      "SpotOptions" : SpotOptionsRequest,
+      "TagSpecifications" : [ TagSpecification, ... ],
+      "TargetCapacitySpecification" : TargetCapacitySpecificationRequest,
+      "TerminateInstancesWithExpiration" : Boolean,
+      "Type" : String,
+      "ValidFrom" : String,
+      "ValidUntil" : String
+    }
+}
+```
+
+## 속성
+
+`Context`  
+예약.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`ExcessCapacityTerminationPolicy`  
+EC2 집합의 총 목표 용량이 EC2 집합의 현재 크기 미만으로 감소하는 경우 실행 중인 인스턴스를 종료해야 하는지 여부를 나타냅니다.  
+유형의 플릿에 대해서만 지원됩니다`maintain`.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `no-termination | termination`  
+_업데이트 필요 사항_: 중단 없음
+
+`LaunchTemplateConfigs`  
+EC2 집합의 구성입니다.  
+_필수 항목 여부_: 예  
+_유형_: FleetLaunchTemplateConfigRequest 목록  
+_최대_: `50`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`OnDemandOptions`  
+EC2 집합의 온디맨드 인스턴스 구성에 대해 설명합니다.  
+*필수 항목 *여부: 아니요  
+_형식_: OnDemandOptionsRequest  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ReplaceUnhealthyInstances`  
+EC2 집합이 비정상 스팟 인스턴스를 대체해야 하는지 여부를 나타냅니다. 유형의 플릿에 대해서만 지원됩니다`maintain`. 자세한 내용은 _Amazon EC2 사용 설명서의 EC2 집합 상태 확인을 참조하세요_.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`SpotOptions`  
+EC2 집합의 스팟 인스턴스 구성에 대해 설명합니다.  
+*필수 항목 *여부: 아니요  
+_형식_: SpotOptionsRequest  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`TagSpecifications`  
+생성 시 EC2 집합 요청에 태그를 지정하기 위한 키-값 페어입니다. 자세한 내용은 리소스에 태그 지정을 참조하세요.  
+플릿 유형이 인 경우, `instant` 플릿에 태그를 지정하거나 `fleet` 시작 시 인스턴스에 태그를 지정할 리소스 유형을 지정합니다 `instance` .  
+플릿 유형이 또는 인 경우 `maintain` `request` 의 리소스 유형을 지정 `fleet` 하여 플릿에 태그를 지정합니다. 의 리소스 종류를 지정할 수 없습니다`instance`. 시작 시 인스턴스에 태그를 지정하려면 시작 템플릿에서 태그를 지정합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: TagSpecification 목록  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`TargetCapacitySpecification`  
+요청할 단위 수입니다.  
+_필수 항목 여부_: 예  
+_형식_: TargetCapacitySpecificationRequest  
+_업데이트 필요 사항_: 중단 없음
+
+`TerminateInstancesWithExpiration`  
+EC2 집합이 만료될 때 실행 중인 인스턴스를 종료해야 하는지 여부를 나타냅니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Type`  
+플릿 유형입니다. 기본값은 `maintain`입니다.
+
+- `maintain` - EC2 집합은 원하는 용량에 대해 비동기식 요청을 보내고, 중단된 스팟 인스턴스를 보충하여 원하는 스팟 용량을 계속 유지합니다.
+- `request` - EC2 집합은 원하는 용량에 대해 비동기식 일회성 요청을 보내지만, 스팟 용량을 사용할 수 없는 경우 대체 용량 풀에 스팟 요청을 제출하고, 스팟 인스턴스가 중단된 경우 스팟 용량을 유지하지 않습니다.
+- `instant` - EC2 집합은 원하는 용량에 대해 동기식 일회성 요청을 하고 시작할 수 없는 인스턴스에 대해 오류를 반환합니다.
+  자세한 내용은 _Amazon EC2 사용 설명서의 EC2 집합 요청 유형을 참조하세요_.  
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열  
+  _허용되는 값_: `instant | maintain | request`  
+  _업데이트 필요 사항_: 바꿔 놓음
+
+`ValidFrom`  
+UTC 형식의 요청 시작 날짜 및 시간(예: *YYYY-MM-DD\*\*\*\* *T*HH*:*MM:\*\*SS*Z)입니다. 기본값은 요청 이행을 즉시 시작하는 것입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ValidUntil`  
+UTC 형식의 요청 종료 날짜 및 시간(예: *YYYY-MM-DD\*\*\*\* *T*HH*:*MM:\*\*SS*Z)입니다. 이 시점에서는 새로운 EC2 집합 요청이 발신되지 않거나 요청을 이행할 수 없습니다. 값을 지정하지 않으면 취소할 때까지 요청이 유지됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 intrinsic 함수에 전달하면 `Ref` `Ref`플릿 ID(예: )를 반환합니다 `fleet-1fe24079-d272-4023-8e7c-70e10784cb0e`.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`FleetId` EC2 집합의 ID입니다.
+
+## 참고 항목
+
+- Amazon EC2 API 참조\* \*의 CreateFleet

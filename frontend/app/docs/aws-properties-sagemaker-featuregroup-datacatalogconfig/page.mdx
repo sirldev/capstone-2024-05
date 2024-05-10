@@ -1,0 +1,46 @@
+# AWS::SageMaker::FeatureGroup 데이터 카탈로그 구성
+
+에 대한 데이터 카탈로그 역할을 하는 Glue 테이블의 메타데이터 입니다`OfflineStore`.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Catalog" : String,
+  "Database" : String,
+  "TableName" : String
+}
+```
+
+## 속성
+
+`Catalog`  
+Glue 테이블 카탈로그의 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `255`  
+_패턴_: `[u0020-uD7FFuE000-uFFFDuD800uDC00-uDBFFuDFFFt]*`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Database`  
+Glue 테이블 데이터베이스의 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `255`  
+_패턴_: `[u0020-uD7FFuE000-uFFFDuD800uDC00-uDBFFuDFFFt]*`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`TableName`  
+글루 테이블의 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `255`  
+_패턴_: `[u0020-uD7FFuE000-uFFFDuD800uDC00-uDBFFuDFFFt]*`  
+_업데이트 필요 사항_: 바꿔 놓음

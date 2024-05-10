@@ -1,0 +1,42 @@
+# AWS::Route53::HealthCheck 경보 식별자
+
+Amazon Route 53 상태 확인 프로그램이 지정된 상태 확인이 정상인지 여부를 확인하는 데 사용할 CloudWatch 경보를 식별하는 복합 유형입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Name" : String,
+  "Region" : String
+}
+```
+
+## 속성
+
+`Name` Amazon Route 53 상태 확인 프로그램이 이 상태 확인이 정상인지 여부를 확인하는 데 사용할 CloudWatch 경보의 이름입니다.  
+Route 53은 다음과 같은 기능을 통해 CloudWatch 경보를 지원합니다.
+
+- 표준 해상도 메트릭. 고해상도 메트릭은 지원되지 않습니다. 자세한 내용은 _Amazon CloudWatch 사용 설명서의 고분해능 지표를 참조하십시오_.
+- 통계: Average, Minimum, Maximum, Sum 및 SampleCount. 확장 통계는 지원되지 않습니다.
+  _필수 항목 여부_: 예  
+  _유형_: 문자열  
+  _최소_: `1`  
+  _최대_: `256`  
+  _업데이트 필요 사항_: 중단 없음
+
+`Region`  
+Route 53 상태 확인 프로그램이 이 상태 확인이 정상인지 여부를 확인하는 데 사용할 CloudWatch 경보의 경우, 경보가 생성된 리전입니다.  
+현재 CloudWatch 리전 목록은 _Amazon Web Services 일반 참조의 Amazon CloudWatch 엔드포인트 및 할당량을 참조하세요_.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_허용되는 값_: `af-south-1 | ap-east-1 | ap-northeast-1 | ap-northeast-2 | ap-northeast-3 | ap-south-1 | ap-southeast-1 | ap-southeast-2 | ap-southeast-3 | ca-central-1 | cn-north-1 | cn-northwest-1 | eu-central-1 | eu-north-1 | eu-south-1 | eu-west-1 | eu-west-2 | eu-west-3 | me-south-1 | sa-east-1 | us-east-1 | us-east-2 | us-gov-east-1 | us-gov-west-1 | us-iso-east-1 | us-iso-west-1 | us-isob-east-1 | us-west-1 | us-west-2`  
+_업데이트 필요 사항_: 중단 없음
+
+## 참고 항목
+
+- AWS::Route53::HealthCheck 주제의 반환 값
+- Amazon Route 53 API Reference\* \*의 AlarmIdentifier

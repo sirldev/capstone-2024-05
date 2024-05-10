@@ -1,0 +1,55 @@
+# AWS::Route53RecoveryControl::클러스터
+
+Amazon Route 53 Application Recovery Controller에서 클러스터를 생성합니다. 클러스터는 Route 53 ARC API 호출을 실행하여 하나 이상의 라우팅 제어 상태를 업데이트하거나 가져올 수 있는 중복 리전 엔드포인트 집합입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::Route53RecoveryControl::Cluster",
+  "Properties" : {
+      "Name" : String,
+      "Tags" : [Tag, ... ]
+    }
+}
+```
+
+## 속성
+
+`Name`  
+클러스터의 이름입니다. 다음을 제외하고 이름에 공백이 아닌 문자를 사용할 수 있습니다: & > < ' (작은따옴표) " (큰따옴표) ; (세미콜론).  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Tags`  
+태그의 값입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 바꿔 놓음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref`개체 `Ref`가 반환됩니다 `ClusterArn` .
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`ClusterArn` 클러스터의 Amazon 리소스 이름(ARN)입니다.
+
+`ClusterEndpoints` 클러스터에 대한 끝점 배열입니다. 이러한 끝점 중 하나는 클러스터에서 라우팅 제어 상태를 설정하거나 검색하려는 경우에 지정합니다.
+
+`Status` 클러스터의 배포 상태입니다. 상태는 PENDING, DEPLOYED PENDING_DELETION 중 하나일 수 있습니다.

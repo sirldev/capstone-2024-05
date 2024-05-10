@@ -1,0 +1,327 @@
+# AWS::ApiGateway::D omainName
+
+리소스는 `AWS::ApiGateway::DomainName` API Gateway에서 API에 대한 사용자 지정 도메인 이름을 지정합니다.
+
+사용자 지정 도메인 이름을 사용하여 보다 직관적이고 기억하기 쉬운 URL을 제공할 수 있습니다. 사용자 지정 도메인 이름 사용에 대한 자세한 내용은 API Gateway 개발자 안내서의 API Gateway에서 API에 대한 사용자 지정 도메인 이름 설정을 참조하십시오\*\*.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::ApiGateway::DomainName",
+  "Properties" : {
+      "CertificateArn" : String,
+      "DomainName" : String,
+      "EndpointConfiguration" : EndpointConfiguration,
+      "MutualTlsAuthentication" : MutualTlsAuthentication,
+      "OwnershipVerificationCertificateArn" : String,
+      "RegionalCertificateArn" : String,
+      "SecurityPolicy" : String,
+      "Tags" : [Tag, ... ]
+    }
+}
+```
+
+## 속성
+
+`CertificateArn`  
+이 도메인 이름에 대해 엣지 최적화 엔드포인트에서 사용할 AWS 관리형 인증서에 대한 참조입니다. AWS Certificate Manager가 유일하게 지원되는 소스입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`DomainName`  
+API 호스트 이름으로서의 사용자 지정 도메인 이름(예: `my-api.example.com`.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`EndpointConfiguration`  
+도메인 이름의 끝점 유형을 보여 주는 이 DomainName의 끝점 구성입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: EndpointConfiguration  
+_업데이트 필요 사항_: 중단 없음
+
+`MutualTlsAuthentication`  
+사용자 지정 도메인 이름에 대한 상호 TLS 인증 구성입니다. 지정된 경우 API Gateway는 클라이언트와 서버 간에 양방향 인증을 수행합니다. 클라이언트는 API에 액세스하기 위해 신뢰할 수 있는 인증서를 제시해야 합니다.  
+*필수 항목 *여부: 아니요  
+_형식_: MutualTlsAuthentication  
+_업데이트 필요 사항_: 중단 없음
+
+`OwnershipVerificationCertificateArn`  
+사용자 지정 도메인의 소유권을 확인하기 위해 ACM에서 발급한 공인 인증서의 ARN입니다. 상호 TLS를 구성하고 ACM에서 가져온 인증서 또는 사설 CA 인증서 ARN을 RegionalCertificateArn으로 사용하는 경우에만 필요합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`RegionalCertificateArn`  
+리전 도메인 이름을 검증하는 데 사용할 AWS 관리형 인증서에 대한 참조입니다. AWS Certificate Manager가 유일하게 지원되는 소스입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`SecurityPolicy`  
+이 DomainName에 대한 TLS(전송 계층 보안) 버전 + 암호 그룹입니다. 유효한 값은 `TLS_1_0` 및 `TLS_1_2`입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `TLS_1_0 | TLS_1_2`  
+_업데이트 필요 사항_: 중단 없음
+
+`Tags`  
+태그 모음입니다. 각 태그 요소는 지정된 리소스와 연결됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref`도메인 `Ref`이름이 반환됩니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`DistributionDomainName`  
+사용자 지정 도메인 이름에 매핑된 Amazon CloudFront 배포 도메인 이름입니다. 이는 유형이 인 끝점에만 적용됩니다 `EDGE`.  
+본보기: `d111111abcdef8.cloudfront.net`
+
+`DistributionHostedZoneId`  
+엣지 최적화 엔드포인트의 지역에 구애받지 않는 Amazon Route 53 호스팅 영역 ID입니다. 유일하게 유효한 값은 `Z2FDTNDATAQYW2` 모든 지역에 대한 값입니다.
+
+`RegionalDomainName` 이 사용자 지정 도메인 이름에 대한 리전 엔드포인트와 연결된 도메인 이름입니다. 사용자 지정 도메인 이름이 이 리전 도메인 이름을 가리키도록 하는 DNS 레코드를 추가하여 이 연결을 설정합니다.
+
+`RegionalHostedZoneId` 리전 엔드포인트의 리전별 Amazon Route 53 호스팅 영역 ID입니다.
+
+## 예제
+
+### 사용자 지정 도메인 만들기
+
+다음 예제에서는 의 사용자 지정 도메인 이름을 만듭니다 `api.mydomain.com`.
+
+#### JSON (영문)
+
+```
+{
+    "MyDomainName": {
+        "Type": "AWS::ApiGateway::DomainName",
+        "Properties": {
+            "DomainName": "api.mydomain.com",
+            "CertificateArn": "arn:aws:acm:us-east-1:111122223333:certificate/fb1b9770-a305-495d-aefb-27e5e101ff3"
+        }
+    }
+}
+```
+
+### 매개 변수에서 사용자 지정 도메인 만들기
+
+다음 예제에서는 의 사용자 지정 도메인 이름을 만듭니다 `example.mydomain.com`.
+
+#### JSON (영문)
+
+```
+{
+    "Parameters": {
+        "basePath": {
+            "Type": "String",
+            "Default": "examplepath"
+        },
+        "domainName": {
+            "Type": "String",
+            "Default": "example.mydomain.com"
+        },
+        "restApiName": {
+            "Type": "String",
+            "Default": "exampleapi"
+        }
+    },
+    "Resources": {
+        "myCertificate": {
+            "Type": "AWS::CertificateManager::Certificate",
+            "Properties": {
+                "DomainName": {
+                    "Ref": "domainName"
+                }
+            }
+        },
+        "myDomainName": {
+            "Type": "AWS::ApiGateway::DomainName",
+            "Properties": {
+                "CertificateArn": {
+                    "Ref": "myCertificate"
+                },
+                "DomainName": {
+                    "Ref": "domainName"
+                }
+            }
+        },
+        "myMapping": {
+            "Type": "AWS::ApiGateway::BasePathMapping",
+            "Properties": {
+                "BasePath": {
+                    "Ref": "basePath"
+                },
+                "DomainName": {
+                    "Ref": "myDomainName"
+                },
+                "RestApiId": {
+                    "Ref": "myRestApi"
+                }
+            }
+        },
+        "myRestApi": {
+            "Type": "AWS::ApiGateway::RestApi",
+            "Properties": {
+                "Name": {
+                    "Ref": "restApiName"
+                }
+            }
+        }
+    },
+    "Outputs": {
+        "domainName": {
+            "Value": {
+                "Fn::GetAtt": [
+                    "myDomainName",
+                    "DistributionDomainName"
+                ]
+            }
+        }
+    }
+}
+```
+
+### EndpointConfiguration을 사용하여 도메인 이름 만들기
+
+다음 예제에서는 리전 인증서 ARN 및 엔드포인트 유형을 지정하는 사용자 지정 도메인 이름을 생성합니다.
+
+#### JSON (영문)
+
+```
+{
+  "Parameters": {
+    "cfnDomainName": {
+      "Type": "String"
+    },
+    "certificateArn": {
+      "Type": "String"
+    },
+    "type": {
+      "Type": "String"
+    }
+  },
+  "Resources": {
+    "myDomainName": {
+      "Type": "AWS::ApiGateway::DomainName",
+      "Properties": {
+        "CertificateArn": {
+          "Ref": "certificateArn"
+        },
+        "DomainName": {
+          "Ref": "cfnDomainName"
+        },
+        "EndpointConfiguration": {
+          "Types": [
+            {
+              "Ref": "type"
+            }
+          ]
+        },
+        "RegionalCertificateArn": {
+          "Ref": "certificateArn"
+        }
+      }
+    }
+  },
+  "Outputs": {
+    "DomainName": {
+      "Value": {
+        "Ref": "myDomainName"
+      }
+    }
+  }
+}
+```
+
+### 도메인 이름 및 영역 ID를 출력으로 생성
+
+다음 예제에서는 배포 및 리전 도메인 이름뿐만 아니라 배포 및 리전 호스팅 영역 ID를 스택의 출력으로 정의합니다.
+
+#### JSON (영문)
+
+```
+{
+    "Resources": {
+        "myDomainName": {
+            "Type": "AWS::ApiGateway::DomainName",
+            "Properties": {
+                "CertificateArn": {
+                    "Ref": "certificateArn"
+                },
+                "DomainName": {
+                    "Ref": "cfnDomainName"
+                },
+                "EndpointConfiguration": {
+                    "Types": [
+                        {
+                            "Ref": "type"
+                        }
+                    ]
+                },
+                "RegionalCertificateArn": {
+                    "Ref": "certificateArn"
+                }
+            }
+        }
+    },
+    "Outputs": {
+        "DistributionDomainName": {
+            "Value": {
+                "Fn::GetAtt": [
+                    "myDomainName",
+                    "DistributionDomainName"
+                ]
+            }
+        },
+        "DistributionHostedZoneId": {
+            "Value": {
+                "Fn::GetAtt": [
+                    "myDomainName",
+                    "DistributionHostedZoneId"
+                ]
+            }
+        },
+        "RegionalDomainName": {
+            "Value": {
+                "Fn::GetAtt": [
+                    "myDomainName",
+                    "RegionalDomainName"
+                ]
+            }
+        },
+        "RegionalHostedZoneId": {
+            "Value": {
+                "Fn::GetAtt": [
+                    "myDomainName",
+                    "RegionalHostedZoneId"
+                ]
+            }
+        }
+    }
+}
+```
+
+## 참고 항목
+
+- domainname:create(_Amazon API Gateway REST API 참조)_

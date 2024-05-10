@@ -1,0 +1,516 @@
+# AWS::EFS::파일 시스템
+
+리소스는 `AWS::EFS::FileSystem` Amazon Elastic File System(Amazon EFS)에 비어 있는 새 파일 시스템을 생성합니다. Amazon EC2 또는 다른 AWS 클라우드 컴퓨팅 리소스에 EFS 파일 시스템을 탑재하려면 탑재 대상(AWS::EFS::MountTarget)을 생성해야 합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::EFS::FileSystem",
+  "Properties" : {
+      "AvailabilityZoneName" : String,
+      "BackupPolicy" : BackupPolicy,
+      "BypassPolicyLockoutSafetyCheck" : Boolean,
+      "Encrypted" : Boolean,
+      "FileSystemPolicy" : Json,
+      "FileSystemTags" : [ ElasticFileSystemTag, ... ],
+      "KmsKeyId" : String,
+      "LifecyclePolicies" : [ LifecyclePolicy, ... ],
+      "PerformanceMode" : String,
+      "ProvisionedThroughputInMibps" : Double,
+      "ThroughputMode" : String
+    }
+}
+```
+
+## 속성
+
+`AvailabilityZoneName`  
+One Zone 스토리지 클래스를 사용하는 파일 시스템을 생성하는 데 사용됩니다. 파일 시스템을 생성할 AWS 가용 영역을 지정합니다. 형식을 사용하여 `us-east-1a` 가용 영역을 지정합니다. One Zone 스토리지 클래스에 대한 자세한 내용은 *Amazon EFS 사용 설명서*의 EFS 스토리지 클래스 사용을 참조하세요.  
+One Zone 스토리지 클래스는 Amazon EFS를 사용할 수 있는 AWS 리전의 모든 가용 영역에서 사용할 수 있는 것은 아닙니다.
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `64`  
+_패턴_: `.+`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`BackupPolicy`  
+를 `BackupPolicy` 사용하여 파일 시스템에 대한 자동 백업을 켜거나 끌 수 있습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: BackupPolicy  
+_업데이트 필요 사항_: 중단 없음
+
+`BypassPolicyLockoutSafetyCheck`  
+(선택 사항) 잠금 안전 검사를 무시할지 여부를 지정하는 부울입니다 `FileSystemPolicy` . 잠금 안전 검사는 요청의 정책이 요청을 수행하는 IAM 보안 주체를 잠그거나 이 파일 시스템에서 향후 요청을 하지 못하도록 차단할지 여부를 결정합니다 `PutFileSystemPolicy` . `BypassPolicyLockoutSafetyCheck` `True` 요청을 수행하는 IAM 보안 주체 가 `PutFileSystemPolicy` 이 파일 시스템에서 후속 요청을 하지 못하도록 하려는 경우에만 설정합니다. 기본값은 `False`입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`Encrypted`  
+true인 경우 암호화된 파일 시스템을 만드는 부울 값입니다. 암호화된 파일 시스템을 생성할 때 기존 AWS KMS 키에 대해 KmsKeyId를 지정할 수 있습니다. KMS 키를 지정하지 않으면 Amazon EFS의 기본 KMS 키인 `/aws/elasticfilesystem`가 암호화된 파일 시스템을 보호하는 데 사용됩니다.  
+_필수_: 조건부  
+_유형_: Boolean  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`FileSystemPolicy`  
+EFS `FileSystemPolicy` 파일 시스템용입니다. 파일 시스템 정책은 EFS 파일 시스템에 대한 NFS 액세스를 제어하는 데 사용되는 IAM 리소스 정책입니다. 자세한 내용은 Amazon EFS 사용 설명서의 IAM을 사용하여 Amazon EFS에 대한 NFS 액세스 제어를 참조하세요\**.  
+*필수 항목 *여부: 아니요  
+*형식*: Json  
+*최소*: `1`  
+*최대*: `20000`  
+*패턴*: `[sS]+`  
+*업데이트 필요 사항\*: 중단 없음
+
+`FileSystemTags`  
+파일 시스템과 연결된 하나 이상의 태그를 만드는 데 사용합니다. 각 태그는 사용자 정의 키-값 페어입니다. 생성 시 키-값 쌍을 포함하여 파일 시스템의 이름을 지정합니다 `"Key":"Name","Value":"{value}"` . 각 키는 고유해야 합니다. 자세한 내용은 * AWS 일반 참조 안내서*의 AWS 리소스 태깅을 참조하세요.  
+*필수 항목 *여부: 아니요  
+_유형_: ElasticFileSystemTag 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`KmsKeyId` 암호화된 파일 시스템을 보호하는 데 사용할 AWS KMS key의 ID입니다. 이 파라미터는 기본이 아닌 KMS 키를 사용하려는 경우에만 필요합니다. 이 파라미터를 지정하지 않으면 Amazon EFS의 기본 KMS 키가 사용됩니다. 이 ID는 다음 형식 중 하나일 수 있습니다.
+
+- 키 ID - 키의 고유 식별자(예: `1234abcd-12ab-34cd-56ef-1234567890ab`.
+- ARN - 키의 Amazon 리소스 이름(ARN)입니다(예: `arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab`).
+- 키 별칭 - 이전에 만든 키 표시 이름(예: `alias/projectKey1`.
+- 키 별칭 ARN - 키 별칭에 대한 ARN입니다(예: `arn:aws:kms:us-west-2:444455556666:alias/projectKey1`).
+  `KmsKeyId` 지정된 경우 `Encrypted` 매개 변수를 true로 설정해야 합니다.  
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열  
+  _최대_: `2048`  
+  _패턴_: `^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}|mrk-[0-9a-f]{32}|alias/[a-zA-Z0-9/_-]+|(arn:aws[-a-z]*:kms:[a-z0-9-]+:d{12}:((key/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})|(key/mrk-[0-9a-f]{32})|(alias/[a-zA-Z0-9/_-]+))))$`  
+  _업데이트 필요 사항_: 바꿔 놓음
+
+`LifecyclePolicies`  
+ `LifecyclePolicy` 파일 시스템의 개체를 정의하는 개체의 배열입니다 `LifecycleConfiguration` . `LifecycleConfiguration` 객체는 EFS 수명 주기 관리 및 지능형 계층화에 다음 사항을 알려줍니다.
+
+- 파일 시스템의 파일을 기본 스토리지에서 IA 스토리지 클래스로 이동해야 하는 경우.
+- IA 스토리지에 있는 파일을 기본 스토리지로 이동해야 하는 경우.
+  Amazon EFS에서는 각 `LifecyclePolicy` 객체에 전환이 하나만 있어야 합니다. 즉, 요청 본문에서 `LifecyclePolicies` 각 전환에 대해 하나의 개체인 , `LifecyclePolicy`, 의 `TransitionToIA` 배열로 구성되어야 합니다`TransitionToPrimaryStorageClass`. 자세한 내용은 다음 섹션의 예제 요청을 참조하세요.
+  *필수 항목 *여부: 아니요  
+  _유형_: LifecyclePolicy 목록  
+  _최대_: `2`  
+  _업데이트 필요 사항_: 중단 없음
+
+`PerformanceMode`  
+파일 시스템의 성능 모드입니다. `generalPurpose` 대부분의 파일 시스템에 대해 성능 모드를 사용하는 것이 좋습니다. 성능 모드를 사용하는 파일 시스템은 `maxIO` 대부분의 파일 작업에서 대기 시간이 약간 더 길어지는 대신 더 높은 수준의 집계 처리량 및 초당 작업 수로 확장할 수 있습니다. 파일 시스템을 만든 후에는 성능 모드를 변경할 수 없습니다.  
+이 `maxIO` 모드는 One Zone 스토리지 클래스를 사용하는 파일 시스템에서 지원되지 않습니다.
+기본값은 입니다`generalPurpose`.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `generalPurpose | maxIO`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ProvisionedThroughputInMibps`  
+초당 메비바이트(MiBps)로 측정된 처리량으로, 생성 중인 파일 시스템에 대해 프로비저닝하려는 처리량입니다. `ThroughputMode` 로 설정된 `provisioned` 경우 필수입니다. 유효한 값은 1-3414MiBps이며 상한은 지역에 따라 다릅니다. 이 한도를 늘리려면 AWS Support에 문의하십시오. 자세한 내용은 _Amazon EFS 사용 설명서의 늘릴 수 있는 Amazon EFS 할당량을 참조하세요_.  
+_필수_: 조건부  
+_유형_: 더블  
+_업데이트 필요 사항_: 중단 없음
+
+`ThroughputMode`  
+파일 시스템의 처리량 모드를 지정합니다. 모드는 `bursting`, `provisioned`, 또는 `elastic` 일 수 있습니다. 로 설정한 경우 `ThroughputMode` `provisioned`에 대한 값도 설정해야 합니다`ProvisionedThroughputInMibps`. 파일 시스템을 생성한 후 프로비저닝된 처리량 모드에서 파일 시스템의 처리량을 줄이거나 특정 시간 제한에 따라 처리량 모드 간에 변경할 수 있습니다. 자세한 내용은 _Amazon EFS 사용 설명서의 프로비저닝된 모드로 처리량 지정을 참조하세요_.  
+기본값은 입니다`bursting`.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `bursting | elastic | provisioned`  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`FileSystem ID가 반환됩니다. 예를 들어:
+
+`{"Ref":"logical_file_system_id"}`
+
+를 반환합니다 `fs-0123456789abcdef2`.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`Arn` EFS 파일 시스템의 Amazon 리소스 이름(ARN)입니다.  
+본보기: `arn:aws:elasticfilesystem:us-west-2:1111333322228888:file-system/fs-0123456789abcdef8`
+
+`FileSystemId` EFS 파일 시스템의 ID입니다. 예를 들어: `fs-abcdef0123456789a`
+
+## 예제
+
+### EFS Standard 스토리지 클래스를 사용하여 암호화된 EFS 파일 시스템 생성
+
+다음 예제에서는 다음 속성을 사용하여 Amazon EFS 파일 시스템을 선언합니다.
+
+- EFS Standard 스토리지 클래스를 사용합니다.
+- maxIO 성능 모드.
+- 라이프사이클 관리 및 Intelligent Tiering이 활성화되었습니다.
+- 미사용 시 암호화됩니다.
+- 자동 일일 백업이 활성화됩니다.
+- EfsReadOnly IAM 역할에 대한 읽기 전용 액세스 권한을 부여하는 파일 시스템 정책입니다.
+- 파일 시스템 액세스:
+  - 3개의 가용 영역에 대상을 탑재합니다.
+  - 파일 시스템에 대한 응용 프로그램별 진입점을 제공하는 액세스 지점입니다.
+
+#### JSON (영문)
+
+```
+"{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Resources": {
+        "MountTargetVPC": {
+            "Type": "AWS::EC2::VPC",
+            "Properties": {
+                "CidrBlock": "172.31.0.0/16"
+            }
+        },
+        "MountTargetSubnetOne": {
+            "Type": "AWS::EC2::Subnet",
+            "Properties": {
+                "CidrBlock": "172.31.1.0/24",
+                "VpcId": {
+                    "Ref": "MountTargetVPC"
+                },
+                "AvailabilityZone": "us-east-1a"
+            }
+        },
+        "MountTargetSubnetTwo": {
+            "Type": "AWS::EC2::Subnet",
+            "Properties": {
+                "CidrBlock": "172.31.2.0/24",
+                "VpcId": {
+                    "Ref": "MountTargetVPC"
+                },
+                "AvailabilityZone": "us-east-1b"
+            }
+        },
+        "MountTargetSubnetThree": {
+            "Type": "AWS::EC2::Subnet",
+            "Properties": {
+                "CidrBlock": "172.31.3.0/24",
+                "VpcId": {
+                    "Ref": "MountTargetVPC"
+                },
+                "AvailabilityZone": "us-east-1c
+            }
+        },
+       "FileSystemResource": {
+            "Type": "AWS::EFS::FileSystem",
+            "Properties": {
+                "PerformanceMode": "maxIO",
+                "LifecyclePolicies":[
+                    {
+                        "TransitionToIA" : "AFTER_30_DAYS"
+                    },
+                    {
+                        "TransitionToPrimaryStorageClass" : "AFTER_1_ACCESS"
+                    }
+                ],
+                "Encrypted": true,
+                "FileSystemTags": [
+                    {
+                        "Key": "Name",
+                        "Value": "TestFileSystem"
+                    }
+                ],
+                "FileSystemPolicy": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Effect": "Allow",
+                            "Action": [
+                                "elasticfilesystem:ClientMount"
+                            ],
+                            "Principal":  {"AWS": "arn:aws:iam::111122223333:role/EfsReadOnly"}
+                        }
+                    ]
+                },
+                "BackupPolicy": {
+                    "Status": "ENABLED"
+                    },
+                "KmsKeyId": {
+                    "Fn::GetAtt": [
+                        "key",
+                        "Arn"
+                    ]
+                }
+            }
+        },
+        "key": {
+            "Type": "AWS::KMS::Key",
+            "Properties": {
+                "KeyPolicy": {
+                    "Version": "2012-10-17",
+                    "Id": "key-default-1",
+                    "Statement": [
+                        {
+                            "Sid": "Allow administration of the key",
+                            "Effect": "Allow",
+                            "Principal": {
+                                "AWS": {
+                                    "Fn::Join": [
+                                        "",
+                                        [
+                                            "arn:aws:iam::",
+                                            {
+                                                "Ref": "AWS::AccountId"
+                                            },
+                                            ":root"
+                                        ]
+                                    ]
+                                }
+                            },
+                            "Action": [
+                                "kms:*"
+                            ],
+                            "Resource": "*"
+                        }
+                    ]
+                }
+            }
+        },
+        "MountTargetResource1": {
+            "Type": "AWS::EFS::MountTarget",
+            "Properties": {
+                "FileSystemId": {
+                    "Ref": "FileSystemResource"
+                },
+                "SubnetId": {
+                    "Ref": "MountTargetSubnetOne"
+                },
+                "SecurityGroups": [
+                    {
+                        "Fn::GetAtt": [
+                            "MountTargetVPC",
+                            "DefaultSecurityGroup"
+                        ]
+                    }
+                ]
+            }
+        },
+        "MountTargetResource2": {
+            "Type": "AWS::EFS::MountTarget",
+            "Properties": {
+                "FileSystemId": {
+                    "Ref": "FileSystemResource"
+                },
+                "SubnetId": {
+                    "Ref": "MountTargetSubnetTwo"
+                },
+                "SecurityGroups": [
+                    {
+                        "Fn::GetAtt": [
+                            "MountTargetVPC",
+                            "DefaultSecurityGroup"
+                        ]
+                    }
+                ]
+            }
+        },
+        "MountTargetResource3": {
+            "Type": "AWS::EFS::MountTarget",
+            "Properties": {
+                "FileSystemId": {
+                    "Ref": "FileSystemResource"
+                },
+                "SubnetId": {
+                    "Ref": "MountTargetSubnetThree"
+                },
+                "SecurityGroups": [
+                    {
+                        "Fn::GetAtt": [
+                            "MountTargetVPC",
+                            "DefaultSecurityGroup"
+                        ]
+                    }
+                ]
+            }
+        },
+        "AccessPointResource": {
+            "Type": "AWS::EFS::AccessPoint",
+            "Properties": {
+                "FileSystemId": {
+                    "Ref": "FileSystemResource"
+                },
+                "PosixUser": {
+                    "Uid": "13234",
+                    "Gid": "1322",
+                    "SecondaryGids": [
+                        "1344",
+                        "1452"
+                    ]
+                },
+                "RootDirectory": {
+                    "CreationInfo": {
+                        "OwnerGid": "708798",
+                        "OwnerUid": "7987987",
+                        "Permissions": "0755"
+                    },
+                    "Path": "/testcfn/abc"
+                }
+            }
+        }
+    }
+}
+```
+
+### EFS One Zone 스토리지 클래스를 사용하여 파일 시스템 생성
+
+다음 예제에서는 us-east-1a 가용 영역의 One Zone 스토리지 클래스를 사용하여 암호화된 Amazon EFS 파일 시스템을 선언합니다.
+
+#### JSON (영문)
+
+```
+"{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Resources": {
+        "MountTargetVPC": {
+            "Type": "AWS::EC2::VPC",
+            "Properties": {
+                "CidrBlock": "172.31.0.0/16"
+            }
+        },
+        "MountTargetSubnetOne": {
+            "Type": "AWS::EC2::Subnet",
+            "Properties": {
+                "CidrBlock": "172.31.1.0/24",
+                "VpcId": {
+                    "Ref": "MountTargetVPC"
+                },
+                "AvailabilityZone": "us-east-1a"
+            }
+        },
+       "FileSystemResource": {
+            "Type": "AWS::EFS::FileSystem",
+            "Properties": {
+                "AvailabilityZoneName": "us-east-1a",
+                "LifecyclePolicies":[
+                    {
+                        "TransitionToIA" : "AFTER_30_DAYS"
+                    },
+                    {
+                        "TransitionToPrimaryStorageClass" : "AFTER_1_ACCESS"
+                    }
+                ],
+                "Encrypted": true,
+                "FileSystemTags": [
+                    {
+                        "Key": "Name",
+                        "Value": "TestFileSystem"
+                    }
+                ],
+                "FileSystemPolicy": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Effect": "Allow",
+                            "Action": [
+                                "elasticfilesystem:ClientMount"
+                            ],
+                            "Principal":  {"AWS": "arn:aws:iam::111122223333:role/EfsReadOnly"}
+                        }
+                    ]
+                },
+                "BackupPolicy": {
+                    "Status": "ENABLED"
+                    },
+                "KmsKeyId": {
+                    "Fn::GetAtt": [
+                        "key",
+                        "Arn"
+                    ]
+                }
+            }
+        },
+        "key": {
+            "Type": "AWS::KMS::Key",
+            "Properties": {
+                "KeyPolicy": {
+                    "Version": "2012-10-17",
+                    "Id": "key-default-1",
+                    "Statement": [
+                        {
+                            "Sid": "Allow administration of the key",
+                            "Effect": "Allow",
+                            "Principal": {
+                                "AWS": {
+                                    "Fn::Join": [
+                                        "",
+                                        [
+                                            "arn:aws:iam::",
+                                            {
+                                                "Ref": "AWS::AccountId"
+                                            },
+                                            ":root"
+                                        ]
+                                    ]
+                                }
+                            },
+                            "Action": [
+                                "kms:*"
+                            ],
+                            "Resource": "*"
+                        }
+                    ]
+                }
+            }
+        },
+        "MountTargetResource1": {
+            "Type": "AWS::EFS::MountTarget",
+            "Properties": {
+                "FileSystemId": {
+                    "Ref": "FileSystemResource"
+                },
+                "SubnetId": {
+                    "Ref": "MountTargetSubnetOne"
+                },
+                "SecurityGroups": [
+                    {
+                        "Fn::GetAtt": [
+                            "MountTargetVPC",
+                            "DefaultSecurityGroup"
+                        ]
+                    }
+                ]
+            }
+        },
+        "AccessPointResource": {
+            "Type": "AWS::EFS::AccessPoint",
+            "Properties": {
+                "FileSystemId": {
+                    "Ref": "FileSystemResource"
+                },
+                "PosixUser": {
+                    "Uid": "13234",
+                    "Gid": "1322",
+                    "SecondaryGids": [
+                        "1344",
+                        "1452"
+                    ]
+                },
+                "RootDirectory": {
+                    "CreationInfo": {
+                        "OwnerGid": "708798",
+                        "OwnerUid": "7987987",
+                        "Permissions": "0755"
+                    },
+                    "Path": "/testcfn/abc"
+                }
+            }
+        }
+    }
+}
+```
+
+## 참고 항목
+
+- Amazon EFS: 작동 방식
+- Amazon EFS 파일 시스템 생성

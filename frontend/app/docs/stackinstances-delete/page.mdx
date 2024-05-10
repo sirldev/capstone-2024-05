@@ -1,0 +1,81 @@
+# 스택 세트에서 스택 인스턴스 삭제
+
+AWS Management Console에서 또는 AWS CLI에서 AWS CloudFormation 명령을 사용하여 스택 세트에서 스택 인스턴스를 삭제할 수 있습니다. 이 절차에서는 모든 스택을 삭제합니다.
+
+서비스 관리형 권한이 있는 스택 세트의 경우 최상위 조직 단위(OU)에서 스택 인스턴스를 삭제하면 OU가 스택 세트의 대상에서 제거됩니다.
+
+**항목**
+
+- AWS Management Console을 사용하여 스택 인스턴스 삭제
+- AWS CLI를 사용하여 스택 인스턴스 삭제
+
+## AWS Management Console을 사용하여 스택 인스턴스 삭제
+
+1.  some-address에서 AWS CloudFormation 콘솔을 엽니다.
+
+1.  탐색 창에서 [StackSets**]를 선택합니다 \*\* . [StackSets] 페이지에서 스택 세트 생성에서 생성한 스택 세트를 선택합니다.
+
+1.  스택 세트를 선택한 상태에서 **[Actions**] 메뉴에서 **[Delete stacks from StackSet**]를 선택합니다 .
+
+1.  [Set deployment options**] \*\* 페이지에서 스택 인스턴스를 삭제할 계정을 선택합니다.
+
+    1.  [자체 관리 권한][Accounts**] 에서 **[Deploy stacks in accounts**]를 선택합니다\*\*. 대상 계좌 번호를 텍스트 상자에 붙여넣고 여러 숫자를 쉼표로 구분합니다.
+
+              [서비스 관리 권한][Accounts**]  에서 **[Deploy stacks in organizational units**]를 선택합니다**. 스택 세트가 대상으로 하는 OU의 ID를 붙여 넣습니다.
+
+        **메모**  
+        또한 StackSets는 지정된 대상 OU의 모든 하위 OU에서 스택 인스턴스를 삭제합니다.
+
+    1.  **배포 리전(Deployment regions**)에서 스택 인스턴스를 삭제할 리전을 선택합니다. 이 경우 미국 동부(버지니아 북부) 리전 및 미국 서부(오레곤) 리전입니다.
+
+    1.  배포 옵션**의 경우: **
+
+        - Maximum concurrent accounts(최대 동시 계정**)**에서 기본값인 **Number(숫자**)와 **1을 유지합니다**.
+        - **[Failure tolerance**]에서 기본값인 **Number** 및 **0을 유지합니다**.
+
+        [Retain stacks**] \*\* 영역에서 기본 설정인 [disabled]를 유지합니다.
+
+        스택 세트에서 스택을 삭제할 때 **[Retain stacks**] 옵션을 사용하면 스택 세트에서 스택 인스턴스를 제거하되 스택 및 관련 리소스는 저장하도록 선택할 수 있습니다. **[Retain stacks**] 옵션을 선택하여 스택 세트에서 스택을 저장하면 스택의 리소스는 현재 상태로 유지되지만 스택은 더 이상 스택 세트의 일부가 아닙니다. 스택을 다시 연결하거나 기존 스택을 스택 세트에 추가하려면 AWS CloudFormation StackSets로 스택 가져오기 단원을 참조하십시오.
+
+        다음**(Next)을 선택합니다**.
+
+1.  [Review**] ** 페이지에서 선택 사항을 검토하고 [Submit]을 선택합니다\*\***.
+
+1.  스택 삭제가 완료되면 스택 인스턴스 탭의 StackSet 세부 정보 페이지에서 스택 세트에서 스택 인스턴스가 삭제되었는지 확인할 수 \*\*\*\* 있습니다.
+
+## AWS CLI를 사용하여 스택 인스턴스 삭제
+
+위임된 관리자 역할을 하는 경우 `--call-as` StackSets 명령을 실행할 때마다`DELEGATED_ADMIN` 매개 변수를 다음으로 설정해야 합니다.
+
+```
+--call-as DELEGATED_ADMIN
+```
+
+1.  명령을 실행합니다 `delete-stack-instances` . 에서 `--stack-set-name`스택 세트 이름을 지정합니다`my-awsconfig-stackset`.
+
+         다음 예제와 같이 매개 변수 `FailureToleranceCount` 에서 `0`, 및 `MaxConcurrentCount` to `1` 로 설정하여 내결함성 및 최대 동시 계정을 설정합니다 `--operation-preferences` . 대신 백분율을 적용하려면 `FailureTolerancePercentage` 또는 `MaxConcurrentPercentage`를 사용합니다. 이 연습에서는 백분율이 아닌 개수를 사용합니다.
+
+    **메모**  
+    의 값은 `MaxConcurrentCount` 의 값에 따라 달라집니다`FailureToleranceCount`. `MaxConcurrentCount` 는 보다 최대 하나 더 많습니다`FailureToleranceCount`.
+
+        의 필수 매개 변수이기 `--retain-stacks`때문에 `delete-stack-instances`스택을 유지(저장)하지  않으려면 `--no-retain-stacks`를 추가합니다. 이 연습에서는 스택을 `--no-retain-stacks` 유지하지 않으므로 파라미터를 추가합니다.
+
+    [자체 관리 권한]account_ID* 스택 세트 생성에서 스택 세트를 생성하는 데 사용한 계정으로* 바꿉니다.
+
+    ```
+    aws cloudformation delete-stack-instances --stack-set-name my-awsconfig-stackset --accounts '["0123456789012"]' --regions '["eu-west-1"]' --operation-preferences FailureToleranceCount=0,MaxConcurrentCount=1 --no-retain-stacks
+    ```
+
+    [서비스 관리 권한] 에서 `--deployment-targets`스택 인스턴스를 생성한 조직(루트) ID 또는 OU ID를 지정합니다.
+    **메모**  
+    또한 StackSets는 지정된 대상 OU의 모든 하위 OU에서 스택 인스턴스를 삭제합니다.
+
+    ```
+    aws cloudformation delete-stack-instances --stack-set-name my-awsconfig-stackset --deployment-targets OrganizationalUnitIds='["ou-rcuk-1x5jlwo", "ou-rcuk-slr5lh0a"]' --regions '["eu-west-1"]' --no-retain-stacks
+    ```
+
+1.  선택적으로, 스택 삭제가 완료된 후 `describe-stack-set-operation` 스택 삭제 작업의 상태와 결과를 표시하는 명령을 실행하여 스택 인스턴스가 스택 세트에서 삭제되었는지 확인합니다. 의 `--operation-id` 경우 명령`delete-stack-instances`에서 반환된 작업 ID를 사용합니다.
+
+    ```
+    aws cloudformation describe-stack-set-operation --stack-set-name stackSetName --operation-id ddf16f54-ad62-4d9b-b0ab-3ed8e9example
+    ```

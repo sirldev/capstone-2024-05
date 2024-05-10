@@ -1,0 +1,36 @@
+# AWS::KinesisFirehose::D eliveryStream HttpEndpointCommonAttribute
+
+지정된 HTTP 엔드포인트 대상으로 전달되는 메타데이터를 설명합니다. Kinesis Firehose는 Datadog, MongoDB 및 New Relic을 포함하여 지원되는 타사 서비스 공급자가 소유한 모든 사용자 지정 HTTP 엔드포인트 또는 HTTP 엔드포인트를 지원합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "AttributeName" : String,
+  "AttributeValue" : String
+}
+```
+
+## 속성
+
+`AttributeName`  
+HTTP 끝점 공통 특성의 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `256`  
+_패턴_: `^(?!s*$).+`  
+_업데이트 필요 사항_: 중단 없음
+
+`AttributeValue`  
+HTTP 끝점 공통 특성의 값입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `0`  
+_최대_: `1024`  
+_패턴_: `.*`  
+_업데이트 필요 사항_: 중단 없음

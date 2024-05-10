@@ -1,0 +1,31 @@
+# AWS::SageMaker::D omain RSessionAppSettings
+
+앱에 적용되는 설정 모음입니다 `RSessionGateway` .
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "CustomImages" : [ CustomImage, ... ],
+  "DefaultResourceSpec" : ResourceSpec
+}
+```
+
+## 속성
+
+`CustomImages`  
+RSession 앱으로 실행되도록 구성된 사용자 지정 SageMaker 이미지 목록입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: CustomImage 목록  
+_최대_: `200`  
+_업데이트 필요 사항_: 중단 없음
+
+`DefaultResourceSpec`  
+SageMaker 이미지 및 SageMaker 이미지 버전의 ARN과 버전이 실행되는 인스턴스 유형을 지정합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: ResourceSpec  
+_업데이트 필요 사항_: 중단 없음

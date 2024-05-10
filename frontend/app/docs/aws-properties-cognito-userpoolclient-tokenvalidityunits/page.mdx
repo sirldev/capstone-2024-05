@@ -1,0 +1,40 @@
+# AWS::Cognito::UserPoolClient 토큰유효성단위
+
+ID, 액세스 및 새로 고침 토큰의 기간을 설정할 때 사용하는 시간 단위입니다. RefreshToken의 기본 단위는 일이고 ID 및 액세스 토큰의 기본값은 시간입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "AccessToken" : String,
+  "IdToken" : String,
+  "RefreshToken" : String
+}
+```
+
+## 속성
+
+`AccessToken`  
+ `seconds`, `minutes`, `hours`또는 `days` 매개변수에 설정한 값의 시간 단위입니다 `AccessTokenValidity` . 기본 `AccessTokenValidity` 시간 단위는 시간입니다. `AccessTokenValidity` 기간은 5분에서 1일까지 다양합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `days | hours | minutes | seconds`  
+_업데이트 필요 사항_: 중단 없음
+
+`IdToken`  
+`seconds`, `minutes`, `hours`또는 `days` 매개변수에 설정한 값의 시간 단위입니다 `IdTokenValidity` . 기본 `IdTokenValidity` 시간 단위는 시간입니다. `IdTokenValidity` 기간은 5분에서 1일까지 다양합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `days | hours | minutes | seconds`  
+_업데이트 필요 사항_: 중단 없음
+
+`RefreshToken`  
+`seconds`, `minutes`, `hours`또는 `days` 매개변수에 설정한 값의 시간 단위입니다 `RefreshTokenValidity` . 기본 `RefreshTokenValidity` 시간 단위는 일입니다. `RefreshTokenValidity` 기간은 60분에서 10년까지 다양합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `days | hours | minutes | seconds`  
+_업데이트 필요 사항_: 중단 없음

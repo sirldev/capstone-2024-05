@@ -1,0 +1,30 @@
+# AWS::D ynamoDB::GlobalTable ReadProvisionedThroughputSettings
+
+가 로 설정된 경우 복제본 테이블 또는 복제본 global secondary index에 대한 읽기 용량 설정을 지정할 `BillingMode` 수 있습니다`PROVISIONED`. 또는 중 하나의 값을 지정해야 하지만 둘 다에 대해서는 지정할 `ReadCapacityUnits` `ReadCapacityAutoScalingSettings`수 없습니다. 고정 용량과 Auto Scaling 간에 전환할 수 있습니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ReadCapacityAutoScalingSettings" : CapacityAutoScalingSettings,
+  "ReadCapacityUnits" : Integer
+}
+```
+
+## 속성
+
+`ReadCapacityAutoScalingSettings`  
+복제본 테이블 또는 global secondary index에 대한 Auto Scaling 설정을 지정합니다.  
+*필수 항목 *여부: 아니요  
+_형식_: CapacityAutoScalingSettings  
+_업데이트 필요 사항_: 중단 없음
+
+`ReadCapacityUnits`  
+복제본 테이블 또는 global secondary index에 대한 고정 읽기 용량을 지정합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음

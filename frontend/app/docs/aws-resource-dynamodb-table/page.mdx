@@ -1,0 +1,522 @@
+# AWS::D ynamoDB::테이블
+
+`AWS::DynamoDB::Table` 리소스는 DynamoDB 테이블을 생성합니다. 자세한 내용은 _Amazon DynamoDB API Reference의 CreateTable을 참조하십시오_.
+
+DynamoDB 테이블로 작업할 때는 다음과 같은 동작에 유의해야 합니다.
+
+- AWS CloudFormation에서는 일반적으로 DynamoDB 테이블을 병렬로 생성합니다. 그러나 템플릿에 인덱스가 있는 DynamoDB 테이블이 여러 개 포함되어 있는 경우 테이블이 순차적으로 생성되도록 종속성을 선언해야 합니다. Amazon DynamoDB는 생성 중 상태에 있는 보조 인덱스가 있는 테이블의 수를 제한합니다. 인덱스가 있는 여러 테이블을 동시에 생성하면 DynamoDB가 오류를 반환하고 스택 작업이 실패합니다. 예제는 DependsOn 속성이 있는 DynamoDB 테이블 단원을 참조하십시오.
+
+**중요하다**  
+ AWS CloudFormation 템플릿에 대해 여기에 설명된 최신 스키마를 사용하는 것이 지침입니다. 이 스키마는 아래의 모든 테이블 설정에 대한 프로비저닝을 지원합니다. AWS CloudFormation 템플릿에서 이 스키마를 사용하는 경우 Identity and Access Management(IAM) 정책이 이러한 설정 변경의 권한 부여를 허용하는 적절한 권한으로 업데이트되었는지 확인하십시오.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::DynamoDB::Table",
+  "Properties" : {
+      "AttributeDefinitions" : [ AttributeDefinition, ... ],
+      "BillingMode" : String,
+      "ContributorInsightsSpecification" : ContributorInsightsSpecification,
+      "DeletionProtectionEnabled" : Boolean,
+      "GlobalSecondaryIndexes" : [ GlobalSecondaryIndex, ... ],
+      "ImportSourceSpecification" : ImportSourceSpecification,
+      "KeySchema" : [ KeySchema, ... ],
+      "KinesisStreamSpecification" : KinesisStreamSpecification,
+      "LocalSecondaryIndexes" : [ LocalSecondaryIndex, ... ],
+      "PointInTimeRecoverySpecification" : PointInTimeRecoverySpecification,
+      "ProvisionedThroughput" : ProvisionedThroughput,
+      "SSESpecification" : SSESpecification,
+      "StreamSpecification" : StreamSpecification,
+      "TableClass" : String,
+      "TableName" : String,
+      "Tags" : [Tag, ... ],
+      "TimeToLiveSpecification" : TimeToLiveSpecification
+    }
+}
+```
+
+## 속성
+
+`AttributeDefinitions`  
+테이블 및 인덱스에 대한 키 스키마를 설명하는 속성 목록입니다.  
+이 속성은 DynamoDB 테이블을 생성하는 데 필요합니다.  
+업데이트 필요 사항: 일부 중단. 기존 AttributeDefinition을 편집하는 경우 대체됩니다.  
+_필수_: 조건부  
+_유형_: AttributeDefinition 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`BillingMode` 읽기 및 쓰기 처리량에 대한 요금이 부과되는 방법과 용량을 관리하는 방법을 지정합니다.  
+유효한 값은 다음과 같습니다.
+
+- `PROVISIONED`- 예측 가능한 워크로드에 `PROVISIONED` 사용하는 것이 좋습니다`PROVISIONED`. 청구 모드를 프로비저닝된 모드로 설정합니다.
+- `PAY_PER_REQUEST`- 예측할 수 없는 워크로드에 `PAY_PER_REQUEST` 사용하는 것이 좋습니다`PAY_PER_REQUEST`. 청구 모드를 온디맨드 모드로 설정합니다.
+  지정하지 않으면 기본값은 `PROVISIONED`입니다.  
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열  
+  _업데이트 필요 사항_: 중단 없음
+
+`ContributorInsightsSpecification`  
+지정된 테이블에 대해 CloudWatch Contributor Insights를 활성화하거나 비활성화하는 데 사용되는 설정입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: ContributorInsightsSpecification  
+_업데이트 필요 사항_: 중단 없음
+
+`DeletionProtectionEnabled`  
+테이블이 삭제되지 않도록 보호되는지 여부를 결정합니다. 사용하도록 설정하면 사용자 또는 프로세스에서 테이블을 삭제할 수 없습니다. 이 설정은 기본적으로 비활성화되어 있습니다. 자세한 내용은 _Amazon DynamoDBDeveloper 안내서의 삭제 방지 사용을 참조하세요_.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`GlobalSecondaryIndexes`  
+테이블에 생성할 글로벌 보조 인덱스입니다. 최대 20개의 글로벌 보조 인덱스를 생성할 수 있습니다.  
+새 글로벌 보조 인덱스를 포함하도록 테이블을 업데이트하면 AWS CloudFormation에서 인덱스 생성을 시작한 다음 스택 업데이트를 진행합니다. AWS CloudFormation은 테이블 크기에 따라 채우기 단계에 시간이 오래 걸릴 수 있으므로 인덱스 생성이 완료될 때까지 기다리지 않습니다. 인덱스의 상태가 가 될 때까지 인덱스를 사용하거나 테이블을 업데이트할 수 없습니다`ACTIVE`. DynamoDB DescribeTable 명령을 사용하여 상태를 추적할 수 있습니다.  
+업데이트 중에 인덱스를 추가하거나 삭제하는 경우 다른 리소스는 업데이트하지 않는 것이 좋습니다. 스택이 업데이트되지 않고 새 인덱스를 추가하는 동안 롤백되는 경우 인덱스를 수동으로 삭제해야 합니다.  
+업데이트는 지원되지 않습니다. 예외는 다음과 같습니다.
+
+- Contributor Insights 사양 또는 global secondary indexes의 프로비저닝된 처리량 값을 업데이트하면 중단 없이 테이블을 업데이트할 수 있습니다.
+- 중단 없이 하나의 global secondary index를 삭제하거나 추가할 수 있습니다. 동일한 업데이트에서 둘 다 수행하는 경우(예: 인덱스의 논리적 ID 변경) 업데이트가 실패합니다.
+  *필수 항목 *여부: 아니요  
+  _형식_: GlobalSecondaryIndex 목록  
+  _업데이트 필요 사항_: 중단 없음
+
+`ImportSourceSpecification`  
+S3 버킷 소스에서 테이블로 가져오는 데이터의 속성을 지정합니다.  
+속성을 지정 `ImportSourceSpecification` 하고 `StreamSpecification` `TableClass` , 속성 또는 속성도 `DeletionProtectionEnabled` 지정하는 경우 스택을 생성/업데이트하는 IAM 엔터티에 권한이 있어야 합니다 `UpdateTable` .
+*필수 항목 *여부: 아니요  
+_형식_: ImportSourceSpecification  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`KeySchema`  
+테이블의 기본 키를 구성하는 특성을 지정합니다. 속성의 특성 `KeySchema` 도 속성에 정의되어야 합니다 `AttributeDefinitions` .  
+_필수 항목 여부_: 예  
+_유형_: KeySchema 목록  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`KinesisStreamSpecification`  
+지정된 테이블에 대한 Kinesis Data Streams 구성입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: KinesisStreamSpecification  
+_업데이트 필요 사항_: 중단 없음
+
+`LocalSecondaryIndexes`  
+테이블에 생성할 local secondary indexes. 최대 5개의 local secondary index를 생성할 수 있습니다. 각 인덱스의 범위는 지정된 해시 키 값으로 지정됩니다. 각 해시 키의 크기는 최대 10GB일 수 있습니다.  
+*필수 항목 *여부: 아니요  
+_형식_: LocalSecondaryIndex 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`PointInTimeRecoverySpecification`  
+특정 시점 복구를 사용하도록 설정하는 데 사용되는 설정입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: PointInTimeRecoverySpecification  
+_업데이트 필요 사항_: 중단 없음
+
+`ProvisionedThroughput`  
+및 에 대한 값으로 구성된 지정된 테이블의 처리량 `ReadCapacityUnits` `WriteCapacityUnits` 입니다. 프로비저닝된 처리량 구조의 내용에 대한 자세한 내용은 Amazon DynamoDB 테이블 ProvisionedThroughput 단원을 참조하십시오.  
+로 설정하는 경우 `BillingMode` `PROVISIONED`이 속성을 지정해야 합니다. `BillingMode` 로 `PAY_PER_REQUEST` 설정하면 이 속성을 지정할 수 없습니다.  
+_필수_: 조건부  
+_형식_: ProvisionedThroughput  
+_업데이트 필요 사항_: 중단 없음
+
+`SSESpecification`  
+서버 쪽 암호화를 사용하도록 설정하도록 설정합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: SSES사양  
+_업데이트 필요 사항_: 일부 중단
+
+`StreamSpecification`  
+테이블에 저장된 항목의 변경 사항을 캡처하는 DynamoDB 테이블 스트림에 대한 설정입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: StreamSpecification  
+_업데이트 필요 사항_: 중단 없음
+
+`TableClass`  
+새 테이블의 table 클래스입니다. 유효한 값은 `STANDARD` 및 `STANDARD_INFREQUENT_ACCESS`입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`TableName`  
+테이블의 이름입니다. 이름을 지정하지 않으면 AWS CloudFormation에서는 고유한 물리적 ID를 생성하고 해당 ID를 테이블 이름으로 사용합니다. 자세한 내용은 이름 유형을 참조하십시오.  
+이름을 지정하면 이 리소스를 대체해야 하는 업데이트를 수행할 수 없습니다. 중단이 필요 없거나 약간의 중단이 필요한 업데이트를 수행할 수 있습니다. 리소스를 바꿔야 하는 경우 새 이름을 지정합니다.
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `3`  
+_최대_: `255`  
+_패턴_: `[a-zA-Z0-9_.-]+`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Tags`  
+이 리소스에 적용할 키-값 쌍의 배열입니다.  
+자세한 내용은 태그를 참조하십시오.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`TimeToLiveSpecification`  
+테이블의 TTL(Time to Live) 설정을 지정합니다.  
+DynamoDB의 제한에 대한 자세한 내용은 Amazon DynamoDB 개발자 안내서의 Amazon DynamoDB의 제한을 참조하십시오.
+*필수 항목 *여부: 아니요  
+_형식_: TimeToLiveSpecification  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`리소스 이름이 반환됩니다. 예를 들어:
+
+`{ "Ref": "MyResource" }`
+
+논리적 ID가 있는 리소스의 경우 `myDynamoDBTable` `Ref` DynamoDB 테이블 이름을 반환합니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`Arn`  
+DynamoDB 테이블의 Amazon 리소스 이름(ARN)입니다 `arn:aws:dynamodb:us-east-2:123456789012:table/myDynamoDBTable`.
+
+`StreamArn`  
+DynamoDB 스트림의 ARN(예: `arn:aws:dynamodb:us-east-1:123456789012:table/testddbstack-myDynamoDBTable-012A1SL7SMP5Q/stream/2015-11-30T20:10:00.000`.  
+`StreamSpecification` 이 속성을 사용하려면 속성을 지정해야 합니다.
+
+## 예제
+
+### DynamoDB 테이블(로컬 및 보조 인덱스 포함)
+
+다음 샘플은 , `Album`, `Artist`를 `Sales` 속성으로 사용하여 DynamoDB 테이블을 생성합니다 `NumberOfSongs` . 기본 키에는 `Album` 해시 키로서의 속성과 `Artist` 범위 키로서의 속성이 포함됩니다. 이 테이블에는 2개의 글로벌 인덱스와 1개의 보조 인덱스도 포함되어 있습니다. 지정된 아티스트의 판매 수를 쿼리하기 위해 global secondary index는 `Sales` 속성을 해시 키로, `Artist` 속성을 범위 키로 사용합니다.
+
+노래 수를 기준으로 판매량을 쿼리하기 위해 global secondary index는 `NumberOfSongs` 속성을 해시 키로, `Sales` 속성을 범위 키로 사용합니다.
+
+앨범 판매량을 쿼리할 때 local secondary index는 테이블과 동일한 해시 키를 사용하지만 `Sales` 속성을 범위 키로 사용합니다.
+
+#### JSON (영문)
+
+```
+{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+  "Resources" : {
+    "myDynamoDBTable" : {
+      "Type" : "AWS::DynamoDB::Table",
+      "Properties" : {
+        "AttributeDefinitions" : [
+          {
+            "AttributeName" : "Album",
+            "AttributeType" : "S"
+          },
+          {
+            "AttributeName" : "Artist",
+            "AttributeType" : "S"
+          },
+          {
+            "AttributeName" : "Sales",
+            "AttributeType" : "N"
+          },
+          {
+            "AttributeName" : "NumberOfSongs",
+            "AttributeType" : "N"
+          }
+        ],
+        "KeySchema" : [
+          {
+            "AttributeName" : "Album",
+            "KeyType" : "HASH"
+          },
+          {
+            "AttributeName" : "Artist",
+            "KeyType" : "RANGE"
+          }
+        ],
+        "ProvisionedThroughput" : {
+          "ReadCapacityUnits" : "5",
+          "WriteCapacityUnits" : "5"
+        },
+        "TableName" : "myTableName",
+        "GlobalSecondaryIndexes" : [{
+          "IndexName" : "myGSI",
+          "KeySchema" : [
+            {
+              "AttributeName" : "Sales",
+              "KeyType" : "HASH"
+            },
+            {
+              "AttributeName" : "Artist",
+              "KeyType" : "RANGE"
+            }
+          ],
+          "Projection" : {
+            "NonKeyAttributes" : ["Album","NumberOfSongs"],
+            "ProjectionType" : "INCLUDE"
+          },
+          "ProvisionedThroughput" : {
+            "ReadCapacityUnits" : "5",
+            "WriteCapacityUnits" : "5"
+          }
+        },
+        {
+          "IndexName" : "myGSI2",
+          "KeySchema" : [
+            {
+              "AttributeName" : "NumberOfSongs",
+              "KeyType" : "HASH"
+            },
+            {
+              "AttributeName" : "Sales",
+              "KeyType" : "RANGE"
+            }
+          ],
+          "Projection" : {
+            "NonKeyAttributes" : ["Album","Artist"],
+            "ProjectionType" : "INCLUDE"
+          },
+          "ProvisionedThroughput" : {
+            "ReadCapacityUnits" : "5",
+            "WriteCapacityUnits" : "5"
+          }
+        }],
+        "LocalSecondaryIndexes" :[{
+          "IndexName" : "myLSI",
+          "KeySchema" : [
+            {
+              "AttributeName" : "Album",
+              "KeyType" : "HASH"
+            },
+            {
+              "AttributeName" : "Sales",
+              "KeyType" : "RANGE"
+            }
+          ],
+          "Projection" : {
+            "NonKeyAttributes" : ["Artist","NumberOfSongs"],
+            "ProjectionType" : "INCLUDE"
+          }
+        }]
+      }
+    }
+  }
+}
+```
+
+### DependsOn 속성이 있는 DynamoDB 테이블
+
+단일 템플릿에 인덱스가 있는 여러 DynamoDB 테이블을 포함하는 경우 테이블이 순차적으로 생성되도록 종속성을 포함해야 합니다. DynamoDB는 생성 중 상태에 있는 보조 인덱스가 있는 테이블의 수를 제한합니다. 인덱스가 있는 여러 테이블을 동시에 생성하면 DynamoDB가 오류를 반환하고 스택 작업이 실패합니다.
+
+다음 샘플 `myFirstDDBTable` 에서는 테이블이 테이블과 동일한 템플릿에 선언되어 `mySecondDDBTable` 있고 두 테이블 모두 보조 인덱스를 포함하고 있다고 가정합니다. 테이블에는 `mySecondDDBTable` 테이블에 대한 종속성이 포함되어 `myFirstDDBTable` 있으므로 AWS CloudFormation에서는 테이블을 한 번에 하나씩 생성합니다.
+
+#### JSON (영문)
+
+```
+"mySecondDDBTable" : {
+  "Type" : "AWS::DynamoDB::Table",
+  "DependsOn" : "myFirstDDBTable" ,
+  "Properties" : {
+    "AttributeDefinitions" : [
+      {
+        "AttributeName" : "ArtistId",
+        "AttributeType" : "S"
+      },
+      {
+        "AttributeName" : "Concert",
+        "AttributeType" : "S"
+      },
+      {
+        "AttributeName" : "TicketSales",
+        "AttributeType" : "S"
+      }
+    ],
+    "KeySchema" : [
+      {
+        "AttributeName" : "ArtistId",
+        "KeyType" : "HASH"
+      },
+      {
+        "AttributeName" : "Concert",
+        "KeyType" : "RANGE"
+      }
+    ],
+    "ProvisionedThroughput" : {
+      "ReadCapacityUnits" : {"Ref" : "ReadCapacityUnits"},
+      "WriteCapacityUnits" : {"Ref" : "WriteCapacityUnits"}
+    },
+    "GlobalSecondaryIndexes" : [{
+      "IndexName" : "myGSI",
+      "KeySchema" : [
+        {
+          "AttributeName" : "TicketSales",
+          "KeyType" : "HASH"
+        }
+      ],
+      "Projection" : {
+        "ProjectionType" : "KEYS_ONLY"
+      },
+      "ProvisionedThroughput" : {
+        "ReadCapacityUnits" : {"Ref" : "ReadCapacityUnits"},
+        "WriteCapacityUnits" : {"Ref" : "WriteCapacityUnits"}
+      }
+    }],
+    "Tags": [
+      {
+        "Key": "foo",
+        "Value": "bar"
+      }
+    ]
+  }
+}
+```
+
+### Application Auto Scaling을 사용하는 DynamoDB 테이블
+
+이 예제에서는 리소스에 대한 Application Auto Scaling을 설정합니다 `AWS::DynamoDB::Table` . 템플릿은 `TargetTrackingScaling` 테이블의 처리량 `WriteCapacityUnits` 을 확장하는 조정 정책을 정의합니다.
+
+#### JSON (영문)
+
+```
+{
+  "Resources": {
+    "DDBTable": {
+      "Type": "AWS::DynamoDB::Table",
+      "Properties": {
+        "AttributeDefinitions": [
+          {
+            "AttributeName": "ArtistId",
+            "AttributeType": "S"
+          },
+          {
+            "AttributeName": "Concert",
+            "AttributeType": "S"
+          },
+          {
+            "AttributeName": "TicketSales",
+            "AttributeType": "S"
+          }
+        ],
+        "KeySchema": [
+          {
+            "AttributeName": "ArtistId",
+            "KeyType": "HASH"
+          },
+          {
+            "AttributeName": "Concert",
+            "KeyType": "RANGE"
+          }
+        ],
+        "GlobalSecondaryIndexes": [
+          {
+            "IndexName": "GSI",
+            "KeySchema": [
+              {
+                "AttributeName": "TicketSales",
+                "KeyType": "HASH"
+              }
+            ],
+            "Projection": {
+              "ProjectionType": "KEYS_ONLY"
+            },
+            "ProvisionedThroughput": {
+              "ReadCapacityUnits": 5,
+              "WriteCapacityUnits": 5
+            }
+          }
+        ],
+        "ProvisionedThroughput": {
+          "ReadCapacityUnits": 5,
+          "WriteCapacityUnits": 5
+        }
+      }
+    },
+    "WriteCapacityScalableTarget": {
+      "Type": "AWS::ApplicationAutoScaling::ScalableTarget",
+      "Properties": {
+        "MaxCapacity": 15,
+        "MinCapacity": 5,
+        "ResourceId": { "Fn::Join": [
+          "/",
+          [
+            "table",
+            { "Ref": "DDBTable" }
+          ]
+        ] },
+        "RoleARN": {
+          "Fn::GetAtt": ["ScalingRole", "Arn"]
+        },
+        "ScalableDimension": "dynamodb:table:WriteCapacityUnits",
+        "ServiceNamespace": "dynamodb"
+      }
+    },
+    "ScalingRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": [
+                  "application-autoscaling.amazonaws.com"
+                ]
+              },
+              "Action": [
+                "sts:AssumeRole"
+              ]
+            }
+          ]
+        },
+        "Path": "/",
+        "Policies": [
+          {
+            "PolicyName": "root",
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "dynamodb:DescribeTable",
+                    "dynamodb:UpdateTable",
+                    "cloudwatch:PutMetricAlarm",
+                    "cloudwatch:DescribeAlarms",
+                    "cloudwatch:GetMetricStatistics",
+                    "cloudwatch:SetAlarmState",
+                    "cloudwatch:DeleteAlarms"
+                  ],
+                  "Resource": "*"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "WriteScalingPolicy": {
+      "Type": "AWS::ApplicationAutoScaling::ScalingPolicy",
+      "Properties": {
+        "PolicyName": "WriteAutoScalingPolicy",
+        "PolicyType": "TargetTrackingScaling",
+        "ScalingTargetId": {
+          "Ref": "WriteCapacityScalableTarget"
+        },
+        "TargetTrackingScalingPolicyConfiguration": {
+          "TargetValue": 50.0,
+          "ScaleInCooldown": 60,
+          "ScaleOutCooldown": 60,
+          "PredefinedMetricSpecification": {
+            "PredefinedMetricType": "DynamoDBWriteCapacityUtilization"
+          }
+        }
+      }
+    }
+  }
+}
+```

@@ -1,0 +1,165 @@
+# AWS::Cognito::UserPoolRiskConfigurationAttachment
+
+이 `AWS::Cognito::UserPoolRiskConfigurationAttachment` 리소스는 Amazon Cognito 고급 보안 기능에 사용되는 위험 구성을 설정합니다.
+
+단일 클라이언트(특정 ) 또는 모든 클라이언트( `clientId` to `clientId` )에 대한 위험 구성을 지정할 수 있습니다`ALL`. 를 지정하면 `ALL`이전에 위험 요소 구성이 설정되지 않은 모든 클라이언트에 대해 기본 구성이 사용됩니다. 특정 클라이언트에 대한 위험 구성을 지정하면 더 이상 구성으로 대체되지 않습니다 `ALL` .
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::Cognito::UserPoolRiskConfigurationAttachment",
+  "Properties" : {
+      "AccountTakeoverRiskConfiguration" : AccountTakeoverRiskConfigurationType,
+      "ClientId" : String,
+      "CompromisedCredentialsRiskConfiguration" : CompromisedCredentialsRiskConfigurationType,
+      "RiskExceptionConfiguration" : RiskExceptionConfigurationType,
+      "UserPoolId" : String
+    }
+}
+```
+
+## 속성
+
+`AccountTakeoverRiskConfiguration`  
+계정 인계 위험 구성 오브젝트( `NotifyConfiguration` 오브젝트 포함) 및 `Actions` 계정 인계가 있는 경우 취할 객체입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: AccountTakeoverRiskConfigurationType  
+_업데이트 필요 사항_: 중단 없음
+
+`ClientId`  
+앱 클라이언트 ID입니다. 단일 클라이언트(특정 ClientId를 사용) 또는 모든 클라이언트(ClientId를 로 설정)에 대한 위험 구성을 지정할 수 있습니다 `ALL`.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `128`  
+_패턴_: `[w+]+`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`CompromisedCredentialsRiskConfiguration`  
+손상된 자격 증명 위험 구성 개체( `EventFilter` 및 `EventAction`.  
+*필수 항목 *여부: 아니요  
+_유형_: CompromisedCredentialsRiskConfigurationType  
+_업데이트 필요 사항_: 중단 없음
+
+`RiskExceptionConfiguration`  
+위험 결정을 재정의하는 구성입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: RiskExceptionConfigurationType  
+_업데이트 필요 사항_: 중단 없음
+
+`UserPoolId`  
+사용자 풀 ID입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `55`  
+_패턴_: `[w-]+_[0-9a-zA-Z]+`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`"UserPoolRiskConfigurationAttachment-UserPoolId-ClientId"인 physicalResourceId를 반환합니다. 예를 들어:
+
+`{ "Ref": “UserPoolRiskConfigurationAttachment-us-east-1_FAKEPOOLID-2asc123fakeclientidajjulj6bh” }`
+
+Amazon Cognito 위험 구성 연결의 경우 `UserPoolRiskConfigurationAttachment-us-east-1_FAKEPOOLID-2asc123fakeclientidajjulj6bh`Ref는 위험 구성 연결의 이름을 반환합니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+## 예제
+
+### 사용자 풀에 대한 새 위험 구성 첨부 파일 생성
+
+다음 예제에서는 참조된 사용자 풀 및 클라이언트에서 위험 구성을 설정합니다.
+
+#### JSON (영문)
+
+```
+{
+   "UserPoolRiskConfiguration":{
+      "Type":"AWS::Cognito::UserPoolRiskConfigurationAttachment",
+      "Properties":{
+         "UserPoolId":{
+            "Ref":"UserPool"
+         },
+         "ClientId":{
+            "Ref":"Client"
+         },
+         "AccountTakeoverRiskConfiguration":{
+            "Actions":{
+               "HighAction":{
+                  "EventAction":"MFA_REQUIRED",
+                  "Notify":true,
+
+               },
+               "MediumAction":{
+                  "EventAction":"MFA_IF_CONFIGURED",
+                  "Notify":true
+               },
+               "LowAction":{
+                  "EventAction":{
+                     "Ref":"EventAction"
+                  },
+                  "Notify":false
+               }
+            },
+            "NotifyConfiguration":{
+               "BlockEmail":{
+                  "HtmlBody":"html body",
+                  "Subject":"Your account got blocked",
+                  "TextBody":"Your account got blocked"
+               },
+               "MfaEmail":{
+                  "HtmlBody":"html body",
+                  "Subject":"Your account needs MFA verification",
+                  "TextBody":"Your account needs MFA verification"
+               },
+               "NoActionEmail":{
+                  "HtmlBody":{
+                     "Ref":"HtmlBody"
+                  },
+                  "Subject":{
+                     "Ref":"Subject"
+                  },
+                  "TextBody":{
+                     "Ref":"TextBody"
+                  },
+
+               },
+               "From":"your-from-email@amazon.com",
+               "SourceArn":{
+                  "Ref":"SourceArn"
+               },
+               "ReplyTo":"your-reply-to@amazon.com"
+            }
+         },
+         "CompromisedCredentialsRiskConfiguration":{
+            "Actions":{
+               "EventAction":"BLOCK"
+            },
+            "EventFilter":[
+               {
+                  "Ref":"EventFilter"
+               },
+
+            ]
+         },
+         "RiskExceptionConfiguration":{
+            "BlockedIPRangeList":[
+               "198.0.0.1"
+            ],
+            "SkippedIPRangeList":[
+               "198.0.0.1"
+            ]
+         }
+      }
+   }
+}
+```

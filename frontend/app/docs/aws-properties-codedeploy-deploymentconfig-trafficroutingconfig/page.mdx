@@ -1,0 +1,38 @@
+# AWS::CodeDeploy::D eploymentConfig 트래픽라우팅 구성
+
+AWS Lambda 배포 중에 Lambda 함수의 한 버전에서 다른 버전으로 또는 Amazon ECS 배포 중에 한 Amazon ECS 작업 세트에서 다른 버전으로 트래픽을 이동하는 방법을 지정하는 구성입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "TimeBasedCanary" : TimeBasedCanary,
+  "TimeBasedLinear" : TimeBasedLinear,
+  "Type" : String
+}
+```
+
+## 속성
+
+`TimeBasedCanary`  
+Lambda 함수 또는 ECS 태스크 세트의 한 버전에서 다른 버전으로 트래픽을 2씩 이동하는 구성입니다. 원본 및 대상 Lambda 함수 버전 또는 ECS 작업 세트는 배포의 AppSpec 파일에 지정됩니다.  
+*필수 항목 *여부: 아니요  
+_형식_: TimeBasedCanary  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`TimeBasedLinear`  
+Lambda 함수 또는 Amazon ECS 태스크 세트의 한 버전에서 다른 버전으로 트래픽을 균등하게 증분하고 각 증분 사이에 동일한 시간(분)을 두고 이동하는 구성입니다. 원본 및 대상 Lambda 함수 버전 또는 Amazon ECS 작업 세트는 배포의 AppSpec 파일에 지정됩니다.  
+*필수 항목 *여부: 아니요  
+_형식_: TimeBasedLinear  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Type`  
+ 배포 구성에서 사용하는 트래픽 이동( `TimeBasedCanary` 또는 `TimeBasedLinear`)의 유형입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_허용되는 값_: `AllAtOnce | TimeBasedCanary | TimeBasedLinear`  
+_업데이트 필요 사항_: 바꿔 놓음

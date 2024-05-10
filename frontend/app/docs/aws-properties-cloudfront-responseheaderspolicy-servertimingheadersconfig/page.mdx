@@ -1,0 +1,30 @@
+# AWS::CloudFront::ResponseHeadersPolicy ServerTimingHeadersConfig
+
+CloudFront에서 전송된 HTTP 응답에서 헤더`Server-Timing`를 활성화하기 위한 구성 입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Enabled" : Boolean,
+  "SamplingRate" : Double
+}
+```
+
+## 속성
+
+`Enabled`  
+CloudFront `Server-Timing` 가 이 응답 헤더 정책과 연결된 캐시 동작과 일치하는 요청에 대한 응답으로 보내는 HTTP 응답에 헤더를 추가할지 여부를 결정하는 부울입니다.  
+_필수 항목 여부_: 예  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`SamplingRate`  
+0–100(포함)의 숫자로, CloudFront에서 헤더를 추가할 응답의 백분율을 지정합니다 `Server-Timing` . 샘플링 속도를 100으로 설정하면 CloudFront `Server-Timing` 에서는 이 응답 헤더 정책이 연결된 캐시 동작과 일치하는 모든 요청에 대해 HTTP 응답에 헤더를 추가합니다. 이 값을 50으로 설정하면 CloudFront는 캐시 동작과 일치하는 요청에 대한 응답의 50%에 헤더를 추가합니다. 샘플링 속도는 소수점 이하 4자리까지 0-100의 숫자로 설정할 수 있습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 더블  
+_업데이트 필요 사항_: 중단 없음

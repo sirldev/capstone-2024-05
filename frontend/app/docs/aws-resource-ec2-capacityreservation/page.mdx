@@ -1,0 +1,163 @@
+# AWS::EC2::용량 예약
+
+지정된 특성을 사용하여 새 용량 예약을 생성합니다. 자세한 내용은 _Amazon EC2 사용 설명서의 용량 예약을 참조하십시오_.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::EC2::CapacityReservation",
+  "Properties" : {
+      "AvailabilityZone" : String,
+      "EbsOptimized" : Boolean,
+      "EndDate" : String,
+      "EndDateType" : String,
+      "EphemeralStorage" : Boolean,
+      "InstanceCount" : Integer,
+      "InstanceMatchCriteria" : String,
+      "InstancePlatform" : String,
+      "InstanceType" : String,
+      "OutPostArn" : String,
+      "PlacementGroupArn" : String,
+      "TagSpecifications" : [ TagSpecification, ... ],
+      "Tenancy" : String
+    }
+}
+```
+
+## 속성
+
+`AvailabilityZone`  
+용량 예약을 생성할 가용 영역입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`EbsOptimized`  
+용량 예약이 EBS 최적화 인스턴스를 지원하는지 여부를 나타냅니다. 이 최적화는 Amazon EBS에 전용 처리량과 최적화된 구성 스택을 제공하여 최적의 I/O 성능을 제공합니다. 이 최적화는 모든 인스턴스 유형에서 사용할 수 있는 것은 아닙니다. EBS 최적화 인스턴스를 사용하는 경우 추가 사용 요금이 적용됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`EndDate`  
+용량 예약이 만료되는 날짜 및 시간입니다. 용량 예약이 만료되면 예약된 용량이 해제되고 더 이상 인스턴스를 시작할 수 없습니다. 용량 예약의 상태가 `expired` 종료 날짜 및 시간에 도달하는 시점으로 변경됩니다.  
+`EndDate` 인 `EndDateType` 경우 값을 `limited` 제공해야 합니다. `EndDate` 인 `EndDateType` 경우 `unlimited` 생략합니다.  
+`EndDateType` 인 `limited` 경우 지정된 시간으로부터 한 시간 이내에 용량 예약이 취소됩니다. 예를 들어 2019년 5월 31일 13:30:55를 지정하면 용량 예약이 2019년 5월 31일 13:30:55에서 14:30:55 사이에 종료되도록 보장됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`EndDateType` 용량 예약이 종료되는 방식을 나타냅니다. 용량 예약에는 다음 종료 유형 중 하나가 있을 수 있습니다.
+
+- `unlimited` - 용량 예약은 명시적으로 취소할 때까지 활성 상태로 유지됩니다. is 인 경우 제공하지 마십시오 `EndDate` `EndDateType` `unlimited`.
+- `limited` - 용량 예약은 지정된 날짜 및 시간에 자동으로 만료됩니다. `EndDate` 값이 인 `EndDateType` 경우 값을 제공해야 합니다`limited`.
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열  
+  _허용되는 값_: `limited | unlimited`  
+  _업데이트 필요 사항_: 중단 없음
+
+`EphemeralStorage`  
+ _되지 않는._  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`InstanceCount`  
+용량을 예약할 인스턴스 수입니다.  
+유효 범위: 1 - 1000  
+_필수 항목 여부_: 예  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`InstanceMatchCriteria` 용량 예약이 수락하는 인스턴스 시작 유형을 나타냅니다. 옵션은 다음과 같습니다.
+
+- `open` - 용량 예약은 일치하는 속성(인스턴스 유형, 플랫폼 및 가용 영역)이 있는 모든 인스턴스와 자동으로 일치합니다. 일치하는 속성이 있는 인스턴스는 추가 파라미터를 지정하지 않고 용량 예약에서 자동으로 실행됩니다.
+- `targeted` - 용량 예약은 일치하는 속성(인스턴스 유형, 플랫폼 및 가용 영역)이 있는 인스턴스만 허용하며 용량 예약을 명시적으로 대상으로 합니다. 이렇게 하면 허용된 인스턴스만 예약된 용량을 사용할 수 있습니다.
+  기본값: `open`  
+  _필수_: 아니요  
+  _유형_: 문자열  
+  _허용되는 값_: `open | targeted`  
+  _업데이트 필요 사항_: 바꿔 놓음
+
+`InstancePlatform`  
+용량을 예약할 운영 체제의 유형입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_허용되는 값_: `Linux with SQL Server Enterprise | Linux with SQL Server Standard | Linux with SQL Server Web | Linux/UNIX | Red Hat Enterprise Linux | RHEL with HA | RHEL with HA and SQL Server Enterprise | RHEL with HA and SQL Server Standard | RHEL with SQL Server Enterprise | RHEL with SQL Server Standard | RHEL with SQL Server Web | SUSE Linux | Windows | Windows with SQL Server | Windows with SQL Server Enterprise | Windows with SQL Server Standard | Windows with SQL Server Web`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`InstanceType`  
+용량을 예약할 인스턴스 유형입니다. 자세한 내용은 _Amazon EC2 사용 설명서의 인스턴스 유형을 참조하세요_.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`OutPostArn`  
+용량 예약을 생성할 Outposts의 Amazon 리소스 이름(ARN)입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_패턴_: `^arn:aws([a-z-]+)?:outposts:[a-zd-]+:d{12}:outpost/op-[a-f0-9]{17}$`  
+*업데이트 필요 *사항: 바꿔 놓음
+
+`PlacementGroupArn`  
+용량 예약을 생성할 클러스터 배치 그룹의 Amazon 리소스 이름(ARN)입니다. 자세한 내용은 _Amazon EC2 사용 설명서의 클러스터 배치 그룹에 대한 용량 예약을 참조하세요_.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_패턴_: `^arn:aws([a-z-]+)?:ec2:[a-zd-]+:d{12}:placement-group/^.{1,255}$`  
+*업데이트 필요 *사항: 바꿔 놓음
+
+`TagSpecifications`  
+시작하는 동안 용량 예약에 적용할 태그입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: TagSpecification 목록  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Tenancy` 용량 예약의 테넌시를 나타냅니다. 용량 예약에는 다음 테넌시 설정 중 하나가 있을 수 있습니다.
+
+- `default` - 용량 예약은 다른 AWS 계정과 공유되는 하드웨어에 생성됩니다.
+- `dedicated` - 용량 예약은 단일 AWS 계정 전용의 단일 테넌트 하드웨어에서 생성됩니다.
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열  
+  _허용되는 값_: `dedicated | default`  
+  _업데이트 필요 사항_: 바꿔 놓음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref`는 `Ref`와 같은 리소스 ID를 반환합니다 `cr-1234ab5cd6789e0f1`.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`AvailabilityZone`  
+용량이 예약된 가용 영역을 반환합니다. 예를 들면 다음과 같습니다 `us-east-1a`.
+
+`AvailableInstanceCount`  
+용량 예약에서 시작할 수 있는 인스턴스 수를 나타내는 남은 용량을 반환합니다. 예를 들면 다음과 같습니다 `9`.
+
+`Id` 용량 예약의 ID입니다.
+
+`InstanceType`  
+용량이 예약된 인스턴스의 유형을 반환합니다. 예를 들면 다음과 같습니다 `m4.large`.
+
+`Tenancy`  
+용량 예약의 테넌시를 반환합니다. 예를 들면 다음과 같습니다 `dedicated`.
+
+`TotalInstanceCount`  
+용량 예약이 용량을 예약하는 총 인스턴스 수를 반환합니다. 예를 들면 다음과 같습니다 `15`.
+
+## 참고 항목
+
+- Amazon EC2 사용 설명서\* \* 의 온디맨드 용량 예약

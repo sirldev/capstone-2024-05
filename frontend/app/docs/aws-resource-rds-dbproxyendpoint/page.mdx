@@ -1,0 +1,146 @@
+# AWS::RDS::D BProxyEndpoint
+
+`AWS::RDS::DBProxyEndpoint` 리소스는 DB 프록시 엔드포인트를 생성하거나 업데이트합니다. 사용자 지정 프록시 엔드포인트를 사용하여 프록시의 기본 VPC가 아닌 다른 VPC를 통해 프록시에 액세스할 수 있습니다.
+
+RDS Proxy에 대한 자세한 내용은 AWS::RDS::D BProxy를 참조하십시오.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::RDS::DBProxyEndpoint",
+  "Properties" : {
+      "DBProxyEndpointName" : String,
+      "DBProxyName" : String,
+      "Tags" : [ TagFormat, ... ],
+      "TargetRole" : String,
+      "VpcSecurityGroupIds" : [ String, ... ],
+      "VpcSubnetIds" : [ String, ... ]
+    }
+}
+```
+
+## 속성
+
+`DBProxyEndpointName`  
+생성할 DB 프록시 엔드포인트의 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`DBProxyName`  
+생성한 DB 프록시 엔드포인트와 연결된 DB 프록시의 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Tags`  
+선택한 임의의 데이터를 프록시와 연결하기 위한 선택적 키-값 쌍 집합입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: TagFormat 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`TargetRole`  
+DB 프록시 엔드포인트를 읽기/쓰기 또는 읽기 전용 작업에 사용할 수 있는지 여부를 나타내는 값입니다.  
+유효한 값 : `READ_WRITE | READ_ONLY`  
+*필수 항목 *여부 : 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`VpcSecurityGroupIds`  
+생성한 DB 프록시 엔드포인트의 VPC 보안 그룹 ID입니다. 원래 DB 프록시와 다른 보안 그룹 ID 세트를 지정할 수 있습니다. 기본값은 VPC의 기본 보안 그룹입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`VpcSubnetIds`  
+생성한 DB 프록시 엔드포인트의 VPC 서브넷 ID입니다. 원래 DB 프록시와 다른 서브넷 ID 세트를 지정할 수 있습니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 바꿔 놓음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref`DB `Ref`프록시 엔드포인트의 이름을 반환합니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+####
+
+`DBProxyEndpointArn` DB 프록시 엔드포인트를 나타내는 Amazon 리소스 이름(ARN)입니다.
+
+`Endpoint` RDS DB 인스턴스 또는 Aurora DB 클러스터에 대한 사용자 지정 엔드포인트입니다.
+
+`IsDefault` 이 엔드포인트가 연결된 DB 프록시의 기본 엔드포인트인지 여부를 나타내는 값입니다. 기본 DB 프록시 엔드포인트에는 항상 읽기/쓰기 기능이 있습니다. DB 프록시와 연결하는 다른 엔드포인트는 읽기/쓰기 또는 읽기 전용일 수 있습니다.
+
+`VpcId` DB 프록시 엔드포인트의 VPC ID입니다.
+
+## 예제
+
+### 사용자 지정 DB 프록시 엔드포인트 생성
+
+다음 예제에서는 사용자 지정 DB 프록시 엔드포인트를 생성합니다.
+
+#### JSON (영문)
+
+```
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Parameters": {
+    "ProxyEndpointName": {
+      "Type": "String",
+      "Default": "exampleProxyEndpoint"
+    },
+    "ProxyName": {
+      "Type": "String",
+      "Default": "exampleProxy"
+    },
+    "SecurityGroupIds": {
+      "Type": "String",
+      "Default": "sg-12345678"
+    },
+    "SubnetIds": {
+      "Type": "String",
+      "Default": "subnet-12345677,subnet-12345678,subnet-12345679"
+    }
+  },
+  "Resources": {
+    "TestDBProxy": {
+      "Type": "AWS::RDS::DBProxyEndpoint",
+      "Properties": {
+        "DBProxyEndpointName": {
+          "Ref": "ProxyEndpointName"
+        },
+        "DBProxyName": {
+          "Ref": "ProxyName"
+        },
+        "VpcSecurityGroupIds": {
+          "Fn::Split": [
+            ",",
+            {
+              "Ref": "SecurityGroupIds"
+            }
+          ]
+        },
+        "VpcSubnetIds": {
+          "Fn::Split": [
+            ",",
+            {
+              "Ref": "SubnetIds"
+            }
+          ]
+        },
+        "TargetRole": "READ_ONLY"
+      }
+    }
+  }
+}
+```

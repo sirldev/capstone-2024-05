@@ -1,0 +1,23 @@
+# AWS::Rekognition::StreamProcessor 알림 채널
+
+Amazon Simple Notification Service Amazon Rekognition이 객체 탐지 결과 및 비디오 분석 작업의 완료 상태를 게시하는 주제입니다. Amazon Rekognition Rekognition은 비디오 스트림에서 관심 있는 객체나 사람이 처음 감지될 때 알림을 게시합니다. 또한 Amazon Rekognition은 스트림 처리 세션이 완료되면 요약과 함께 세션 종료 알림을 게시합니다. 자세한 내용은 StreamProcessorNotificationChannel을 참조하세요.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Arn" : String
+}
+```
+
+## 속성
+
+`Arn`  
+알림을 수신하는 SNS 주제의 ARN입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음

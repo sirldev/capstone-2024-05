@@ -1,0 +1,220 @@
+# AWS::CloudTrail::EventDataStore
+
+새 이벤트 데이터 저장소를 생성합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::CloudTrail::EventDataStore",
+  "Properties" : {
+      "AdvancedEventSelectors" : [ AdvancedEventSelector, ... ],
+      "IngestionEnabled" : Boolean,
+      "KmsKeyId" : String,
+      "MultiRegionEnabled" : Boolean,
+      "Name" : String,
+      "OrganizationEnabled" : Boolean,
+      "RetentionPeriod" : Integer,
+      "Tags" : [Tag, ... ],
+      "TerminationProtectionEnabled" : Boolean
+    }
+}
+```
+
+## 속성
+
+`AdvancedEventSelectors`  
+데이터 저장소에 대한 이벤트를 선택하는 데 사용할 고급 이벤트 선택기입니다. 각 이벤트 데이터 저장소에 대해 최대 5개의 고급 이벤트 선택기를 구성할 수 있습니다.  
+ 고급 이벤트 선택기를 사용하여 CloudTrail 이벤트를 로깅하는 방법에 대한 자세한 내용은 CloudTrail 사용 설명서의 고급 이벤트 선택기를 사용하여 이벤트 로깅을 참조하세요.  
+고급 이벤트 선택기를 사용하여 이벤트 데이터 스토어에 AWS Config 구성 항목을 포함하는 방법에 대한 자세한 내용은 CloudTrail 사용 설명서의 AWS Config 구성 항목에 대한 이벤트 데이터 스토어 생성을 참조하세요.  
+고급 이벤트 선택기를 사용하여 이벤트 데이터 스토어에 AWS 이외의 이벤트를 포함하는 방법에 대한 자세한 내용은 CloudTrail 사용 설명서의 AWS 외부에서 이벤트를 기록하는 통합 생성을 참조하세요.  
+*필수 항목 *여부: 아니요  
+_형식_: AdvancedEventSelector 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`IngestionEnabled`  
+이벤트 데이터 저장소가 라이브 이벤트 수집을 시작해야 하는지 여부를 지정합니다. 기본값은 true입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`KmsKeyId`  
+CloudTrail에서 전달한 이벤트를 암호화하는 데 사용할 AWS KMS 키 ID를 지정합니다. 값은 접두사가 붙은 별칭 이름 `alias/`, 별칭에 대해 완전히 지정된 ARN, 키에 대해 완전히 지정된 ARN 또는 전역적으로 고유한 식별자일 수 있습니다.  
+KMS 키를 비활성화 또는 삭제하거나 키에 대한 CloudTrail 권한을 제거하면 CloudTrail이 이벤트 데이터 스토어에 이벤트를 로깅할 수 없으며 사용자가 키로 암호화된 이벤트 데이터 스토어의 데이터를 쿼리할 수 없습니다. 이벤트 데이터 스토어를 KMS 키와 연결한 후에는 KMS 키를 제거하거나 변경할 수 없습니다. 이벤트 데이터 스토어와 함께 사용 중인 KMS 키를 비활성화하거나 삭제하기 전에 이벤트 데이터 스토어를 삭제하거나 백업합니다.
+CloudTrail은 AWS KMS 다중 리전 키도 지원합니다. 다중 리전 키에 대한 자세한 내용은 * AWS Key Management Service 개발자 안내서*의 다중 리전 키 사용을 참조하세요.  
+예제:
+
+- `alias/MyAliasName`
+- `arn:aws:kms:us-east-2:123456789012:alias/MyAliasName`
+- `arn:aws:kms:us-east-2:123456789012:key/12345678-1234-1234-1234-123456789012`
+- `12345678-1234-1234-1234-123456789012`
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열  
+  _최소_: `1`  
+  _최대_: `350`  
+  _패턴_: `^[a-zA-Z0-9._/-:]+$`  
+  _업데이트 필요 사항_: 중단 없음
+
+`MultiRegionEnabled`  
+이벤트 데이터 저장소에 모든 리전의 이벤트가 포함되는지 또는 이벤트 데이터 저장소가 생성된 리전의 이벤트만 포함되는지를 지정합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`Name`  
+이벤트 데이터 저장소의 이름입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `3`  
+_최대_: `128`  
+_패턴_: `^[a-zA-Z0-9._-]+$`  
+_업데이트 필요 사항_: 중단 없음
+
+`OrganizationEnabled`  
+이벤트 데이터 스토어가 AWS Organizations의 조직에 대해 로깅된 이벤트를 수집할지 여부를 지정합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`RetentionPeriod`  
+이벤트 데이터 저장소의 보존 기간(일)입니다. 보존 기간은 최대 2557일(7년에 해당)로 설정할 수 있습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_최소_: `7`  
+_최대_: `2557`  
+_업데이트 필요 사항_: 중단 없음
+
+`Tags`  
+태그 목록입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_최대_: `200`  
+_업데이트 필요 사항_: 중단 없음
+
+`TerminationProtectionEnabled`  
+이벤트 데이터 저장소에 대해 종료 방지를 사용할 수 있는지 여부를 지정합니다. 종료 방지를 사용하도록 설정한 경우 종료 방지를 사용하지 않도록 설정할 때까지 이벤트 데이터 저장소를 삭제할 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID가 Ref 내장 함수에 제공되면 `Ref` 리소스 이름을 반환합니다.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`CreatedTimestamp`  
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`이벤트 데이터 저장소 생성의 타임스탬프(예: `1248496624`)를 반환합니다.
+
+`EventDataStoreArn`  
+ 이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`CloudTrail 이벤트 데이터 스토어의 ARN을 반환합니다 `arn:aws:cloudtrail:us-east-1:12345678910:eventdatastore/EXAMPLE-f852-4e8f-8bd1-bcf6cEXAMPLE`.
+
+`Status`  
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`이벤트 데이터 저장소의 상태(예: )를 반환합니다 `ENABLED`.
+
+`UpdatedTimestamp`  
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref`이벤트 `Ref`데이터 저장소에 대한 업데이트가 수행된 타임스탬프(예: )를 반환합니다`1598296624`.
+
+## 예제
+
+### 본보기
+
+다음 예제에서는 모든 리전의 이벤트를 기록하는 이벤트 데이터 스토어를 생성합니다. CloudTrail Lake 이벤트 데이터 스토어에 대한 자세한 내용은 _AWS CloudTrail User Guide의 CloudTrail Lake 작업을 참조하십시오_.
+
+#### JSON (영문)
+
+```
+{
+    "Parameters": {
+        "Name": {
+            "Type": "String"
+        }
+    },
+    "Conditions": {
+        "IsOrganizationsSupported": {
+            "Fn::Not": [
+                {
+                    "Fn::Equals": [
+                        {
+                            "Ref": "AWS::Partition"
+                        },
+                        "aws-cn"
+                    ]
+                }
+            ]
+        }
+    },
+    "Resources": {
+        "myEventDataStore": {
+            "Type": "AWS::CloudTrail::EventDataStore",
+            "Properties": {
+                "Name": {
+                    "Ref": "Name"
+                },
+                "MultiRegionEnabled": true,
+                "IngestionEnabled": true,
+                "RetentionPeriod": 30,
+                "OrganizationEnabled": {
+                    "Fn::If": [
+                        "IsOrganizationsSupported",
+                        true,
+                        {
+                            "Ref": "AWS::NoValue"
+                        }
+                    ]
+                },
+                "TerminationProtectionEnabled": false,
+                "KmsKeyId": {
+                    "Fn::ImportValue": "EventDataStoreKeyTest"
+                },
+                "Tags": [
+                    {
+                        "Key": "TagKeyIntTest",
+                        "Value": "TagValueIntTest"
+                    },
+                    {
+                        "Key": "TagKeyIntTest2",
+                        "Value": "TagValueIntTest2"
+                    }
+                ],
+                "AdvancedEventSelectors": [
+                    {
+                        "Name": "AdvancedEventSelectors1",
+                        "FieldSelectors": [
+                            {
+                                "Field": "eventCategory",
+                                "Equals": [
+                                    "Management"
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    },
+    "Outputs": {
+        "myEventDataStoreArn": {
+            "Description": "The event data store ARN",
+            "Value": {
+                "Fn::GetAtt": [
+                    "myEventDataStore",
+                    "EventDataStoreArn"
+                ]
+            }
+        }
+    }
+}
+```

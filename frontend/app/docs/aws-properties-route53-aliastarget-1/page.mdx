@@ -1,0 +1,143 @@
+# AWS::Route53::RecordSetGroup 별칭 대상
+
+_별칭 레코드만:_ 트래픽을 라우팅하려는 AWS 리소스(예: CloudFront 배포 또는 Amazon S3 버킷)에 대한 정보입니다.
+
+프라이빗 호스팅 영역에 대한 레코드를 생성할 때는 다음 사항에 유의하세요.
+
+- 프라이빗 호스팅 영역에서 지리적 위치 별칭 및 지연 시간 별칭 레코드를 생성하는 것은 허용되지만 지원되지는 않습니다.
+- 프라이빗 호스팅 영역에서 장애 조치 레코드를 생성하는 방법에 대한 자세한 내용은 프라이빗 호스팅 영역에서 장애 조치 구성 단원을 참조하십시오.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "DNSName" : String,
+  "EvaluateTargetHealth" : Boolean,
+  "HostedZoneId" : String
+}
+```
+
+## 속성
+
+`DNSName`  
+_별칭 레코드만:_ 지정하는 값은 쿼리를 라우팅하려는 위치에 따라 달라집니다.  
+Amazon API Gateway 사용자 지정 리전 API 및 엣지 최적화 API  
+API에 적용 가능한 도메인 이름을 지정합니다. AWS CLI 명령 get-domain-names를 사용하여 해당 값을 가져올 수 있습니다.
+
+- 리전 API의 경우 값을 지정합니다 `regionalDomainName`.
+- 엣지 최적화 API의 경우 값을 지정합니다`distributionDomainName`. 연결된 CloudFront 배포의 이름입니다(예: `da1b2c3d4e5.cloudfront.net`).
+  만드는 레코드의 이름은 API의 사용자 지정 도메인 이름(예: )과 일치해야 합니다`api.example.com`.  
+  Amazon Virtual Private Cloud 인터페이스 VPC 엔드포인트  
+  인터페이스 끝점에 대한 API 끝점(예: `vpce-123456789abcdef01-example-us-east-1a.elasticloadbalancing.us-east-1.vpce.amazonaws.com` )을 입력합니다. 엣지 최적화 API의 경우, 이 이름은 해당 CloudFront 배포의 도메인 이름입니다. `DnsName` AWS CLI 명령 describe-vpc-endpoints를 사용하여 값을 얻을 수 있습니다.  
+  CloudFront 배포  
+  배포를 생성할 때 CloudFront에서 할당한 도메인 이름을 지정합니다.  
+  CloudFront 배포에는 레코드 이름과 일치하는 대체 도메인 이름이 포함되어야 합니다. 예를 들어, 레코드 이름이 _acme.example.com_ 인 경우 CloudFront 배포에는 _acme.example.com_ 대체 도메인 이름 중 하나로 포함되어야 합니다. 자세한 내용은 Amazon CloudFront 개발자 안내서의 대체 도메인 이름(CNAME) 사용을 참조하십시오\*\*.  
+  트래픽을 CloudFront 배포로 라우팅하기 위해 프라이빗 호스팅 영역에 레코드를 생성할 수 없습니다.  
+  장애 조치 별칭 레코드의 경우 기본 레코드와 보조 레코드 모두에 대해 CloudFront 배포를 지정할 수 없습니다. 배포에는 레코드 이름과 일치하는 대체 도메인 이름이 포함되어야 합니다. 그러나 기본 레코드와 보조 레코드의 이름은 동일하며 둘 이상의 배포에 동일한 대체 도메인 이름을 포함할 수 없습니다.  
+  Elastic Beanstalk 환경  
+  Elastic Beanstalk 환경의 도메인 이름에 환경을 배포한 리전이 포함된 경우 트래픽을 환경으로 라우팅하는 별칭 레코드를 생성할 수 있습니다. 예를 들어 도메인 이름은 `my-environment.us-west-2.elasticbeanstalk.com` 지역화된 도메인 이름입니다.  
+  2016년 초 이전에 생성된 환경의 경우 도메인 이름에 리전이 포함되지 않습니다. 이러한 환경으로 트래픽을 라우팅하려면 별칭 레코드 대신 CNAME 레코드를 만들어야 합니다. 루트 도메인 이름에 대한 CNAME 레코드는 만들 수 없습니다. 예를 들어, 도메인 이름이 example.com 인 경우 acme.example.com 에 대한 트래픽을 Elastic Beanstalk 환경으로 라우팅하는 레코드를 생성할 수 있지만, example.com 에 대한 트래픽을 Elastic Beanstalk 환경으로 라우팅하는 레코드는 생성할 수 없습니다.
+  리전화된 하위 도메인이 있는 Elastic Beanstalk 환경의 경우 `CNAME` 환경에 대한 속성을 지정합니다. 다음 메서드를 사용하여 CNAME 특성의 값을 가져올 수 있습니다.
+- _AWS Management Console_: 콘솔을 사용하여 값을 가져오는 방법에 대한 자세한 내용은 AWS Elastic Beanstalk 개발자 안내서의 AWS Elastic Beanstalk에서 사용자 지정 도메인 사용을 참조하십시오\*\*.
+- _Elastic Beanstalk API_: 작업을 사용하여 `DescribeEnvironments` 속성 값을 가져옵니다 `CNAME` . 자세한 내용은 _AWS Elastic Beanstalk API Reference의 DescribeEnvironments를 참조하십시오_.
+- _AWS CLI:_ `describe-environments` 명령을 사용하여 속성 값을 가져옵니다 `CNAME` . 자세한 내용은 AWS CLI의 describe-environments 섹션을 참조하세요\*\*.  
+  ELB 로드 밸런서  
+  로드 밸런서와 연결된 DNS 이름을 지정합니다. AWS Management Console, ELB API 또는 AWS CLI를 사용하여 DNS 이름을 가져옵니다.
+- **AWS Management Console**: EC2 페이지로 이동하고, 탐색 창에서 **[Load Balancers**]를 선택 하고, 로드 밸런서를 선택하고, **[Description] 탭을 선택하고, **[DNS name**] 필드의 값을 가져옵니다 \*\* .
+
+  트래픽을 Classic Load Balancer로 라우팅하는 경우 dualstack으로 시작하는 값을 가져옵니다\*\*\*\*. 트래픽을 다른 유형의 부하 분산기로 라우팅하는 경우 레코드 유형(A 또는 AAAA)에 적용되는 값을 가져옵니다.
+
+- **Elastic Load Balancing API**: `DescribeLoadBalancers` 의 값을 가져오는 데 `DNSName` 사용합니다. 자세한 내용은 해당 가이드를 참조하세요.
+  - Classic Load Balancer: DescribeLoadBalancer
+  - Application Load Balancer 및 Network Load Balancer: DescribeLoadBalancer
+- **CloudFormation Fn::GetAtt 내장 함수**: Fn::GetAtt 내장 함수를 사용하여 다음 값을 가져옵니다 `DNSName`.
+  - Classic Load Balancer.
+  - Application Load Balancer 및 Network Load Balancer.
+- **AWS CLI:** 의 값을 가져오는 데 `describe-load-balancers`사용합니다`DNSName`. 자세한 내용은 해당 가이드를 참조하세요.
+  - Classic Load Balancer: describe-load-balancers
+  - Application Load Balancer 및 Network Load Balancer: describe-load-balancers  
+    글로벌 액셀러레이터 액셀러레이터  
+    액셀러레이터의 DNS 이름을 지정합니다.
+- **글로벌 액셀러레이터 API**: DNS 이름을 가져오려면 DescribeAccelerator를 사용합니다.
+- **AWS CLI:** DNS 이름을 가져오려면 describe-accelerator를 사용합니다.  
+  정적 웹 사이트로 구성된 Amazon S3 버킷  
+  버킷을 생성한 Amazon S3 웹 사이트 엔드포인트의 도메인 이름을 지정합니다(예: `s3-website.us-east-2.amazonaws.com`). 유효한 값에 대한 자세한 내용은 *Amazon Web Services 일반 참조*의 Amazon S3 웹 사이트 엔드포인트 표를 참조하십시오. 웹 사이트용 S3 버킷 사용에 대한 자세한 내용은 *Amazon Route 53 개발자 안내서*의 Amazon Route 53 시작하기를 참조하십시오.  
+  또 다른 Route 53 기록  
+  `Name` 현재 호스팅 영역에 있는 레코드의 요소 값을 지정합니다.  
+  호스팅 영역(zone apex라고 함)과 이름이 같은 별칭 레코드를 생성하는 경우 값이 인 레코드의 도메인 이름을 지정할 수 없습니다 `Type` `CNAME`. 이는 별칭 레코드가 트래픽을 라우팅하는 레코드와 동일한 유형이어야 하며, 별칭 레코드에 대해서도 zone apex에 대한 CNAME 레코드 생성이 지원되지 않기 때문입니다.
+  _필수 항목 여부_: 예  
+  _유형_: 문자열  
+  _최대_: `1024`  
+  _업데이트 필요 사항_: 중단 없음
+
+`EvaluateTargetHealth`  
+_라우팅 정책이 있는 별칭 레코드에만 적용됨:_ 인 `EvaluateTargetHealth` 경우 `true`별칭 레코드는 ELB 로드 밸런서 또는 호스팅 영역의 다른 레코드와 같은 참조된 AWS 리소스의 상태를 상속합니다.  
+다음 사항에 유의하세요.  
+CloudFront 배포  
+`EvaluateTargetHealth` `true` 별칭 대상이 CloudFront 배포인 경우로 설정할 수 없습니다.  
+리전화된 하위 도메인이 있는 Elastic Beanstalk 환경  
+Elastic Beanstalk 환경을 지정 `DNSName` 하고 환경에 ELB 로드 밸런서가 포함된 경우 Elastic Load Balancing은 로드 밸런서에 등록된 정상 Amazon EC2 인스턴스로만 쿼리를 라우팅합니다. (환경에 Amazon EC2 인스턴스가 두 개 이상 포함된 경우 ELB 로드 밸런서가 자동으로 포함됩니다.) 로 설정 `EvaluateTargetHealth` `true` 했는데 정상인 Amazon EC2 인스턴스가 없거나 로드 밸런서 자체가 양호하지 않은 경우, Route 53은 양호한 다른 가용 리소스(있는 경우)로 쿼리를 라우팅합니다.  
+환경에 단일 Amazon EC2 인스턴스가 포함된 경우 특별한 요구 사항은 없습니다.  
+ELB 로드 밸런서  
+상태 확인 동작은 로드 밸런서의 유형에 따라 다릅니다.
+
+- **Classic Load Balancer:** 에서 ELB Classic Load Balancer를 지정하는 경우 `DNSName`Elastic Load Balancing은 로드 밸런서에 등록된 정상 Amazon EC2 인스턴스로만 쿼리를 라우팅합니다. 로 설정 `EvaluateTargetHealth` `true` 했는데 양호한 EC2 인스턴스가 없거나 로드 밸런서 자체가 양호하지 않은 경우, Route 53은 쿼리를 다른 리소스로 라우팅합니다.
+- **Application Load Balancer 및 Network Load Balancer**: ELB Application Load Balancer 또는 Network Load Balancer를 지정하고 `EvaluateTargetHealth` 로 `true` 설정하면 Route 53은 로드 밸런서와 연결된 대상 그룹의 상태에 따라 로드 밸런서로 쿼리를 라우팅합니다.
+  - Application Load Balancer 또는 Network Load Balancer가 정상으로 간주되려면 대상이 포함된 모든 대상 그룹에 정상 대상이 하나 이상 포함되어야 합니다. 대상 그룹에 비정상 대상만 포함된 경우 로드 밸런서는 비정상으로 간주되고 Route 53은 쿼리를 다른 리소스로 라우팅합니다.
+  - 등록된 대상이 없는 대상 그룹은 비정상으로 간주됩니다.
+    로드 밸런서를 생성할 때 Elastic Load Balancing 상태 확인에 대한 설정을 구성합니다. Route 53 상태 확인은 아니지만 유사한 기능을 수행합니다. ELB 로드 밸런서에 등록한 EC2 인스턴스에 대한 Route 53 상태 확인을 생성하지 마십시오.  
+    S3 버킷  
+    `EvaluateTargetHealth` `true` 별칭 대상이 S3 버킷인 경우로 설정하기 위한 특별한 요구 사항은 없습니다.  
+    동일한 호스팅 영역의 다른 레코드  
+    지정한 AWS 리소스 `DNSName` 가 레코드 또는 레코드 그룹(예: 가중치 기반 레코드 그룹)이지만 다른 별칭 레코드가 아닌 경우, 상태 확인을 별칭 대상의 모든 레코드와 연결하는 것이 좋습니다. 자세한 내용은 상태 확인을 생략하면 어떻게 됩니까?를 참조하십시오. 의*Amazon Route 53 개발자 안내서*.
+    자세한 내용과 예제는 Amazon Route 53 개발자 안내서의 Amazon Route 53 상태 확인 및 DNS 장애 조치를 참조하십시오\**.  
+    *필수 항목 *여부: 아니요  
+    *유형*: Boolean  
+    *업데이트 필요 사항\*: 중단 없음
+
+`HostedZoneId`  
+*별칭 리소스 레코드 세트*만: 사용되는 값은 트래픽을 라우팅하려는 위치에 따라 다릅니다.  
+Amazon API Gateway 사용자 지정 리전 API 및 엣지 최적화 API  
+API의 호스팅 영역 ID를 지정합니다. AWS CLI 명령 get-domain-names를 사용하여 해당 값을 가져올 수 있습니다.
+
+- 리전 API의 경우 값을 지정합니다 `regionalHostedZoneId`.
+- 엣지 최적화 API의 경우 값을 지정합니다`distributionHostedZoneId`.  
+  Amazon Virtual Private Cloud 인터페이스 VPC 엔드포인트  
+  인터페이스 엔드포인트의 호스팅 영역 ID를 지정합니다. `HostedZoneId` AWS CLI 명령 describe-vpc-endpoints를 사용하여 값을 얻을 수 있습니다.  
+  CloudFront 배포  
+  를 지정합니다`Z2FDTNDATAQYW2`. 이 ID는 CloudFront 배포로 트래픽을 라우팅하는 별칭 레코드를 생성할 때 항상 호스팅 영역 ID입니다.  
+  CloudFront에 대한 별칭 레코드는 프라이빗 영역에서 생성할 수 없습니다.  
+  Elastic Beanstalk 환경  
+  환경을 생성한 리전의 호스팅 영역 ID를 지정합니다. 환경에는 지역화된 하위 도메인이 있어야 합니다. 리전 및 해당 호스팅 영역 ID 목록은 Amazon Web Services 일반 참조의 AWS Elastic Beanstalk 엔드포인트 및 할당량을 참조하십시오\*\*.  
+  ELB 로드 밸런서  
+  로드 밸런서의 호스팅 영역 ID 값을 지정합니다. 다음 방법을 사용하여 호스팅 영역 ID를 가져옵니다.
+- Amazon Web Services 일반 참조의 _"Elastic Load Balancing 엔드포인트 및 할당량" 주제에 있는 서비스 엔드포인트 표_: 로드 밸런서를 생성한 리전에 해당하는 값을 사용합니다. Application Load Balancer 및 Classic Load Balancer와 Network Load Balancer에 대한 별도의 열이 있습니다.
+- **AWS Management Console**: Amazon EC2 페이지로 이동하여 탐색 창에서 **[Load Balancers**]를 선택하고 로드 밸런서를 선택한 다음 **[Description**] 탭에서 **[Hosted zone**] 필드의 값을 가져옵니다 .
+- **Elastic Load Balancing API**: `DescribeLoadBalancers` 적용 가능한 값을 가져오는 데 사용합니다. 자세한 내용은 해당 가이드를 참조하세요.
+  - Classic Load Balancer: DescribeLoadBalancers를 사용하여 의 값을 가져옵니다 `CanonicalHostedZoneNameID`.
+  - Application Load Balancer 및 Network Load Balancer: DescribeLoadBalancers를 사용하여 의 값을 가져옵니다 `CanonicalHostedZoneID`.
+- **CloudFormation Fn::GetAtt 내장 함수**: Fn::GetAtt 내장 함수를 사용하여 해당 값을 가져옵니다.
+  - Classic Load Balancer: CanonicalHostedZoneNameID를 가져옵니다.
+  - Application Load Balancer 및 Network Load Balancer: CanonicalHostedZoneID를 가져옵니다.
+- **AWS CLI:** `describe-load-balancers` 적용 가능한 값을 가져오는 데 사용합니다. 자세한 내용은 해당 가이드를 참조하세요.
+  - Classic Load Balancer: describe-load-balancers를 사용하여 의 값을 가져옵니다 `CanonicalHostedZoneNameID`.
+  - Application Load Balancer 및 Network Load Balancer: describe-load-balancers를 사용하여 의 값을 가져옵니다`CanonicalHostedZoneID`.  
+    글로벌 액셀러레이터 액셀러레이터  
+    를 지정합니다`Z2BJ6XQ5FK7U4H`.  
+    정적 웹 사이트로 구성된 Amazon S3 버킷  
+    버킷을 생성한 리전의 호스팅 영역 ID를 지정합니다. 유효한 값에 대한 자세한 내용은 *Amazon Web Services 일반 참조*의 Amazon S3 웹 사이트 엔드포인트 표를 참조하십시오.  
+    호스팅 영역의 다른 Route 53 레코드  
+    호스팅 영역의 호스팅 영역 ID를 지정합니다. (별칭 레코드는 다른 호스팅 영역의 레코드를 참조할 수 없습니다.)
+    _필수 항목 여부_: 예  
+    _유형_: 문자열  
+    _최대_: `32`  
+    _업데이트 필요 사항_: 중단 없음
+
+## 참고 항목
+
+- AWS::Route53::RecordSetGroup 주제의 반환 값
+- Amazon Route 53 API Reference*의 AliasTarget *

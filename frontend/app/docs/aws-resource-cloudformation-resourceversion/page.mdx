@@ -1,0 +1,168 @@
+# AWS::CloudFormation::리소스 버전
+
+CloudFormation 서비스에 리소스 버전을 등록합니다. 리소스 버전을 등록하면 AWS 계정의 CloudFormation 템플릿에서 사용할 수 있으며 다음이 포함됩니다.
+
+- 리소스 스키마의 유효성을 검사합니다.
+- 자원에 대해 지정된 처리기(있는 경우)를 판별합니다.
+- 계정에서 리소스를 사용할 수 있도록 합니다.
+
+리소스를 개발하고 등록을 준비하는 방법에 대한 자세한 내용은 _CloudFormation CLI 사용 설명서의 리소스 공급자 생성을 참조하십시오_.
+
+한 번에 최대 50개의 리소스 버전을 등록할 수 있습니다. 이 최대값은 계정 및 리전당입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::CloudFormation::ResourceVersion",
+  "Properties" : {
+      "ExecutionRoleArn" : String,
+      "LoggingConfig" : LoggingConfig,
+      "SchemaHandlerPackage" : String,
+      "TypeName" : String
+    }
+}
+```
+
+## 속성
+
+`ExecutionRoleArn`  
+리소스를 호출할 때 CloudFormation에서 수임할 IAM 역할의 Amazon 리소스 이름(ARN)입니다. 리소스가 핸들러에서 AWS API를 호출하는 경우 해당 AWS API를 호출하는 데 필요한 권한이 포함된 _IAM 실행 역할을_ 생성하고 계정에서 해당 실행 역할을 프로비저닝해야 합니다. CloudFormation에서 리소스 유형 핸들러를 호출해야 하는 경우 CloudFormation은 이 실행 역할을 맡아 임시 세션 토큰을 생성한 다음 리소스 유형 핸들러에 전달하여 리소스 유형에 적절한 자격 증명을 제공합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `256`  
+_패턴_: `arn:.+:iam::[0-9]{12}:role/.+`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`LoggingConfig`  
+자원에 대한 로깅 구성 정보.  
+*필수 항목 *여부: 아니요  
+_유형_: LoggingConfig  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`SchemaHandlerPackage`  
+등록하려는 리소스에 필요한 파일이 포함된 리소스 프로젝트 패키지가 포함된 S3 버킷의 URL입니다.  
+등록하려는 리소스에 대한 스키마 핸들러 패키지 생성에 대한 자세한 내용은 *CloudFormation CLI 사용 설명서*의 제출을 참조하십시오.  
+리소스를 등록하는 사용자는 S3 버킷의 패키지에 액세스할 수 있어야 합니다. 즉, 사용자에게 스키마 처리기 패키지에 대한 GetObject 권한이 있어야 합니다. 자세한 내용은 AWS Identity and Access Management 사용 설명서의 Amazon S3에 사용되는 작업, 리소스 및 조건 키를 참조하십시오\**.
+*필수 항목 여부*: 예  
+*유형*: 문자열  
+*최소*: `1`  
+*최대*: `4096`  
+*업데이트 필요 사항\*: 바꿔 놓음
+
+`TypeName`  
+등록되는 리소스의 이름입니다.  
+리소스 이름은 _company_or_organization_::_service_::_type_ 패턴을 따르는 것이 좋습니다.  
+다음 조직 네임스페이스는 예약되어 있으며 리소스 이름에 사용할 수 없습니다.
+
+- `Alexa`
+- `AMZN`
+- `Amazon`
+- `AWS`
+- `Custom`
+- `Dev`
+  _필수 항목 여부_: 예  
+  _유형_: 문자열  
+  _최소_: `10`  
+  _최대_: `204`  
+  _패턴_: `[A-Za-z0-9]{2,64}::[A-Za-z0-9]{2,64}::[A-Za-z0-9]{2,64}(::MODULE){0,1}`  
+  _업데이트 필요 사항_: 바꿔 놓음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`리소스 버전의 ARN을 반환합니다. 예를 들어:
+
+`arn:aws:cloudformation:us-west-2:012345678901:type/resource/Sample-CloudFormation-Resource/00000001`
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`Arn` 리소스 버전의 Amazon 리소스 이름(ARN)입니다.
+
+`IsDefaultVersion` 리소스 버전이 기본 버전으로 설정되는지 여부입니다.
+
+`ProvisioningType` 리소스 종류의 프로비전 동작The provisioning behavior of the resource type. CloudFormation은 제출된 스키마 핸들러 패키지의 핸들러 유형에 따라 등록 중에 프로비저닝 유형을 결정합니다.  
+유효한 값은 다음과 같습니다.
+
+- `FULLY_MUTABLE`: 리소스 유형에는 스택 업데이트 작업 중에 유형에 대한 업데이트를 처리하기 위한 업데이트 핸들러가 포함되어 있습니다.
+- `IMMUTABLE`: 리소스 종류에 업데이트 처리기가 포함되어 있지 않으므로 형식을 업데이트할 수 없으며 대신 스택 업데이트 작업 중에 바꿔야 합니다.
+- `NON_PROVISIONABLE`: 리소스 종류에 다음 처리기가 모두 포함되어 있지 않으므로 실제로 프로비전할 수 없습니다.
+  - 창조하다
+  - 읽다
+  - 삭제하다
+
+`TypeArn` 리소스의 Amazon 리소스 이름(ARN)입니다.
+
+`VersionId` 리소스의 특정 버전 ID입니다. 버전 ID는 리소스 버전이 등록될 때 리소스 버전에 할당된 Amazon 리소스 이름(ARN)의 끝에 있는 값입니다.
+
+`Visibility` CloudFormation 작업에서 리소스를 표시하고 사용할 수 있는 범위입니다.  
+유효한 값은 다음과 같습니다.
+
+- `PRIVATE`: 리소스는 등록된 계정 내에서만 볼 수 있고 사용할 수 있습니다. CloudFormation은 등록한 모든 리소스를 `PRIVATE`로 표시합니다.
+- `PUBLIC`: 리소스는 공개적으로 표시되며 모든 Amazon 계정 내에서 사용할 수 있습니다.
+
+## 예제
+
+### 자원 버전 지정
+
+다음 예제에서는 새 리소스 버전을 지정하는 방법을 보여 줍니다.
+
+#### JSON (영문)
+
+```
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Resources": {
+        "ResourceVersion": {
+            "Type": "AWS::CloudFormation::ResourceVersion",
+            "Properties": {
+                "TypeName": "My::Sample::Resource",
+                "SchemaHandlerPackage": "s3://my-sample-resourceversion-bucket/my-sample-resource.zip"
+            }
+        }
+    }
+}
+```
+
+### 자원 버전을 지정하고 기본 버전으로 설정Specifying a resource version and setting it as the default version
+
+다음 예제에서는 새 리소스 버전을 지정하고 `Ref` 반환 값을 사용하여 해당 버전을 기본 버전으로 설정하는 방법을 보여 줍니다.
+
+#### JSON (영문)
+
+```
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Resources": {
+        "ResourceVersion": {
+            "Type": "AWS::CloudFormation::ResourceVersion",
+            "Properties": {
+                "TypeName": "My::Sample::Resource",
+                "SchemaHandlerPackage": "s3://my-sample-resourceversion-bucket/my-sample-resource.zip"
+            }
+        },
+        "ResourceDefaultVersion": {
+            "Type": "AWS::CloudFormation::ResourceDefaultVersion",
+            "Properties": {
+                "TypeVersionArn": {
+                    "Ref": "ResourceVersion"
+                }
+            }
+        }
+    }
+}
+```

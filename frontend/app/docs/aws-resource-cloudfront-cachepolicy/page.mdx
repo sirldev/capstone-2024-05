@@ -1,0 +1,54 @@
+# AWS::CloudFront::캐시 정책
+
+캐시 정책입니다.
+
+캐시 동작에 연결된 경우 캐시 정책은 다음을 결정합니다.
+
+- CloudFront가 캐시 키에 포함하는 값입니다. 이러한 값에는 HTTP 헤더, 쿠키 및 URL 쿼리 문자열이 포함될 수 있습니다. CloudFront는 캐시 키를 사용하여 최종 사용자에게 반환할 수 있는 객체를 캐시에서 찾습니다.
+- 객체를 CloudFront 캐시에 유지하려는 기본, 최소 및 최대 TTL(Time to Live) 값입니다.
+
+캐시 키에 포함된 헤더, 쿠키 및 쿼리 문자열은 CloudFront가 오리진에 보내는 요청에도 포함됩니다. CloudFront는 캐시에서 요청의 캐시 키와 일치하는 유효한 객체를 찾을 수 없을 때 요청을 보냅니다. 오리진에 값을 전송하되 * 캐시 키에 포함*하지 않으려면 `OriginRequestPolicy`.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::CloudFront::CachePolicy",
+  "Properties" : {
+      "CachePolicyConfig" : CachePolicyConfig
+    }
+}
+```
+
+## 속성
+
+`CachePolicyConfig`  
+캐시 정책 구성입니다.  
+_필수 항목 여부_: 예  
+_유형_: CachePolicyConfig  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref`캐시 `Ref`정책 ID가 반환됩니다. 예를 들면 다음과 같습니다 `2766f7b2-75c5-41c6-8f06-bf4303a2f2f5`.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`Id`  
+캐시 정책의 고유 식별자입니다. 예를 들면 다음과 같습니다 `2766f7b2-75c5-41c6-8f06-bf4303a2f2f5`.
+
+`LastModifiedTime` 캐시 정책을 마지막으로 수정한 날짜 및 시간입니다.

@@ -1,0 +1,37 @@
+# AWS::ECS::TaskDefinition 보안 암호
+
+컨테이너에 노출할 비밀을 나타내는 개체입니다. 비밀은 다음과 같은 방법으로 컨테이너에 노출될 수 있습니다.
+
+- 중요한 데이터를 컨테이너에 환경 변수로 삽입하려면 `secrets` 컨테이너 정의 매개 변수를 사용합니다.
+- 컨테이너의 로그 구성에서 중요한 정보를 참조하려면 `secretOptions` container definition 매개 변수를 사용합니다.
+
+자세한 내용은 Amazon Elastic Container Service 개발자 안내서*의 민감한 데이터 지정을 참조하세요*.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Name" : String,
+  "ValueFrom" : String
+}
+```
+
+## 속성
+
+`Name`  
+비밀의 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ValueFrom`  
+컨테이너에 노출할 비밀입니다. 지원되는 값은 AWS Secrets Manager 보안 암호의 전체 ARN 또는 SSM 파라미터 스토어에 있는 파라미터의 전체 ARN입니다.  
+필요한 AWS Identity and Access Management 권한에 대한 자세한 내용은 Amazon Elastic Container Service 개발자 안내서의 Amazon ECS 보안 암호에 필요한 IAM 권한(Secrets Manager의 경우) 또는 Amazon ECS 보안 암호에 필요한 IAM 권한(Systems Manager 파라미터 스토어의 경우)을 참조하세요\**.  
+SSM 파라미터 스토어 파라미터가 시작 중인 작업과 동일한 리전에 있는 경우 파라미터의 전체 ARN 또는 이름을 사용할 수 있습니다. 파라미터가 다른 리전에 있는 경우 전체 ARN을 지정해야 합니다.
+*필수 항목 여부*: 예  
+*유형*: 문자열  
+*업데이트 필요 사항\*: 바꿔 놓음

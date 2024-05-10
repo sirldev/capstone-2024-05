@@ -1,0 +1,30 @@
+# AWS::CloudFront::ContinuousDeploymentPolicy SingleHeaderConfig
+
+스테이징 배포로 전송되는 HTTP 요청을 결정합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Header" : String,
+  "Value" : String
+}
+```
+
+## 속성
+
+`Header`  
+CloudFront에서 스테이징 배포로 전송할 요청 헤더 이름입니다. 헤더에는 접두사 가 포함되어야 합니다 `aws-cf-cd-`.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Value`  
+요청 헤더 값입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음

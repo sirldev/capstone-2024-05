@@ -1,0 +1,512 @@
+# AWS::ElasticBeanstalk::환경
+
+AWS::ElasticBeanstalk::Environment 리소스는 Elastic Beanstalk 환경을 지정하는 AWS Elastic Beanstalk 리소스 유형입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::ElasticBeanstalk::Environment",
+  "Properties" : {
+      "ApplicationName" : String,
+      "CNAMEPrefix" : String,
+      "Description" : String,
+      "EnvironmentName" : String,
+      "OperationsRole" : String,
+      "OptionSettings" : [ OptionSetting, ... ],
+      "PlatformArn" : String,
+      "SolutionStackName" : String,
+      "Tags" : [Tag, ... ],
+      "TemplateName" : String,
+      "Tier" : Tier,
+      "VersionLabel" : String
+    }
+}
+```
+
+## 속성
+
+`ApplicationName`  
+이 환경과 연결된 응용 프로그램의 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `100`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`CNAMEPrefix`  
+지정된 경우 환경은 이 값을 Elastic Beanstalk 환경 URL의 CNAME에 대한 접두사로 사용하려고 시도합니다. 지정하지 않으면 환경 이름에 임의의 영숫자 문자열을 추가하여 CNAME이 자동으로 생성됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `4`  
+_최대_: `63`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Description`  
+이 환경에 대한 설명입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최대_: `200`  
+_업데이트 필요 사항_: 중단 없음
+
+`EnvironmentName`  
+환경의 고유한 이름입니다.  
+제약 조건: 길이는 4자에서 40자 사이여야 합니다. 이름에는 문자, 숫자 및 하이픈만 사용할 수 있습니다. 하이픈으로 시작하거나 끝날 수 없습니다. 이 이름은 계정의 리전 내에서 고유해야 합니다.  
+매개 변수를 지정하지 않으면 `CNAMEPrefix` 환경 이름이 CNAME의 일부가 되므로 애플리케이션에 표시되는 URL의 일부가 됩니다.  
+환경 이름을 지정하지 않으면 AWS CloudFormation에서 고유한 물리적 ID를 생성하고 해당 ID를 환경 이름으로 사용합니다. 자세한 내용은 이름 유형을 참조하십시오.  
+이름을 지정하면 이 리소스를 대체해야 하는 업데이트를 수행할 수 없습니다. 중단이 필요 없거나 약간의 중단이 필요한 업데이트를 수행할 수 있습니다. 리소스를 바꿔야 하는 경우 새 이름을 지정합니다.
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `4`  
+_최대_: `40`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`OperationsRole`  
+AWS Elastic Beanstalk의 작업 역할 기능은 베타 버전으로 출시되었으며 변경될 수 있습니다.
+환경의 운영 역할로 사용할 기존 IAM 역할의 Amazon 리소스 이름(ARN)입니다. 지정된 경우 Elastic Beanstalk는 이 호출 중 및 이 환경에서 작동하는 후속 호출 중에 다운스트림 서비스에 대한 권한에 대해 작업 역할을 사용합니다. 작업 역할을 지정하려면 `iam:PassRole` 해당 역할에 대한 권한이 있어야 합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `256`  
+_업데이트 필요 사항_: 중단 없음
+
+`OptionSettings`  
+이 환경에 대한 구성 옵션(예: 인스턴스 유형)을 정의하는 키-값 페어입니다. 이러한 옵션은 솔루션 스택 또는 구성 템플릿에 정의된 값을 재정의합니다. 스택 업데이트 중에 옵션을 제거하면 제거된 옵션은 현재 값을 유지합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: OptionSetting 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`PlatformArn`  
+환경에서 사용할 사용자 지정 플랫폼의 Amazon 리소스 이름(ARN)입니다. 자세한 내용은 * AWS Elastic Beanstalk 개발자 안내서*의 사용자 지정 플랫폼을 참조하십시오.  
+를 지정하는 경우 를 `PlatformArn`지정하지 마십시오`SolutionStackName`.
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`SolutionStackName`  
+환경에서 사용할 Elastic Beanstalk 솔루션 스택(플랫폼 버전)의 이름입니다. 지정된 경우 Elastic Beanstalk는 구성 값을 지정된 솔루션 스택과 연결된 기본값으로 설정합니다. 현재 솔루션 스택 목록은 _ AWS Elastic Beanstalk 플랫폼_ 안내서의 Elastic Beanstalk 지원 플랫폼을 참조하십시오.  
+를 지정하는 경우 `SolutionStackName` 또는 를 `PlatformArn`지정하지 마십시오`TemplateName`.
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Tags`  
+환경의 리소스에 적용되는 태그를 지정합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`TemplateName`  
+환경에서 사용할 Elastic Beanstalk 구성 템플릿의 이름입니다.  
+를 지정할 경우 를 `TemplateName`지정하지 마십시오`SolutionStackName`.
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `100`  
+_업데이트 필요 사항_: 중단 없음
+
+`Tier`  
+이 환경을 만드는 데 사용할 계층을 지정합니다. 선택한 환경 티어에 따라 Elastic Beanstalk가 HTTP(S) 요청을 처리하는 웹 애플리케이션을 지원하기 위해 리소스를 프로비저닝할지 아니면 백그라운드 처리 작업을 처리하는 웹 애플리케이션을 지원할지가 결정됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 계층  
+_업데이트 필요 사항_: 중단 없음
+
+`VersionLabel`  
+배포할 응용 프로그램 버전의 이름입니다.  
+기본값: 지정하지 않으면 Elastic Beanstalk가 샘플 애플리케이션을 배포하려고 시도합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `100`  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID가 `Ref`내장 함수 에 제공되면 `Ref`리소스 이름을 반환합니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`EndpointURL`  
+부하 분산된 자동 크기 조정 환경의 경우 부하 분산 장치에 대한 URL입니다. 단일 인스턴스 환경의 경우 인스턴스의 IP 주소입니다.  
+로드 밸런서 URL 예:  
+ `awseb-myst-myen-132MQC4KRLAMD-1371280482.us-east-2.elb.amazonaws.com`  
+인스턴스 IP 주소의 예:  
+ `192.0.2.0`
+
+## 예제
+
+### 간단한 환경
+
+#### JSON (영문)
+
+```
+{
+   "Type" : "AWS::ElasticBeanstalk::Environment",
+   "Properties" : {
+      "ApplicationName" : { "Ref" : "sampleApplication" },
+      "Description" :  "AWS Elastic Beanstalk Environment running PHP Sample Application",
+      "EnvironmentName" :  "SamplePHPEnvironment",
+      "TemplateName" : "DefaultConfiguration",
+      "VersionLabel" : "Initial Version"
+   }
+}
+```
+
+### 옵션 설정이 포함된 환경
+
+#### JSON (영문)
+
+```
+{
+   "Type" : "AWS::ElasticBeanstalk::Environment",
+   "Properties" : {
+      "ApplicationName" : { "Ref" : "sampleApplication" },
+      "Description" :  "AWS Elastic Beanstalk Environment running Python Sample Application",
+      "EnvironmentName" :  "SamplePythonEnvironment",
+      "SolutionStackName" : "64bit Amazon Linux 2017.03 v2.5.0 running Python 2.7",
+      "OptionSettings" : [ {
+         "Namespace" : "aws:autoscaling:launchconfiguration",
+         "OptionName" : "EC2KeyName",
+         "Value" : { "Ref" : "KeyName" }
+      } ],
+      "VersionLabel" : "Initial Version"
+   }
+}
+```
+
+### 사용자 지정 또는 지원되는 플랫폼
+
+다음 예제에는 스택을 생성할 때`PlatformArn` 사용자 지정 플랫폼 또는 `SolutionStackName` 지원되는 플랫폼을 지정할 수 있는 파라미터가 포함되어 있습니다.
+
+#### JSON (영문)
+
+```
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "Elasticbeanstalk test template",
+  "Parameters": {
+    "BeanstalkService": {
+      "Type": "String"
+    },
+    "Ec2Service": {
+      "Type": "String"
+    },
+    "Partition":{
+      "Type": "String"
+    },
+    "SolutionStackName": {
+      "Type": "String"
+    },
+    "PlatformArn": {
+      "Type": "String"
+    }
+  },
+  "Resources": {
+    "Application": {
+      "Type": "AWS::ElasticBeanstalk::Application",
+      "Properties": {
+        "ApplicationName": "SampleBeanstalkApp",
+        "Description": "AWS Elastic Beanstalk Python Sample Application"
+      }
+    },
+    "AppVersion": {
+      "Type": "AWS::ElasticBeanstalk::ApplicationVersion",
+      "Properties": {
+        "ApplicationName": {"Ref" : "Application"},
+        "Description": "Version 1.0",
+        "SourceBundle": {
+          "S3Bucket": {
+            "Fn::Join": ["-", [ "elasticbeanstalk-samples", { "Ref" : "AWS::Region" } ] ] },
+          "S3Key": "python-sample-20150402.zip"
+        }
+      }
+    },
+    "Environment": {
+      "Type": "AWS::ElasticBeanstalk::Environment",
+      "Properties": {
+        "ApplicationName": {"Ref": "Application"},
+        "Description": "AWS Elastic Beanstalk Environment running Python Sample Application",
+        "PlatformArn": { "Ref" : "PlatformArn"},
+        "SolutionStackName": {
+          "Ref": "SolutionStackName"
+        },
+        "VersionLabel": {"Ref": "AppVersion"},
+        "OptionSettings": [
+          {
+            "Namespace": "aws:autoscaling:launchconfiguration",
+            "OptionName": "IamInstanceProfile",
+            "Value": {
+              "Ref": "InstanceProfile"
+            }
+          },
+          {
+            "Namespace": "aws:elasticbeanstalk:environment",
+            "OptionName": "ServiceRole",
+            "Value": {
+              "Ref": "ServiceRole"
+            }
+          }
+        ]
+      }
+    },
+    "ServiceRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Sid": "",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": {"Ref": "BeanstalkService"}
+              },
+              "Action": "sts:AssumeRole",
+              "Condition": {
+                "StringEquals": {
+                  "sts:ExternalId": "elasticbeanstalk"
+                }
+              }
+            }
+          ]
+        },
+        "Policies": [
+          {
+            "PolicyName": "root",
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "elasticloadbalancing:DescribeInstanceHealth",
+                    "ec2:DescribeInstances",
+                    "ec2:DescribeInstanceStatus",
+                    "ec2:GetConsoleOutput",
+                    "ec2:AssociateAddress",
+                    "ec2:DescribeAddresses",
+                    "ec2:DescribeSecurityGroups",
+                    "sqs:GetQueueAttributes",
+                    "sqs:GetQueueUrl",
+                    "autoscaling:DescribeAutoScalingGroups",
+                    "autoscaling:DescribeAutoScalingInstances",
+                    "autoscaling:DescribeScalingActivities",
+                    "autoscaling:DescribeNotificationConfigurations"
+                  ],
+                  "Resource": [
+                    "*"
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        "Path": "/"
+      }
+    },
+    "InstanceProfile": {
+      "Type": "AWS::IAM::InstanceProfile",
+      "Properties": {
+        "Path": "/",
+        "Roles": [
+          {
+            "Ref": "InstanceProfileRole"
+          }
+        ]
+      }
+    },
+    "InstanceProfileRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": [
+                  {"Ref": "Ec2Service"}
+                ]
+              },
+              "Action": [
+                "sts:AssumeRole"
+              ]
+            }
+          ]
+        },
+        "Policies": [
+          {
+            "PolicyName": "root",
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Sid": "BucketAccess",
+                  "Action": [
+                    "s3:Get*",
+                    "s3:List*",
+                    "s3:PutObject"
+                  ],
+                  "Effect": "Allow",
+                  "Resource": [
+                    {
+                      "Fn::Join": [
+                        "",
+                        [
+                          "arn:",
+                          {
+                            "Ref": "Partition"
+                          },
+                          ":s3:::elasticbeanstalk-*-",
+                          {
+                            "Ref": "AWS::AccountId"
+                          }
+                        ]
+                      ]
+                    },
+                    {
+                      "Fn::Join": [
+                        "",
+                        [
+                          "arn:",
+                          {
+                            "Ref": "Partition"
+                          },
+                          ":s3:::elasticbeanstalk-*-",
+                          {
+                            "Ref": "AWS::AccountId"
+                          },
+                          "/*"
+                        ]
+                      ]
+                    },
+                    {
+                      "Fn::Join": [
+                        "",
+                        [
+                          "arn:",
+                          {
+                            "Ref": "Partition"
+                          },
+                          ":s3:::elasticbeanstalk-*-",
+                          {
+                            "Ref": "AWS::AccountId"
+                          },
+                          "-*"
+                        ]
+                      ]
+                    },
+                    {
+                      "Fn::Join": [
+                        "",
+                        [
+                          "arn:",
+                          {
+                            "Ref": "Partition"
+                          },
+                          ":s3:::elasticbeanstalk-*-",
+                          {
+                            "Ref": "AWS::AccountId"
+                          },
+                          "-*/*"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "Sid": "ECSAccess",
+                  "Effect": "Allow",
+                  "Action": [
+                    "ecs:StartTask",
+                    "ecs:StopTask",
+                    "ecs:RegisterContainerInstance",
+                    "ecs:DeregisterContainerInstance",
+                    "ecs:DescribeContainerInstances",
+                    "ecs:DiscoverPollEndpoint",
+                    "ecs:Submit*",
+                    "ecs:Poll"
+                  ],
+                  "Resource": "*"
+                },
+                {
+                  "Sid": "QueueAccess",
+                  "Action": [
+                    "sqs:ChangeMessageVisibility",
+                    "sqs:DeleteMessage",
+                    "sqs:ReceiveMessage",
+                    "sqs:SendMessage"
+                  ],
+                  "Effect": "Allow",
+                  "Resource": "*"
+                },
+                {
+                  "Sid": "DynamoPeriodicTasks",
+                  "Action": [
+                    "dynamodb:BatchGetItem",
+                    "dynamodb:BatchWriteItem",
+                    "dynamodb:DeleteItem",
+                    "dynamodb:GetItem",
+                    "dynamodb:PutItem",
+                    "dynamodb:Query",
+                    "dynamodb:Scan",
+                    "dynamodb:UpdateItem"
+                  ],
+                  "Effect": "Allow",
+                  "Resource": [
+                    {
+                      "Fn::Join": [
+                        "",
+                        [
+                          "arn:",
+                          {
+                            "Ref": "Partition"
+                          },
+                          ":dynamodb:*:",
+                          {
+                            "Ref": "AWS::AccountId"
+                          },
+                          ":table/*-stack-AWSEBWorkerCronLeaderRegistry*"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "Sid": "MetricsAccess",
+                  "Action": [
+                    "cloudwatch:PutMetricData"
+                  ],
+                  "Effect": "Allow",
+                  "Resource": "*"
+                }
+              ]
+            }
+          }
+        ],
+        "Path": "/"
+      }
+    }
+  }
+}
+```
+
+## 참고 항목
+
+- AWS Elastic Beanstalk 개발자 안내서\* \*의 AWS Elastic Beanstalk 환경 생성
+- AWS Elastic Beanstalk 개발자 안내서\* \*의 환경 관리
+- 전체 Elastic Beanstalk 샘플 템플릿은 Elastic Beanstalk 템플릿 코드 조각 단원을 참조하십시오.

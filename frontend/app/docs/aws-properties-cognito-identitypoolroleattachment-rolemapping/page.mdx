@@ -1,0 +1,47 @@
+# AWS::Cognito::IdentityPoolRoleAttachment 역할 매핑
+
+`RoleMapping` 는 Amazon Cognito 자격 증명 풀의 역할 매핑 속성을 정의하는 AWS::Cognito::IdentityPoolRoleAttachment 리소스의 속성입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "AmbiguousRoleResolution" : String,
+  "IdentityProvider" : String,
+  "RulesConfiguration" : RulesConfigurationType,
+  "Type" : String
+}
+```
+
+## 속성
+
+`AmbiguousRoleResolution`  
+Rules 유형의 클레임 값과 일치하는 규칙이 없거나, `cognito:preferred_role` 클레임 이 없고 `cognito:roles` Token 유형에 대한 일치 항목이 여러 개 있는 경우 수행할 작업을 지정합니다. 유형으로 토큰 또는 규칙을 지정하는 경우 AmbiguousRoleResolution이 필요합니다.  
+유효한 값은 `AuthenticatedRole` 또는 `Deny`입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`IdentityProvider`  
+역할이 매핑되는 ID 공급자의 식별자입니다. 예를 들면 다음과 같습니다. `graph.facebook.com` 또는 `cognito-idp.us-east-1.amazonaws.com/us-east-1_abcdefghi:app_client_id (some-address This is the identity provider that is used by the user for authentication.  
+If the identity provider property isn't provided, the key of the entry in the `RoleMappings의 맵이 ID 공급자로 사용됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`RulesConfiguration`  
+사용자를 역할에 매핑하는 데 사용할 규칙입니다. 역할 매핑 유형으로 "Rules"를 지정하는 경우 RulesConfiguration이 필요합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: RulesConfigurationType  
+_업데이트 필요 사항_: 중단 없음
+
+`Type`  
+역할 매핑 형식입니다. `Token` `cognito:roles` `cognito:preferred_role` Amazon Cognito 자격 증명 공급자 토큰을 사용하고 클레임을 사용하여 그룹을 역할에 매핑합니다. `Rules` 역할에 매핑할 토큰의 클레임을 일치시키려고 시도합니다.  
+유효한 값은 `Token` 또는 `Rules`입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음

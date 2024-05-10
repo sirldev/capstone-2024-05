@@ -1,0 +1,42 @@
+# AWS::Lightsail::D istribution InputOrigin
+
+`InputOrigin` 은 AWS::Lightsail::D istribution 리소스의 속성입니다. Amazon Lightsail 콘텐츠 전송 네트워크(CDN) 배포의 오리진 리소스에 대해 설명합니다.
+
+오리진은 인스턴스, 버킷 또는 로드 밸런서일 수 있습니다. 배포는 오리진에서 콘텐츠를 가져와 캐시하고 전 세계 엣지 서버 네트워크를 통해 시청자에게 제공합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Name" : String,
+  "ProtocolPolicy" : String,
+  "RegionName" : String
+}
+```
+
+## 속성
+
+`Name`  
+오리진 리소스의 이름입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_패턴_: `w[w-]*w`  
+_업데이트 필요 사항_: 중단 없음
+
+`ProtocolPolicy`  
+Amazon Lightsail 배포에서 콘텐츠를 가져오기 위해 오리진과의 연결을 설정할 때 사용하는 프로토콜입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `http-only | https-only`  
+_업데이트 필요 사항_: 중단 없음
+
+`RegionName`  
+오리진 리소스의 AWS 리전 이름입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `ap-northeast-1 | ap-northeast-2 | ap-south-1 | ap-southeast-1 | ap-southeast-2 | ca-central-1 | eu-central-1 | eu-north-1 | eu-west-1 | eu-west-2 | eu-west-3 | us-east-1 | us-east-2 | us-west-1 | us-west-2`  
+_업데이트 필요 사항_: 중단 없음

@@ -1,0 +1,293 @@
+# AWS::S3::버킷 복제 규칙
+
+복제할 Amazon S3 객체와 복제본을 저장할 위치를 지정합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "DeleteMarkerReplication" : DeleteMarkerReplication,
+  "Destination" : ReplicationDestination,
+  "Filter" : ReplicationRuleFilter,
+  "Id" : String,
+  "Prefix" : String,
+  "Priority" : Integer,
+  "SourceSelectionCriteria" : SourceSelectionCriteria,
+  "Status" : String
+}
+```
+
+## 속성
+
+`DeleteMarkerReplication`  
+Amazon S3에서 삭제 마커를 복제할지 여부를 지정합니다. 복제 구성에서 a를 지정하는 경우 `Filter` 요소 도 포함해야 합니다 `DeleteMarkerReplication` . 요소가 `Filter` 포함된 `Tag` 경우 Amazon S3는 태그 기반 규칙에 대한 삭제 마커 복제를 지원하지 않으므로 를 `DeleteMarkerReplication` `Status` Disabled로 설정해야 합니다. 구성 예는 기본 규칙 구성을 참조하십시오.  
+삭제 마커 복제에 대한 자세한 내용은 기본 규칙 구성을 참조하십시오.  
+이전 버전의 복제 구성을 사용하는 경우 Amazon S3는 삭제 마커의 복제를 다르게 처리합니다. 자세한 내용은 이전 버전과의 호환성을 참조하십시오.
+*필수 항목 *여부: 아니요  
+_형식_: DeleteMarkerReplication  
+_업데이트 필요 사항_: 중단 없음
+
+`Destination`  
+S3 복제 시간 제어(S3 RTC) 활성화를 포함하여 복제 대상 및 해당 구성에 대한 정보를 위한 컨테이너입니다.  
+_필수 항목 여부_: 예  
+_유형_: ReplicationDestination  
+_업데이트 필요 사항_: 중단 없음
+
+`Filter`  
+복제 규칙이 적용되는 개체의 하위 집합을 식별하는 필터입니다. A는 정확히 하나의 `Filter`, `Prefix`또는 `TagFilter` 자식 요소를 지정해야 합니다 `And` . 필터 필드를 사용하면 V2 복제 구성임을 알 수 있습니다. 이 필드는 V1 복제 구성에서 지원되지 않습니다.  
+V1 복제 구성은 키 접두사에 의한 필터링만 지원합니다. V1 복제 구성을 사용하여 필터링하려면 요소의 `Prefix` 자식 요소로 직접 추가합니다 `Rule` .
+*필수 항목 *여부: 아니요  
+_형식_: ReplicationRuleFilter  
+_업데이트 필요 사항_: 중단 없음
+
+`Id`  
+규칙의 고유 식별자입니다. 최대값은 255자입니다. 값을 지정하지 않으면 AWS CloudFormation에서 임의의 ID를 생성합니다. V2 복제 구성을 사용하는 경우 이 속성은 "ID"로 대문자로 표시됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Prefix`  
+규칙이 적용되는 객체를 식별하는 객체 키 이름 접두사입니다. 최대 접두사 길이는 1,024자입니다. 버킷의 모든 객체를 포함하려면 빈 문자열을 지정합니다. V1 복제 구성을 사용하여 필터링하려면 요소의 `Prefix` 자식 요소로 직접 `Rule` 추가합니다 .  
+XML 요청을 사용할 때 특수 문자(예: 캐리지 리턴)를 포함하는 객체 키를 대체해야 합니다. 자세한 내용은 XML 관련 객체 키 제약 조건을 참조하세요.
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Priority`  
+우선 순위는 두 개 이상의 복제 규칙이 충돌할 때마다 우선 순위를 갖는 규칙을 나타냅니다. Amazon S3는 모든 복제 규칙에 따라 객체 복제를 시도합니다. 그러나 동일한 대상 버킷을 가진 규칙이 두 개 이상 있는 경우 우선 순위가 가장 높은 규칙에 따라 객체가 복제됩니다. 숫자가 높을수록 우선 순위가 높습니다.  
+자세한 내용은 _Amazon S3 사용 설명서의 복제를 참조하세요_.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`SourceSelectionCriteria`  
+복제할 원본 개체를 식별하기 위한 추가 필터를 설명하는 컨테이너입니다. 이러한 개체의 복제를 사용하거나 사용하지 않도록 선택할 수 있습니다.  
+*필수 항목 *여부: 아니요  
+_형식_: SourceSelectionCriteria  
+_업데이트 필요 사항_: 중단 없음
+
+`Status`  
+규칙을 사용할 수 있는지 여부를 지정합니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_허용되는 값_: `Disabled | Enabled`  
+_업데이트 필요 사항_: 중단 없음
+
+## 예제
+
+### 복제 구성 IAM 역할을 S3 버킷과 연결
+
+다음 예제에서는 S3 버킷을 생성하고 AWS Identity and Access Management(IAM) 역할을 사용하여 복제 버킷에 쓸 수 있는 권한을 부여합니다. 순환 종속성을 피하기 위해 역할의 정책은 별도의 리소스로 선언됩니다. 버킷은 역할에 따라 다릅니다 `WorkItemBucketBackupRole` . 정책이 역할에 포함된 경우 역할도 버킷에 따라 달라집니다.
+
+#### JSON (영문)
+
+```
+{
+    "Resources": {
+        "RecordServiceS3Bucket": {
+            "Type": "AWS::S3::Bucket",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+                "ReplicationConfiguration": {
+                    "Role": {
+                        "Fn::GetAtt": [
+                            "WorkItemBucketBackupRole",
+                            "Arn"
+                        ]
+                    },
+                    "Rules": [
+                        {
+                            "Destination": {
+                                "Bucket": {
+                                    "Fn::Join": [
+                                        "",
+                                        [
+                                            "arn:aws:s3:::",
+                                            {
+                                                "Fn::Join": [
+                                                    "-",
+                                                    [
+                                                        {
+                                                            "Ref": "AWS::Region"
+                                                        },
+                                                        {
+                                                            "Ref": "AWS::StackName"
+                                                        },
+                                                        "replicationbucket"
+                                                    ]
+                                                ]
+                                            }
+                                        ]
+                                    ]
+                                },
+                                "StorageClass": "STANDARD"
+                            },
+                            "Id": "Backup",
+                            "Prefix": "",
+                            "Status": "Enabled"
+                        }
+                    ]
+                },
+                "VersioningConfiguration": {
+                    "Status": "Enabled"
+                }
+            }
+        },
+        "WorkItemBucketBackupRole": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+                "AssumeRolePolicyDocument": {
+                    "Statement": [
+                        {
+                            "Action": [
+                                "sts:AssumeRole"
+                            ],
+                            "Effect": "Allow",
+                            "Principal": {
+                                "Service": [
+                                    "s3.amazonaws.com"
+                                ]
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        "BucketBackupPolicy": {
+            "Type": "AWS::IAM::Policy",
+            "Properties": {
+                "PolicyDocument": {
+                    "Statement": [
+                        {
+                            "Action": [
+                                "s3:GetReplicationConfiguration",
+                                "s3:ListBucket"
+                            ],
+                            "Effect": "Allow",
+                            "Resource": [
+                                {
+                                    "Fn::Join": [
+                                        "",
+                                        [
+                                            "arn:aws:s3:::",
+                                            {
+                                                "Ref": "RecordServiceS3Bucket"
+                                            }
+                                        ]
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "Action": [
+                                "s3:GetObjectVersion",
+                                "s3:GetObjectVersionAcl"
+                            ],
+                            "Effect": "Allow",
+                            "Resource": [
+                                {
+                                    "Fn::Join": [
+                                        "",
+                                        [
+                                            "arn:aws:s3:::",
+                                            {
+                                                "Ref": "RecordServiceS3Bucket"
+                                            },
+                                            "/*"
+                                        ]
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "Action": [
+                                "s3:ReplicateObject",
+                                "s3:ReplicateDelete"
+                            ],
+                            "Effect": "Allow",
+                            "Resource": [
+                                {
+                                    "Fn::Join": [
+                                        "",
+                                        [
+                                            "arn:aws:s3:::",
+                                            {
+                                                "Fn::Join": [
+                                                    "-",
+                                                    [
+                                                        {
+                                                            "Ref": "AWS::Region"
+                                                        },
+                                                        {
+                                                            "Ref": "AWS::StackName"
+                                                        },
+                                                        "replicationbucket"
+                                                    ]
+                                                ]
+                                            },
+                                            "/*"
+                                        ]
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "PolicyName": "BucketBackupPolicy",
+                "Roles": [
+                    {
+                        "Ref": "WorkItemBucketBackupRole"
+                    }
+                ]
+            }
+        }
+    }
+}
+```
+
+### 버전 관리 사용 및 개체 복제Enable versioning and replicate objects
+
+다음 예제에서는 버전 관리와 두 개의 복제 규칙을 사용하도록 설정합니다. 규칙은 접두사 중 하나와 가 붙은 객체를 복사 `MyPrefix` `MyOtherPrefix` 하고 복사된 객체를 라는 버킷에 저장합니다 `my-replication-bucket`.
+
+#### JSON (영문)
+
+```
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Resources": {
+        "S3Bucket": {
+            "Type": "AWS::S3::Bucket",
+            "Properties": {
+                "VersioningConfiguration": {
+                    "Status": "Enabled"
+                },
+                "ReplicationConfiguration": {
+                    "Role": "arn:aws:iam::123456789012:role/replication_role",
+                    "Rules": [
+                        {
+                            "Id": "MyRule1",
+                            "Status": "Enabled",
+                            "Prefix": "MyPrefix",
+                            "Destination": {
+                                "Bucket": "arn:aws:s3:::my-replication-bucket",
+                                "StorageClass": "STANDARD"
+                            }
+                        },
+                        {
+                            "Status": "Enabled",
+                            "Prefix": "MyOtherPrefix",
+                            "Destination": {
+                                "Bucket": "arn:aws:s3:::my-replication-bucket"
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}
+```

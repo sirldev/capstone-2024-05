@@ -1,0 +1,72 @@
+# AWS::S3::StorageLens StorageLensConfiguration
+
+이는 Amazon S3 Storage Lens 구성의 속성입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "AccountLevel" : AccountLevel,
+  "AwsOrg" : AwsOrg,
+  "DataExport" : DataExport,
+  "Exclude" : BucketsAndRegions,
+  "Id" : String,
+  "Include" : BucketsAndRegions,
+  "IsEnabled" : Boolean,
+  "StorageLensArn" : String
+}
+```
+
+## 속성
+
+`AccountLevel`  
+이 속성에는 Amazon S3 Storage Lens 구성에 대한 계정 수준 지표의 세부 정보가 포함되어 있습니다.  
+_필수 항목 여부_: 예  
+_유형_: AccountLevel  
+_업데이트 필요 사항_: 중단 없음
+
+`AwsOrg`  
+이 속성에는 S3 Storage Lens 구성에 대한 AWS Organization의 세부 정보가 포함되어 있습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: AwsOrg  
+_업데이트 필요 사항_: 중단 없음
+
+`DataExport`  
+이 속성에는 이 S3 Storage Lens 구성의 지표 내보내기에 대한 세부 정보가 포함되어 있습니다.  
+*필수 항목 *여부: 아니요  
+_형식_: DataExport  
+_업데이트 필요 사항_: 중단 없음
+
+`Exclude`  
+이 속성에는 Amazon S3 Storage Lens 구성에서 제외된 버킷 및/또는 리전의 세부 정보가 포함되어 있습니다.  
+*필수 항목 *여부: 아니요  
+_형식_: BucketsAndRegions  
+_업데이트 필요 사항_: 중단 없음
+
+`Id`  
+이 속성에는 S3 Storage Lens 구성의 ID에 대한 세부 정보가 포함되어 있습니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Include`  
+이 속성에는 Amazon S3 Storage Lens 구성에 포함된 버킷 및/또는 리전의 세부 정보가 포함되어 있습니다.  
+*필수 항목 *여부: 아니요  
+_형식_: BucketsAndRegions  
+_업데이트 필요 사항_: 중단 없음
+
+`IsEnabled`  
+이 속성에는 Amazon S3 Storage Lens 구성이 활성화되었는지 여부에 대한 세부 정보가 포함되어 있습니다.  
+_필수 항목 여부_: 예  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`StorageLensArn`  
+이 속성에는 S3 스토리지 렌즈 구성의 ARN에 대한 세부 정보가 포함되어 있습니다. 이 속성은 읽기 전용입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음

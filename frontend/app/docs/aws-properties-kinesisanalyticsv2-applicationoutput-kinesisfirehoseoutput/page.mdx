@@ -1,0 +1,30 @@
+# AWS::KinesisAnalyticsV2::ApplicationOutput KinesisFirehose출력
+
+SQL 기반 Managed Service for Apache Flink 애플리케이션의 경우 애플리케이션 출력을 구성할 때 Kinesis Data Firehose 전송 스트림을 대상으로 식별합니다. 전송 스트림의 스트림 Amazon 리소스 이름(ARN)을 제공합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ResourceARN" : String
+}
+```
+
+## 속성
+
+`ResourceARN`  
+쓸 대상 전송 스트림의 ARN입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `2048`  
+_패턴_: `arn:.*`  
+_업데이트 필요 사항_: 중단 없음
+
+## 참고 항목
+
+- Amazon Kinesis Data Analytics API 참조\* \*의 KinesisFirehoseOutput

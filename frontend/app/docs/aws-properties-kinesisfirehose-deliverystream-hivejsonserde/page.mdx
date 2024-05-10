@@ -1,0 +1,23 @@
+# AWS::KinesisFirehose::D eliveryStream HiveJsonSerDe
+
+네이티브 Hive/HCatalog JsonSerDe. Kinesis Data Firehose에서 데이터를 역직렬화하는 데 사용되며, 이는 데이터를 Parquet 또는 ORC 형식으로 직렬화하기 위해 JSON 형식에서 데이터를 변환하는 것을 의미합니다. 이 deserializer는 필요한 기능을 제공하는 디시리얼라이저에 따라 선택할 수 있는 두 가지 deserializer 중 하나입니다. 다른 옵션은 OpenX SerDe입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "TimestampFormats" : [ String, ... ]
+}
+```
+
+## 속성
+
+`TimestampFormats`  
+Kinesis Data Firehose가 입력 데이터 JSON에 있을 수 있는 날짜 및 타임스탬프를 구문 분석하는 방법을 나타냅니다. 이러한 형식 문자열을 지정하려면 JodaTime의 DateTimeFormat 형식 문자열의 패턴 구문을 따르십시오. 자세한 내용은 DateTimeFormat 클래스를 참조하십시오. 특수 값을 사용하여 `millis` epoch 밀리초 단위로 타임스탬프를 구문 분석할 수도 있습니다. 형식을 지정하지 않으면 Kinesis Data Firehose 가 `java.sql.Timestamp::valueOf` 기본적으로 사용합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음

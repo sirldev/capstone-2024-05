@@ -1,0 +1,128 @@
+# AWS::EC2::트래픽 미러세션
+
+트래픽 미러 세션을 생성합니다.
+
+트래픽 미러 세션은 트래픽 미러 소스에서 트래픽 미러 대상으로 패킷을 능동적으로 복사합니다. 필터를 만든 다음 세션에 할당하여 미러링할 트래픽의 하위 집합(예: 모든 TCP 트래픽)을 정의합니다.
+
+트래픽 미러 소스와 트래픽 미러 대상(모니터링 어플라이언스)은 동일한 VPC에 있거나 VPC 피어링 또는 전송 게이트웨이를 통해 연결된 다른 VPC에 있을 수 있습니다.
+
+기본적으로 트래픽은 미러링되지 않습니다. AWS::EC2::TrafficMirrorFilterRule을 사용하여 미러링할 트래픽을 지정하는 필터 규칙을 지정합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::EC2::TrafficMirrorSession",
+  "Properties" : {
+      "Description" : String,
+      "NetworkInterfaceId" : String,
+      "PacketLength" : Integer,
+      "SessionNumber" : Integer,
+      "Tags" : [Tag, ... ],
+      "TrafficMirrorFilterId" : String,
+      "TrafficMirrorTargetId" : String,
+      "VirtualNetworkId" : Integer
+    }
+}
+```
+
+## 속성
+
+`Description`  
+트래픽 미러 세션에 대한 설명입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`NetworkInterfaceId`  
+원본 네트워크 인터페이스의 ID입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`PacketLength`  
+미러링할 각 패킷의 바이트 수입니다. VXLAN 헤더 뒤의 바이트입니다. 전체 패킷을 미러링하려는 경우 이 매개 변수를 지정하지 마십시오. 패킷의 하위 집합을 미러링하려면 미러링할 길이(바이트)로 설정합니다. 예를 들어 이 값을 100으로 설정하면 필터 조건을 충족하는 처음 100바이트가 대상에 복사됩니다.  
+전체 패킷을 미러링하지 않으려면 `PacketLength` 매개 변수를 사용하여 미러링할 각 패킷의 바이트 수를 지정합니다.  
+Network Load Balancer(NLB) 트래픽 미러 대상이 있는 세션의 경우 기본값은 `PacketLength` 8500으로 설정됩니다. 유효한 값은 1-8500입니다. `PacketLength` 8500보다 크게 설정하면 오류 응답이 발생합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`SessionNumber`  
+세션 번호는 여러 세션에서 인터페이스를 사용할 때 세션이 평가되는 순서를 결정합니다. 일치하는 필터가 있는 첫 번째 세션은 패킷을 미러링하는 세션입니다.  
+유효한 값은 1-32766입니다.  
+_필수 항목 여부_: 예  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`Tags`  
+트래픽 미러 세션에 할당할 태그입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`TrafficMirrorFilterId`  
+트래픽 미러 필터의 ID입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`TrafficMirrorTargetId`  
+트래픽 미러 대상의 ID입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`VirtualNetworkId`  
+트래픽 미러 세션의 VXLAN ID입니다. 가상 확장형 LAN(VXLAN) 프로토콜에 대한 자세한 내용은 RFC 7348을 참조하십시오. 를 지정하지 않으면 `VirtualNetworkId`계정 전체의 고유 ID가 임의로 선택됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`트래픽 미러 세션의 ID를 반환합니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+## 예제
+
+### 트래픽 미러 세션 만들기
+
+이는 각 패킷의 처음 100바이트를 미러링하는 트래픽 미러 세션입니다.
+
+#### JSON (영문)
+
+```
+{
+  "SampleTrafficMirrorSession": {
+    "Type": "AWS::EC2::TrafficMirrorSession",
+    "Properties": {
+      "Description": "Example traffic mirror session",
+      "NetworkInterfaceId": "eni-070203a001EXAMPLE",
+      "TrafficMirrorTargetId": "tmt-5319fsEXAMPLE",
+      "TrafficMirrorFilterId": "tmf-1tdbhqEXAMPLE",
+      "SessionNumber": 1,
+      "PacketLength": 100,
+      "VirtualNetworkId": 1234,
+      "Tags": [
+        {
+          "Key": "Name",
+          "Value": "SampleSession"
+        }
+      ]
+    }
+  }
+}
+```
+
+## 참고 항목
+
+- Traffic Mirroring*의 트래픽 미러 세션 *
+- Amazon EC2 API 참조*의 CreateTrafficMirrorSession *

@@ -1,0 +1,60 @@
+# AWS::EC2::EC2Fleet TargetCapacitySpecificationRequest
+
+EC2 집합에 대해 요청할 단위 수를 지정합니다. 인스턴스 또는 애플리케이션 워크로드에 중요한 성능 특성(예: vCPU, 메모리 또는 I/O)을 기준으로 목표 용량을 설정하도록 선택할 수 있습니다. 요청 유형이 인 경우 `maintain`목표 용량을 지정 `0` 하고 나중에 용량을 추가할 수 있습니다.
+
+`TargetCapacitySpecificationRequest` 은 AWS::EC2::EC2Fleet 리소스의 속성입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "DefaultTargetCapacityType" : String,
+  "OnDemandTargetCapacity" : Integer,
+  "SpotTargetCapacity" : Integer,
+  "TargetCapacityUnitType" : String,
+  "TotalTargetCapacity" : Integer
+}
+```
+
+## 속성
+
+`DefaultTargetCapacityType`  
+기본값 `TotalTargetCapacity`, `Spot` 또는 `On-Demand`.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `on-demand | spot`  
+_업데이트 필요 사항_: 중단 없음
+
+`OnDemandTargetCapacity`  
+요청할 온디맨드 단위의 수입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`SpotTargetCapacity`  
+요청할 스팟 단위의 수입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`TargetCapacityUnitType`  
+목표 용량의 단위입니다. 지정된 `TargetCapacityUnitType` 경우에만 지정할 수 있습니다 `InstanceRequirements` .  
+기본값: `units` (인스턴스 수로 변환)  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `memory-mib | units | vcpu`  
+_업데이트 필요 사항_: 중단 없음
+
+`TotalTargetCapacity`  
+를 사용하여 채워진 요청할 단위 수입니다 `DefaultTargetCapacityType`.  
+_필수 항목 여부_: 예  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+## 참고 항목
+
+- Amazon EC2 API 참조\* \*의 TargetCapacitySpecificationRequest

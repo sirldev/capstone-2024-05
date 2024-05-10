@@ -1,0 +1,79 @@
+# AWS::KinesisFirehose::D eliveryStream 스키마 구성
+
+Kinesis Data Firehose가 Amazon S3에 데이터를 쓰기 전에 데이터를 구성할 스키마를 지정합니다. true로 설정된 경우 이 매개 변수가 필요합니다 `Enabled` .
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "CatalogId" : String,
+  "DatabaseName" : String,
+  "Region" : String,
+  "RoleARN" : String,
+  "TableName" : String,
+  "VersionId" : String
+}
+```
+
+## 속성
+
+`CatalogId`  
+AWS Glue Data Catalog의 ID입니다. 이를 제공하지 않으면 기본적으로 AWS 계정 ID가 사용됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `1024`  
+_패턴_: `^S+$`  
+_업데이트 필요 사항_: 중단 없음
+
+`DatabaseName`  
+출력 데이터에 대한 스키마가 포함된 AWS Glue 데이터베이스의 이름을 지정합니다.  
+`SchemaConfiguration` 요청 매개변수가 API 호출의 일부로 사용되는 경우 특성 `CreateDeliveryStream` 이 `DatabaseName` 필요하며 해당 값을 지정해야 합니다.
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `1024`  
+_패턴_: `^S+$`  
+_업데이트 필요 사항_: 중단 없음
+
+`Region`  
+AWS 리전을 지정하지 않으면 기본값은 현재 리전입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `1024`  
+_패턴_: `^S+$`  
+_업데이트 필요 사항_: 중단 없음
+
+`RoleARN`  
+Kinesis Data Firehose가 AWS Glue에 액세스하는 데 사용할 수 있는 역할입니다. 이 역할은 Kinesis Data Firehose에 사용하는 것과 동일한 계정에 있어야 합니다. 교차 계정 역할은 허용되지 않습니다.  
+`SchemaConfiguration` 요청 매개변수가 API 호출의 일부로 사용되는 경우 특성 `CreateDeliveryStream` 이 `RoleARN` 필요하며 해당 값을 지정해야 합니다.
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `1024`  
+_패턴_: `^S+$`  
+_업데이트 필요 사항_: 중단 없음
+
+`TableName`  
+데이터 스키마를 구성하는 열 정보가 포함된 AWS Glue 테이블을 지정합니다.  
+`SchemaConfiguration` 요청 매개변수가 API 호출의 일부로 사용되는 경우 특성 `CreateDeliveryStream` 이 `TableName` 필요하며 해당 값을 지정해야 합니다.
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `1024`  
+_패턴_: `^S+$`  
+_업데이트 필요 사항_: 중단 없음
+
+`VersionId`  
+출력 데이터 스키마에 대한 테이블 버전을 지정합니다. 이 버전 ID를 지정하지 않거나 로 설정하면 `LATEST`Kinesis Data Firehose가 최신 버전을 사용합니다. 즉, 테이블에 대한 모든 업데이트가 자동으로 선택됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `1024`  
+_패턴_: `^S+$`  
+_업데이트 필요 사항_: 중단 없음

@@ -1,0 +1,23 @@
+# AWS::SageMaker::엔드포인트 구성 AsyncInferenceClientConfig
+
+비동기식 추론 중에 SageMaker가 모델 컨테이너와 상호 작용하는 데 사용하는 클라이언트의 동작을 구성합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "MaxConcurrentInvocationsPerInstance" : Integer
+}
+```
+
+## 속성
+
+`MaxConcurrentInvocationsPerInstance`  
+SageMaker 클라이언트가 모델 컨테이너로 보낸 최대 동시 요청 수입니다. 값이 제공되지 않으면 SageMaker가 최적의 값을 선택합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 바꿔 놓음

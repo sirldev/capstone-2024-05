@@ -1,0 +1,93 @@
+# AWS::KinesisFirehose::D eliveryStream OrcSerDe
+
+데이터를 Amazon S3에 저장하기 전에 ORC 형식으로 변환하는 데 사용할 직렬 변환기입니다. 자세한 내용은 Apache ORC를 참조하세요.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "BlockSizeBytes" : Integer,
+  "BloomFilterColumns" : [ String, ... ],
+  "BloomFilterFalsePositiveProbability" : Double,
+  "Compression" : String,
+  "DictionaryKeyThreshold" : Double,
+  "EnablePadding" : Boolean,
+  "FormatVersion" : String,
+  "PaddingTolerance" : Double,
+  "RowIndexStride" : Integer,
+  "StripeSizeBytes" : Integer
+}
+```
+
+## 속성
+
+`BlockSizeBytes`  
+HDFS(Hadoop Distributed File System) 블록 크기입니다. 이는 쿼리하기 전에 Amazon S3에서 HDFS로 데이터를 복사하려는 경우에 유용합니다. 기본값은 256MiB이고 최소값은 64MiB입니다. Kinesis Data Firehose는 패딩 계산에 이 값을 사용합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_최소_: `67108864`  
+_업데이트 필요 사항_: 중단 없음
+
+`BloomFilterColumns`  
+Kinesis Data Firehose에서 블룸 필터를 생성할 열 이름입니다. 기본값은 `null`입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`BloomFilterFalsePositiveProbability`  
+블룸 필터 가양성 확률(FPP)입니다. FPP가 낮을수록 블룸 필터가 커집니다. 기본값은 0.05, 최소값은 0, 최대값은 1입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 더블  
+_업데이트 필요 사항_: 중단 없음
+
+`Compression`  
+데이터 블록에 사용할 압축 코드입니다. 기본값은 `SNAPPY`입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `NONE | SNAPPY | ZLIB`  
+_업데이트 필요 사항_: 중단 없음
+
+`DictionaryKeyThreshold`  
+null이 아닌 행의 총 수에 대한 비율을 나타냅니다. 사전 인코딩을 해제하려면 이 비율을 사전의 고유 키 수보다 작은 숫자로 설정합니다. 항상 사전 인코딩을 사용하려면 이 임계값을 1로 설정합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 더블  
+_업데이트 필요 사항_: 중단 없음
+
+`EnablePadding`  
+`true` 스트라이프를 HDFS 블록 경계에 채우고 싶다는 것을 나타내려면 이 값을 설정하십시오. 이는 쿼리하기 전에 Amazon S3에서 HDFS로 데이터를 복사하려는 경우에 유용합니다. 기본값은 `false`입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`FormatVersion`  
+쓸 파일의 버전입니다. 가능한 값은 `V0_11` 및 `V0_12`입니다. 기본값은 `V0_12`입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `V0_11 | V0_12`  
+_업데이트 필요 사항_: 중단 없음
+
+`PaddingTolerance`  
+블록 채우기에 대한 허용 오차를 스트라이프 크기의 소수 자릿수로 정의하는 0과 1 사이의 숫자입니다. 기본값은 0.05이며, 이는 스트라이프 크기의 5%를 의미합니다.  
+디폴트 값 64MiB ORC 스트라이프 및 256MiB HDFS 블록의 경우, 기본 블록 패딩 허용 오차 5%는 256MiB 블록 내의 패딩에 대해 최대 3.2MiB를 예약합니다. 이 경우 블록 내에서 사용 가능한 크기가 3.2MiB보다 크면 해당 공간에 맞게 더 작은 새 스트라이프가 삽입됩니다. 이렇게 하면 스트라이프가 블록 경계를 넘지 않고 노드-로컬 작업 내에서 원격 읽기가 발생하지 않습니다.  
+Kinesis Data Firehose는 다음과 같은 경우 이 파라미터를 무시합니다 `EnablePadding` `false`.  
+*필수 항목 *여부: 아니요  
+_유형_: 더블  
+_업데이트 필요 사항_: 중단 없음
+
+`RowIndexStride`  
+인덱스 항목 사이의 행 수입니다. 기본값은 10,000이고 최소값은 1,000입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_최소_: `1000`  
+_업데이트 필요 사항_: 중단 없음
+
+`StripeSizeBytes`  
+각 스트라이프의 바이트 수입니다. 기본값은 64MiB이고 최소값은 8MiB입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_최소_: `8388608`  
+_업데이트 필요 사항_: 중단 없음

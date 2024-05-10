@@ -1,0 +1,42 @@
+# AWS::람다::함수 VpcConfig
+
+Lambda 함수에 연결된 VPC 보안 그룹 및 서브넷입니다. 함수를 VPC에 연결하면 Lambda는 함수의 VPC 구성에서 보안 그룹과 서브넷의 각 조합에 대해 탄력적 네트워크 인터페이스를 생성합니다. 이 함수는 해당 VPC를 통해서만 리소스와 인터넷에 액세스할 수 있습니다. 자세한 내용은 VPC 설정 단원을 참조하십시오.
+
+**메모**  
+함수를 삭제하면 AWS CloudFormation은 네트워크 인터페이스의 상태를 모니터링하고 Lambda가 함수를 삭제할 때까지 기다렸다가 계속 진행합니다. VPC가 동일한 스택에 정의된 경우 AWS CloudFormation에서 VPC의 리소스를 삭제하기 전에 Lambda에서 네트워크 인터페이스를 삭제해야 합니다.  
+네트워크 인터페이스를 모니터링하려면 AWS CloudFormation에 권한이 필요합니다 `ec2:DescribeNetworkInterfaces` . 스택을 수정하는 사용자 또는 역할로부터 이를 가져옵니다. 이 권한을 제공하지 않으면 AWS CloudFormation은 네트워크 인터페이스가 삭제될 때까지 기다리지 않습니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "SecurityGroupIds" : [ String, ... ],
+  "SubnetIds" : [ String, ... ]
+}
+```
+
+## 속성
+
+`SecurityGroupIds`  
+VPC 보안 그룹 ID 목록입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_최대_: `5`  
+_업데이트 필요 사항_: 중단 없음
+
+`SubnetIds`  
+VPC 서브넷 ID 목록입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_최대_: `16`  
+_업데이트 필요 사항_: 중단 없음
+
+## 예제
+
+### VPC 구성
+
+VPC에 함수를 연결합니다.

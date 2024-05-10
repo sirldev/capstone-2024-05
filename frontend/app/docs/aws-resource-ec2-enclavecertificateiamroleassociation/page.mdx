@@ -1,0 +1,82 @@
+# AWS::EC2::EnclaveCertificateIamRoleAssociation
+
+AWS Identity and Access Management(IAM) 역할을 AWS Certificate Manager(ACM) 인증서와 연결합니다. 이렇게 하면 엔클레이브 내에서 ACM for Nitro Enclaves 애플리케이션에서 인증서를 사용할 수 있습니다. 자세한 내용은 * AWS Nitro Enclaves 사용 설명서*의 AWS Certificate Manager for Nitro Enclaves를 참조하세요.
+
+IAM 역할이 ACM 인증서와 연결되면 인증서, 인증서 체인 및 암호화된 프라이빗 키가 연결된 IAM 역할만 액세스할 수 있는 Amazon S3 위치에 배치됩니다. 인증서의 프라이빗 키는 증명 기반 키 정책이 연결된 AWS 관리형 키로 암호화됩니다.
+
+IAM 역할이 Amazon S3 객체에 액세스할 수 있도록 하려면 `s3:GetObject` 명령에서 반환된 Amazon S3 버킷을 호출할 수 있는 권한을 부여해야 합니다. IAM 역할이 KMS 키에 액세스할 수 있도록 하려면 명령에서 반환된 KMS 키를 호출할 수 있는 권한을 부여해야 합니다 `kms:Decrypt` . 자세한 내용은 * AWS Nitro Enclaves 사용 설명서*의 인증서 및 암호화 키에 액세스할 수 있는 역할 권한 부여를 참조하세요.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::EC2::EnclaveCertificateIamRoleAssociation",
+  "Properties" : {
+      "CertificateArn" : String,
+      "RoleArn" : String
+    }
+}
+```
+
+## 속성
+
+`CertificateArn`  
+IAM 역할을 연결할 ACM 인증서의 ARN입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`RoleArn`  
+ACM 인증서와 연결할 IAM 역할의 ARN입니다. 최대 16개의 IAM 역할을 ACM 인증서와 연결할 수 있습니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`IAM 역할과 ACM 인증서 연결이 반환됩니다.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`CertificateS3BucketName` 인증서가 업로드된 Amazon S3 버킷의 이름입니다.
+
+`CertificateS3ObjectKey`  
+인증서, 인증서 체인 및 암호화된 프라이빗 키 번들이 저장되는 Amazon S3 객체 키입니다. 객체 키의 형식은 `role_arn`/`certificate_arn`입니다.
+
+`EncryptionKmsKeyId` 인증서의 프라이빗 키를 암호화하는 데 사용되는 AWS KMS 키의 ID입니다.
+
+## 예제
+
+### IAM 역할을 ACM 인증서와 연결
+
+다음 예제에서는 IAM 역할을 `arn:aws:iam::123456789012:role/my-acm-role` ACM 인증서와 연결합니다`arn:aws:acm:us-east-1:123456789012:certificate/123abcde-cdef-abcd-1234-123abEXAMPLE`.
+
+#### JSON (영문)
+
+```
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "myCertAssociation",
+    "Resources": {
+        "MyEnclaveCertificateIamRoleAssociation": {
+            "Type": "AWS::EC2::EnclaveCertificateIamRoleAssociation",
+            "Properties": {
+        "CertificateArn": "arn:aws:acm:us-east-1:123456789012:certificate/123abcde-cdef-abcd-1234-123abEXAMPLE",
+        "RoleArn": "arn:aws:iam::123456789012:role/my-acm-role"
+            }
+        }
+    }
+}
+```

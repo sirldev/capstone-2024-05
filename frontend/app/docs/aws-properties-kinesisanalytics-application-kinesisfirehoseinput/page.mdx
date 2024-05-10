@@ -1,0 +1,36 @@
+# AWS::KinesisAnalytics::애플리케이션 KinesisFirehoseInput
+
+Amazon Kinesis Firehose 전송 스트림을 스트리밍 소스로 식별합니다. 전송 스트림의 Amazon 리소스 이름(ARN)과 Amazon Kinesis Analytics가 사용자를 대신하여 스트림에 액세스할 수 있도록 하는 IAM 역할 ARN을 제공합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ResourceARN" : String,
+  "RoleARN" : String
+}
+```
+
+## 속성
+
+`ResourceARN`  
+입력 전송 스트림의 ARN입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `2048`  
+_패턴_: `arn:.*`  
+_업데이트 필요 사항_: 중단 없음
+
+`RoleARN`  
+Amazon Kinesis Analytics가 사용자를 대신하여 스트림에 액세스하기 위해 수임할 수 있는 IAM 역할의 ARN입니다. 역할에 스트림에 액세스하는 데 필요한 권한이 있는지 확인해야 합니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `2048`  
+_패턴_: `arn:.*`  
+_업데이트 필요 사항_: 중단 없음

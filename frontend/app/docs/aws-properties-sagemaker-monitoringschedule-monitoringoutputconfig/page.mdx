@@ -1,0 +1,33 @@
+# AWS::SageMaker::MonitoringSchedule MonitoringOutputConfig
+
+모니터링 작업을 위한 출력 구성입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "KmsKeyId" : String,
+  "MonitoringOutputs" : [ MonitoringOutput, ... ]
+}
+```
+
+## 속성
+
+`KmsKeyId`  
+Amazon SageMaker가 Amazon S3 서버 측 암호화를 사용하여 저장된 모델 아티팩트를 암호화하는 데 사용하는 AWS Key Management Service(AWS KMS) 키입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최대_: `2048`  
+_패턴_: `.*`  
+_업데이트 필요 사항_: 중단 없음
+
+`MonitoringOutputs`  
+모니터링 작업을 위한 모니터링 출력. 정기 모니터링 작업의 출력이 업로드되는 위치입니다.  
+_필수 항목 여부_: 예  
+_형식_: MonitoringOutput 목록  
+_최대_: `1`  
+_업데이트 필요 사항_: 중단 없음

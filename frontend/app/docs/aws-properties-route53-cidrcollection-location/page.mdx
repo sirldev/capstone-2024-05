@@ -1,0 +1,38 @@
+# AWS::Route53::CidrCollection 위치
+
+CIDR 위치에 대한 CIDR 블록 목록을 지정합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "CidrList" : [ String, ... ],
+  "LocationName" : String
+}
+```
+
+## 속성
+
+`CidrList`  
+CIDR 블록 목록입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열 목록  
+_최대_: `1000`  
+_업데이트 필요 사항_: 중단 없음
+
+`LocationName`  
+CIDR 수집 위치 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `16`  
+_패턴_: `[0-9A-Za-z_-*]+`  
+_업데이트 필요 사항_: 중단 없음
+
+## 참고 항목
+
+- Amazon Route 53 API 참조*의 LocationSummary *

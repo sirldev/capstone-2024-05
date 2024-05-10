@@ -1,0 +1,85 @@
+# AWS::KinesisFirehose::D eliveryStream S3DestinationConfiguration
+
+`S3DestinationConfiguration` 속성 유형은 Amazon Kinesis Data Firehose(Kinesis Data Firehose)가 데이터를 전송하는 Amazon Simple Storage Service(Amazon S3) 대상을 지정합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "BucketARN" : String,
+  "BufferingHints" : BufferingHints,
+  "CloudWatchLoggingOptions" : CloudWatchLoggingOptions,
+  "CompressionFormat" : String,
+  "EncryptionConfiguration" : EncryptionConfiguration,
+  "ErrorOutputPrefix" : String,
+  "Prefix" : String,
+  "RoleARN" : String
+}
+```
+
+## 속성
+
+`BucketARN`  
+데이터를 전송할 Amazon S3 버킷의 Amazon 리소스 이름(ARN)입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `2048`  
+_패턴_: `arn:.*`  
+_업데이트 필요 사항_: 중단 없음
+
+`BufferingHints`  
+Kinesis Data Firehose가 수신 데이터를 Amazon S3 버킷으로 전송하는 동안 데이터를 버퍼링하는 방법을 구성합니다.  
+*필수 항목 *여부: 아니요  
+_형식_: BufferingHints  
+_업데이트 필요 사항_: 중단 없음
+
+`CloudWatchLoggingOptions`  
+전송 스트림에 대한 CloudWatch 로깅 옵션입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: CloudWatchLoggingOptions  
+_업데이트 필요 사항_: 중단 없음
+
+`CompressionFormat`  
+Kinesis Data Firehose가 Amazon S3 버킷으로 전송하는 데이터를 압축하는 데 사용하는 압축 유형입니다. 유효한 값은 `CompressionFormat`Amazon Kinesis Data Firehose API Reference*의 S3DestinationConfiguration 데이터 형식에 대한 내용을 * 참조하십시오.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `GZIP | HADOOP_SNAPPY | Snappy | UNCOMPRESSED | ZIP`  
+_업데이트 필요 사항_: 중단 없음
+
+`EncryptionConfiguration`  
+Amazon Simple Storage Service(Amazon S3) 서버 측 암호화를 구성합니다. Kinesis Data Firehose는 AWS Key Management Service(AWS KMS)를 사용하여 Amazon S3 버킷으로 전송하는 데이터를 암호화합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: EncryptionConfiguration  
+_업데이트 필요 사항_: 중단 없음
+
+`ErrorOutputPrefix`  
+Kinesis Data Firehose가 실패한 레코드를 평가하여 S3에 기록하기 전에 추가하는 접두사입니다. 이 접두사는 버킷 이름 바로 뒤에 나타납니다. 이 접두사를 지정하는 방법에 대한 자세한 내용은 Amazon S3 객체에 대한 사용자 지정 접두사 단원을 참조하십시오.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `0`  
+_최대_: `1024`  
+_패턴_: `.*`  
+_업데이트 필요 사항_: 중단 없음
+
+`Prefix`  
+Kinesis Data Firehose가 Amazon S3 버킷으로 전송하는 파일에 추가하는 접두사입니다. 접두사는 Kinesis Data Firehose가 전송한 파일을 식별하는 데 도움이 됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `0`  
+_최대_: `1024`  
+_패턴_: `.*`  
+_업데이트 필요 사항_: 중단 없음
+
+`RoleARN`  
+Kinesis Data Firehose에 Amazon S3 버킷 및 AWS KMS에 대한 액세스 권한을 부여하는 AWS Identity and Access Management(IAM) 역할의 ARN입니다(데이터 암호화를 활성화한 경우). 자세한 내용은 Amazon Kinesis Data Firehose 개발자 안내서의 Amazon S3 대상에 대한 Kinesis Data Firehose 액세스 권한 부여를 참조하십시오\**.  
+*필수 항목 여부*: 예  
+*유형*: 문자열  
+*최소*: `1`  
+*최대*: `512`  
+*패턴*: `arn:.*`  
+_업데이트 필요 사항_: 중단 없음

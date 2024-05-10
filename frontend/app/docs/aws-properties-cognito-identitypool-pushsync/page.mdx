@@ -1,0 +1,30 @@
+# AWS::Cognito::IdentityPool 푸시싱크
+
+`PushSync` 는 AWS::Cognito::IdentityPool 리소스의 속성으로, Amazon Cognito 자격 증명 풀에 적용할 구성 옵션을 정의합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ApplicationArns" : [ String, ... ],
+  "RoleArn" : String
+}
+```
+
+## 속성
+
+`ApplicationArns`  
+클라이언트가 사용할 수 있는 Amazon SNS 플랫폼 애플리케이션의 ARN입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`RoleArn`  
+Amazon Cognito가 개발자를 대신하여 Amazon SNS를 호출할 수 있도록 구성된 IAM 역할입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음

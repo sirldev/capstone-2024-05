@@ -1,0 +1,37 @@
+# AWS::SageMaker::D ataQualityJobDefinition 네트워크 구성
+
+작업에 대한 네트워킹 옵션(예: 컨테이너 간 네트워크 트래픽 암호화, 컨테이너와의 인바운드 및 아웃바운드 네트워크 호출 허용 여부, VPC 지원 작업에 사용할 VPC 서브넷 및 보안 그룹)
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "EnableInterContainerTrafficEncryption" : Boolean,
+  "EnableNetworkIsolation" : Boolean,
+  "VpcConfig" : VpcConfig
+}
+```
+
+## 속성
+
+`EnableInterContainerTrafficEncryption`  
+분산 처리 작업 간의 모든 통신을 암호화할지 여부입니다. `True` 통신을 암호화하도록 선택합니다. 암호화는 분산 처리 작업에 대한 보안을 강화하지만 처리 시간이 더 오래 걸릴 수 있습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`EnableNetworkIsolation`  
+처리 작업에 사용되는 컨테이너에 대한 인바운드 및 아웃바운드 네트워크 호출을 허용할지 여부입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`VpcConfig`  
+훈련 작업 및 호스팅 모델이 액세스할 수 있는 VPC를 지정합니다. VPC를 구성하여 훈련 및 모델 컨테이너에 대한 액세스를 제어합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: VpcConfig  
+_업데이트 필요 사항_: 바꿔 놓음

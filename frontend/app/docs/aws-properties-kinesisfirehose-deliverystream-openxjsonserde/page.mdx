@@ -1,0 +1,38 @@
+# AWS::KinesisFirehose::D eliveryStream OpenXJsonSerDe
+
+The OpenX SerDe. Kinesis Data Firehose에서 데이터를 역직렬화하는 데 사용되며, 이는 데이터를 Parquet 또는 ORC 형식으로 직렬화하기 위해 JSON 형식에서 데이터를 변환하는 것을 의미합니다. 이 deserializer는 필요한 기능을 제공하는 디시리얼라이저에 따라 선택할 수 있는 두 가지 deserializer 중 하나입니다. 다른 옵션은 네이티브 Hive/HCatalog JsonSerDe입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "CaseInsensitive" : Boolean,
+  "ColumnToJsonKeyMappings" : {Key: Value, ...},
+  "ConvertDotsInJsonKeysToUnderscores" : Boolean
+}
+```
+
+## 속성
+
+`CaseInsensitive`  
+`true`기본값인 로 설정하면 Kinesis Data Firehose가 JSON 키를 역직렬화하기 전에 소문자로 변환합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`ColumnToJsonKeyMappings`  
+열 이름과 동일하지 않은 JSON 키에 열 이름을 매핑합니다. 이는 JSON에 Hive 키워드인 키가 포함된 경우에 유용합니다. 예를 들어 `timestamp` 는 Hive 키워드입니다. 라는 JSON 키가 있는 경우 `timestamp`이 매개 변수를 로 설정하여 `{"ts": "timestamp"}` 이 키를 라는 열에 매핑합니다`ts`.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 맵  
+_업데이트 필요 사항_: 중단 없음
+
+`ConvertDotsInJsonKeysToUnderscores`  
+로 설정하면 `true`키 이름에 점이 포함되고 Kinesis Data Firehose에서 이를 밑줄로 바꾸도록 지정합니다. 이는 Apache Hive가 열 이름에 점을 허용하지 않기 때문에 유용합니다. 예를 들어 JSON에 이름이 "a.b"인 키가 포함된 경우 이 옵션을 사용할 때 열 이름을 "a_b"로 정의할 수 있습니다.  
+기본값은 `false`입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음

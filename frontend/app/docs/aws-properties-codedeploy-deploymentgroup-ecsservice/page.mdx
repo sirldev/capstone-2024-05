@@ -1,0 +1,30 @@
+# AWS::CodeDeploy::D eploymentGroup ECSService
+
+Amazon ECS 배포의 대상을 식별하는 데 사용되는 서비스 및 클러스터 이름을 포함합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ClusterName" : String,
+  "ServiceName" : String
+}
+```
+
+## 속성
+
+`ClusterName`  
+ Amazon ECS 서비스가 연결된 클러스터의 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`ServiceName`  
+ 대상 Amazon ECS 서비스의 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음

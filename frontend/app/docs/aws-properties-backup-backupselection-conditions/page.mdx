@@ -1,0 +1,44 @@
+# AWS::Backup::BackupSelection 조건
+
+태그를 사용하여 백업 계획에서 포함하거나 제외할 리소스에 대한 정보를 포함합니다. 조건은 대소문자를 구분합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "StringEquals" : [ ConditionParameter, ... ],
+  "StringLike" : [ ConditionParameter, ... ],
+  "StringNotEquals" : [ ConditionParameter, ... ],
+  "StringNotLike" : [ ConditionParameter, ... ]
+}
+```
+
+## 속성
+
+`StringEquals`  
+태그가 지정된 리소스의 값을 동일한 값으로 태그를 지정한 리소스에 대해서만 필터링합니다. "정확한 일치"라고도 합니다.  
+*필수 항목 *여부: 아니요  
+_형식_: ConditionParameter 목록  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`StringLike`  
+태그가 지정된 리소스의 값을 필터링하여 문자열의 아무 곳에서나 와일드카드 문자()를 사용하여 태그 값을 일치시킵니다*. 예를 들어 "prod*" 또는 "_rod_"는 태그 값 "production"과 일치합니다.  
+*필수 항목 *여부: 아니요  
+_형식_: ConditionParameter 목록  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`StringNotEquals`  
+태그가 지정된 리소스의 값을 동일한 값을 갖지 않고 태그를 지정한 리소스에 대해서만 필터링합니다. "부정 일치"라고도 합니다.  
+*필수 항목 *여부: 아니요  
+_형식_: ConditionParameter 목록  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`StringNotLike`  
+일치하지 않는 태그 값에 대해 태그가 지정된 리소스의 값을 필터링하여 문자열의 아무 곳에서나 와일드카드 문자(*)를 사용합니다.  
+*필수 항목 *여부: 아니요  
+*형식*: ConditionParameter 목록  
+*업데이트 필요 사항\*: 바꿔 놓음

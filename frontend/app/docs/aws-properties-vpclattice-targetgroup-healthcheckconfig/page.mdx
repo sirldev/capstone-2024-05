@@ -1,0 +1,86 @@
+# AWS::VpcLattice::TargetGroup HealthCheckConfig
+
+대상 그룹의 상태 확인 구성을 설명합니다. 상태 확인 구성은 type 또는 의 대상 그룹에 사용되지 않습니다 `LAMBDA` `ALB`.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Enabled" : Boolean,
+  "HealthCheckIntervalSeconds" : Integer,
+  "HealthCheckTimeoutSeconds" : Integer,
+  "HealthyThresholdCount" : Integer,
+  "Matcher" : Matcher,
+  "Path" : String,
+  "Port" : Integer,
+  "Protocol" : String,
+  "ProtocolVersion" : String,
+  "UnhealthyThresholdCount" : Integer
+}
+```
+
+## 속성
+
+`Enabled`  
+상태 확인을 사용할 수 있는지 여부를 나타냅니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`HealthCheckIntervalSeconds`  
+개별 대상의 상태 확인 사이의 대략적인 시간(초)입니다. 범위는 5-300초입니다. 기본값은 30초입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`HealthCheckTimeoutSeconds`  
+대상을 비정상으로 보고하기 전에 대기하는 시간(초)입니다. 범위는 1-120초입니다. 기본값은 5초입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`HealthyThresholdCount`  
+비정상 대상을 정상으로 간주하기 전에 필요한 연속적으로 성공한 상태 확인 수입니다. 범위는 2-10입니다. 기본값은 5입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`Matcher`  
+대상의 성공적인 응답을 확인할 때 사용할 코드입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Matcher  
+_업데이트 필요 사항_: 중단 없음
+
+`Path`  
+대상에 대한 상태 확인의 대상입니다. 프로토콜 버전이 `HTTP/1.1` 또는 `HTTP/2`인 경우 유효한 URI(예: )를 지정합니다. `/path?query` 기본 경로는 `/`입니다. 프로토콜 버전이 인 경우 상태 확인이 지원되지 `gRPC`않지만 `HTTP/1.1` 또는 `HTTP/2` 를 선택하고 유효한 URI를 지정할 수 있습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Port`  
+대상에 대한 상태 확인을 수행할 때 사용되는 포트입니다. 기본 설정은 대상이 트래픽을 수신하는 포트입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`Protocol`  
+대상에 대한 상태 확인을 수행할 때 사용되는 프로토콜입니다. 가능한 프로토콜은 `HTTP` 및 `HTTPS`입니다. 기본값은 `HTTP`입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`ProtocolVersion`  
+대상에 대한 상태 확인을 수행할 때 사용되는 프로토콜 버전입니다. 가능한 프로토콜 버전은 `HTTP1` 및 `HTTP2`입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`UnhealthyThresholdCount`  
+대상이 비정상인 것으로 간주하기 전에 필요한 연속적인 상태 확인 실패 횟수입니다. 범위는 2-10입니다. 기본값은 2입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
