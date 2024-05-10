@@ -3,8 +3,8 @@ from fastapi import APIRouter, HTTPException, Depends
 from sqlalchemy.orm import Session
 
 from db.models import User
-from db.database import SessionLocal, get_db
-from utils.auth import create_access_token
+from db.database import get_db
+from utils.auth import create_access_token, get_current_user
 
 router = APIRouter()
 
@@ -24,6 +24,11 @@ class CreateUserBase(BaseModel):
 class LoginBase(BaseModel):
     username: str
     password: str
+
+
+class SumRequest(BaseModel):
+    addend1: int
+    addend2: int
 
 
 @router.post("/create_user")
@@ -50,7 +55,7 @@ def create_user(params: CreateUserBase, db: Session = Depends(get_db)):
         db.close()
 
 
-@router.post("/login")
+@router.post("/token")
 def login(params: LoginBase, db: Session = Depends(get_db)):
     try:
         user = db.query(User).filter(User.username == params.username).first()
@@ -68,3 +73,10 @@ def login(params: LoginBase, db: Session = Depends(get_db)):
         raise HTTPException(status_code=500, detail=e)
     finally:
         db.close()
+
+
+@router.post("/sum")
+def sum_numbers(request: SumRequest, user: str = Depends(get_current_user)):
+    print(12341321)
+    result = request.addend1 + request.addend2
+    return {"addend1": request.addend1, "addend2": request.addend2, "result": result}
