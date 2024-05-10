@@ -12,6 +12,7 @@ from fastapi import APIRouter, Depends, HTTPException, Request
 from pydantic import BaseModel
 from retrieval.rag import retrieve_doc
 from sqlalchemy.orm import Session
+from sqlalchemy import insert
 from utils.gpt import gpt_genereate
 
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
@@ -19,6 +20,21 @@ sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 import main as app_main
 
 router = APIRouter()
+
+
+# function to get values of dict
+def recursive_value_collect(dict_obj):
+    for value in dict_obj.values():
+        if isinstance(value, dict):
+            yield from recursive_value_collect(value)
+        elif isinstance(value, list):
+            for item in value:
+                if isinstance(item, dict):
+                    yield from recursive_value_collect(item)
+                else:
+                    yield item
+        else:
+            yield value
 
 
 # Data Validation
@@ -105,7 +121,7 @@ async def create_template(request: Request, prompt: str, db: Session = Depends(g
         description = description.strip()
         template_file = "".join(template_file)
         template_file = json.loads(template_file)
-        print("description", description)
+
         # TODO : Valid JWT
         # get user_id from JWT
         db_promptAns = models.PromptAns(
@@ -119,27 +135,31 @@ async def create_template(request: Request, prompt: str, db: Session = Depends(g
         db.commit()
         db.refresh(db_promptAns)
 
-        ###### Description이 없는 경우에는 해시태그가 추출되지 않음
-        # keword extraction
+        ##### keword extraction from template
+        # value 수집
+        values = list(recursive_value_collect(template_file))
+        values = "".join(map(str, values))
         # 정규 표현식을 사용하여 단어 추출
-        keywords = re.findall(r"\b[A-Za-z0-9]+\b", description)
-        print("keywords", keywords)
-        filtered_keywords = [k for k in keywords if k not in ["AWS", "Amazon"]]
-        print("filtered_keywords", filtered_keywords)
+        keywords = re.findall(r"\b[A-Za-z]+\b", values)
+
+        # 필터링
+        filtered_keywords = [
+            k for k in keywords if k not in ["AWS", "Amazon"] and len(k) > 2
+        ]
         tag_ids = []
         # find keyword in db. 이미 존재하는 키워드만 필터링
         for keyword in filtered_keywords:
-            hashtag = db.query(HashTag).filter(keyword in HashTag.tag).first()
-            print(hashtag)
+            hashtag = (
+                db.query(HashTag).filter(HashTag.tag.ilike(f"%{keyword}%")).first()
+            )
             if hashtag is not None:
                 tag_ids.append(hashtag.id)
+        # 새로운 키워드 추가
         for tag_id in tag_ids:
-            db.add(
-                PromptAns_HashTag(
-                    prompt_ans_id=db_promptAns.id,
-                    hashtag_id=tag_id,
-                )
+            stmt = insert(PromptAns_HashTag).values(
+                prompt_ans_id=db_promptAns.id, hashtag_id=tag_id
             )
+            db.execute(stmt)
         db.commit()
 
         # return 할 값 만들기
