@@ -49,6 +49,10 @@ class PromptAnsBase(BaseModel):
     user_id: int  # FK
 
 
+class Prompt(BaseModel):
+    prompt: str
+
+
 ########### GET ###########
 @router.get("")
 async def get_templates(request: Request, db: Session = Depends(get_db)):
@@ -77,7 +81,7 @@ async def get_templates(request: Request, db: Session = Depends(get_db)):
 
 
 @router.get("/{id}")
-async def get_single_templates(db: Session = Depends(get_db)):
+async def get_single_templates(id: int, db: Session = Depends(get_db)):
     template = db.query(models.PromptAns).filter(models.PromptAns.id == id).first()
     return template
 
@@ -93,7 +97,10 @@ documents_dummy = [
 
 ########### POST ###########
 @router.post("")
-async def create_template(request: Request, prompt: str, db: Session = Depends(get_db)):
+async def create_template(prompt: Prompt, db: Session = Depends(get_db)):
+    # print(request)
+    print(prompt)
+    prompt = prompt.prompt
     try:
         retrieved_doc = retrieve_doc(
             question=prompt,
