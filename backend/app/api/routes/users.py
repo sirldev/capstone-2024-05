@@ -26,11 +26,6 @@ class LoginBase(BaseModel):
     password: str
 
 
-class SumRequest(BaseModel):
-    addend1: int
-    addend2: int
-
-
 @router.post("/create_user")
 def create_user(params: CreateUserBase, db: Session = Depends(get_db)):
     try:
