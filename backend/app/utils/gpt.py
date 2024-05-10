@@ -27,9 +27,9 @@ def gpt_genereate(instruction: str, retrieved_doc: List[dict]):
     )
 
     response = completion.choices[0].message.content
-    doc_list = [doc.page_content for doc in retrieved_doc]
+    doc_title_list = [doc.metadata["title"] for doc in retrieved_doc]
 
-    return response, doc_list
+    return response, doc_title_list
 
 
 def gpt_generate_no_rag(instruction: str):
