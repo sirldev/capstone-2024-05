@@ -1,0 +1,38 @@
+# AWS::CloudFront::StreamingDistribution S3오리진
+
+CloudFront에서 배포할 미디어 파일을 가져올 Amazon S3 버킷에 대한 정보가 포함된 복합 유형입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "DomainName" : String,
+  "OriginAccessIdentity" : String
+}
+```
+
+## 속성
+
+`DomainName`  
+Amazon S3 오리진의 DNS 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`OriginAccessIdentity`  
+배포와 연결할 CloudFront 원본 액세스 ID입니다. 원본 액세스 ID를 사용하여 최종 사용자가 CloudFront를 통해서만 Amazon S3 버킷의 객체에 액세스할 수 있도록 배포를 구성합니다.  
+최종 사용자가 CloudFront URL 또는 Amazon S3 URL을 사용하여 객체에 액세스할 수 있도록 하려면 빈 요소를 지정합니다 `OriginAccessIdentity` .  
+기존 배포에서 원본 액세스 ID를 삭제하려면 배포 구성을 업데이트하고 빈 요소를 포함합니다 `OriginAccessIdentity` .  
+원본 액세스 ID를 바꾸려면 배포 구성을 업데이트하고 새 원본 액세스 ID를 지정합니다.  
+자세한 내용은 * Amazon CloudFront 개발자 안내서*의 원본 액세스 ID를 사용하여 Amazon S3 콘텐츠에 대한 액세스 제한을 참조하십시오.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+## 참고 항목
+
+- Amazon CloudFront API Reference\* \*의 S3Origin

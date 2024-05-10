@@ -1,0 +1,106 @@
+# AWS::EC2::SecurityGroup 수신
+
+보안 그룹에 인바운드 규칙을 추가합니다.
+
+인바운드 규칙은 인스턴스가 지정된 IPv4 또는 IPv6 CIDR 주소 범위 또는 지정된 보안 그룹과 연결된 인스턴스에서 트래픽을 수신하도록 허용합니다.
+
+, `CidrIp`, , `CidrIpv6`, `SourcePrefixListId`또는 `SourceSecurityGroupId`.`SourceSecurityGroupName` 속성 중 하나만 지정해야 합니다.
+
+각 규칙에 대한 프로토콜(예: TCP)을 지정합니다. TCP 및 UDP의 경우 포트 또는 포트 범위도 지정해야 합니다. ICMP/ICMPv6의 경우 ICMP/ICMPv6 유형 및 코드도 지정해야 합니다. -1을 사용하여 모든 유형 또는 모든 코드를 의미할 수 있습니다.
+
+소스 보안 그룹(`SourcePrefixListId`, `SourceSecurityGroupId`, 또는 `SourceSecurityGroupName`) 또는 CIDR 범위(`CidrIp` 또는 `CidrIpv6` )를 지정해야 합니다. 이러한 파라미터 중 하나를 지정하지 않으면 스택이 성공적으로 시작되지만 규칙이 보안 그룹에 추가되지 않습니다.
+
+규칙 변경 사항은 가능한 한 빨리 보안 그룹 내의 인스턴스로 전파됩니다. 그러나 약간의 지연이 발생할 수 있습니다.
+
+EC2 보안 그룹 규칙은 해당 유형의 임베디드 속성입니다 `AWS::EC2::SecurityGroup` .
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "CidrIp" : String,
+  "CidrIpv6" : String,
+  "Description" : String,
+  "FromPort" : Integer,
+  "IpProtocol" : String,
+  "SourcePrefixListId" : String,
+  "SourceSecurityGroupId" : String,
+  "SourceSecurityGroupName" : String,
+  "SourceSecurityGroupOwnerId" : String,
+  "ToPort" : Integer
+}
+```
+
+## 속성
+
+`CidrIp`  
+CIDR 형식의 IPv4 주소 범위입니다.  
+소스 보안 그룹(`SourcePrefixListId` 또는 `SourceSecurityGroupId`) 또는 CIDR 범위(`CidrIp` 또는 `CidrIpv6` )를 지정해야 합니다.  
+특정 액세스 시나리오에 대해 보안 그룹에 추가할 수 있는 규칙의 예는 Amazon EC2 사용 설명서의 다양한 사용 사례에 대한 보안 그룹 규칙을 참조하세요\**.  
+*필수 항목 *여부: 아니요  
+*유형*: 문자열  
+*업데이트 필요 사항\*: 중단 없음
+
+`CidrIpv6`  
+CIDR 형식의 IPv6 주소 범위입니다.  
+소스 보안 그룹(`SourcePrefixListId` 또는 `SourceSecurityGroupId`) 또는 CIDR 범위(`CidrIp` 또는 `CidrIpv6` )를 지정해야 합니다.  
+특정 액세스 시나리오에 대해 보안 그룹에 추가할 수 있는 규칙의 예는 Amazon EC2 사용 설명서의 다양한 사용 사례에 대한 보안 그룹 규칙을 참조하세요\**.  
+*필수 항목 *여부: 아니요  
+*유형*: 문자열  
+*업데이트 필요 사항\*: 중단 없음
+
+`Description`  
+수신(인바운드) 보안 그룹 규칙에 대한 설명을 업데이트합니다. 기존 설명을 바꾸거나 이전에 설명이 없었던 규칙에 설명을 추가할 수 있습니다.  
+제약 조건: 최대 255자까지 입력할 수 있습니다. 허용되는 문자는 a-z, A-Z, 0-9, 공백 및 .\_-:/()#,@[]+=;{}입니다! $\*  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`FromPort`  
+프로토콜이 TCP 또는 UDP인 경우 포트 범위의 시작입니다. 프로토콜이 ICMP 또는 ICMPv6인 경우 유형 번호입니다. 값 -1은 모든 ICMP/ICMPv6 유형을 나타냅니다. 모든 ICMP/ICMPv6 유형을 지정하는 경우 모든 ICMP/ICMPv6 코드를 지정해야 합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`IpProtocol`  
+IP 프로토콜 이름(`tcp`, `udp`, `icmp`, `icmpv6`) 또는 번호(프로토콜 번호 참조).  
+`-1` 모든 프로토콜을 지정하는 데 사용합니다. 보안 그룹 규칙에 권한을 부여할 때 `-1`, `tcp`, `udp`또는 `icmp` 지정한 포트 범위에 관계없이 모든 포트에서 트래픽을 허용하는 대신 또는 이외의 프로토콜 번호를 `icmpv6` 지정합니다 . `tcp`, `udp`및 `icmp`의 경우 포트 범위를 지정해야 합니다. 의 경우 `icmpv6`포트 범위는 선택 사항이며, 포트 범위를 생략하면 모든 유형 및 코드에 대한 트래픽이 허용됩니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`SourcePrefixListId`  
+접두사 목록의 ID입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`SourceSecurityGroupId`  
+보안 그룹의 ID입니다. 요청에서 보안 그룹 ID 또는 보안 그룹 이름을 지정해야 합니다. 기본이 아닌 VPC에 있는 보안 그룹의 경우 보안 그룹 ID를 지정해야 합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`SourceSecurityGroupName`  
+[기본 VPC] 소스 보안 그룹의 이름입니다. 보안 그룹 ID 또는 보안 그룹 이름을 지정해야 합니다. 그룹 이름은 IP 주소 범위와 함께 지정할 수 없습니다. 전체 ICMP, UDP 및 TCP 액세스 권한을 부여하는 규칙을 만듭니다.  
+기본이 아닌 VPC에 있는 보안 그룹의 경우 그룹 ID를 지정해야 합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`SourceSecurityGroupOwnerId`  
+[기본이 아닌 VPC] 소스 보안 그룹이 다른 계정에 있는 경우 소스 보안 그룹의 AWS 계정 ID입니다. IP 주소 범위로 이 속성을 지정할 수 없습니다. 전체 ICMP, UDP 및 TCP 액세스 권한을 부여하는 규칙을 만듭니다.  
+`SourceSecurityGroupName` 또는 `SourceSecurityGroupId` 를 지정 하고 해당 보안 그룹이 스택을 생성하는 계정과 다른 계정에서 소유하고 있는 경우 를 지정해야 하며, `SourceSecurityGroupOwnerId`그렇지 않으면 이 속성은 선택 사항입니다.  
+_필수_: 조건부  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`ToPort`  
+프로토콜이 TCP 또는 UDP인 경우 포트 범위의 끝입니다. 프로토콜이 ICMP 또는 ICMPv6인 경우 이 코드가 코드입니다. 값 -1은 모든 ICMP/ICMPv6 코드를 나타냅니다. 모든 ICMP/ICMPv6 유형을 지정하는 경우 모든 ICMP/ICMPv6 코드를 지정해야 합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음

@@ -1,0 +1,73 @@
+# AWS::EC2::LocalGatewayRouteTableVirtualInterfaceGroupAssociation
+
+로컬 게이트웨이 라우팅 테이블과 가상 인터페이스 그룹 간의 연결을 설명합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::EC2::LocalGatewayRouteTableVirtualInterfaceGroupAssociation",
+  "Properties" : {
+      "LocalGatewayRouteTableId" : String,
+      "LocalGatewayVirtualInterfaceGroupId" : String,
+      "Tags" : [Tag, ... ]
+    }
+}
+```
+
+## 속성
+
+`LocalGatewayRouteTableId`  
+로컬 게이트웨이 라우팅 테이블의 ID입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`LocalGatewayVirtualInterfaceGroupId`  
+가상 인터페이스 그룹의 ID입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Tags`  
+연결에 할당된 태그입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`로컬 게이트웨이 라우팅 테이블 가상 인터페이스 그룹 연결의 ID를 반환합니다. 예를 들어:
+
+`{ "Ref": "lgw-vif-grp-assoc-07145b276bEXAMPLE" }`
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`LocalGatewayId` 로컬 게이트웨이의 ID입니다.
+
+`LocalGatewayRouteTableArn` 가상 인터페이스 그룹에 대한 로컬 게이트웨이 라우팅 테이블의 Amazon 리소스 이름(ARN)입니다.
+
+`LocalGatewayRouteTableVirtualInterfaceGroupAssociationId` 연결의 ID입니다.
+
+`OwnerId` 로컬 게이트웨이 가상 인터페이스 그룹 연결을 소유하는 AWS 계정의 ID입니다.
+
+`State` 연결의 상태입니다.
+
+## 참고 항목
+
+- AWS Outposts 사용 설명서*의 로컬 게이트웨이 *
+- CreateLocalGatewayRouteTableVirtualInterfaceGroupAssociation(_Amazon EC2 API 참조)_

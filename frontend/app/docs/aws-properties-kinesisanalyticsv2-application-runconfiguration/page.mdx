@@ -1,0 +1,30 @@
+# AWS::KinesisAnalyticsV2::애플리케이션 실행 구성
+
+Managed Service for Apache Flink 애플리케이션의 시작 매개변수에 대해 설명합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ApplicationRestoreConfiguration" : ApplicationRestoreConfiguration,
+  "FlinkRunConfiguration" : FlinkRunConfiguration
+}
+```
+
+## 속성
+
+`ApplicationRestoreConfiguration`  
+다시 시작하는 응용 프로그램의 복원 동작에 대해 설명합니다.  
+*필수 항목 *여부: 아니요  
+_형식_: ApplicationRestoreConfiguration  
+_업데이트 필요 사항_: 중단 없음
+
+`FlinkRunConfiguration`  
+Managed Service for Apache Flink 애플리케이션의 시작 매개변수에 대해 설명합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: FlinkRunConfiguration  
+_업데이트 필요 사항_: 중단 없음

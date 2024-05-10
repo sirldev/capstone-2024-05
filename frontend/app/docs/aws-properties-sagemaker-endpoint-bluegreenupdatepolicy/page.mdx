@@ -1,0 +1,41 @@
+# AWS::SageMaker::엔드포인트 BlueGreenUpdatePolicy
+
+블루/그린 배포에 대한 정책을 업데이트합니다. 이 업데이트 정책이 지정된 경우 SageMaker는 이전 플릿을 유지하면서 배포 중에 새 플릿을 생성합니다. SageMaker는 지정된 트래픽 라우팅 구성에 따라 트래픽을 새 플릿으로 전환합니다. 배포 구성에는 하나의 업데이트 정책만 사용해야 합니다. 업데이트 정책이 지정되지 않은 경우 SageMaker는 기본적으로 한 번에 트래픽이 이동하는 블루/그린 배포 전략을 사용합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "MaximumExecutionTimeoutInSeconds" : Integer,
+  "TerminationWaitInSeconds" : Integer,
+  "TrafficRoutingConfiguration" : TrafficRoutingConfig
+}
+```
+
+## 속성
+
+`MaximumExecutionTimeoutInSeconds`  
+배포에 대한 최대 실행 제한 시간입니다. 제한시간 값은 및 에 지정된 총 대기 시간보다 커야 합니다 `TerminationWaitInSeconds` `WaitIntervalInSeconds`.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_최소_: `600`  
+_최대_: `28800`  
+_업데이트 필요 사항_: 중단 없음
+
+`TerminationWaitInSeconds`  
+엔드포인트 배포가 완료된 후 이전 엔드포인트 플릿을 종료하기 전에 추가 대기 시간(초)입니다. 기본값은 0입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_최소_: `0`  
+_최대_: `3600`  
+_업데이트 필요 사항_: 중단 없음
+
+`TrafficRoutingConfiguration`  
+엔드포인트 배포 중에 이전 플릿에서 새 플릿으로 트래픽을 이동하기 위한 트래픽 라우팅 전략을 정의합니다.  
+_필수 항목 여부_: 예  
+_유형_: TrafficRoutingConfig  
+_업데이트 필요 사항_: 중단 없음

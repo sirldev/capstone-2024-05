@@ -1,0 +1,37 @@
+# AWS::D ynamoDB::GlobalTable ReplicaGlobalSecondaryIndex사양
+
+복제본별로 설정할 수 있는 global secondary index의 속성을 나타냅니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ContributorInsightsSpecification" : ContributorInsightsSpecification,
+  "IndexName" : String,
+  "ReadProvisionedThroughputSettings" : ReadProvisionedThroughputSettings
+}
+```
+
+## 속성
+
+`ContributorInsightsSpecification`  
+특정 테이블 또는 인덱스에 대한 참가자 인사이트의 상태를 업데이트합니다. DynamoDB 그래프에 대한 CloudWatch Contributor Insights는 자주 액세스하는 항목과 자주 조절되는 항목의 파티션 키 및 정렬 키(해당하는 경우)를 일반 텍스트로 표시합니다. AWS Key Management Service(KMS)를 사용하여 AWS 관리형 키 또는 고객 관리형 키를 사용하여 이 테이블의 파티션 키 및 정렬 키 데이터를 암호화해야 하는 경우 이 테이블에 대해 DynamoDB에 대한 CloudWatch Contributor Insights를 활성화해서는 안 됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: ContributorInsightsSpecification  
+_업데이트 필요 사항_: 중단 없음
+
+`IndexName`  
+global secondary index의 이름입니다. 이름은 이 테이블의 다른 모든 인덱스에서 고유해야 합니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ReadProvisionedThroughputSettings`  
+가 로 설정된 경우 복제본 global secondary index에 대한 읽기 용량 설정을 지정할 수 있습니다 `BillingMode` `PROVISIONED`.  
+*필수 항목 *여부: 아니요  
+_형식_: ReadProvisionedThroughputSettings  
+_업데이트 필요 사항_: 중단 없음

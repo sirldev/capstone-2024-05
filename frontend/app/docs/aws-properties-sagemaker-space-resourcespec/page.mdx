@@ -1,0 +1,44 @@
+# AWS::SageMaker::Space 리소스 사양
+
+SageMaker 이미지 및 SageMaker 이미지 버전의 ARN과 버전이 실행되는 인스턴스 유형을 지정합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "InstanceType" : String,
+  "SageMakerImageArn" : String,
+  "SageMakerImageVersionArn" : String
+}
+```
+
+## 속성
+
+`InstanceType`  
+이미지 버전이 실행되는 인스턴스 유형입니다.  
+ **JupyterServer 앱은** 값 만 지원합니다 `system` .  
+**KernelGateway 앱의** 경우 `system` 값이 로 변환됩니다`ml.t3.medium`. KernelGateway 앱은 사용 가능한 인스턴스 유형에 대한 다른 모든 값도 지원합니다.
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `ml.c5.12xlarge | ml.c5.18xlarge | ml.c5.24xlarge | ml.c5.2xlarge | ml.c5.4xlarge | ml.c5.9xlarge | ml.c5.large | ml.c5.xlarge | ml.g4dn.12xlarge | ml.g4dn.16xlarge | ml.g4dn.2xlarge | ml.g4dn.4xlarge | ml.g4dn.8xlarge | ml.g4dn.xlarge | ml.g5.12xlarge | ml.g5.16xlarge | ml.g5.24xlarge | ml.g5.2xlarge | ml.g5.48xlarge | ml.g5.4xlarge | ml.g5.8xlarge | ml.g5.xlarge | ml.geospatial.interactive | ml.m5.12xlarge | ml.m5.16xlarge | ml.m5.24xlarge | ml.m5.2xlarge | ml.m5.4xlarge | ml.m5.8xlarge | ml.m5.large | ml.m5.xlarge | ml.m5d.12xlarge | ml.m5d.16xlarge | ml.m5d.24xlarge | ml.m5d.2xlarge | ml.m5d.4xlarge | ml.m5d.8xlarge | ml.m5d.large | ml.m5d.xlarge | ml.p3.16xlarge | ml.p3.2xlarge | ml.p3.8xlarge | ml.p3dn.24xlarge | ml.p4d.24xlarge | ml.p4de.24xlarge | ml.r5.12xlarge | ml.r5.16xlarge | ml.r5.24xlarge | ml.r5.2xlarge | ml.r5.4xlarge | ml.r5.8xlarge | ml.r5.large | ml.r5.xlarge | ml.t3.2xlarge | ml.t3.large | ml.t3.medium | ml.t3.micro | ml.t3.small | ml.t3.xlarge | system`  
+_업데이트 필요 사항_: 중단 없음
+
+`SageMakerImageArn`  
+이미지 버전이 속한 SageMaker 이미지의 ARN입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최대_: `256`  
+_패턴_: `^arn:aws(-[w]+)*:sagemaker:.+:[0-9]{12}:image/a-z0-9*$`  
+_업데이트 필요 사항_: 중단 없음
+
+`SageMakerImageVersionArn`  
+인스턴스에서 생성된 이미지 버전의 ARN입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최대_: `256`  
+_패턴_: `^arn:aws(-[w]+)*:sagemaker:.+:[0-9]{12}:image-version/a-z0-9*/[0-9]+$`  
+_업데이트 필요 사항_: 중단 없음

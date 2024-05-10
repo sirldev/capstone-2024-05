@@ -1,0 +1,40 @@
+# AWS::AutoScaling::ScalingPolicy 지표
+
+특정 메트릭을 나타냅니다.
+
+`Metric` 은 AWS::AutoScaling::ScalingPolicy MetricStat 속성 유형의 속성입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Dimensions" : [ MetricDimension, ... ],
+  "MetricName" : String,
+  "Namespace" : String
+}
+```
+
+## 속성
+
+`Dimensions`  
+지표의 차원입니다. 사용 가능한 차원 목록은 Amazon CloudWatch 사용 설명서의 CloudWatch 지표를 게시하는 AWS 서비스의 표에서 제공되는 AWS 설명서를 참조하십시오\**.  
+조건부: 차원을 사용하여 지표를 게시한 경우 조정 정책에서 동일한 차원을 지정해야 합니다.  
+*필수 항목 *여부: 아니요  
+*유형*: MetricDimension 목록  
+*업데이트 필요 사항\*: 중단 없음
+
+`MetricName`  
+메트릭의 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Namespace`  
+메트릭의 네임스페이스입니다. 자세한 내용은 Amazon CloudWatch 사용 설명서에서 CloudWatch 지표를 게시하는 AWS 서비스의 표를 참조하세요\**.  
+*필수 항목 여부*: 예  
+*유형*: 문자열  
+*업데이트 필요 사항\*: 중단 없음

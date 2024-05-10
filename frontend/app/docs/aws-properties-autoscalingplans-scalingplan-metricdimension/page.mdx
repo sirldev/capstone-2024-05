@@ -1,0 +1,30 @@
+# AWS::AutoScalingPlans::ScalingPlan 지표 차원
+
+`MetricDimension` 는 AWS Auto Scaling(Auto Scaling 계획)과 함께 사용할 사용자 지정 지표의 차원을 지정하는 CustomizedScalingMetricSpecification의 하위 속성입니다. 차원은 CloudWatch 지표와 연결할 수 있는 임의의 이름/값 페어입니다. 중복 치수는 허용되지 않습니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Name" : String,
+  "Value" : String
+}
+```
+
+## 속성
+
+`Name`  
+차원의 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Value`  
+차원의 값입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음

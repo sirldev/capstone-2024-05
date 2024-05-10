@@ -1,0 +1,67 @@
+# AWS::AutoScalingPlans::ScalingPlan 사용자 지정 LoadMetric사양
+
+`CustomizedLoadMetricSpecification` 는 AWS Auto Scaling(Auto Scaling 계획)과 함께 사용할 예측 조정에 대한 사용자 지정 로드 지표를 지정하는 ScalingInstruction의 하위 속성입니다.
+
+예측 조정이 사용자 지정 로드 지표 사양과 함께 작동하려면 AWS Auto Scaling이 `Sum` `Average` CloudWatch가 지표 데이터에서 계산하는 통계에 액세스해야 합니다.
+
+로드 지표를 선택할 때 `Sum` `Average` 지표에 대한 필수 및 통계를 CloudWatch에서 사용할 수 있고 예측 조정에 대한 관련 데이터를 제공하는지 확인합니다. 통계는 `Sum` 자원의 총 부하를 나타내야 하며, `Average` 통계는 자원의 용량 단위당 평균 부하를 나타내야 합니다. 예를 들어, 오토 스케일링에서 처리한 요청 수를 계산하는 지표가 있습니다. 통계가 `Sum` 그룹에서 처리한 총 요청 수를 나타내는 `Average` 경우 지정된 지표에 대한 통계는 그룹의 각 인스턴스에서 처리한 평균 요청 수를 나타내야 합니다.
+
+자체 지표를 게시하는 경우 지정된 간격으로 데이터 포인트를 집계한 다음 집계된 데이터 포인트를 CloudWatch에 게시할 수 있습니다. AWS Auto Scaling은 예측을 생성하기 전에 예측에 사용된 세부 기간(60분)과 일치하도록 각 시간 내에 발생한 모든 지표 데이터 포인트를 합산합니다.
+
+용어, 사용 가능한 지표 또는 새 지표를 게시하는 방법에 대한 자세한 내용은 _Amazon CloudWatch 사용 설명서의 Amazon CloudWatch 개념을 참조하십시오_.
+
+크기 조정 계획을 생성한 후 AWS Auto Scaling 콘솔을 사용하여 지정된 지표에 대한 예측을 시각화할 수 있습니다. 자세한 내용은 _AWS Auto Scaling 사용 설명서의 리소스에 대한 조정 정보 보기를 참조하십시오_.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Dimensions" : [ MetricDimension, ... ],
+  "MetricName" : String,
+  "Namespace" : String,
+  "Statistic" : String,
+  "Unit" : String
+}
+```
+
+## 속성
+
+`Dimensions`  
+지표의 차원입니다.  
+조건부: 차원과 함께 지표를 게시한 경우 사용자 지정된 부하 지표 사양에서 동일한 차원을 지정해야 합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: MetricDimension 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`MetricName`  
+메트릭의 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Namespace`  
+메트릭의 네임스페이스입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Statistic`  
+메트릭의 통계입니다.  
+_허용되는 값_: `Sum`  
+_필수_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Unit`  
+메트릭의 단위입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+## 참고 항목
+
+- AWS Auto Scaling 사용 설명서

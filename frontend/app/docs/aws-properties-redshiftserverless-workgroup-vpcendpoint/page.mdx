@@ -1,0 +1,37 @@
+# AWS::RedshiftServerless::작업 그룹 VpcEndpoint
+
+프록시를 통해 Amazon Redshift Serverless에 연결하기 위한 연결 엔드포인트입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "NetworkInterfaces" : [ NetworkInterface, ... ],
+  "VpcEndpointId" : String,
+  "VpcId" : String
+}
+```
+
+## 속성
+
+`NetworkInterfaces`  
+엔드포인트의 하나 이상의 네트워크 인터페이스입니다. 인터페이스 엔드포인트라고도 합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: NetworkInterface 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`VpcEndpointId`  
+Amazon Redshift Serverless에 연결하기 위한 연결 엔드포인트 ID입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`VpcId`  
+엔드포인트가 연결된 VPC 식별자입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음

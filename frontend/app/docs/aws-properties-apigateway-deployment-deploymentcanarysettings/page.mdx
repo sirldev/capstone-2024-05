@@ -1,0 +1,41 @@
+# AWS::ApiGateway::D eployment DeploymentCanarySettings
+
+`DeploymentCanarySettings` 속성 유형은 카나리아 배포에 대한 설정을 지정합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "PercentTraffic" : Double,
+  "StageVariableOverrides" : {Key: Value, ...},
+  "UseStageCache" : Boolean
+}
+```
+
+## 속성
+
+`PercentTraffic`  
+카나리아 배포로 라우팅된 트래픽의 백분율(0.0-100.0)입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 더블  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`StageVariableOverrides`  
+단계 변수는 canary 릴리스 배포에 사용되는 재정의입니다. 기존 단계 변수를 재정의하거나 canary 릴리스 배포를 위해 새 단계 변수를 추가할 수 있습니다. 이러한 단계 변수는 단계 변수 이름과 해당 값 사이의 문자열 간 맵으로 표현됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 맵  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`UseStageCache`  
+카나리아 릴리스 배포가 단계 캐시를 사용하는지 여부를 나타내는 부울 플래그입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 바꿔 놓음
+
+## 참고 항목
+
+- Amazon API Gateway REST API 참조*의 CreateDeployment *

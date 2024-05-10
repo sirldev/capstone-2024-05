@@ -1,0 +1,44 @@
+# AWS::SageMaker::ModelPackage DriftCheck기준선
+
+모델 패키지를 사용하여 모델 모니터를 설정할 때 사용할 수 있는 드리프트 체크 기준선을 나타냅니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Bias" : DriftCheckBias,
+  "Explainability" : DriftCheckExplainability,
+  "ModelDataQuality" : DriftCheckModelDataQuality,
+  "ModelQuality" : DriftCheckModelQuality
+}
+```
+
+## 속성
+
+`Bias`  
+모델 패키지를 사용하여 모델 모니터를 설정할 때 사용할 수 있는 드리프트 체크 바이어스 기준선을 나타냅니다.  
+*필수 항목 *여부: 아니요  
+_유형_: DriftCheckBias  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Explainability`  
+모델 패키지를 사용하여 모델 모니터를 설정할 때 사용할 수 있는 드리프트 검사 설명 가능성 기준을 나타냅니다.  
+*필수 항목 *여부: 아니요  
+_유형_: DriftCheckExplainability  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ModelDataQuality`  
+모델 패키지를 사용하여 모델 모니터를 설정할 때 사용할 수 있는 드리프트 검사 모델 데이터 품질 기준을 나타냅니다.  
+*필수 항목 *여부: 아니요  
+_형식_: DriftCheckModelDataQuality  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ModelQuality`  
+모델 패키지를 사용하여 모델 모니터를 설정할 때 사용할 수 있는 드리프트 검사 모델 품질 기준선을 나타냅니다.  
+*필수 항목 *여부: 아니요  
+_형식_: DriftCheckModelQuality  
+_업데이트 필요 사항_: 바꿔 놓음

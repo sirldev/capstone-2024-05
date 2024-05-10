@@ -1,0 +1,34 @@
+# AWS::EC2::인스턴스 CpuOptions
+
+인스턴스에 대한 CPU 옵션을 지정합니다. CPU 옵션을 지정할 때 CPU 코어 수와 코어당 스레드 수를 모두 지정해야 합니다.
+
+인스턴스에 대한 CPU 옵션을 수정하면 인스턴스가 교체됩니다.
+
+자세한 내용은 Amazon Elastic Compute Cloud 사용 설명서*의 CPU 옵션 최적화를 참조하세요*.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "CoreCount" : Integer,
+  "ThreadsPerCore" : Integer
+}
+```
+
+## 속성
+
+`CoreCount`  
+인스턴스의 CPU 코어 수입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`ThreadsPerCore`  
+CPU 코어당 스레드 수입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음

@@ -1,0 +1,37 @@
+# AWS::ElasticLoadBalancing::LoadBalancer LBCookieStickinessPolicy
+
+Classic Load Balancer에 대한 기간 기반 세션 고정에 대한 정책을 지정합니다.
+
+정책을 수신기와 연결하려면 수신기의 PolicyNames 속성을 사용합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "CookieExpirationPeriod" : String,
+  "PolicyName" : String
+}
+```
+
+## 속성
+
+`CookieExpirationPeriod`  
+쿠키가 부실한 것으로 간주되어야 하는 기간(초)입니다. 이 매개 변수를 지정하지 않으면 고정 세션은 브라우저 세션 기간 동안 지속됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`PolicyName`  
+정책의 이름입니다. 이 이름은 이 로드 밸런서에 대한 정책 집합 내에서 고유해야 합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+## 참고 항목
+
+- Elastic Load Balancing API 참조(버전 2012-06-01)\* \*의 CreateLBCookieStickinessPolicy
+- Classic Load Balancer* 사용 설명서*의 고정 세션

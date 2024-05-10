@@ -1,0 +1,31 @@
+# AWS::D ynamoDB::GlobalTable TimeToLiveSpecification
+
+지정된 테이블에 대해 TTL(Time to Live)을 사용하거나 사용하지 않도록 설정하는 데 사용되는 설정을 나타냅니다. 모든 복제본은 TTL(Time to Live) 구성이 동일합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "AttributeName" : String,
+  "Enabled" : Boolean
+}
+```
+
+## 속성
+
+`AttributeName`  
+테이블의 항목에 대한 만료 시간을 저장하는 데 사용되는 속성의 이름입니다.  
+현재는 TTL(Time to Live)을 평가하는 데 사용되는 속성 이름을 직접 변경할 수 없습니다. 이렇게 하려면 먼저 TTL(Time to Live)을 비활성화한 다음 새 속성 이름으로 다시 활성화해야 합니다. TTL(Time to Live) 변경 내용이 적용되는 데 최대 1시간이 걸릴 수 있습니다. 해당 기간 내에 TTL(Time to Live)을 수정하려고 하면 스택 작업이 지연될 수 있습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Enabled`  
+테이블에서 TTL을 활성화(true) 또는 비활성화(false)할지 여부를 나타냅니다.  
+_필수 항목 여부_: 예  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음

@@ -1,0 +1,58 @@
+# AWS::Route53::레코드 세트 지리적 위치
+
+지리적 위치에 대한 정보를 포함하는 복합 형식입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ContinentCode" : String,
+  "CountryCode" : String,
+  "SubdivisionCode" : String
+}
+```
+
+## 속성
+
+`ContinentCode` 지리적 위치 리소스 레코드 집합의 경우, 대륙을 식별하는 두 글자 약어입니다. Route 53은 다음 대륙 코드를 지원합니다.
+
+- **AF:** 아프리카
+- **AN:** 남극 대륙
+- **AS:** 아시아
+- **EU**: 유럽
+- **OC:** 오세아니아
+- **NA:** 북아메리카
+- **SA:** 남아메리카
+  제약 조건: `ContinentCode` 또는 중 `CountryCode` 하나로 지정 `SubdivisionCode` 하면 오류가 반환됩니다 `InvalidInput` .  
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열  
+  _최소_: `2`  
+  _최대_: `2`  
+  _업데이트 필요 사항_: 중단 없음
+
+`CountryCode`  
+지리적 위치 리소스 레코드 집합의 경우, 한 국가의 두 글자 코드입니다.  
+Route 53은 ISO 표준 3166-1 alpha-2에 지정된 두 글자 국가 코드를 사용합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `2`  
+_업데이트 필요 사항_: 중단 없음
+
+`SubdivisionCode`  
+지리적 위치 리소스 레코드 집합의 경우, 미국 주에 대한 두 글자 코드입니다. Route 53은 에 대한 다른 값을 지원하지 않습니다`SubdivisionCode`. 주 약어 목록은 United States Postal Service 웹 사이트의 부록 B: Two–Letter State and Possession 약어를 참조하십시오.  
+를 지정하는 경우 `subdivisioncode` 에 대해서도 `US`지정해야 합니다`CountryCode`.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `3`  
+_업데이트 필요 사항_: 중단 없음
+
+## 참고 항목
+
+- AWS::Route53::RecordSet 주제의 반환 값
+- Amazon Route 53 API 참조*의 지리적 위치 *

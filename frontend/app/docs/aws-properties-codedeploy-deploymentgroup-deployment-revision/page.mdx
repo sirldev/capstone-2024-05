@@ -1,0 +1,42 @@
+# AWS::CodeDeploy::D eploymentGroup RevisionLocation
+
+`RevisionLocation` 은 배포할 CodeDeploy 애플리케이션 개정의 위치를 정의하는 속성입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "GitHubLocation" : GitHubLocation,
+  "RevisionType" : String,
+  "S3Location" : S3Location
+}
+```
+
+## 속성
+
+`GitHubLocation`  
+GitHub에 저장된 애플리케이션 아티팩트의 위치에 대한 정보입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: GitHubLocation  
+_업데이트 필요 사항_: 중단 없음
+
+`RevisionType` 응용 프로그램 개정 유형:
+
+- S3: Amazon S3에 저장된 애플리케이션 개정입니다.
+- GitHub: GitHub에 저장된 애플리케이션 개정입니다(EC2/온프레미스 배포만 해당).
+- 문자열: JSON 형식 문자열(AWS Lambda 배포만 해당).
+- AppSpecContent: `AppSpecContent` AWS Lambda 또는 Amazon ECS 배포를 위한 AppSpec 파일의 콘텐츠를 포함하는 객체입니다. 콘텐츠는 RawString으로 저장된 JSON 형식으로 지정됩니다.
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열  
+  _허용되는 값_: `AppSpecContent | GitHub | S3 | String`  
+  _업데이트 필요 사항_: 중단 없음
+
+`S3Location`  
+Amazon S3에 저장된 개정의 위치에 대한 정보입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: S3Location  
+_업데이트 필요 사항_: 중단 없음

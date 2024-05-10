@@ -1,0 +1,37 @@
+# AWS::EC2::EC2Fleet FleetLaunchTemplateConfigRequest
+
+시작 템플릿을 지정하고 EC2 집합에 대한 재정의를 지정합니다.
+
+`FleetLaunchTemplateConfigRequest` 은 AWS::EC2::EC2Fleet 리소스의 속성입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "LaunchTemplateSpecification" : FleetLaunchTemplateSpecificationRequest,
+  "Overrides" : [ FleetLaunchTemplateOverridesRequest, ... ]
+}
+```
+
+## 속성
+
+`LaunchTemplateSpecification`  
+사용할 시작 템플릿입니다. 요청에서 시작 템플릿 ID 또는 시작 템플릿 이름을 지정해야 합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: FleetLaunchTemplateSpecificationRequest  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Overrides`  
+지정한 모든 파라미터는 시작 템플릿의 동일한 파라미터를 재정의합니다.  
+유형 및 플릿의 경우 `request` `maintain`모든 시작 템플릿에서 최대 300개의 항목이 허용됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: FleetLaunchTemplateOverridesRequest 목록  
+_업데이트 필요 사항_: 바꿔 놓음
+
+## 참고 항목
+
+- Amazon EC2 API 참조\* \*의 FleetLaunchTemplateConfigRequest

@@ -1,0 +1,182 @@
+# AWS::S3::버킷 규칙
+
+Amazon S3 버킷에 대한 수명 주기 규칙을 지정합니다. 자세한 내용은 _Amazon S3 API Reference의 Put Bucket Lifecycle Configuration을 참조하십시오_.
+
+, `AbortIncompleteMultipartUpload`, , `ExpirationDate`, `ExpirationInDays`, `NoncurrentVersionExpirationInDays`, `NoncurrentVersionTransition` `NoncurrentVersionTransitions`또는 `Transition`.`Transitions` 속성 중 하나 이상을 지정해야 합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "AbortIncompleteMultipartUpload" : AbortIncompleteMultipartUpload,
+  "ExpirationDate" : Timestamp,
+  "ExpirationInDays" : Integer,
+  "ExpiredObjectDeleteMarker" : Boolean,
+  "Id" : String,
+  "NoncurrentVersionExpiration" : NoncurrentVersionExpiration,
+  "NoncurrentVersionExpirationInDays" : Integer,
+  "NoncurrentVersionTransition" : NoncurrentVersionTransition,
+  "NoncurrentVersionTransitions" : [ NoncurrentVersionTransition, ... ],
+  "ObjectSizeGreaterThan" : Long,
+  "ObjectSizeLessThan" : Long,
+  "Prefix" : String,
+  "Status" : String,
+  "TagFilters" : [ TagFilter, ... ],
+  "Transition" : Transition,
+  "Transitions" : [ Transition, ... ]
+}
+```
+
+## 속성
+
+`AbortIncompleteMultipartUpload`  
+Amazon S3 버킷에 대한 불완전한 멀티파트 업로드를 중지하는 수명 주기 규칙을 지정합니다.  
+_필수_: 조건부  
+_형식_: AbortIncompleteMultipartUpload  
+_업데이트 필요 사항_: 중단 없음
+
+`ExpirationDate`  
+Amazon S3 및 Amazon S3 Glacier에서 객체가 삭제되는 시점을 나타냅니다. 날짜 값은 ISO 8601 형식이어야 합니다. 시간은 항상 자정(UTC)입니다. 만료 및 전환 시간을 지정하는 경우 두 속성에 대해 동일한 시간 단위(일 단위 또는 날짜별)를 사용해야 합니다. 만료 시간도 전환 시간보다 늦어야 합니다.  
+_필수_: 조건부  
+_유형_: 타임스탬프  
+_업데이트 필요 사항_: 중단 없음
+
+`ExpirationInDays`  
+생성 후 Amazon S3 및 Amazon S3 Glacier에서 객체가 삭제되는 기간(일)을 나타냅니다. 만료 및 전환 시간을 지정하는 경우 두 속성에 대해 동일한 시간 단위(일 단위 또는 날짜별)를 사용해야 합니다. 만료 시간도 전환 시간보다 늦어야 합니다.  
+_필수_: 조건부  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`ExpiredObjectDeleteMarker`  
+Amazon S3가 최신이 아닌 버전이 없는 삭제 마커를 제거할지 여부를 나타냅니다. true로 설정하면 최신이 아닌 버전이 없는 경우 삭제 마커가 제거됩니다. `ExpirationInDays`, `ExpirationDate`, 또는 와 함께 지정할 수 없습니다`TagFilters`.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`Id`  
+규칙의 고유 식별자입니다. 값은 255자를 초과할 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`NoncurrentVersionExpiration`  
+최신이 아닌 객체 버전이 만료되는 시기를 지정합니다. 만료 시 Amazon S3는 최신이 아닌 객체 버전을 영구적으로 삭제합니다. 버전 관리가 활성화된(또는 일시 중지된) 버킷에서 이 수명 주기 구성 작업을 설정하여 Amazon S3가 객체 수명 주기의 특정 기간에 최신이 아닌 객체 버전을 삭제하도록 요청합니다.  
+*필수 항목 *여부: 아니요  
+_형식_: NoncurrentVersionExpiration  
+_업데이트 필요 사항_: 중단 없음
+
+`NoncurrentVersionExpirationInDays`  
+(더 이상 사용되지 않습니다.) 버전 관리가 활성화된(또는 일시 중지된) 버킷의 경우, 객체의 새 버전이 버킷에 업로드되는 시점과 객체의 이전 버전이 만료되는 시점 사이의 시간(일)을 지정합니다. 객체 버전이 만료되면 Amazon S3는 해당 버전을 영구적으로 삭제합니다. 전환 및 만료 시간을 지정하는 경우 만료 시간은 전환 시간보다 이후여야 합니다.  
+_필수_: 조건부  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`NoncurrentVersionTransition`  
+(더 이상 사용되지 않습니다.) 버전 관리가 활성화(또는 일시 중지)된 버킷의 경우, 최신이 아닌 객체가 지정된 스토리지 클래스로 전환되는 시점을 지정합니다. 전환 및 만료 시간을 지정하는 경우 만료 시간은 전환 시간보다 이후여야 합니다. 이 속성을 지정하는 경우 속성을 지정하지 마세요 `NoncurrentVersionTransitions` .  
+_필수_: 조건부  
+_형식_: NoncurrentVersionTransition  
+_업데이트 필요 사항_: 중단 없음
+
+`NoncurrentVersionTransitions`  
+버전 관리가 활성화된(또는 일시 중단된) 버킷의 경우, 최신이 아닌 객체가 지정된 스토리지 클래스로 전환되는 시점을 지정하는 하나 이상의 전환 규칙입니다. 전환 및 만료 시간을 지정하는 경우 만료 시간은 전환 시간보다 이후여야 합니다. 이 속성을 지정하는 경우 속성을 지정하지 마세요 `NoncurrentVersionTransition` .  
+_필수_: 조건부  
+_형식_: NoncurrentVersionTransition 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`ObjectSizeGreaterThan`  
+이 규칙을 적용할 최소 개체 크기(바이트)를 지정합니다. 객체는 이 값(바이트)보다 커야 합니다. 크기 기반 규칙에 대한 자세한 내용은 _Amazon S3 사용 설명서의 크기 기반 규칙을 사용한 수명 주기 구성을 참조하세요_.  
+*필수 항목 *여부: 아니요  
+_유형_: 긴  
+_업데이트 필요 사항_: 중단 없음
+
+`ObjectSizeLessThan`  
+이 규칙을 적용할 최대 개체 크기(바이트)를 지정합니다. 객체는 이 값(바이트)보다 작아야 합니다. 크기 기반 규칙에 대한 자세한 내용은 _Amazon S3 사용 설명서의 크기 기반 규칙을 사용한 수명 주기 구성을 참조하세요_.  
+*필수 항목 *여부: 아니요  
+_유형_: 긴  
+_업데이트 필요 사항_: 중단 없음
+
+`Prefix`  
+이 규칙이 적용되는 하나 이상의 객체를 식별하는 객체 키 접두사입니다.  
+XML 요청을 사용할 때 특수 문자(예: 캐리지 리턴)를 포함하는 객체 키를 대체해야 합니다. 자세한 내용은 XML 관련 객체 키 제약 조건을 참조하세요.
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Status`  
+인 경우 `Enabled`규칙이 현재 적용되고 있습니다. 인 경우 `Disabled`규칙이 현재 적용되고 있지 않습니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_허용되는 값_: `Disabled | Enabled`  
+_업데이트 필요 사항_: 중단 없음
+
+`TagFilters`  
+수명 주기 규칙이 적용되는 객체의 하위 집합을 식별하는 데 사용할 태그입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: TagFilter 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`Transition`  
+(더 이상 사용되지 않습니다.) 객체가 지정된 스토리지 클래스로 전환되는 시기를 지정합니다. 만료 및 전환 시간을 지정하는 경우 두 속성에 대해 동일한 시간 단위(일 단위 또는 날짜별)를 사용해야 합니다. 만료 시간도 전환 시간보다 늦어야 합니다. 이 속성을 지정하는 경우 속성을 지정하지 마세요 `Transitions` .  
+_필수_: 조건부  
+_유형_: 전환  
+_업데이트 필요 사항_: 중단 없음
+
+`Transitions`  
+객체가 지정된 스토리지 클래스로 전환되는 시기를 지정하는 하나 이상의 전환 규칙입니다. 만료 및 전환 시간을 지정하는 경우 두 속성에 대해 동일한 시간 단위(일 단위 또는 날짜별)를 사용해야 합니다. 만료 시간도 전환 시간보다 늦어야 합니다. 이 속성을 지정하는 경우 속성을 지정하지 마세요 `Transition` .  
+_필수_: 조건부  
+_유형_: 전환 목록  
+_업데이트 필요 사항_: 중단 없음
+
+## 예제
+
+### S3 객체의 수명 주기 관리
+
+다음 예제 템플릿은 수명 주기 구성 규칙이 있는 S3 버킷을 보여줍니다. 이 규칙은 키 접두사가 있는 모든 개체에 적용됩니다 `glacier` . 객체는 하루 후에 Glacier로 전환되고 1년 후에 삭제됩니다.
+
+#### JSON (영문)
+
+```
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Resources": {
+        "S3Bucket": {
+            "Type": "AWS::S3::Bucket",
+            "Properties": {
+                "AccessControl": "Private",
+                "LifecycleConfiguration": {
+                    "Rules": [
+                        {
+                            "Id": "GlacierRule",
+                            "Prefix": "glacier",
+                            "Status": "Enabled",
+                            "ExpirationInDays": 365,
+                            "Transitions": [
+                                {
+                                    "TransitionInDays": 1,
+                                    "StorageClass": "GLACIER"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "Outputs": {
+        "BucketName": {
+            "Value": {
+                "Ref": "S3Bucket"
+            },
+            "Description": "Name of the sample Amazon S3 bucket with a lifecycle configuration."
+        }
+    }
+}
+```
+
+## 참고 항목
+
+- AWS::S3::버킷 예제

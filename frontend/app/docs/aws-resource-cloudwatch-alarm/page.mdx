@@ -1,0 +1,280 @@
+# AWS::CloudWatch::경보
+
+이 `AWS::CloudWatch::Alarm` 유형은 경보를 지정하고 지정된 지표 또는 지표 수학 표현식과 연결합니다.
+
+이 작업이 경보를 생성하면 경보 상태가 즉시 로 설정됩니다 `INSUFFICIENT_DATA`. 그런 다음 경보가 평가되고 상태가 적절하게 설정됩니다. 그런 다음 새 상태와 연결된 모든 작업이 실행됩니다.
+
+기존 경보를 업데이트하면 해당 상태는 변경되지 않은 상태로 유지되지만 업데이트는 경보의 이전 구성을 완전히 덮어씁니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::CloudWatch::Alarm",
+  "Properties" : {
+      "ActionsEnabled" : Boolean,
+      "AlarmActions" : [ String, ... ],
+      "AlarmDescription" : String,
+      "AlarmName" : String,
+      "ComparisonOperator" : String,
+      "DatapointsToAlarm" : Integer,
+      "Dimensions" : [ Dimension, ... ],
+      "EvaluateLowSampleCountPercentile" : String,
+      "EvaluationPeriods" : Integer,
+      "ExtendedStatistic" : String,
+      "InsufficientDataActions" : [ String, ... ],
+      "MetricName" : String,
+      "Metrics" : [ MetricDataQuery, ... ],
+      "Namespace" : String,
+      "OKActions" : [ String, ... ],
+      "Period" : Integer,
+      "Statistic" : String,
+      "Threshold" : Double,
+      "ThresholdMetricId" : String,
+      "TreatMissingData" : String,
+      "Unit" : String
+    }
+}
+```
+
+## 속성
+
+`ActionsEnabled`  
+경보 상태가 변경되는 동안 작업을 실행해야 하는지 여부를 나타냅니다. 기본값은 TRUE입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`AlarmActions`  
+이 경보가 다른 상태에서 ALARM 상태로 전환될 때 실행할 작업 목록입니다. 각 작업을 Amazon 리소스 이름(ARN)으로 지정합니다. 경보 생성 및 지정할 수 있는 작업에 대한 자세한 내용은 _Amazon CloudWatch API Reference의 PutMetricAlarm을 참조하십시오_.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_최대_: `5`  
+_업데이트 필요 사항_: 중단 없음
+
+`AlarmDescription`  
+경보에 대한 설명입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `0`  
+_최대_: `1024`  
+_업데이트 필요 사항_: 중단 없음
+
+`AlarmName`  
+경보의 이름입니다. 이름을 지정하지 않으면 AWS CloudFormation에서 고유한 물리적 ID를 생성하고 해당 ID를 경보 이름으로 사용합니다.  
+이름을 지정하면 이 리소스를 대체해야 하는 업데이트를 수행할 수 없습니다. 중단이 필요 없거나 약간의 중단이 필요한 업데이트를 수행할 수 있습니다. 리소스를 바꿔야 하는 경우 새 이름을 지정합니다.
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `255`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ComparisonOperator`  
+지정된 통계와 임계값을 비교할 때 사용할 산술 연산입니다. 지정된 통계 값이 첫 번째 피연산자로 사용됩니다.  
+ `GreaterThanThreshold`, `GreaterThanOrEqualToThreshold`, 또는 `LessThanThreshold` `LessThanOrEqualToThreshold`.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_허용되는 값_: `GreaterThanOrEqualToThreshold | GreaterThanThreshold | GreaterThanUpperThreshold | LessThanLowerOrGreaterThanUpperThreshold | LessThanLowerThreshold | LessThanOrEqualToThreshold | LessThanThreshold`  
+_업데이트 필요 사항_: 중단 없음
+
+`DatapointsToAlarm`  
+경보를 트리거하기 위해 위반해야 하는 데이터 포인트의 수입니다. 이것은 "N 중 M" 알람을 설정하는 경우에만 사용됩니다. 이 경우 이 값은 M이고 설정한 값은 `EvaluationPeriods` N 값입니다. 자세한 내용은 *Amazon CloudWatch 사용 설명서*의 경보 평가를 참조하십시오.  
+이 파라미터를 생략하면 CloudWatch는 에 대해 설정한 것과 동일한 값을 사용하며, `EvaluationPeriods`연속된 기간이 여러 번 위반되는 경우 경보가 경보 상태로 전환됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_최소_: `1`  
+_업데이트 필요 사항_: 중단 없음
+
+`Dimensions`  
+경보와 연결된 지표의 차원입니다. 수학 표현식을 기반으로 하는 경보의 경우 를 지정할 수 없습니다`Dimensions`. 대신 `Metrics`.  
+*필수 항목 *여부: 아니요  
+_유형_: 차원 목록  
+_최대_: `30`  
+_업데이트 필요 사항_: 중단 없음
+
+`EvaluateLowSampleCountPercentile`  
+백분위수를 기반으로 하는 경보에만 사용됩니다. 인 경우 `ignore`데이터 포인트가 너무 적어 통계적으로 유의하지 않은 기간 동안 경보 상태가 변경되지 않습니다. `evaluate` 또는 이 파라미터를 사용하지 않으면 경보가 항상 평가되며 사용 가능한 데이터 포인트 수에 관계없이 상태가 변경될 수 있습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `255`  
+_업데이트 필요 사항_: 중단 없음
+
+`EvaluationPeriods`  
+데이터가 지정된 임계값과 비교되는 기간의 수입니다. 경보를 트리거하기 위해 여러 개의 연속된 데이터 포인트가 위반해야 하는 경보를 설정하는 경우 이 값은 해당 숫자를 지정합니다. "N 중 M" 알람을 설정하는 경우 이 값은 N이고 `DatapointsToAlarm` M입니다.  
+자세한 내용은 _Amazon CloudWatch 사용 설명서의 경보 평가를 참조하십시오_.  
+_필수 항목 여부_: 예  
+_유형_: Integer  
+_최소_: `1`  
+_업데이트 필요 사항_: 중단 없음
+
+`ExtendedStatistic`  
+경보와 연결된 지표에 대한 백분위수 통계입니다. p0.0과 p100 사이의 값을 지정합니다.  
+지표를 기반으로 하는 경보의 경우 둘 중 하나 또는 둘 다 지정해서는 안 됩니다 `Statistic` `ExtendedStatistic` .  
+수학 표현식을 기반으로 하는 경보의 경우 를 지정할 수 없습니다`ExtendedStatistic`. 대신 `Metrics`.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`InsufficientDataActions`  
+이 경보가 다른 상태에서 상태로 전환될 때 실행할 작업 `INSUFFICIENT_DATA` 입니다. 각 작업은 Amazon 리소스 이름(ARN)으로 지정됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_최대_: `5`  
+_업데이트 필요 사항_: 중단 없음
+
+`MetricName`  
+경보와 연결된 지표의 이름입니다. 이는 지표를 기반으로 하는 경보에 필요합니다. 수학 표현식을 기반으로 하는 경보의 경우 대신 를 사용하며 를 `Metrics` 지정할 수 없습니다`MetricName`.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `255`  
+_업데이트 필요 사항_: 중단 없음
+
+`Metrics`  
+지표 수학 표현식의 결과를 기반으로 경보를 생성할 수 있는 배열입니다. 배열의 각 항목은 메트릭을 검색하거나 수학 표현식을 수행합니다.  
+매개변수를 지정하는 경우 `Metrics`, `MetricName`, `Dimensions`, `Period`, `Namespace`, `Statistic`또는 `ExtendedStatistic` 를 지정할 수 없습니다`Unit`.  
+*필수 항목 *여부: 아니요  
+_유형_: MetricDataQuery 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`Namespace`  
+경보와 연결된 지표의 네임스페이스입니다. 이는 지표를 기반으로 하는 경보에 필요합니다. 수학 표현식을 기반으로 하는 경보의 경우 지정할 수 없으며 대신 `Namespace` 사용합니다 `Metrics` .  
+AWS 서비스의 지표에 대한 네임스페이스 목록은 CloudWatchMetrics를 게시하는 AWS 서비스 단원을 참조하십시오.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `255`  
+_패턴_: `[^:].*`  
+_업데이트 필요 사항_: 중단 없음
+
+`OKActions`  
+이 경보가 다른 상태에서 상태로 전환될 때 실행할 작업 `OK` 입니다. 각 작업은 Amazon 리소스 이름(ARN)으로 지정됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_최대_: `5`  
+_업데이트 필요 사항_: 중단 없음
+
+`Period`  
+통계가 적용되는 기간(초)입니다. 이는 지표를 기반으로 하는 경보에 필요합니다. 유효한 값은 10, 30, 60 및 60의 배수입니다.  
+수학 표현식을 기반으로 하는 경보의 경우 를 지정할 수 없으며 `Period`대신 파라미터를 사용합니다 `Metrics` .  
+_최소값:_ 10  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`Statistic`  
+경보와 연결된 지표에 대한 통계(백분위수 제외)입니다. 백분위수 통계량의 경우 을 사용합니다`ExtendedStatistic`.  
+지표를 기반으로 하는 경보의 경우 둘 중 하나 또는 둘 다 지정해서는 안 됩니다 `Statistic` `ExtendedStatistic` .  
+수학 표현식을 기반으로 하는 경보의 경우 를 지정할 수 없습니다`Statistic`. 대신 `Metrics`.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `Average | Maximum | Minimum | SampleCount | Sum`  
+_업데이트 필요 사항_: 중단 없음
+
+`Threshold`  
+지정된 통계와 비교할 값입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 더블  
+_업데이트 필요 사항_: 중단 없음
+
+`ThresholdMetricId`  
+이상 탐지 모델을 기반으로 하는 경보에서 경보 의 `ANOMALY_DETECTION_BAND` 임계값으로 사용되는 함수의 ID입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `255`  
+_업데이트 필요 사항_: 중단 없음
+
+`TreatMissingData`  
+이 경보가 누락된 데이터 포인트를 처리하는 방법을 설정합니다. 유효한 값은 `breaching`, `notBreaching`, `ignore`및 `missing`입니다. 자세한 내용은 Amazon CloudWatch사용 설명서의 CloudWatchAlarms가 누락 데이터를 처리하는 방법 구성을 참조하십시오\**.  
+이 매개 변수를 생략하면 의 기본 동작 `missing` 이 사용됩니다.  
+*필수 항목 *여부: 아니요  
+*유형*: 문자열  
+*최소*: `1`  
+*최대*: `255`  
+*업데이트 필요 사항\*: 중단 없음
+
+`Unit`  
+경보와 연결된 지표의 단위입니다. 단일 지표를 기반으로 경보를 생성하는 경우에만 이를 지정합니다. 배열을 지정하는 경우에는 지정하지 마십시오 `Metrics` .  
+ Seconds, Microseconds, Milliseconds, Bytes, Kilobytes, Megabytes, Gigabytes, Terabytes, Bits, Kilobits, Megabits, Gigabits, Terabits, Percent, Count, Bytes/Second, Kilobytes/Second, Megabytes/Second, Gigabytes/Second, Terabytes/Second, Bits/Second, Kilobits/Second, Megabits/Second, Gigabits/Second, Terabits/Second, Count/Second 또는 None 값을 지정할 수 있습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `Bits | Bits/Second | Bytes | Bytes/Second | Count | Count/Second | Gigabits | Gigabits/Second | Gigabytes | Gigabytes/Second | Kilobits | Kilobits/Second | Kilobytes | Kilobytes/Second | Megabits | Megabits/Second | Megabytes | Megabytes/Second | Microseconds | Milliseconds | None | Percent | Seconds | Terabits | Terabits/Second | Terabytes | Terabytes/Second`  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref`경보 `Ref`이름(예: )을 반환합니다 `TestAlarm`.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`Arn`  
+CloudWatch경보의 ARN(예: `arn:aws:cloudwatch:us-west-2:123456789012:alarm:myCloudWatchAlarm-CPUAlarm-UXMMZK36R55Z`.
+
+## 예제
+
+### Anomaly Detector를 기반으로 한 경보
+
+이 예에서는 이상 탐지기를 기반으로 하는 경보를 생성합니다.
+
+#### JSON (영문)
+
+```
+"Resources": {
+    "LambdaInvocationsAnomalyDetector": {
+       "Type": "AWS::CloudWatch::AnomalyDetector",
+       "Properties": {
+          "MetricName": "Invocations",
+          "Namespace": "AWS/Lambda",
+          "Stat": "Sum"
+       }
+    },
+    "LambdaInvocationsAlarm": {
+       "Type": "AWS::CloudWatch::Alarm",
+       "Properties": {
+          "AlarmDescription": "Lambda invocations",
+          "AlarmName": "LambdaInvocationsAlarm",
+          "ComparisonOperator": "LessThanLowerOrGreaterThanUpperThreshold",
+          "EvaluationPeriods": 1,
+          "Metrics": [
+             {
+                "Expression": "ANOMALY_DETECTION_BAND(m1, 2)",
+                "Id": "ad1"
+             },
+             {
+                "Id": "m1",
+                "MetricStat": {
+                   "Metric": {
+                      "MetricName": "Invocations",
+                      "Namespace": "AWS/Lambda"
+                   },
+                   "Period": 86400,
+                   "Stat": "Sum"
+                }
+             }
+          ],
+          "ThresholdMetricId": "ad1",
+          "TreatMissingData": "breaching"
+       }
+    }
+ }
+```
+
+## 참고 항목
+
+- Amazon CloudWatch 템플릿 코드 조각

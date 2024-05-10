@@ -1,0 +1,59 @@
+# AWS::AutoScaling::AutoScalingGroup LaunchTemplate사양
+
+Auto Scaling 그룹에 대한 EC2 인스턴스를 프로비저닝할 때 사용할 시작 템플릿을 지정합니다.
+
+다음을 지정해야 합니다.
+
+- 시작 템플릿의 ID 또는 이름이지만 둘 다 아님.
+- 시작 템플릿의 버전입니다.
+
+`LaunchTemplateSpecification` 은 AWS::AutoScaling::AutoScalingGroup 리소스의 속성입니다. 또한 AWS::AutoScaling::AutoScalingGroup LaunchTemplate 및 AWS::AutoScaling::AutoScalingGroup LaunchTemplateOverrides 속성 유형의 속성이기도 합니다.
+
+시작 템플릿 생성에 대한 자세한 내용은 Amazon EC2 Auto Scaling 사용 설명서의 AWS::EC2::LaunchTemplate 및 오토 스케일링에 대한 시작 템플릿 생성을 참조하세요\*\*.
+
+시작 템플릿의 예는 Auto Scaling 템플릿 코드 조각 및 리소스의 예제 섹션을 참조하세요 `AWS::EC2::LaunchTemplate` .
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "LaunchTemplateId" : String,
+  "LaunchTemplateName" : String,
+  "Version" : String
+}
+```
+
+## 속성
+
+`LaunchTemplateId`  
+시작 템플릿의 ID입니다.  
+또는 를 지정해야 하지만 `LaunchTemplateID` `LaunchTemplateName`둘 다 지정해서는 안 됩니다.  
+_필수_: 조건부  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`LaunchTemplateName`  
+시작 템플릿의 이름입니다.  
+또는 를 지정해야 하지만 `LaunchTemplateName` `LaunchTemplateID`둘 다 지정해서는 안 됩니다.  
+_필수_: 조건부  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Version`  
+시작 템플릿의 버전 번호입니다.  
+`$Latest` `$Default` 템플릿 버전 번호에 대해 or을 지정하는 것은 지원되지 않습니다. 그러나 intrinsic 함수를 `LatestVersionNumber` 사용하여 OR을 `DefaultVersionNumber` 지정할 수 `Fn::GetAtt` 있습니다. 자세한 내용은 Fn::GetAtt 단원을 참조하십시오.  
+함수를 사용하는 예제 는 리소스 `Fn::GetAtt` 의 Examples 섹션을 참조하세요 `AWS::AutoScaling::AutoScalingGroup` .
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+## 참고 항목
+
+- AWS::EC2::Launch템플릿
+- AWS::EC2::LaunchTemplate 블록 디바이스 매핑
+- Amazon EC2 Auto Scaling 사용 설명서*의 암호화된 볼륨에 사용하기 위한 필수 KMS 키 정책 *
+- Linux 인스턴스용 Amazon EC2 사용 설명서*의 EBS 지원 AMI에서 암호화 사용 *

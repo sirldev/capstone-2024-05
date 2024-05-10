@@ -1,0 +1,35 @@
+# AWS::CloudFront::CachePolicy 쿠키 구성
+
+최종 사용자 요청의 쿠키가 있는지(포함되어 있는 경우 어떤 쿠키인지) 캐시 키 및 CloudFront에서 오리진에 보내는 요청에 포함되어 있는지 여부를 결정하는 객체입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "CookieBehavior" : String,
+  "Cookies" : [ String, ... ]
+}
+```
+
+## 속성
+
+`CookieBehavior` 최종 사용자 요청의 쿠키가 캐시 키 및 CloudFront에서 오리진으로 보내는 요청에 포함되는지 여부를 결정합니다. 유효한 값은 다음과 같습니다.
+
+- `none` – 최종 사용자 요청의 쿠키는 캐시 키 또는 CloudFront에서 오리진으로 보내는 요청에 포함되지 않습니다. 이 필드가 로 설정된 경우에도 에 `none` `OriginRequestPolicy`나열된 모든 쿠키*는* 오리진 요청에 포함됩니다.
+- `whitelist` – 유형에 나열된 최종 사용자 요청의 쿠키만 `CookieNames` 캐시 키 및 CloudFront에서 오리진에 보내는 요청에 포함됩니다.
+- `allExcept` – 최종 사용자 요청의 모든 쿠키는 캐시 키 및 CloudFront에서 오리진에 보내는 요청에 포함됩니다( ** \*는 포함되지 않은 유형에**`CookieNames` 나열된 쿠키는 제외).
+- `all` – 최종 사용자 요청의 모든 쿠키는 캐시 키 및 CloudFront에서 오리진에 보내는 요청에 포함됩니다.
+  _필수 항목 여부_: 예  
+  _유형_: 문자열  
+  _허용되는 값_: `all | allExcept | none | whitelist`  
+  _업데이트 필요 사항_: 중단 없음
+
+`Cookies`  
+쿠키 이름 목록을 포함합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음

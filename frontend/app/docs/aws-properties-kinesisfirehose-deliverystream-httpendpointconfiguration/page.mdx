@@ -1,0 +1,46 @@
+# AWS::KinesisFirehose::D eliveryStream HttpEndpointConfiguration
+
+Kinesis Firehose가 데이터를 전송하는 HTTP 엔드포인트의 구성을 설명합니다. Kinesis Firehose는 Datadog, MongoDB 및 New Relic을 포함하여 지원되는 타사 서비스 공급자가 소유한 모든 사용자 지정 HTTP 엔드포인트 또는 HTTP 엔드포인트를 지원합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "AccessKey" : String,
+  "Name" : String,
+  "Url" : String
+}
+```
+
+## 속성
+
+`AccessKey`  
+Kinesis Firehose가 대상으로 선택한 HTTP 엔드포인트로 인증하는 데 필요한 액세스 키입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `0`  
+_최대_: `4096`  
+_패턴_: `.*`  
+_업데이트 필요 사항_: 중단 없음
+
+`Name`  
+대상으로 선택한 HTTP 끝점의 이름입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `256`  
+_패턴_: `^(?!s*$).+`  
+_업데이트 필요 사항_: 중단 없음
+
+`Url`  
+대상으로 선택한 HTTP 엔드포인트의 URL입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `1000`  
+_패턴_: 'some-address  
+_업데이트 필요 사항_: 중단 없음

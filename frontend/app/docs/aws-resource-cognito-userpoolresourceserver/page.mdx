@@ -1,0 +1,102 @@
+# AWS::Cognito::UserPool리소스 서버
+
+리소스는 `AWS::Cognito::UserPoolResourceServer` 새 OAuth2.0 리소스 서버를 만들고 그 안에 사용자 지정 범위를 정의합니다.
+
+**메모**  
+파라미터 값을 지정하지 않으면 Amazon Cognito가 파라미터 값을 기본값으로 설정합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::Cognito::UserPoolResourceServer",
+  "Properties" : {
+      "Identifier" : String,
+      "Name" : String,
+      "Scopes" : [ ResourceServerScopeType, ... ],
+      "UserPoolId" : String
+    }
+}
+```
+
+## 속성
+
+`Identifier`  
+자원 서버에 대한 고유한 자원 서버 식별자입니다. 리소스 서버가 있는 HTTPS 엔드포인트일 수 있습니다. 예: `some-address  
+*Required*: Yes  
+*Type*: String  
+*Minimum*: `1` 
+*Maximum*:`256` 
+*Pattern*:`[x21x23-x5Bx5D-x7E]+'  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Name`  
+리소스 서버의 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `256`  
+_패턴_: `[ws+=,.@-]+`  
+_업데이트 필요 사항_: 중단 없음
+
+`Scopes`  
+범위 목록입니다. 각 범위는 키와 가 있는 맵입니다 `ScopeName` `ScopeDescription`.  
+*필수 항목 *여부: 아니요  
+_유형_: ResourceServerScopeType 목록  
+_최대_: `100`  
+_업데이트 필요 사항_: 중단 없음
+
+`UserPoolId`  
+사용자 풀의 사용자 풀 ID입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `55`  
+_패턴_: `[w-]+_[0-9a-zA-Z]+`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`리소스 서버 식별자 "Identifier"인 physicalResourceId를 반환합니다. 예를 들어:
+
+`{ "Ref": "yourResourceServerIdentifier" }`
+
+Amazon Cognito 리소스 서버의 경우 `yourResourceServerIdentifier`Ref는 리소스 서버의 이름을 반환합니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+## 예제
+
+### 사용자 풀에 대한 새 리소스 서버 생성
+
+다음 예제에서는 참조된 사용자 풀에 식별자 "Identifier"를 사용하여 리소스 서버 "Name"을 생성합니다.
+
+#### JSON (영문)
+
+```
+{
+	"UserPoolResourceServer": {
+		"Type": "AWS::Cognito::UserPoolResourceServer",
+		"Properties": {
+			"UserPoolId": {
+				"Ref": "UserPool"
+			},
+			"Identifier": "Identifier",
+			"Name": "Name",
+			"Scopes": [{
+				"ScopeName": "ScopeName1",
+				"ScopeDescription": "description"
+			}, {
+				"ScopeName": "ScopeName2",
+				"ScopeDescription": "description"
+			}]
+		}
+	}
+}
+```

@@ -1,0 +1,35 @@
+# AWS::Cognito::UserPoolResourceServer ResourceServerScopeType
+
+리소스 서버 범위입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ScopeDescription" : String,
+  "ScopeName" : String
+}
+```
+
+## 속성
+
+`ScopeDescription`  
+범위에 대한 설명입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `256`  
+_업데이트 필요 사항_: 중단 없음
+
+`ScopeName`  
+범위의 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `256`  
+_패턴_: `[x21x23-x2Ex30-x5Bx5D-x7E]+`  
+_업데이트 필요 사항_: 중단 없음

@@ -1,0 +1,385 @@
+# AWS::EC2::VPC엔드포인트
+
+VPC 엔드포인트를 지정합니다. VPC 엔드포인트는 VPC와 엔드포인트 서비스 간에 프라이빗 연결을 제공합니다. AWS, AWS Marketplace 파트너 또는 조직의 다른 AWS 계정에서 제공하는 엔드포인트 서비스를 사용할 수 있습니다. 자세한 내용은 AWS PrivateLink 사용 설명서를 참조하세요.
+
+유형의 엔드포인트 `Interface` 는 VPC의 서브넷과 AWS 서비스, 자체 서비스 또는 다른 AWS 계정에서 호스팅하는 서비스 간에 연결을 설정합니다. 인터페이스 VPC 엔드포인트를 사용하여 엔드포인트를 생성할 서브넷과 엔드포인트 네트워크 인터페이스와 연결할 보안 그룹을 지정합니다.
+
+유형의 엔드포인트 `gateway` 는 Amazon S3 또는 DynamoDB로 향하는 트래픽에 대한 라우팅 테이블의 대상 역할을 합니다. VPC에서 서비스에 대한 액세스를 제어하는 엔드포인트에 대한 엔드포인트 정책을 지정할 수 있습니다. 엔드포인트를 사용하는 VPC 라우팅 테이블을 지정할 수도 있습니다. Amazon S3 연결에 대한 자세한 내용은 게이트웨이 VPC 엔드포인트를 사용하여 S3 버킷에 연결할 수 없는 이유는 무엇입니까?를 참조하세요.
+
+유형의 엔드포인트는 `GatewayLoadBalancer` VPC와 서비스 공급자의 가상 어플라이언스 간에 프라이빗 연결을 제공합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::EC2::VPCEndpoint",
+  "Properties" : {
+      "PolicyDocument" : Json,
+      "PrivateDnsEnabled" : Boolean,
+      "RouteTableIds" : [ String, ... ],
+      "SecurityGroupIds" : [ String, ... ],
+      "ServiceName" : String,
+      "SubnetIds" : [ String, ... ],
+      "VpcEndpointType" : String,
+      "VpcId" : String
+    }
+}
+```
+
+## 속성
+
+`PolicyDocument` VPC에서 서비스에 대한 액세스를 제어하는 엔드포인트 정책입니다. 기본 끝점 정책은 서비스에 대한 모든 권한을 허용합니다. 끝점 정책은 게이트웨이 및 인터페이스 끝점에 대해서만 지원됩니다.
+
+*필수 항목 *여부: 아니요  
+_형식_: Json  
+_업데이트 필요 사항_: 중단 없음
+
+`PrivateDnsEnabled`  
+프라이빗 호스팅 영역을 지정된 VPC와 연결할지 여부를 나타냅니다. 프라이빗 호스팅 영역에는 VPC에 있는 엔드포인트 네트워크 인터페이스의 프라이빗 IP 주소로 확인되는 리전 서비스의 기본 퍼블릭 DNS 이름에 대한 레코드 세트(예: `kinesis.us-east-1.amazonaws.com`)가 포함되어 있습니다. 이렇게 하면 VPC 엔드포인트 서비스에서 자동으로 생성되는 퍼블릭 DNS 이름 대신 서비스의 기본 퍼블릭 DNS 이름을 요청할 수 있습니다.  
+프라이빗 호스팅 영역을 사용하려면 다음 VPC 속성을 로 설정해야 합니다 `true` `enableDnsHostnames` `enableDnsSupport`.  
+이 속성은 인터페이스 엔드포인트에 대해서만 지원됩니다.  
+기본값: `false`  
+_필수_: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`RouteTableIds`  
+라우팅 테이블의 ID입니다. 라우팅은 게이트웨이 엔드포인트에 대해서만 지원됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`SecurityGroupIds`  
+엔드포인트 네트워크 인터페이스와 연결할 보안 그룹의 ID입니다. 이 파라미터를 지정하지 않으면 VPC의 기본 보안 그룹을 사용합니다. 보안 그룹은 인터페이스 엔드포인트에 대해서만 지원됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`ServiceName`  
+끝점 서비스의 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`SubnetIds`  
+끝점 네트워크 인터페이스를 만들 서브넷의 ID입니다. 인터페이스 엔드포인트 또는 Gateway Load Balancer 엔드포인트에 대해 이 속성을 지정해야 합니다. 게이트웨이 엔드포인트에 대해 이 속성을 지정할 수 없습니다. Gateway Load Balancer 엔드포인트의 경우 서브넷을 하나만 지정할 수 있습니다.  
+_필수_: 조건부  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`VpcEndpointType`  
+끝점의 유형입니다.  
+기본값: 게이트웨이  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `Gateway | GatewayLoadBalancer | Interface`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`VpcId`  
+VPC의 ID입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`VPC 엔드포인트의 ID를 반환합니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`CreationTimestamp` VPC 엔드포인트가 생성된 날짜 및 시간입니다. 예를 들어: `Fri Sep 28 23:34:36 UTC 2018.`
+
+`DnsEntries`  
+(인터페이스 끝점) 엔드포인트에 대한 DNS 항목입니다. 각 항목은 호스팅 영역 ID와 DNS 이름의 조합입니다. 항목은 지역 공용 DNS, 영역 공용 DNS, 개인 DNS 및 와일드카드 DNS로 정렬됩니다. 이 명령은 AWS Marketplace 서비스에는 적용되지 않습니다.  
+예를 들면 다음과 같습니다. 첫 번째 항목에서 호스팅 영역 ID는 Z1HUB23UULQXV이고 DNS 이름은 vpce-01abc23456de78f9g-12abccd3.ec2.us-east-1.vpce.amazonaws.com 입니다.  
+["Z1HUB23UULQXV:vpce-01abc23456de78f9g-12abccd3.ec2.us-east-1.vpce.amazonaws.com", "Z1HUB23UULQXV:vpce-01abc23456de78f9g-12abccd3-us-east-1a.ec2.us-east-1.vpce.amazonaws.com", "Z1C12344VYDITB0:ec2.us-east-1.amazonaws.com"]  
+ `PrivateDnsEnabled` or `SubnetIds` 속성을 업데이트하면 목록의 DNS 항목이 변경됩니다.
+
+`Id` VPC 엔드포인트의 ID입니다.
+
+`NetworkInterfaceIds`  
+(인터페이스 끝점) 네트워크 인터페이스 ID입니다. `PrivateDnsEnabled` or `SubnetIds` 속성을 업데이트하면 이 목록의 항목이 변경될 수 있습니다.
+
+## 예제
+
+### 인터페이스 끝점 만들기
+
+다음 예제에서는 현재 리전에서 Amazon CloudWatch Logs에 대한 인터페이스 엔드포인트를 생성합니다. 인터페이스 엔드포인트를 포함하고 자동으로 통과하는 가용 영역의 서브넷에서 CloudWatch Logs로 전송되는 트래픽 `subnetA` `subnetB` 입니다.
+
+필요에 따라 , `myVPC`, `subnetA`및 `subnetB` 의 속성을 사용자 정의할 수 있습니다 `mySecurityGroup` . 또는 , , 및 에서 기존 자원의 ID를 지정합니다 `VpcId` `SubnetIds` `SecurityGroupIds`.
+
+#### JSON (영문)
+
+```
+{
+    "Resources": {
+        "CWLInterfaceEndpoint": {
+            "Type": "AWS::EC2::VPCEndpoint",
+            "Properties": {
+                "VpcEndpointType": "Interface",
+                "ServiceName": {
+                    "Fn::Sub": "com.amazonaws.${AWS::Region}.logs"
+                },
+                "VpcId": {
+                    "Ref": "myVPC"
+                },
+                "SubnetIds": [
+                    {
+                        "Ref": "subnetA"
+                    },
+                    {
+                        "Ref": "subnetB"
+                    }
+                ],
+                "SecurityGroupIds": [
+                    {
+                        "Ref": "mySecurityGroup"
+                    }
+                ]
+            }
+        },
+        "myVPC": {
+            "Type": "AWS::EC2::VPC",
+            "Properties": {
+                "CidrBlock": "10.0.0.0/16",
+                "EnableDnsSupport": true,
+                "EnableDnsHostnames": true,
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "myVPC"
+                    }
+                ]
+            }
+        },
+        "subnetA": {
+            "Type": "AWS::EC2::Subnet",
+            "Properties": {
+                "VpcId": {
+                    "Ref": "myVPC"
+                },
+                "CidrBlock": "10.0.1.0/24",
+                "AvailabilityZone": {
+                    "Fn::Select": [
+                        0,
+                        {
+                            "Fn::GetAZs": ""
+                        }
+                    ]
+                }
+            }
+        },
+        "subnetB": {
+            "Type": "AWS::EC2::Subnet",
+            "Properties": {
+                "VpcId": {
+                    "Ref": "myVPC"
+                },
+                "CidrBlock": "10.0.2.0/24",
+                "AvailabilityZone": {
+                    "Fn::Select": [
+                        1,
+                        {
+                            "Fn::GetAZs": ""
+                        }
+                    ]
+                }
+            }
+        },
+        "mySecurityGroup": {
+            "Type": "AWS::EC2::SecurityGroup",
+            "Properties": {
+                "GroupDescription": "Allow HTTPS traffic from the VPC",
+                "VpcId": {
+                    "Ref": "myVPC"
+                },
+                "SecurityGroupIngress": [
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": 443,
+                        "ToPort": 443,
+                        "CidrIp": {
+                            "Fn::GetAtt": [
+                                "myVPC",
+                                "CidrBlock"
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}
+```
+
+### 게이트웨이 끝점 만들기Create a gateway endpoint
+
+다음 예제에서는 현재 리전의 Amazon S3와 정의된 VPC를 연결하는 게이트웨이 엔드포인트 `myVPC` 를 생성합니다. 엔드포인트 정책은 `s3:GetObject` 지정된 버킷에 대한 작업만 허용합니다. 에 지정된 라우팅 테이블과 연결된 서브넷에서 Amazon S3로 향하는 트래픽 `RouteTableIds` 은 게이트웨이 엔드포인트를 통해 자동으로 라우팅됩니다.
+
+필요에 따라 , `myVPC`, `mySubnet`및 `myRouteTable` 의 속성을 사용자 정의할 수 있습니다 `mySubnetRouteTableAssociation` . 또는 및 에서 기존 리소스의 ID를 지정합니다 `VpcId` `RouteTableIds`.
+
+#### JSON (영문)
+
+```
+{
+    "Resources": {
+        "S3GatewayEndpoint": {
+            "Type": "AWS::EC2::VPCEndpoint",
+            "Properties": {
+                "VpcEndpointType": "Gateway",
+                "VpcId": {
+                    "Ref": "myVPC"
+                },
+                "ServiceName": {
+                    "Fn::Sub": "com.amazonaws.${AWS::Region}.s3"
+                },
+                "PolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Effect": "Allow",
+                            "Principal": "*",
+                            "Action": [
+                                "s3:GetObject"
+                            ],
+                            "Resource": [
+                                "arn:aws:s3:::mybucket/*"
+                            ]
+                        }
+                    ]
+                },
+                "RouteTableIds": [
+                    {
+                        "Ref": "myRouteTable"
+                    }
+                ]
+            }
+        },
+        "myVPC": {
+            "Type": "AWS::EC2::VPC",
+            "Properties": {
+                "CidrBlock": "10.0.0.0/16",
+                "EnableDnsSupport": true,
+                "EnableDnsHostnames": true,
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "myVPC"
+                    }
+                ]
+            }
+        },
+        "mySubnet": {
+            "Type": "AWS::EC2::Subnet",
+            "Properties": {
+                "VpcId": {
+                    "Ref": "myVPC"
+                },
+                "CidrBlock": "10.0.0.0/24",
+                "AvailabilityZone": {
+                    "Fn::Select": [
+                        1,
+                        {
+                            "Fn::GetAZs": null
+                        }
+                    ]
+                }
+            }
+        },
+        "myRouteTable": {
+            "Type": "AWS::EC2::RouteTable",
+            "Properties": {
+                "VpcId": {
+                    "Ref": "myVPC"
+                }
+            }
+        },
+        "mySubnetRouteTableAssociation": {
+            "Type": "AWS::EC2::SubnetRouteTableAssociation",
+            "Properties": {
+                "SubnetId": {
+                    "Ref": "mySubnet"
+                },
+                "RouteTableId": {
+                    "Ref": "myRouteTable"
+                }
+            }
+        }
+    }
+}
+```
+
+### Gateway Load Balancer 엔드포인트 생성
+
+다음 예제에서는 현재 리전의 지정된 엔드포인트 서비스와 `myVPC`연결하는 Gateway Load Balancer 엔드포인트를 생성합니다.
+
+필요에 따라 및 `myVPC`속성을 사용자 지정할 수 있습니다 `mySubnet` . 또는 및 에서 기존 리소스의 ID를 지정합니다 `VpcId` `SubnetIds`.
+
+#### JSON (영문)
+
+```
+{
+    "Resources": {
+        "GWLBEndpoint": {
+            "Type": "AWS::EC2::VPCEndpoint",
+            "Properties": {
+                "VpcEndpointType": "GatewayLoadBalancer",
+                "ServiceName": "com.amazonaws.vpce.${AWS::Region}.vpce-svc-123123a1c43abc123",
+                "VpcId": {
+                    "Ref": "myVPC"
+                },
+                "SubnetIds": [
+                    {
+                        "Ref": "mySubnet"
+                    }
+                ]
+            }
+        },
+        "myVPC": {
+            "Type": "AWS::EC2::VPC",
+            "Properties": {
+                "CidrBlock": "10.0.0.0/16",
+                "EnableDnsSupport": true,
+                "EnableDnsHostnames": true,
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "myVPC"
+                    }
+                ]
+            }
+        },
+        "mySubnet": {
+            "Type": "AWS::EC2::Subnet",
+            "Properties": {
+                "VpcId": {
+                    "Ref": "myVPC"
+                },
+                "CidrBlock": "10.0.0.0/24",
+                "AvailabilityZone": {
+                    "Fn::Select": [
+                        1,
+                        {
+                            "Fn::GetAZs": ""
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}
+```

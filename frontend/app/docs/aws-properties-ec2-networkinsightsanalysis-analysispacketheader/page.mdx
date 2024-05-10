@@ -1,0 +1,51 @@
+# AWS::EC2::NetworkInsights분석 AnalysisPacket헤더
+
+헤더에 대해 설명합니다. 트래픽이 통과할 때 구성 요소에 의해 수행된 모든 변경 사항을 반영합니다. 인바운드 헤더의 필드는 경로의 첫 번째 구성 요소를 제외하고 null입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "DestinationAddresses" : [ String, ... ],
+  "DestinationPortRanges" : [ PortRange, ... ],
+  "Protocol" : String,
+  "SourceAddresses" : [ String, ... ],
+  "SourcePortRanges" : [ PortRange, ... ]
+}
+```
+
+## 속성
+
+`DestinationAddresses`  
+대상 주소입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`DestinationPortRanges`  
+대상 포트 범위입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: PortRange 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`Protocol`  
+프로토콜입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`SourceAddresses`  
+소스 주소입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`SourcePortRanges`  
+원본 포트 범위입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: PortRange 목록  
+_업데이트 필요 사항_: 중단 없음

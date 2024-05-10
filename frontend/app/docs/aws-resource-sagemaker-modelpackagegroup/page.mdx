@@ -1,0 +1,68 @@
+# AWS::SageMaker::모델 패키지 그룹
+
+모델 레지스트리에 있는 버전이 지정된 모델 그룹입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::SageMaker::ModelPackageGroup",
+  "Properties" : {
+      "ModelPackageGroupDescription" : String,
+      "ModelPackageGroupName" : String,
+      "ModelPackageGroupPolicy" : Json,
+      "Tags" : [Tag, ... ]
+    }
+}
+```
+
+## 속성
+
+`ModelPackageGroupDescription`  
+모델 그룹에 대한 설명입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최대_: `1024`  
+_패턴_: `[p{L}p{M}p{Z}p{S}p{N}p{P}]*`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ModelPackageGroupName`  
+모델 그룹의 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `63`  
+_패턴_: `^a-zA-Z0-9{0,62}$`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ModelPackageGroupPolicy`  
+모델 그룹에 대한 액세스를 제어하기 위한 리소스 정책입니다. 리소스 정책에 대한 자세한 내용은 *AWS Identity and Access Management 사용 설명서의 자격 증명 기반 정책 및 리소스 기반 정책을 참조하세요.*을 클릭합니다.  
+*필수 항목 *여부: 아니요  
+_형식_: Json  
+_업데이트 필요 사항_: 중단 없음
+
+`Tags`  
+이 리소스에 적용할 키-값 쌍의 배열입니다.  
+자세한 내용은 태그를 참조하십시오.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_최대_: `50`  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+### Fn::GetAtt
+
+####
+
+`CreationTime` 모델 그룹을 만든 시간입니다.
+
+`ModelPackageGroupArn` 모델 그룹의 Amazon 리소스 이름(ARN)입니다.
+
+`ModelPackageGroupStatus` 모델 그룹의 상태입니다.

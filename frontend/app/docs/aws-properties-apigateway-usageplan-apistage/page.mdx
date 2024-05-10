@@ -1,0 +1,41 @@
+# AWS::ApiGateway::UsagePlan ApiStage
+
+사용량 계획에서 연결된 API 단계의 API 단계 이름입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ApiId" : String,
+  "Stage" : String,
+  "Throttle" : {Key: Value, ...}
+}
+```
+
+## 속성
+
+`ApiId`  
+사용량 계획에서 연결된 API 단계의 API ID입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Stage`  
+사용량 계획에서 연결된 API 단계의 API 단계 이름입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Throttle`  
+사용량 계획의 API 단계에 대한 메서드 수준 조절 정보를 포함하는 맵입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: ThrottleSettings 맵  
+_업데이트 필요 사항_: 중단 없음
+
+## 참고 항목
+
+- Amazon API Gateway REST API 참조*의 UsagePlan *

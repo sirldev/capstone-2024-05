@@ -1,0 +1,96 @@
+# AWS::RDS::D BCluster 크기 조정 구성
+
+`ScalingConfiguration` 속성 유형은 Aurora Serverless DB 클러스터의 크기 조정 구성을 지정합니다.
+
+자세한 내용은 Amazon Aurora 사용 설명서*의 Amazon Aurora Serverless 사용을 참조하세요*.
+
+이 속성은 Aurora Serverless v1에서만 지원됩니다. Aurora Serverless v2의 경우 property를 사용합니다 `ServerlessV2ScalingConfiguration` .
+
+유효 기간: Aurora DB 클러스터만 해당
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "AutoPause" : Boolean,
+  "MaxCapacity" : Integer,
+  "MinCapacity" : Integer,
+  "SecondsBeforeTimeout" : Integer,
+  "SecondsUntilAutoPause" : Integer,
+  "TimeoutAction" : String
+}
+```
+
+## 속성
+
+`AutoPause`  
+DB 엔진 모드에서 Aurora DB 클러스터에 대한 자동 일시 중지를 허용할지 여부를 나타내는 값입니다 `serverless` . DB 클러스터는 유휴 상태일 때(연결이 없음) 때만 일시 중지할 수 있습니다.  
+DB 클러스터가 7일 이상 일시 중지된 경우 DB 클러스터가 스냅샷으로 백업될 수 있습니다. 이 경우 DB 클러스터에 대한 연결 요청이 있을 때 DB 클러스터가 복원됩니다.
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`MaxCapacity`  
+DB 엔진 모드에서 Aurora DB 클러스터의 최대 용량입니다 `serverless` .  
+Aurora MySQL의 경우 유효한 용량 값은 `1`, `2`, `4`, `8` `16` `32` `64` `128`및 `256`입니다.  
+Aurora PostgreSQL의 경우 유효한 용량 값은 `2`, `4`, `8`, `16` `32` `64` `192`및 `384`입니다.  
+최대 용량은 최소 용량보다 크거나 같아야 합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`MinCapacity`  
+DB 엔진 모드에서 Aurora DB 클러스터의 최소 용량입니다 `serverless` .  
+Aurora MySQL의 경우 유효한 용량 값은 `1`, `2`, `4`, `8` `16` `32` `64` `128`및 `256`입니다.  
+Aurora PostgreSQL의 경우 유효한 용량 값은 `2`, `4`, `8`, `16` `32` `64` `192`및 `384`입니다.  
+최소 용량은 최대 용량보다 작거나 같아야 합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`SecondsBeforeTimeout`  
+Aurora Serverless v1이 제한 시간 작업을 적용하기 전에 원활한 조정을 수행하기 위해 조정점을 찾으려고 시도하는 시간(초)입니다. 기본값은 300입니다.  
+60초에서 600초 사이의 값을 지정합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`SecondsUntilAutoPause`  
+모드의 Aurora DB 클러스터가 일시 중지되기 전의 시간(초 `serverless` )입니다.  
+300초에서 86,400초 사이의 값을 지정합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`TimeoutAction`  
+시간 제한에 도달했을 때 수행할 작업( `ForceApplyCapacityChange` 또는 `RollbackCapacityChange`.  
+ `ForceApplyCapacityChange` 가능한 한 빨리 용량을 지정된 값으로 설정합니다.  
+ `RollbackCapacityChange`기본값은 제한 시간 내에 조정점을 찾을 수 없는 경우 용량 변경을 무시합니다.  
+를 지정하면 `ForceApplyCapacityChange`Aurora Serverless v1이 조정점을 찾지 못하게 하는 연결이 삭제될 수 있습니다.
+자세한 내용은 Amazon Aurora 사용 설명서의 Aurora Serverless v1에 대한 자동 크기 조정을 참조하세요\**.  
+*필수 항목 *여부: 아니요  
+*유형*: 문자열  
+*업데이트 필요 사항\*: 중단 없음
+
+## 예제
+
+###
+
+다음은 크기 조정 구성을 지정합니다.
+
+Aurora Serverless DB 클러스터를 구성하는 샘플 템플릿은 Amazon Aurora Serverless DB 클러스터 생성 단원을 참조하십시오.
+
+#### JSON (영문)
+
+```
+"ScalingConfiguration" : {
+                  "AutoPause" : true,
+                  "MinCapacity" : 4,
+                  "MaxCapacity" : 32,
+                  "SecondsUntilAutoPause" : 1000
+              }
+```

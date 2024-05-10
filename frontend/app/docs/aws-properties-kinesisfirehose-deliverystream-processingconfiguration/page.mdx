@@ -1,0 +1,30 @@
+# AWS::KinesisFirehose::D elivery스트림 처리 구성
+
+이 `ProcessingConfiguration` 속성은 Amazon Kinesis Data Firehose 전송 스트림에 대한 데이터 처리를 구성합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Enabled" : Boolean,
+  "Processors" : [ Processor, ... ]
+}
+```
+
+## 속성
+
+`Enabled`  
+데이터 처리가 사용되는지(true) 또는 사용하지 않도록 설정되었는지(false)를 나타냅니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`Processors`  
+데이터 프로세서.  
+*필수 항목 *여부: 아니요  
+_유형_: 프로세서 목록  
+_업데이트 필요 사항_: 중단 없음

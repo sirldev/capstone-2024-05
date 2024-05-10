@@ -1,0 +1,29 @@
+# AWS::KinesisFirehose::D eliveryStream SplunkRetryOptions
+
+`SplunkRetryOptions` 속성 유형은 Kinesis Data Firehose가 Splunk에 문서를 전달할 수 없거나 Splunk로부터 승인을 받지 못하는 경우 재시도 동작을 지정합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "DurationInSeconds" : Integer
+}
+```
+
+## 속성
+
+`DurationInSeconds`  
+Kinesis Data Firehose가 재시도에 소비하는 총 시간입니다. 이 기간은 Splunk에 데이터를 전송하려는 초기 시도가 실패한 후에 시작됩니다. Kinesis Data Firehose가 각 시도 후 Splunk의 승인을 기다리는 기간은 포함되지 않습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_최소_: `0`  
+_최대_: `7200`  
+_업데이트 필요 사항_: 중단 없음
+
+## 참고 항목
+
+- Amazon Kinesis Data Firehose API Reference*의 SplunkRetryOptions*.

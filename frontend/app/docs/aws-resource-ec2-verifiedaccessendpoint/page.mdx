@@ -1,0 +1,142 @@
+# AWS::EC2::VerifiedAccessEndpoint
+
+AWS Verified Access 엔드포인트는 AWS Verified Access가 액세스를 제공하는 애플리케이션을 지정합니다. AWS Verified Access 그룹에 연결되어야 합니다. AWS Verified Access 엔드포인트에는 그룹에 연결하기 전에 액세스 정책도 연결되어 있어야 합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::EC2::VerifiedAccessEndpoint",
+  "Properties" : {
+      "ApplicationDomain" : String,
+      "AttachmentType" : String,
+      "Description" : String,
+      "DomainCertificateArn" : String,
+      "EndpointDomainPrefix" : String,
+      "EndpointType" : String,
+      "LoadBalancerOptions" : LoadBalancerOptions,
+      "NetworkInterfaceOptions" : NetworkInterfaceOptions,
+      "PolicyDocument" : String,
+      "PolicyEnabled" : Boolean,
+      "SecurityGroupIds" : [ String, ... ],
+      "Tags" : [Tag, ... ],
+      "VerifiedAccessGroupId" : String
+    }
+}
+```
+
+## 속성
+
+`ApplicationDomain`  
+사용자가 애플리케이션에 연결할 DNS 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`AttachmentType`  
+AWS Verified Access 엔드포인트와 애플리케이션 간의 연결을 제공하는 데 사용되는 연결 유형입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_허용되는 값_: `vpc`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Description`  
+AWS Verified Access 엔드포인트에 대한 설명입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`DomainCertificateArn`  
+ACM으로 가져오거나 ACM으로 생성한 퍼블릭 TLS/SSL 인증서의 ARN입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`EndpointDomainPrefix`  
+끝점에 대해 생성된 DNS 이름 앞에 추가되는 사용자 지정 식별자입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`EndpointType`  
+AWS Verified Access 엔드포인트의 유형입니다. 들어오는 애플리케이션 요청은 지정된 엔드포인트 유형에 따라 IP 주소, 로드 밸런서 또는 네트워크 인터페이스로 전송됩니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_허용되는 값_: `load-balancer | network-interface`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`LoadBalancerOptions`  
+AWS Verified Access 엔드포인트를 유형으로 생성하는 경우 로드 밸런서 세부 정보입니다`load-balancer`.  
+*필수 항목 *여부: 아니요  
+_형식_: LoadBalancerOptions  
+_업데이트 필요 사항_: 중단 없음
+
+`NetworkInterfaceOptions`  
+네트워크 인터페이스 유형 엔드포인트에 대한 옵션입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: NetworkInterfaceOptions  
+_업데이트 필요 사항_: 중단 없음
+
+`PolicyDocument`  
+Verified Access 정책 문서입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`PolicyEnabled`  
+Verified Access 정책의 상태입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`SecurityGroupIds`  
+엔드포인트에 대한 보안 그룹의 ID입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Tags`  
+태그.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`VerifiedAccessGroupId`  
+AWS Verified Access 그룹의 ID입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`Verified Access 엔드포인트의 ID를 반환합니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`CreationTime` 생성 시간입니다.
+
+`DeviceValidationDomain` 이를 사용하여 OIDC 공급자의 허용 목록에 추가할 리디렉션 URI를 생성합니다.
+
+`EndpointDomain` 엔드포인트에 대해 생성된 DNS 이름입니다.
+
+`LastUpdatedTime` 마지막 업데이트 시간입니다.
+
+`Status` 끝점 상태입니다.
+
+`VerifiedAccessEndpointId` Verified Access 엔드포인트의 ID입니다.
+
+`VerifiedAccessInstanceId` 인스턴스 식별자입니다.

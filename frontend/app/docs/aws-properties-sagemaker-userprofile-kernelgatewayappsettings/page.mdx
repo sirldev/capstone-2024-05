@@ -1,0 +1,32 @@
+# AWS::SageMaker::사용자 프로필 KernelGatewayAppSettings
+
+KernelGateway 앱 설정.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "CustomImages" : [ CustomImage, ... ],
+  "DefaultResourceSpec" : ResourceSpec
+}
+```
+
+## 속성
+
+`CustomImages`  
+KernelGateway 앱으로 실행되도록 구성된 사용자 지정 SageMaker 이미지 목록입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: CustomImage 목록  
+_최대_: `200`  
+_업데이트 필요 사항_: 중단 없음
+
+`DefaultResourceSpec`  
+KernelGateway 앱에서 사용하는 기본 SageMaker 이미지의 기본 인스턴스 유형 및 Amazon 리소스 이름(ARN)입니다.  
+Amazon SageMaker Studio UI는 여기에 설정된 기본 인스턴스 유형 값을 사용하지 않습니다. 여기에 설정된 기본 인스턴스 유형은 AWS Command Line Interface 또는 AWS CloudFormation을 사용하여 앱을 생성하고 인스턴스 유형 파라미터 값이 전달되지 않을 때 사용됩니다.
+*필수 항목 *여부: 아니요  
+_유형_: ResourceSpec  
+_업데이트 필요 사항_: 중단 없음

@@ -1,0 +1,35 @@
+# AWS::ECS::TaskDefinition FirelensConfiguration
+
+컨테이너에 대한 FireLens 구성입니다. 컨테이너 로그에 대한 로그 라우터를 지정하고 구성하는 데 사용됩니다. 자세한 내용은 _Amazon Elastic Container Service 개발자 안내서의 사용자 지정 로그 라우팅을 참조하세요_.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Options" : {Key: Value, ...},
+  "Type" : String
+}
+```
+
+## 속성
+
+`Options` 로그 라우터를 구성할 때 사용할 옵션입니다. 이 필드는 선택 사항이며 작업, 작업 정의, 클러스터 및 컨테이너 인스턴스 세부 정보와 같은 추가 메타데이터를 로그 이벤트에 추가하는 데 사용할 수 있습니다.  
+ 지정된 경우 유효한 옵션 키는 다음과 같습니다.
+
+- `enable-ecs-log-metadata`, `true` 또는 `false`
+- `config-file-type`, `s3` 또는 `file`
+- `config-file-value`- S3 ARN 또는 파일 경로입니다.
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열 맵  
+  _업데이트 필요 사항_: 바꿔 놓음
+
+`Type`  
+사용할 로그 라우터입니다. 유효한 값은 `fluentd` 또는 `fluentbit`입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `fluentbit | fluentd`  
+_업데이트 필요 사항_: 바꿔 놓음

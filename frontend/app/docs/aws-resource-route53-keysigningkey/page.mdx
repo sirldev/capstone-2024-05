@@ -1,0 +1,72 @@
+# AWS::Route53::키 서명 키
+
+리소스는 `AWS::Route53::KeySigningKey` 호스팅 영역에 새 KSK(키 서명 키)를 생성합니다. 호스팅 영역 ID는 KSK 속성에서 파라미터로 전달됩니다. 리소스의 , 및 속성을 사용하여 이 KSK의 속성을 지정할 수 있습니다 `Name` `Status` `KeyManagementServiceArn `.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::Route53::KeySigningKey",
+  "Properties" : {
+      "HostedZoneId" : String,
+      "KeyManagementServiceArn" : String,
+      "Name" : String,
+      "Status" : String
+    }
+}
+```
+
+## 속성
+
+`HostedZoneId`  
+호스팅 영역을 식별하는 데 사용되는 고유 문자열(ID)입니다. 예를 들면 다음과 같습니다 `Z00001111A1ABCaaABC11`.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`KeyManagementServiceArn`  
+AWS Key Management Service(AWS KMS)의 고객 관리형 고객 마스터 키(CMK)에 대한 Amazon 리소스 이름(ARN)입니다. `KeyManagementServiceArn` 단일 호스팅 영역의 각 KSK(키 서명 키)에 대해 고유해야 합니다. 예를 들면 다음과 같습니다 `arn:aws:kms:us-east-1:111122223333:key/111a2222-a11b-1ab1-2ab2-1ab21a2b3a111`.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Name`  
+KSK(키 서명 키)를 식별하는 데 사용되는 문자열입니다. `Name` 숫자, 문자, 밑줄(\_)을 포함할 수 있습니다. `Name` 는 동일한 호스팅 영역의 각 키 서명 키에 대해 고유해야 합니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `3`  
+_최대_: `128`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Status`  
+현재 KSK(키 서명 키) 상태를 나타내는 문자열입니다.  
+상태는 다음 값 중 하나를 가질 수 있습니다.  
+활동적인  
+KSK가 서명에 사용되고 있습니다.  
+게으른  
+KSK가 서명에 사용되지 않습니다.  
+삭제  
+KSK를 삭제하는 중입니다.  
+ACTION_NEEDED  
+KSK에 해결 조치를 취해야 하는 문제가 있습니다. 예를 들어 고객 관리형 키가 삭제되었거나 고객 관리형 키에 대한 권한이 변경되었을 수 있습니다.  
+INTERNAL_FAILURE  
+요청 중에 오류가 발생했습니다. 이 KSK와 관련된 작업을 포함하여 DNSSEC 서명 작업을 계속하려면 먼저 문제를 해결해야 합니다. 예를 들어 KSK를 활성화하거나 비활성화해야 할 수 있습니다.
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `5`  
+_최대_: `150`  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`호스팅 영역 ID와 KSK 이름 속성을 모두 기반으로 하는 식별자를 반환합니다. 예를 들어:
+
+`{ "Ref": "Z00001111A1ABCaaABC11|KSK1" }`
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.

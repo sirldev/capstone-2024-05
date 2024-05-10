@@ -1,0 +1,50 @@
+# AWS::CloudFront::ResponseHeadersPolicy XSSProtection
+
+CloudFront에 HTTP 응답 헤더와 헤더의 값이`X-XSS-Protection` 포함되어 있는지 여부를 결정합니다.
+
+HTTP 응답 헤더에 대한 자세한 `X-XSS-Protection` 내용은 MDN Web Docs의 X-XSS-Protection을 참조하십시오.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ModeBlock" : Boolean,
+  "Override" : Boolean,
+  "Protection" : Boolean,
+  "ReportUri" : String
+}
+```
+
+## 속성
+
+`ModeBlock`  
+CloudFront가 헤더에 지시문을 포함하는지 여부를 결정하는 부울입니다 `mode=block` `X-XSS-Protection` .  
+이 지시문에 대한 자세한 내용은 MDN Web Docs의 X-XSS-Protection을 참조하십시오.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`Override`  
+CloudFront가 `X-XSS-Protection` 오리진에서 수신한 HTTP 응답 헤더를 이 응답 헤더 정책에 지정된 헤더로 재정의할지 여부를 결정하는 부울입니다.  
+_필수 항목 여부_: 예  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`Protection`  
+HTTP 응답 헤더의 값을 결정하는 부울입니다 `X-XSS-Protection` . 이 설정이 인 경우 `true` 헤더`X-XSS-Protection`의 값은 `1`입니다. 이 설정이 인 경우 `false` 헤더`X-XSS-Protection`의 값은 `0`입니다.  
+이러한 설정에 대한 자세한 내용은 MDN Web Docs의 X-XSS-Protection을 참조하십시오.  
+_필수 항목 여부_: 예  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`ReportUri`  
+CloudFront에서 헤더의 지시문 값으로 사용하는 보고 `report` URI입니다 `X-XSS-Protection` .  
+when은 지정할 수 없습니다 `ReportUri` `ModeBlock` `true`.  
+보고 URL 사용에 대한 자세한 내용은 MDN Web Docs의 X-XSS-Protection을 참조하십시오.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음

@@ -1,0 +1,34 @@
+# AWS::D ynamoDB::테이블 프로젝션
+
+테이블에서 인덱스로 복사(프로젝션)되는 특성을 나타냅니다. 이는 자동으로 프로젝션되는 기본 키 속성 및 인덱스 키 속성에 추가됩니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "NonKeyAttributes" : [ String, ... ],
+  "ProjectionType" : String
+}
+```
+
+## 속성
+
+`NonKeyAttributes`  
+인덱스에 프로젝션될 키가 아닌 특성 이름을 나타냅니다.  
+local secondary indexes의 경우, `NonKeyAttributes` 모든 local secondary indexes의 합계 수는 100을 초과할 수 없습니다. 동일한 속성을 두 개의 서로 다른 인덱스로 프로젝션하는 경우 합계를 결정할 때 두 개의 고유한 속성으로 계산됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 업데이트가 지원되지 않습니다.
+
+`ProjectionType` 인덱스에 프로젝션되는 속성 집합:
+
+- `KEYS_ONLY` - 인덱스와 기본 키만 인덱스에 프로젝션됩니다.
+- `INCLUDE` - 에 설명된 속성 외에도 `KEYS_ONLY`secondary index에는 지정한 키가 아닌 다른 속성이 포함됩니다.
+- `ALL` - 모든 테이블 속성이 인덱스에 프로젝션됩니다.
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열  
+  _업데이트 필요 사항_: 중단 없음

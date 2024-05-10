@@ -1,0 +1,30 @@
+# AWS::D ynamoDB::GlobalTable 스트림 사양
+
+DynamoDB의 테이블에 대한 DynamoDB Streams 구성을 나타냅니다.
+
+에 항목이 하나만 포함된 `AWS::DynamoDB::GlobalTable`경우에만 이 값을 수정할 수 있습니다`Replicas`. 둘 이상의 복제본이 포함된 경우 이 속성의 값을 지정해야 합니다 `AWS::DynamoDB::GlobalTable` .
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "StreamViewType" : String
+}
+```
+
+## 속성
+
+`StreamViewType`  
+ 테이블의 항목이 수정되면 `StreamViewType` 이 테이블의 스트림에 기록되는 정보를 결정합니다. 유효한 값은 `StreamViewType` 다음과 같습니다.
+
+- `KEYS_ONLY` - 수정된 항목의 키 속성만 스트림에 기록됩니다.
+- `NEW_IMAGE` - 수정된 후 표시되는 전체 항목이 스트림에 기록됩니다.
+- `OLD_IMAGE` - 수정되기 전에 표시된 전체 항목이 스트림에 기록됩니다.
+- `NEW_AND_OLD_IMAGES` - 항목의 새 항목 이미지와 이전 항목 이미지가 모두 스트림에 기록됩니다.
+  _필수 항목 여부_: 예  
+  _유형_: 문자열  
+  _업데이트 필요 사항_: 중단 없음

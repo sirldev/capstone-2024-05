@@ -1,0 +1,75 @@
+# AWS::S3::버킷 주제 구성
+
+Amazon S3가 지정된 이벤트를 감지할 때 Amazon Simple Notification Service(Amazon SNS) 주제에 메시지를 게시하기 위한 구성을 지정하기 위한 컨테이너입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Event" : String,
+  "Filter" : NotificationFilter,
+  "Topic" : String
+}
+```
+
+## 속성
+
+`Event`  
+알림을 보낼 Amazon S3 버킷 이벤트입니다. 자세한 내용은 _Amazon S3 사용 설명서의 지원되는 이벤트 유형을 참조하세요_.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Filter`  
+알림을 보낼 개체를 결정하는 필터링 규칙입니다. 예를 들어, 확장자가 있는 이미지 파일이 버킷에 추가될 때만 Amazon S3가 알림을 보내도록 필터를 생성할 수 `.jpg` 있습니다.  
+*필수 항목 *여부: 아니요  
+_형식_: NotificationFilter  
+_업데이트 필요 사항_: 중단 없음
+
+`Topic`  
+Amazon S3가 지정된 유형의 이벤트를 감지할 때 메시지를 게시하는 Amazon SNS 주제의 Amazon 리소스 이름(ARN)입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+## 예제
+
+### SNS 주제에 대한 S3 버킷 알림 수신
+
+다음 예제 템플릿은 S3가 객체의 모든 복제본을 손실했을 때 지정된 SNS 주제로 이벤트를 전송하는 알림 구성이 있는 Amazon S3 버킷을 보여줍니다.
+
+#### JSON (영문)
+
+```
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Resources": {
+        "S3Bucket": {
+            "Type": "AWS::S3::Bucket",
+            "Properties": {
+                "AccessControl": "Private",
+                "NotificationConfiguration": {
+                    "TopicConfigurations": [
+                        {
+                            "Topic": "arn:aws:sns:us-east-1:123456789012:TestTopic",
+                            "Event": "s3:ReducedRedundancyLostObject"
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "Outputs": {
+        "BucketName": {
+            "Value": {
+                "Ref": "S3Bucket"
+            },
+            "Description": "Name of the sample Amazon S3 bucket with a notification configuration."
+        }
+    }
+}
+```

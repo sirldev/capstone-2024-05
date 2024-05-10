@@ -1,0 +1,31 @@
+# AWS::S3::버킷 계층화
+
+S3 Intelligent-Tiering 스토리지 클래스는 추가 운영 오버헤드 없이 데이터를 가장 비용 효율적인 스토리지 액세스 계층으로 자동으로 이동하여 스토리지 비용을 최적화하도록 설계되었습니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "AccessTier" : String,
+  "Days" : Integer
+}
+```
+
+## 속성
+
+`AccessTier`  
+S3 Intelligent-Tiering 액세스 계층. S3 Intelligent-Tiering 스토리지 클래스의 액세스 티어 목록은 자주 액세스하거나 자주 액세스하지 않는 객체를 자동으로 최적화하기 위한 스토리지 클래스를 참조하세요.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_허용되는 값_: `ARCHIVE_ACCESS | DEEP_ARCHIVE_ACCESS`  
+_업데이트 필요 사항_: 중단 없음
+
+`Days`  
+객체가 해당 계층으로 전환될 수 있는 연속 일 수입니다. Archive Access 티어에 지정된 최소 일수는 90일 이상, Deep Archive Access 티어는 180일 이상이어야 합니다. 최댓값은 최대 2년(730일)입니다.  
+_필수 항목 여부_: 예  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음

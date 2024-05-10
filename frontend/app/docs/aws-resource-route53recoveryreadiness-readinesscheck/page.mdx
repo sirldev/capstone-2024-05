@@ -1,0 +1,62 @@
+# AWS::Route53복구 준비::준비 상태 확인
+
+Amazon Route 53 Application Recovery Controller에서 준비 상태 확인을 생성합니다. 준비 상태 확인은 Route 53 ARC가 복구 준비 상태를 감사하는 애플리케이션의 리소스 세트(예: Amazon Aurora 인스턴스 세트)를 지속적으로 모니터링합니다. 감사는 준비 검사와 연결된 모든 리소스에 대해 1분마다 한 번씩 실행됩니다.
+
+모든 리소스 유형에는 Route 53 ARC가 리소스의 준비 상태를 감사하는 데 사용하는 일련의 규칙이 연결되어 있습니다. 자세한 내용은 Amazon Route 53 Application Recovery Controller 개발자 안내서의 준비 규칙 설명을 참조하세요.
+
+Route 53 ARC Readiness는 us-east-1 및 us-west-2 AWS 리전만 지원합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::Route53RecoveryReadiness::ReadinessCheck",
+  "Properties" : {
+      "ReadinessCheckName" : String,
+      "ResourceSetName" : String,
+      "Tags" : [Tag, ... ]
+    }
+}
+```
+
+## 속성
+
+`ReadinessCheckName`  
+만들 준비 검사의 이름입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ResourceSetName`  
+확인할 리소스 집합의 이름입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Tags`  
+리소스와 연결된 태그의 컬렉션입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref` `ReadinessCheckName`.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`ReadinessCheckArn` 준비 상태 확인의 Amazon 리소스 이름(ARN)입니다.

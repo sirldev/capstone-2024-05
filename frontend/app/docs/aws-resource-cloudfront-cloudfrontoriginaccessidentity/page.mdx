@@ -1,0 +1,74 @@
+# AWS::CloudFront::CloudFrontOriginAccessIdentity
+
+새 원본 액세스 ID(OAI)를 생성하기 위한 요청입니다. 원본 액세스 ID는 Amazon S3 오리진과 연결할 수 있는 특수한 CloudFront 사용자로, Amazon S3 콘텐츠의 전부 또는 일부만 보호할 수 있습니다. 자세한 내용은 Amazon CloudFront 개발자 안내서의 Restricting Access to Amazon S3 Content by Using an Origin Access Identity를 참조하십시오\*\*.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::CloudFront::CloudFrontOriginAccessIdentity",
+  "Properties" : {
+      "CloudFrontOriginAccessIdentityConfig" : CloudFrontOriginAccessIdentityConfig
+    }
+}
+```
+
+## 속성
+
+`CloudFrontOriginAccessIdentityConfig`  
+ID에 대한 현재 구성 정보입니다.  
+_필수 항목 여부_: 예  
+_유형_: CloudFrontOriginAccessIdentityConfig  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref`원본 `Ref`액세스 ID(예: )를 반환합니다 `E15MNIMTCFKK4C`.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`Id`  
+원본 액세스 ID의 ID(예: `E74FTE3AJFJ256A`.
+
+`S3CanonicalUserId`  
+원본 액세스 ID에 대한 Amazon S3 정식 사용자 ID로, 원본 액세스 ID에 Amazon S3의 객체에 대한 읽기 권한을 부여할 때 사용됩니다. 예를 들면 다음과 같습니다 `b970b42360b81c8ddbd79d2f5df0069ba9033c8a79655752abe380cd6d63ba8bcf23384d568fcf89fc49700b5e11a0fd`.
+
+## 예제
+
+### 원본 액세스 ID에 대한 설명을 지정합니다
+
+#### JSON (영문)
+
+```
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Resources": {
+        "cloudfrontoriginaccessidentity": {
+            "Type": "AWS::CloudFront::CloudFrontOriginAccessIdentity",
+            "Properties": {
+                "CloudFrontOriginAccessIdentityConfig": {
+                    "Comment": "string-value"
+                }
+            }
+        }
+    }
+}
+```
+
+## 참고 항목
+
+- Amazon CloudFront API 참조\* \*의 OriginAccessIdentity

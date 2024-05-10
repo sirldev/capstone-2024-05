@@ -1,0 +1,69 @@
+# AWS::ECR::복제 구성
+
+리소스는 `AWS::ECR::ReplicationConfiguration` 개인 레지스트리에 대한 복제 구성을 만들거나 업데이트합니다. 복제 구성이 프라이빗 레지스트리에 처음 적용되면 복제 프로세스를 위해 계정에 서비스 연결 IAM 역할이 생성됩니다. 자세한 내용은 Amazon Elastic Container Registry 사용 설명서의 Amazon ECR에 서비스 연결 역할 사용을 참조하십시오\*\*.
+
+**메모**  
+교차 계정 복제를 구성할 때 대상 계정은 원본 계정에 복제할 수 있는 권한을 부여해야 합니다. 이 권한은 개인 레지스트리 권한 정책을 사용하여 제어됩니다. 자세한 내용은 을 참조하십시오 `AWS::ECR::RegistryPolicy`.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::ECR::ReplicationConfiguration",
+  "Properties" : {
+      "ReplicationConfiguration" : ReplicationConfiguration
+    }
+}
+```
+
+## 속성
+
+`ReplicationConfiguration`  
+레지스트리에 대한 복제 구성입니다.  
+_필수 항목 여부_: 예  
+_유형_: ReplicationConfiguration  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### Fn::GetAtt
+
+####
+
+`RegistryId` 대상 레지스트리의 계정 ID입니다.
+
+## 예제
+
+### 개인 레지스트리에 대한 복제 구성 지정Specify a replication configuration for a private registry
+
+다음 예제에서는 프라이빗 레지스트리에 대한 원본 리전의 복제 구성을 지정하여 동일한 `us-east-2` 계정 내의`us-west-1` 및 Regions에 콘텐츠를 복제합니다.
+
+#### JSON (영문)
+
+```
+"TestReplicationConfiguration": {
+  "Type": "AWS::ECR::ReplicationConfiguration",
+  "Properties": {
+     "ReplicationConfiguration": {
+        "Rules": [
+           {
+              "Destinations": [
+                 {
+                    "Region": "us-east-2",
+                    "RegistryId": "123456789012"
+                 },
+                 {
+                     "Region": "us-west-1",
+                     "RegistryId": "123456789012"
+                 }
+               ]
+             }
+          ]
+       }
+    }
+}
+```

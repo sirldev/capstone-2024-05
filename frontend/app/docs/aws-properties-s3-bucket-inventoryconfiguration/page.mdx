@@ -1,0 +1,139 @@
+# AWS::S3::버킷 인벤토리 구성
+
+Amazon S3 버킷에 대한 인벤토리 구성을 지정합니다. 자세한 내용은 _Amazon S3 API Reference의 GET Bucket inventory를 참조하세요_.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Destination" : Destination,
+  "Enabled" : Boolean,
+  "Id" : String,
+  "IncludedObjectVersions" : String,
+  "OptionalFields" : [ String, ... ],
+  "Prefix" : String,
+  "ScheduleFrequency" : String
+}
+```
+
+## 속성
+
+`Destination`  
+인벤토리 결과를 게시할 위치에 대한 정보를 포함합니다.  
+_필수 항목 여부_: 예  
+_유형_: 대상  
+_업데이트 필요 사항_: 중단 없음
+
+`Enabled`  
+인벤토리를 사용할 수 있는지 또는 사용하지 않도록 설정할지 여부를 지정합니다. 로 설정하면 `True`인벤토리 목록이 생성됩니다. 로 설정하면 `False`인벤토리 목록이 생성되지 않습니다.  
+_필수 항목 여부_: 예  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`Id`  
+인벤토리 구성을 식별하는 데 사용되는 ID입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`IncludedObjectVersions`  
+인벤토리 목록에 포함할 개체 버전입니다. 로 설정하면 `All`목록에 모든 객체 버전이 포함되며, 이 경우 버전 관련 필드 `VersionId`, `IsLatest`및 `DeleteMarker` 가 목록에 추가됩니다. 로 설정하면 `Current`목록에 이러한 버전 관련 필드가 포함되지 않습니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_허용되는 값_: `All | Current`  
+_업데이트 필요 사항_: 중단 없음
+
+`OptionalFields`  
+인벤토리 결과에 포함된 선택적 필드를 포함합니다.  
+_유효한 값_: `Size | LastModifiedDate | StorageClass | ETag | IsMultipartUploaded | ReplicationStatus | EncryptionStatus | ObjectLockRetainUntilDate | ObjectLockMode | ObjectLockLegalHoldStatus | IntelligentTieringAccessTier | BucketKeyStatus`  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`Prefix`  
+인벤토리 필터 접두사를 지정합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`ScheduleFrequency`  
+인벤토리 결과를 생성하기 위한 스케줄을 지정합니다.  
+_허용되는 값_: `Daily` | `Weekly`  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+## 예제
+
+### S3 버킷에 대한 분석 및 인벤토리 구성 지정
+
+다음 예제에서는 결과 형식 및 대상 버킷을 포함하여 S3 버킷에 대해 생성할 분석 및 인벤토리 결과를 지정합니다. 인벤토리 목록은 매주 보고서를 생성하며 각 개체의 현재 버전을 포함합니다.
+
+#### JSON (영문)
+
+```
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "S3 Bucket with Inventory and Analytics Configurations",
+    "Resources": {
+        "Helper": {
+            "Type": "AWS::S3::Bucket"
+        },
+        "S3Bucket": {
+            "Type": "AWS::S3::Bucket",
+            "Properties": {
+                "AnalyticsConfigurations": [
+                    {
+                        "Id": "AnalyticsConfigurationId",
+                        "StorageClassAnalysis": {
+                            "DataExport": {
+                                "Destination": {
+                                    "BucketArn": {
+                                        "Fn::GetAtt": [
+                                            "Helper",
+                                            "Arn"
+                                        ]
+                                    },
+                                    "Format": "CSV",
+                                    "Prefix": "AnalyticsDestinationPrefix"
+                                },
+                                "OutputSchemaVersion": "V_1"
+                            }
+                        },
+                        "Prefix": "AnalyticsConfigurationPrefix",
+                        "TagFilters": [
+                            {
+                                "Key": "AnalyticsTagKey",
+                                "Value": "AnalyticsTagValue"
+                            }
+                        ]
+                    }
+                ],
+                "InventoryConfigurations": [
+                    {
+                        "Id": "InventoryConfigurationId",
+                        "Destination": {
+                            "BucketArn": {
+                                "Fn::GetAtt": [
+                                    "Helper",
+                                    "Arn"
+                                ]
+                            },
+                            "Format": "CSV",
+                            "Prefix": "InventoryDestinationPrefix"
+                        },
+                        "Enabled": true,
+                        "IncludedObjectVersions": "Current",
+                        "Prefix": "InventoryConfigurationPrefix",
+                        "ScheduleFrequency": "Weekly"
+                    }
+                ]
+            }
+        }
+    }
+}
+```

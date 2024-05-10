@@ -1,0 +1,38 @@
+# AWS::EC2::서브넷 PrivateDnsNameOptionsOnLaunch
+
+인스턴스 호스트 이름에 대한 옵션을 설명합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "EnableResourceNameDnsAAAARecord" : Boolean,
+  "EnableResourceNameDnsARecord" : Boolean,
+  "HostnameType" : String
+}
+```
+
+## 속성
+
+`EnableResourceNameDnsAAAARecord`  
+DNS AAAA 레코드가 있는 인스턴스 호스트 이름에 대한 DNS 쿼리에 응답할지 여부를 나타냅니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`EnableResourceNameDnsARecord`  
+DNS A 레코드가 있는 인스턴스 호스트 이름에 대한 DNS 쿼리에 응답할지 여부를 나타냅니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`HostnameType`  
+EC2 인스턴스의 호스트 이름 유형입니다. IPv4 전용 서브넷의 경우 인스턴스 DNS 이름은 인스턴스 IPv4 주소를 기반으로 해야 합니다. IPv6 전용 서브넷의 경우 인스턴스 DNS 이름은 인스턴스 ID를 기반으로 해야 합니다. 듀얼 스택 서브넷의 경우 DNS 이름이 인스턴스 IPv4 주소를 사용할지 아니면 인스턴스 ID를 사용할지를 지정할 수 있습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `ip-name | resource-name`  
+_업데이트 필요 사항_: 중단 없음

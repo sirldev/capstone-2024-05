@@ -1,0 +1,37 @@
+# AWS::CloudFront::ContinuousDeploymentPolicy ContinuousDeploymentPolicyConfig
+
+지속적인 배포 정책에 대한 구성을 포함합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Enabled" : Boolean,
+  "StagingDistributionDnsNames" : [ String, ... ],
+  "TrafficConfig" : TrafficConfig
+}
+```
+
+## 속성
+
+`Enabled`  
+이 지속적인 배포 정책을 사용할 수 있는지 여부를 나타내는 부울입니다(실제로). 이 값이 인 경우 `true`이 정책이 활성화되고 적용됩니다. 이 값이 인 경우 `false`이 정책은 사용하도록 설정되지 않으며 아무런 효과가 없습니다.  
+_필수 항목 여부_: 예  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`StagingDistributionDnsNames`  
+스테이징 배포의 CloudFront 도메인 이름입니다. 예를 들면 다음과 같습니다 `d111111abcdef8.cloudfront.net`.  
+_필수 항목 여부_: 예  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`TrafficConfig`  
+프로덕션 트래픽을 기본 배포에서 스테이징 배포로 라우팅하기 위한 파라미터를 포함합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: TrafficConfig  
+_업데이트 필요 사항_: 중단 없음

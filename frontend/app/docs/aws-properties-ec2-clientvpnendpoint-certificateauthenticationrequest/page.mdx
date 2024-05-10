@@ -1,0 +1,23 @@
+# AWS::EC2::ClientVpnEndpoint 인증서 인증 요청
+
+인증에 사용할 클라이언트 인증서에 대한 정보입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ClientRootCertificateChainArn" : String
+}
+```
+
+## 속성
+
+`ClientRootCertificateChainArn`  
+클라이언트 인증서의 ARN입니다. 인증서는 인증 기관(CA)에서 서명해야 하며 AWS Certificate Manager(ACM)에서 프로비저닝되어야 합니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음

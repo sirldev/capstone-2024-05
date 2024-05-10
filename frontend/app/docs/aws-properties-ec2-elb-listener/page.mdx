@@ -1,0 +1,71 @@
+# AWS::ElasticLoadBalancing::LoadBalancer 리스너
+
+Classic Load Balancer에 대한 리스너를 지정합니다.
+
+속성을 수정하면 리스너가 바뀝니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "InstancePort" : String,
+  "InstanceProtocol" : String,
+  "LoadBalancerPort" : String,
+  "PolicyNames" : [ String, ... ],
+  "Protocol" : String,
+  "SSLCertificateId" : String
+}
+```
+
+## 속성
+
+`InstancePort`  
+인스턴스가 수신 대기 중인 포트입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `65535`  
+_업데이트 필요 사항_: 일부 중단
+
+`InstanceProtocol`  
+인스턴스로 트래픽을 라우팅하는 데 사용할 프로토콜(HTTP, HTTPS, TCP 또는 SSL)입니다.  
+프런트 엔드 프로토콜이 TCP 또는 SSL인 경우 백 엔드 프로토콜은 TCP 또는 SSL이어야 합니다. 프런트 엔드 프로토콜이 HTTP 또는 HTTPS인 경우 백 엔드 프로토콜은 HTTP 또는 HTTPS여야 합니다.  
+`InstancePort` `InstanceProtocol` 동일한 보안 (HTTPS 또는 SSL`InstanceProtocol`)을 가진 다른 리스너가있는 경우 리스너 도 안전해야합니다.  
+`InstancePort` `InstanceProtocol` HTTP 또는 TCP 와 동일한 다른 리스너가 있는 경우 리스너는 `InstanceProtocol` HTTP 또는 TCP여야 합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 일부 중단
+
+`LoadBalancerPort`  
+부하 분산 장치가 수신 대기 중인 포트입니다. EC2-VPC에서는 1-65535 범위의 모든 포트를 지정할 수 있습니다. EC2-Classic에서는 25, 80, 443, 465, 587, 1024-65535 목록에서 포트를 지정할 수 있습니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 일부 중단
+
+`PolicyNames`  
+수신기와 연결할 정책의 이름입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 일부 중단
+
+`Protocol`  
+라우팅에 사용할 로드 밸런서 전송 프로토콜(HTTP, HTTPS, TCP 또는 SSL)입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 일부 중단
+
+`SSLCertificateId`  
+서버 인증서의 Amazon 리소스 이름(ARN)입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 일부 중단
+
+## 참고 항목
+
+- Elastic Load Balancing API 참조(버전 2012-06-01)\* \*의 CreateLoadBalancerListeners
+- Classic Load Balancer* 사용 설명서*의 리스너
+- Classic Load Balancer* 사용 설명서*의 HTTPS 리스너

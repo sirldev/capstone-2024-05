@@ -1,0 +1,35 @@
+# AWS::CloudFront::OriginRequestPolicy 쿼리 문자열 구성
+
+최종 사용자 요청의 URL 쿼리 문자열이 포함되는지 여부(포함된 경우 어떤 쿼리 문자열)가 CloudFront에서 오리진에 보내는 요청에 포함되는지를 결정하는 객체입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "QueryStringBehavior" : String,
+  "QueryStrings" : [ String, ... ]
+}
+```
+
+## 속성
+
+`QueryStringBehavior` 최종 사용자 요청의 URL 쿼리 문자열이 CloudFront에서 오리진에 보내는 요청에 포함되는지 여부를 결정합니다. 유효한 값은 다음과 같습니다.
+
+- `none` – CloudFront에서 오리진에 보내는 요청에는 최종 사용자 요청의 쿼리 문자열이 포함되지 않습니다. 이 필드가 로 설정된 경우에도 a `none` `CachePolicy`에 나열된 모든 쿼리 문자열*은* 오리진 요청에 포함됩니다.
+- `whitelist` – 유형에 나열된 최종 사용자 요청의 쿼리 문자열만 `QueryStringNames` CloudFront에서 오리진에 보내는 요청에 포함됩니다.
+- `all` – 최종 사용자 요청의 모든 쿼리 문자열은 CloudFront에서 오리진에 보내는 요청에 포함됩니다.
+- `allExcept` – 최종 사용자 요청의 모든 쿼리 문자열은 CloudFront에서 오리진에 보내는 요청에 포함됩니다(**\***는 제외 ). `QueryStringNames`
+  _필수 항목 여부_: 예  
+  _유형_: 문자열  
+  _허용되는 값_: `all | allExcept | none | whitelist`  
+  _업데이트 필요 사항_: 중단 없음
+
+`QueryStrings`  
+쿼리 문자열 이름 목록을 포함합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음

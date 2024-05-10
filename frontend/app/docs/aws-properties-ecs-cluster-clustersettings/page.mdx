@@ -1,0 +1,32 @@
+# AWS::ECS::클러스터 클러스터 설정
+
+클러스터를 만들 때 사용할 설정입니다. 이 파라미터는 클러스터에 대해 CloudWatch Container Insights를 켜는 데 사용됩니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Name" : String,
+  "Value" : String
+}
+```
+
+## 속성
+
+`Name`  
+클러스터 설정의 이름입니다. 값은 입니다 `containerInsights` .  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `containerInsights`  
+_업데이트 필요 사항_: 중단 없음
+
+`Value`  
+클러스터 설정에 대해 설정할 값입니다. 지원되는 값은 `enabled` 및 `disabled`입니다.  
+로 설정하고 `name` `containerInsights` `value` 로 `enabled` 설정하면 CloudWatch Container Insights가 클러스터에 대해 활성화되고, 그렇지 않으면 계정 설정이 켜져 있지 않으면 해제됩니다 `containerInsights` . 클러스터 값이 지정되면 `containerInsights` PutAccountSetting 또는 PutAccountSettingDefault로 설정된 값을 재정의합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음

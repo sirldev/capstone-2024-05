@@ -1,0 +1,30 @@
+# AWS::SageMaker::Workteam 멤버 정의
+
+Amazon Cognito 또는 작업 팀의 일부인 자체 OIDC IdP 사용자 그룹을 정의합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "CognitoMemberDefinition" : CognitoMemberDefinition,
+  "OidcMemberDefinition" : OidcMemberDefinition
+}
+```
+
+## 속성
+
+`CognitoMemberDefinition`  
+작업 팀의 일부인 Amazon Cognito 사용자 그룹입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: CognitoMemberDefinition  
+_업데이트 필요 사항_: 중단 없음
+
+`OidcMemberDefinition`  
+OIDC ID 공급자(IdP)에 있는 사용자 그룹을 나열합니다. 1개에서 10개의 그룹을 사용하여 단일 개인 작업 팀을 만들 수 있습니다. 에 있는 목록에 사용자 그룹을 추가하면 `Groups`해당 사용자 그룹을 하나 이상의 비공개 작업 팀에 추가할 수 있습니다. 비공개 작업 팀에 사용자 그룹을 추가하면 해당 사용자 그룹의 모든 작업자가 작업 팀에 추가됩니다.  
+*필수 항목 *여부: 아니요  
+_형식_: OidcMemberDefinition  
+_업데이트 필요 사항_: 중단 없음

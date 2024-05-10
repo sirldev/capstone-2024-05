@@ -1,0 +1,166 @@
+# AWS::EC2::IPAMPool
+
+IPAM에서 풀은 연속된 IP 주소 CIDR의 모음입니다. 풀을 사용하면 라우팅 및 보안 요구 사항에 따라 IP 주소를 구성할 수 있습니다. 예를 들어 개발 및 프로덕션 응용 프로그램에 대한 별도의 라우팅 및 보안 요구 사항이 있는 경우 각각에 대한 풀을 만들 수 있습니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::EC2::IPAMPool",
+  "Properties" : {
+      "AddressFamily" : String,
+      "AllocationDefaultNetmaskLength" : Integer,
+      "AllocationMaxNetmaskLength" : Integer,
+      "AllocationMinNetmaskLength" : Integer,
+      "AllocationResourceTags" : [Tag, ... ],
+      "AutoImport" : Boolean,
+      "AwsService" : String,
+      "Description" : String,
+      "IpamScopeId" : String,
+      "Locale" : String,
+      "ProvisionedCidrs" : [ ProvisionedCidr, ... ],
+      "PublicIpSource" : String,
+      "PubliclyAdvertisable" : Boolean,
+      "SourceIpamPoolId" : String,
+      "Tags" : [Tag, ... ]
+    }
+}
+```
+
+## 속성
+
+`AddressFamily`  
+풀의 주소 패밀리입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_허용되는 값_: `ipv4 | ipv6`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`AllocationDefaultNetmaskLength`  
+이 풀에 추가된 할당의 기본 넷마스크 길이입니다. 예를 들어 이 풀에 할당된 CIDR이 10.0.0.0/8이고 여기에 16을 입력하면 새 할당은 기본적으로 10.0.0.0/16으로 설정됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_최소_: `0`  
+_최대_: `128`  
+_업데이트 필요 사항_: 중단 없음
+
+`AllocationMaxNetmaskLength`  
+이 IPAM 풀의 CIDR 할당이 규정을 준수할 수 있는 최대 넷마스크 길이입니다. 최대 넷마스크 길이는 최소 넷마스크 길이보다 커야 합니다. IPv4 주소에 사용할 수 있는 넷마스크 길이는 0 - 32입니다. IPv6 주소에 사용할 수 있는 넷마스크 길이는 0 - 128입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_최소_: `0`  
+_최대_: `128`  
+_업데이트 필요 사항_: 중단 없음
+
+`AllocationMinNetmaskLength`  
+이 IPAM 풀의 CIDR 할당이 규정을 준수하는 데 필요한 최소 넷마스크 길이입니다. 최소 넷마스크 길이는 최대 넷마스크 길이보다 작아야 합니다. IPv4 주소에 사용할 수 있는 넷마스크 길이는 0 - 32입니다. IPv6 주소에 사용할 수 있는 넷마스크 길이는 0 - 128입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_최소_: `0`  
+_최대_: `128`  
+_업데이트 필요 사항_: 중단 없음
+
+`AllocationResourceTags`  
+이 IPAM 풀의 CIDR을 사용하는 리소스에 필요한 태그입니다. 이러한 태그가 없는 리소스는 풀에서 공간을 할당할 수 없습니다. 공간을 할당한 후 리소스의 태그가 변경되었거나 풀에서 할당 태그 지정 요구 사항이 변경된 경우 리소스가 비준수로 표시될 수 있습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`AutoImport`  
+이 옵션을 선택하면 IPAM은 이 풀의 CIDR 범위 내에서 리소스를 지속적으로 찾고 자동으로 IPAM에 할당으로 가져옵니다. 가져오기가 성공하려면 이러한 리소스에 할당될 CIDR이 이미 다른 리소스에 할당되어 있지 않아야 합니다. IPAM은 풀의 할당 규칙 준수에 관계없이 CIDR을 가져오므로 리소스를 가져온 후 비준수로 표시될 수 있습니다. IPAM이 겹치는 여러 CIDR을 검색하는 경우 IPAM은 가장 큰 CIDR만 가져옵니다. IPAM이 일치하는 CIDR이 있는 여러 CIDR을 검색하는 경우 IPAM은 그 중 하나만 임의로 가져옵니다.  
+이 기능이 작동하려면 풀에 로캘을 설정해야 합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`AwsService`  
+풀을 사용할 수 있는 AWS의 서비스를 제한합니다. 예를 들어 "ec2"를 사용하면 사용자가 탄력적 IP 주소 및 VPC에 공간을 사용할 수 있습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `ec2`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Description`  
+IPAM 풀에 대한 설명입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`IpamScopeId`  
+IPAM 풀을 만들려는 범위의 ID입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Locale`  
+IPAM 풀의 로캘입니다. IPAM에서 로캘은 IPAM 풀을 할당에 사용할 수 있도록 하려는 AWS 리전입니다. 풀의 로캘과 동일한 지역에 있는 리소스만 풀에서 IP 주소 할당을 가져올 수 있습니다. 예를 들어 VPC의 리전과 로캘을 공유하는 IPAM 풀에서만 VPC에 대한 CIDR을 할당할 수 있습니다. 풀에 대한 로캘을 선택한 후에는 수정할 수 없습니다. IPAM의 운영 리전으로 구성되지 않은 로캘에 대해 AWS 리전을 선택하면 오류가 발생합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ProvisionedCidrs`  
+IPAM 풀에 프로비저닝된 CIDR에 대한 정보입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: ProvisionedCidr 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`PublicIpSource`  
+공용 범위에 있는 풀의 IP 주소 원본입니다. 공용 범위의 풀에 IP 주소 CIDR을 프로비저닝하는 데만 사용됩니다. 기본값은 입니다`BYOIP`. 자세한 내용은 *Amazon VPC IPAM 사용 설명서*의 IPv6 풀 생성을 참조하세요. 기본적으로 최상위 IPv6 풀에는 Amazon에서 제공하는 IPv6 CIDR 블록을 하나만 추가할 수 있습니다. 기본 한도 증가에 대한 자세한 내용은 _Amazon VPC IPAM 사용 설명서의 IPAM에 대한 할당량을 참조하세요_.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `amazon | byoip`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`PubliclyAdvertisable`  
+풀을 공개적으로 광고할 수 있는지 여부를 결정합니다. AddressFamily가 로 설정된 풀에는 이 옵션을 사용할 수 없습니다`ipv4`.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`SourceIpamPoolId`  
+소스 IPAM 풀의 ID입니다. 이 옵션을 사용하여 기존 소스 풀 내에 IPAM 풀을 생성할 수 있습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Tags`  
+리소스에 할당된 태그의 키/값 조합입니다. 필터 이름에 태그 키를 사용하고 태그 값을 필터 값으로 사용합니다. 예를 들어, 키와 값이 있는 태그가 있는 모든 리소스를 찾으려면 `Owner` `TeamA` `tag:Owner` 필터 이름과 `TeamA` 필터 값을 지정합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`IPAM 풀 ID가 반환됩니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`Arn` IPAM 풀의 ARN입니다.
+
+`IpamArn` IPAM의 ARN입니다.
+
+`IpamPoolId` IPAM 풀의 ID입니다.
+
+`IpamScopeArn` IPAM 풀 범위의 ARN입니다.
+
+`IpamScopeType` IPAM의 범위입니다.
+
+`PoolDepth` IPAM 풀에 있는 풀의 깊이입니다. 풀 깊이 할당량은 10입니다.
+
+`State` IPAM 풀의 상태입니다.
+
+`StateMessage` IPAM 풀 생성 실패와 관련된 메시지입니다.

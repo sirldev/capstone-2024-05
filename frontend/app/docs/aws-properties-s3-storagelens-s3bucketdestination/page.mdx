@@ -1,0 +1,58 @@
+# AWS::S3::StorageLens S3BucketDestination
+
+이 리소스에는 Amazon S3 Storage Lens 지표 내보내기가 배치될 버킷의 세부 정보가 포함되어 있습니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "AccountId" : String,
+  "Arn" : String,
+  "Encryption" : Encryption,
+  "Format" : String,
+  "OutputSchemaVersion" : String,
+  "Prefix" : String
+}
+```
+
+## 속성
+
+`AccountId`  
+이 속성에는 S3 Storage Lens 내보내기 버킷 대상의 AWS 계정 ID에 대한 세부 정보가 포함되어 있습니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Arn`  
+이 속성에는 S3 Storage Lens 내보내기의 버킷 대상에 대한 ARN의 세부 정보가 포함되어 있습니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Encryption`  
+이 속성에는 Amazon S3 Storage Lens 지표 내보내기의 버킷 대상 암호화에 대한 세부 정보가 포함되어 있습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 암호화  
+_업데이트 필요 사항_: 중단 없음
+
+`Format`  
+이 속성에는 S3 Storage Lens 내보내기 버킷 대상의 형식에 대한 세부 정보가 포함되어 있습니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`OutputSchemaVersion`  
+이 속성에는 S3 Storage Lens 내보내기 버킷 대상의 출력 스키마 버전에 대한 세부 정보가 포함되어 있습니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Prefix`  
+이 속성에는 S3 Storage Lens 내보내기의 버킷 대상 접두사에 대한 세부 정보가 포함되어 있습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음

@@ -1,0 +1,69 @@
+# AWS::ElasticLoadBalancing::LoadBalancer 상태 점검
+
+Classic Load Balancer에 대한 상태 확인 설정을 지정합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "HealthyThreshold" : String,
+  "Interval" : String,
+  "Target" : String,
+  "Timeout" : String,
+  "UnhealthyThreshold" : String
+}
+```
+
+## 속성
+
+`HealthyThreshold`  
+인스턴스를 상태로 이동하기 전에 필요한 연속 상태 확인 성공 횟수입니다 `Healthy` .  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `2`  
+_최대_: `10`  
+_업데이트 필요 사항_: 중단 없음
+
+`Interval`  
+개별 인스턴스의 상태 확인 사이의 대략적인 간격(초)입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `5`  
+_최대_: `300`  
+_업데이트 필요 사항_: 중단 없음
+
+`Target`  
+확인 중인 인스턴스입니다. 프로토콜은 TCP, HTTP, HTTPS 또는 SSL입니다. 유효한 포트의 범위는 1에서 65535까지입니다.  
+TCP는 TCP: 포트 쌍으로 지정된 기본값입니다(예: "TCP:5000"). 이 경우 상태 확인은 지정된 포트에서 인스턴스에 대한 TCP 연결을 열려고 시도합니다. 구성된 제한 시간 내에 연결하지 못하면 비정상으로 간주됩니다.  
+SSL은 SSL: 포트 쌍(예: SSL:5000)으로도 지정됩니다.  
+HTTP/HTTPS의 경우 문자열에 ping 경로를 포함해야 합니다. HTTP는 HTTP:port;/; PathToPing입니다. 그룹화(예: "HTTP:80/weather/us/wa/seattle"). 이 경우 지정된 포트 및 경로의 인스턴스에 HTTP GET 요청이 발행됩니다. 제한 시간 내에 "200 OK" 이외의 모든 응답은 비정상으로 간주됩니다.  
+HTTP ping 대상의 총 길이는 1024자 이하의 16비트 유니코드 문자여야 합니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Timeout`  
+응답이 없는 시간 동안 상태 확인이 실패했음을 의미하는 시간(초)입니다.  
+이 값은 값보다 작아야 합니다 `Interval` .  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `2`  
+_최대_: `60`  
+_업데이트 필요 사항_: 중단 없음
+
+`UnhealthyThreshold`  
+인스턴스를 상태로 이동하기 전에 필요한 연속 상태 확인 실패 횟수입니다 `Unhealthy` .  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `2`  
+_최대_: `10`  
+_업데이트 필요 사항_: 중단 없음
+
+## 참고 항목
+
+- Elastic Load Balancing API 참조(버전 2012-06-01)\* \*의 ConfigureHealthCheck
+- Classic Load Balancer* 사용 설명서*의 상태 확인 구성

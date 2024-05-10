@@ -1,0 +1,99 @@
+# AWS::RDS::D BClusterParameterGroup
+
+리소스 `AWS::RDS::DBClusterParameterGroup` 는 새 Amazon RDS DB 클러스터 파라미터 그룹을 생성합니다.
+
+Amazon Aurora DB 클러스터의 파라미터 구성에 대한 자세한 내용은 _Amazon Aurora 사용 설명서의 파라미터 그룹 작업을 참조하세요_.
+
+**메모**  
+파라미터 그룹을 DB 클러스터에 적용하면 DB 인스턴스를 재부팅해야 할 수 있습니다. 이로 인해 DB 인스턴스가 재부팅되는 동안 중단이 발생할 수 있습니다.  
+중지된 DB 클러스터와 연결된 파라미터 그룹에 변경 사항을 적용하면 DB 클러스터가 시작될 때까지 업데이트 스택이 대기합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::RDS::DBClusterParameterGroup",
+  "Properties" : {
+      "DBClusterParameterGroupName" : String,
+      "Description" : String,
+      "Family" : String,
+      "Parameters" : Json,
+      "Tags" : [Tag, ... ]
+    }
+}
+```
+
+## 속성
+
+`DBClusterParameterGroupName` DB 클러스터 파라미터 그룹의 이름입니다.  
+제약 조건:
+
+- 기존 DB 클러스터 파라미터 그룹의 이름과 일치하지 않아야 합니다.
+  속성 값을 지정하지 않으면 `DBClusterParameterGroupName` DB 클러스터 파라미터 그룹에 대한 이름이 자동으로 생성됩니다.  
+  이 값은 소문자 문자열로 저장됩니다.
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열  
+  _업데이트 필요 사항_: 바꿔 놓음
+
+`Description`  
+이 DB 클러스터 파라미터 그룹에 대한 친숙한 설명입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Family`  
+DB 클러스터 파라미터 그룹 패밀리 이름입니다. DB 클러스터 파라미터 그룹은 하나의 DB 클러스터 파라미터 그룹 패밀리에만 연결할 수 있으며, DB 엔진 및 해당 DB 클러스터 파라미터 그룹 패밀리와 호환되는 엔진 버전을 실행하는 DB 클러스터에만 적용할 수 있습니다.  
+DB 클러스터 파라미터 그룹 패밀리는 DB 클러스터 파라미터 그룹을 업데이트할 때 변경할 수 없습니다.
+사용 가능한 파라미터 그룹 패밀리를 모두 나열하려면 다음 명령을 사용합니다.  
+`aws rds describe-db-engine-versions --query "DBEngineVersions[].DBParameterGroupFamily"`  
+출력에 중복 항목이 포함되어 있습니다.  
+자세한 내용은 을 참조하십시오 `CreateDBClusterParameterGroup`.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Parameters`  
+DB 클러스터 파라미터 그룹에 대한 파라미터 목록을 제공합니다.  
+_필수 항목 여부_: 예  
+_형식_: Json  
+_업데이트 필요 사항_: 중단 없음
+
+`Tags`  
+이 DB 클러스터 파라미터 그룹에 적용할 키-값 페어의 선택적 배열입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`DB 클러스터 파라미터 그룹의 이름을 반환합니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+## 예제
+
+###
+
+다음 코드 조각은 Aurora MySQL DB 클러스터에 대한 DB 클러스터 파라미터 그룹을 생성하고 `time_zone` 및 `character_set_database` 파라미터 를 설정합니다.
+
+#### JSON (영문)
+
+```
+"RDSDBClusterParameterGroup": {
+        "Type": "AWS::RDS::DBClusterParameterGroup",
+        "Properties": {
+            "Description": "CloudFormation Sample Aurora Cluster Parameter Group",
+            "Family": "aurora-mysql8.0",
+            "Parameters": {
+                "time_zone": "US/Eastern",
+                "character_set_database": "utf32"
+            }
+        }
+    }
+```

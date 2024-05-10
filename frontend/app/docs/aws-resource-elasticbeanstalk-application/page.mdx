@@ -1,0 +1,72 @@
+# AWS::ElasticBeanstalk::애플리케이션
+
+AWS::ElasticBeanstalk::Application 리소스는 Elastic Beanstalk 애플리케이션을 지정하는 AWS Elastic Beanstalk Beanstalk 리소스 유형입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::ElasticBeanstalk::Application",
+  "Properties" : {
+      "ApplicationName" : String,
+      "Description" : String,
+      "ResourceLifecycleConfig" : ApplicationResourceLifecycleConfig
+    }
+}
+```
+
+## 속성
+
+`ApplicationName`  
+Elastic Beanstalk 애플리케이션의 이름입니다. 이름을 지정하지 않으면 AWS CloudFormation에서는 고유한 물리적 ID를 생성하고 해당 ID를 애플리케이션 이름으로 사용합니다. 자세한 내용은 이름 유형을 참조하십시오.  
+이름을 지정하면 이 리소스를 대체해야 하는 업데이트를 수행할 수 없습니다. 중단이 필요 없거나 약간의 중단이 필요한 업데이트를 수행할 수 있습니다. 리소스를 바꿔야 하는 경우 새 이름을 지정합니다.
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `100`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Description`  
+응용 프로그램에 대한 설명입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최대_: `200`  
+_업데이트 필요 사항_: 중단 없음
+
+`ResourceLifecycleConfig`  
+응용 프로그램이 너무 많은 버전을 누적하지 않도록 응용 프로그램 리소스 수명 주기 구성을 지정합니다.  
+*필수 항목 *여부: 아니요  
+_형식_: ApplicationResourceLifecycleConfig  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID가 `Ref`내장 함수 에 제공되면 `Ref`리소스 이름을 반환합니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+## 예제
+
+###
+
+#### JSON (영문)
+
+```
+{
+   "Type" : "AWS::ElasticBeanstalk::Application",
+   "Properties" : {
+      "ApplicationName" : "SampleAWSElasticBeanstalkApplication",
+      "Description" : "AWS Elastic Beanstalk PHP Sample Application"
+   }
+}
+```
+
+## 참고 항목
+
+- 전체 Elastic Beanstalk 샘플 템플릿은 Elastic Beanstalk 템플릿 코드 조각 단원을 참조하십시오.

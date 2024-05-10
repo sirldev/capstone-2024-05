@@ -1,0 +1,88 @@
+# AWS::CodeDeploy::애플리케이션
+
+리소스는 `AWS::CodeDeploy::Application` AWS CodeDeploy 애플리케이션을 생성합니다. CodeDeploy에서 애플리케이션은 배포 중에 개정, 배포 구성 및 배포 그룹의 올바른 조합이 참조되도록 하는 컨테이너 역할을 하는 이름입니다. 리소스를 사용하여 `AWS::CodeDeploy::DeploymentGroup` 애플리케이션을 CodeDeploy 배포 그룹과 연결할 수 있습니다. 자세한 내용은 _AWS CodeDeploy 사용 설명서의 CodeDeploy_ 배포를 참조하십시오.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::CodeDeploy::Application",
+  "Properties" : {
+      "ApplicationName" : String,
+      "ComputePlatform" : String,
+      "Tags" : [Tag, ... ]
+    }
+}
+```
+
+## 속성
+
+`ApplicationName`  
+ 응용 프로그램의 이름입니다. 이름을 지정하지 않으면 AWS CloudFormation에서는 고유한 물리적 ID를 생성하고 해당 ID를 애플리케이션 이름으로 사용합니다. 자세한 내용은 이름 유형을 참조하십시오.  
+ 에 대한 업데이트 `ApplicationName` 는 지원되지 않습니다.
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `100`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ComputePlatform`  
+CodeDeploy가 애플리케이션을 배포하는 컴퓨팅 플랫폼입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `ECS | Lambda | Server`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Tags`  
+ 애플리케이션을 구성하고 분류하는 데 도움이 되도록 CodeDeploy 애플리케이션에 적용하는 메타데이터입니다. 각 태그는 사용자가 정의하는 키와 선택적 값으로 구성됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+리소스의 논리적 ID를 `AWS::CodeDeploy::Application` 내장 함수에 `Ref` 전달하면 함수는 응용 프로그램 이름(예: )을 반환합니다`myapplication-a123d0d1`.
+
+함수 사용에 대한 자세한 `Ref` 내용은 Ref를 참조하세요.
+
+## 예제
+
+### Lambda 컴퓨팅 플랫폼이 있는 애플리케이션 지정
+
+다음 예제에서는 Lambda 컴퓨팅 플랫폼이 있는 CodeDeploy 애플리케이션을 지정합니다.
+
+#### JSON (영문)
+
+```
+"CodeDeployApplication": {
+    "Type": "AWS::CodeDeploy::Application",
+    "Properties": {
+        "ComputePlatform": "Lambda"
+    }
+}
+```
+
+### 서버 계산 플랫폼이 있는 응용 프로그램 지정Specify an application with a Server compute platform
+
+다음 예제에서는 컴퓨팅 플랫폼을 사용하여 CodeDeploy 애플리케이션을 생성합니다 `Server` .
+
+#### JSON (영문)
+
+```
+"CodeDeployApplication": {
+    "Type": "AWS::CodeDeploy::Application",
+    "Properties": {
+        "ComputePlatform": "Server"
+    }
+}
+```
+
+## 참고 항목
+
+- 배포를 구성하고 애플리케이션 개정을 지정하는 방법은 AWS::CodeDeploy::D eploymentConfig 및 AWS::CodeDeploy::D eploymentGroup 단원을 참조하십시오.

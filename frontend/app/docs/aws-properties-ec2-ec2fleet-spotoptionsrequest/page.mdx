@@ -1,0 +1,91 @@
+# AWS::EC2::EC2Fleet SpotOptionsRequest
+
+EC2 집합에 대한 스팟 인스턴스의 구성을 지정합니다.
+
+`SpotOptionsRequest` 은 AWS::EC2::EC2Fleet 리소스의 속성입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "AllocationStrategy" : String,
+  "InstanceInterruptionBehavior" : String,
+  "InstancePoolsToUseCount" : Integer,
+  "MaintenanceStrategies" : MaintenanceStrategies,
+  "MaxTotalPrice" : String,
+  "MinTargetCapacity" : Integer,
+  "SingleAvailabilityZone" : Boolean,
+  "SingleInstanceType" : Boolean
+}
+```
+
+## 속성
+
+`AllocationStrategy`  
+EC2 집합에서 지정한 스팟 인스턴스 풀에 대상 스팟 인스턴스 용량을 할당하는 방법을 나타냅니다.  
+할당 전략이 인 경우 `lowestPrice`EC2 집합은 스팟 인스턴스 풀에서 가장 낮은 가격으로 인스턴스를 시작합니다. 이것이 기본 할당 전략입니다.  
+할당 전략이 인 경우 `diversified`EC2 집합은 지정한 모든 스팟 인스턴스 풀에서 인스턴스를 시작합니다.  
+할당 전략이 인 경우 `capacityOptimized`EC2 집합은 사용 가능한 스팟 인스턴스 용량에 따라 최적으로 선택된 스팟 인스턴스 풀에서 인스턴스를 시작합니다.  
+_허용되는 값_: `lowestPrice` | `diversified` | `capacityOptimized` | `capacityOptimizedPrioritized`  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`InstanceInterruptionBehavior`  
+스팟 인스턴스가 중단될 때의 동작입니다.  
+기본값: `terminate`  
+_필수_: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `hibernate | stop | terminate`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`InstancePoolsToUseCount`  
+목표 스팟 용량을 할당할 스팟 풀의 수입니다. 스폿이 로 설정된 경우에만 지원됩니다 `AllocationStrategy` `lowest-price`. EC2 집합은 가장 저렴한 스팟 풀을 선택하고 지정한 스팟 풀 수에 걸쳐 목표 스팟 용량을 균등하게 할당합니다.  
+EC2 집합은 최선의 노력을 기울여 사용자가 지정한 풀 수에서 스팟 인스턴스를 가져오려고 시도합니다. 목표 용량을 충족하기 전에 풀의 스팟 용량이 부족해지면 EC2 집합은 다음으로 가장 저렴한 풀에서 끌어와 요청을 계속 이행합니다. 목표 용량을 충족하기 위해 지정한 풀 수보다 많은 풀에서 스팟 인스턴스를 수신할 수 있습니다. 마찬가지로, 대부분의 풀에 스팟 용량이 없는 경우 지정한 풀 수보다 적은 풀에서 전체 목표 용량을 받을 수 있습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`MaintenanceStrategies`  
+중단될 위험이 높은 스팟 인스턴스를 관리하기 위한 전략입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: MaintenanceStrategies  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`MaxTotalPrice`  
+지불할 의사가 있는 스팟 인스턴스의 시간당 최대 금액입니다. 이 매개 변수는 중단이 증가할 수 있으므로 사용하지 않는 것이 좋습니다. 이 파라미터를 지정하지 않으면 현재 스팟 가격을 지불하게 됩니다.  
+최고 가격을 지정하면 이 파라미터를 지정하지 않을 때보다 스팟 인스턴스가 더 자주 중단됩니다.
+플릿에 로 구성된 T 인스턴스가 포함되어 `unlimited`있고 평균 CPU 사용량이 기준 사용률을 초과하는 경우 잉여 크레딧에 대한 요금이 발생합니다. 는 `MaxTotalPrice` 잉여 크레딧을 고려하지 않으며, 잉여 크레딧을 사용하는 경우 최종 비용이 에 대해 지정한 비용보다 높을 수 있습니다`MaxTotalPrice`. 자세한 내용은 EC2 사용 설명서의 잉여 크레딧에 요금이 부과될 수 _있음을 참조하세요_.
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`MinTargetCapacity`  
+플릿의 스팟 인스턴스에 대한 최소 목표 용량입니다. 최소 목표 용량에 도달하지 않으면 플릿은 인스턴스를 시작하지 않습니다.  
+유형의 플릿에 대해서만 지원됩니다`instant`.  
+다음 중 하나 이상을 지정해야 합니다. `SingleAvailabilityZone` `SingleInstanceType`  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`SingleAvailabilityZone`  
+플릿이 모든 스팟 인스턴스를 단일 가용 영역으로 시작함을 나타냅니다.  
+유형의 플릿에 대해서만 지원됩니다`instant`.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`SingleInstanceType`  
+플릿이 단일 인스턴스 유형을 사용하여 플릿의 모든 스팟 인스턴스를 시작함을 나타냅니다.  
+유형의 플릿에 대해서만 지원됩니다`instant`.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 바꿔 놓음
+
+## 참고 항목
+
+- Amazon EC2 API Reference*의 SpotOptionsRequest *

@@ -1,0 +1,47 @@
+# AWS::RDS::D B상태 DBInstanceRole
+
+DB 인스턴스와 연결된 AWS Identity and Access Management(IAM) 역할에 대해 설명합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "FeatureName" : String,
+  "RoleArn" : String
+}
+```
+
+## 속성
+
+`FeatureName`  
+AWS Identity and Access Management(IAM) 역할과 연결된 기능의 이름입니다. DB 인스턴스와 연결된 IAM 역할은 DB 인스턴스가 사용자를 대신하여 다른 AWS 서비스에 액세스할 수 있는 권한을 부여합니다. 지원되는 기능 이름 목록은 `SupportedFeatureNames`Amazon RDS API Reference*의 DBEngineVersion에 있는 설명을 * 참조하십시오.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`RoleArn`  
+DB 인스턴스와 연결된 IAM 역할의 Amazon 리소스 이름(ARN)입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+## 예제
+
+###
+
+다음은 DB 인스턴스와 연결할 역할을 지정합니다.
+
+#### JSON (영문)
+
+```
+"AssociatedRoles": [
+    {
+        "FeatureName": "s3Import",
+        "RoleArn": "arn:aws:iam::123456789012:role/RDSLoadFromS3"
+    }
+]
+```

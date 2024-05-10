@@ -1,0 +1,71 @@
+# AWS::SageMaker::ModelPackage 추가 추론사양 정의
+
+추가 추론 사양의 구조입니다. 추가 추론 사양은 이 모델 패키지를 기반으로 하는 모델로 실행할 수 있는 추론 작업에 대한 세부 정보를 지정합니다
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Containers" : [ ModelPackageContainerDefinition, ... ],
+  "Description" : String,
+  "Name" : String,
+  "SupportedContentTypes" : [ String, ... ],
+  "SupportedRealtimeInferenceInstanceTypes" : [ String, ... ],
+  "SupportedResponseMIMETypes" : [ String, ... ],
+  "SupportedTransformInstanceTypes" : [ String, ... ]
+}
+```
+
+## 속성
+
+`Containers`  
+추론 코드가 포함된 도커 이미지의 Amazon ECR 레지스트리 경로입니다.  
+_필수 항목 여부_: 예  
+_형식_: ModelPackageContainerDefinition 목록  
+_최대_: `15`  
+_업데이트 필요 사항_: 중단 없음
+
+`Description`  
+추가 추론 사양에 대한 설명  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최대_: `1024`  
+_패턴_: `[p{L}p{M}p{Z}p{S}p{N}p{P}]*`  
+_업데이트 필요 사항_: 중단 없음
+
+`Name`  
+추가 추론 사양을 식별하기 위한 고유한 이름입니다. 이름은 특정 모델 패키지에 대한 추가 추론 사양 목록 내에서 고유해야 합니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `63`  
+_패턴_: `^a-zA-Z0-9{0,62}$`  
+_업데이트 필요 사항_: 중단 없음
+
+`SupportedContentTypes`  
+입력 데이터에 대해 지원되는 MIME 유형입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`SupportedRealtimeInferenceInstanceTypes`  
+실시간으로 추론을 생성하는 데 사용되는 인스턴스 유형 목록입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`SupportedResponseMIMETypes`  
+출력 데이터에 대해 지원되는 MIME 유형입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`SupportedTransformInstanceTypes`  
+변환 작업을 실행할 수 있거나 엔드포인트를 배포할 수 있는 인스턴스 유형의 목록입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음

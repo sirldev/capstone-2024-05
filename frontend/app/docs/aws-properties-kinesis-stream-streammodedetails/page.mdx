@@ -1,0 +1,24 @@
+# AWS::Kinesis::스트림 StreamModeDetails
+
+데이터 스트림을 설정할 용량 모드를 지정합니다. 현재 Kinesis Data Streams에서는 ** 데이터 스트림에 대해 **온디맨드** 용량 모드와 **프로비저닝된 용량 모드 중에서 선택할 수 있습니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "StreamMode" : String
+}
+```
+
+## 속성
+
+`StreamMode`  
+ 데이터 스트림을 설정할 용량 모드를 지정합니다. 현재 Kinesis Data Streams에서는 데이터 스트림에 대해 **온디맨드** 용량 모드와 **프로비저닝된** 용량 모드 중에서 선택할 수 있습니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_허용되는 값_: `ON_DEMAND | PROVISIONED`  
+_업데이트 필요 사항_: 중단 없음

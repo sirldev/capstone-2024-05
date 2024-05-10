@@ -1,0 +1,83 @@
+# AWS::SageMaker::MonitoringSchedule MonitoringJobDefinition
+
+모니터링 작업을 정의합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "BaselineConfig" : BaselineConfig,
+  "Environment" : {Key: Value, ...},
+  "MonitoringAppSpecification" : MonitoringAppSpecification,
+  "MonitoringInputs" : [ MonitoringInput, ... ],
+  "MonitoringOutputConfig" : MonitoringOutputConfig,
+  "MonitoringResources" : MonitoringResources,
+  "NetworkConfig" : NetworkConfig,
+  "RoleArn" : String,
+  "StoppingCondition" : StoppingCondition
+}
+```
+
+## 속성
+
+`BaselineConfig`  
+데이터가 지정된 제약 조건 및 통계를 준수하는지 확인하는 데 사용되는 기준 구성  
+*필수 항목 *여부: 아니요  
+_유형_: BaselineConfig  
+_업데이트 필요 사항_: 중단 없음
+
+`Environment`  
+Docker 컨테이너에서 환경 변수를 설정합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 맵  
+_업데이트 필요 사항_: 중단 없음
+
+`MonitoringAppSpecification`  
+지정된 Docker 컨테이너 이미지를 실행하도록 모니터링 작업을 구성합니다.  
+_필수 항목 여부_: 예  
+_형식_: MonitoringAppSpecification  
+_업데이트 필요 사항_: 중단 없음
+
+`MonitoringInputs`  
+모니터링 작업에 대한 입력 배열입니다. 현재 Amazon SageMaker 엔드포인트 모니터링을 지원합니다.  
+_필수 항목 여부_: 예  
+_형식_: MonitoringInput 목록  
+_최대_: `1`  
+_업데이트 필요 사항_: 중단 없음
+
+`MonitoringOutputConfig`  
+Amazon Simple Storage Service(Amazon S3)에 업로드할 모니터링 작업의 출력 배열입니다.  
+_필수 항목 여부_: 예  
+_형식_: MonitoringOutputConfig  
+_업데이트 필요 사항_: 중단 없음
+
+`MonitoringResources`  
+모니터링 작업을 위해 배포할 리소스, ML 컴퓨팅 인스턴스 및 ML 스토리지 볼륨을 식별합니다. 분산 처리에서는 둘 이상의 인스턴스를 지정합니다.  
+_필수 항목 여부_: 예  
+_형식_: MonitoringResources  
+_업데이트 필요 사항_: 중단 없음
+
+`NetworkConfig`  
+모니터링 작업에 대한 네트워킹 옵션을 지정합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: NetworkConfig  
+_업데이트 필요 사항_: 중단 없음
+
+`RoleArn`  
+Amazon SageMaker가 사용자를 대신하여 작업을 수행하기 위해 수임할 수 있는 IAM 역할의 Amazon 리소스 이름(ARN)입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `20`  
+_최대_: `2048`  
+_패턴_: `^arn:aws[a-z-]*:iam::d{12}:role/?[a-zA-Z_0-9+=,.@-_/]+$`  
+_업데이트 필요 사항_: 중단 없음
+
+`StoppingCondition`  
+모니터링 작업을 실행할 수 있는 기간에 대한 시간 제한을 지정합니다.  
+*필수 항목 *여부: 아니요  
+_형식_: StoppingCondition  
+_업데이트 필요 사항_: 중단 없음

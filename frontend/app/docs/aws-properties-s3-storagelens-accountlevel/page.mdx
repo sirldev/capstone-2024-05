@@ -1,0 +1,51 @@
+# AWS::S3::StorageLens 계정 수준
+
+이 리소스에는 Amazon S3 Storage Lens에 대한 계정 수준 지표의 세부 정보가 포함되어 있습니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ActivityMetrics" : ActivityMetrics,
+  "AdvancedCostOptimizationMetrics" : AdvancedCostOptimizationMetrics,
+  "AdvancedDataProtectionMetrics" : AdvancedDataProtectionMetrics,
+  "BucketLevel" : BucketLevel,
+  "DetailedStatusCodesMetrics" : DetailedStatusCodesMetrics
+}
+```
+
+## 속성
+
+`ActivityMetrics`  
+이 속성에는 S3 Storage Lens에 대한 계정 수준 활동 지표의 세부 정보가 포함되어 있습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: ActivityMetrics  
+_업데이트 필요 사항_: 중단 없음
+
+`AdvancedCostOptimizationMetrics`  
+이 속성에는 S3 Storage Lens에 대한 계정 수준 고급 비용 최적화 지표의 세부 정보가 포함되어 있습니다.  
+*필수 항목 *여부: 아니요  
+_형식_: AdvancedCostOptimizationMetrics  
+_업데이트 필요 사항_: 중단 없음
+
+`AdvancedDataProtectionMetrics`  
+이 속성에는 S3 Storage Lens에 대한 계정 수준 고급 데이터 보호 지표의 세부 정보가 포함되어 있습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: AdvancedDataProtectionMetrics  
+_업데이트 필요 사항_: 중단 없음
+
+`BucketLevel`  
+이 속성에는 Amazon S3 Storage Lens에 대한 계정 수준 버킷 수준 구성의 세부 정보가 포함되어 있습니다.  
+_필수 항목 여부_: 예  
+_형식_: BucketLevel  
+_업데이트 필요 사항_: 중단 없음
+
+`DetailedStatusCodesMetrics`  
+이 속성에는 S3 Storage Lens에 대한 계정 수준 세부 상태 코드 지표의 세부 정보가 포함되어 있습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: DetailedStatusCodesMetrics  
+_업데이트 필요 사항_: 중단 없음

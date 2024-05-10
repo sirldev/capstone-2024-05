@@ -1,0 +1,567 @@
+# AWS::KMS::키
+
+리소스는 `AWS::KMS::Key` AWS Key Management Service에서 KMS 키를 지정합니다. 이 리소스를 사용하여 대칭 암호화 KMS 키, 암호화 또는 서명을 위한 비대칭 KMS 키 및 대칭 HMAC KMS 키를 생성할 수 있습니다. 를 `AWS::KMS::Key` 사용하여 지원되는 모든 유형의 다중 리전 기본 키를 생성할 수 있습니다. 다중 리전 키를 복제하려면 리소스를 사용합니다 `AWS::KMS::ReplicaKey` .
+
+**중요하다**  
+ 기존 KMS 키의 `KeySpec`, `KeyUsage`, `Origin`또는 `MultiRegion` 속성 값을 변경하면 속성 값에 관계없이 업데이트 요청이 실패합니다 `UpdateReplacePolicy` . 이렇게 하면 변경할 수 없는 속성 값을 변경하여 실수로 KMS 키를 삭제하는 것을 방지할 수 있습니다.
+
+**메모**  
+AWS KMS는 *고객 마스터 키(CMK)*라는 용어를 _AWS KMS 키_ 및 *KMS 키*로 대체했습니다. 개념은 변경되지 않았습니다. 호환성이 손상되는 변경을 방지하기 위해 AWS KMS는 이 용어의 일부 변형을 유지하고 있습니다.
+
+대칭 암호화 KMS 키를 사용하여 소량의 데이터를 암호화하고 해독할 수 있지만, 데이터 키 및 데이터 키 페어를 생성하는 데 더 일반적으로 사용됩니다. 대칭 암호화 KMS 키를 사용하여 AWS KMS와 통합된 AWS 서비스에 저장된 데이터를 암호화할 수도 있습니다. 자세한 내용은 _AWS Key Management Service 개발자 안내서의 대칭 암호화 KMS 키를 참조하세요_.
+
+비대칭 KMS 키를 사용하여 데이터를 암호화 및 해독하거나 메시지에 서명하고 서명을 확인할 수 있습니다. 비대칭 키를 만들려면 비대칭 `KeySpec` 값과 `KeyUsage` 값을 지정해야 합니다 . 자세한 내용은 _AWS Key Management Service 개발자 안내서의 AWS KMS의 비대칭 키를 참조하세요_.
+
+HMAC KMS 키(대칭 키이기도 함)를 사용하여 해시 기반 메시지 인증 코드를 생성하고 확인할 수 있습니다. HMAC 키를 만들려면 HMAC `KeySpec` 값과 `KeyUsage` 값을 `GENERATE_VERIFY_MAC` 지정해야 합니다. 자세한 내용은 _AWS Key Management Service 개발자 안내서의 AWS KMS의 HMAC 키를 참조하세요_.
+
+대칭 암호화, 비대칭 및 HMAC 다중 리전 기본 키를 생성할 수도 있습니다. 다중 리전 기본 키를 생성하려면 `MultiRegion` 속성을 `true`로 설정합니다. 다중 리전 키에 대한 자세한 내용은 _AWS Key Management Service 개발자 안내서의 AWS KMS의 다중 리전 키를 참조하세요_.
+
+리소스를 사용하여 `AWS::KMS::Key` 가져온 키 구성 요소가 있는 KMS 키 또는 사용자 지정 키 스토어의 KMS 키를 지정할 수 없습니다.
+
+**지역**
+
+AWS KMS CloudFormation 리소스는 AWS KMS 및 AWS CloudFormation이 지원되는 모든 리전에서 사용할 수 있습니다. 리소스를 사용하여 `AWS::KMS::Key` 리전에서 지원되는 모든 KMS 키 유형을 생성하고 관리할 수 있습니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::KMS::Key",
+  "Properties" : {
+      "BypassPolicyLockoutSafetyCheck" : Boolean,
+      "Description" : String,
+      "Enabled" : Boolean,
+      "EnableKeyRotation" : Boolean,
+      "KeyPolicy" : Json,
+      "KeySpec" : String,
+      "KeyUsage" : String,
+      "MultiRegion" : Boolean,
+      "Origin" : String,
+      "PendingWindowInDays" : Integer,
+      "Tags" : [Tag, ... ]
+    }
+}
+```
+
+## 속성
+
+`BypassPolicyLockoutSafetyCheck`  
+키 정책 잠금 안전 검사를 건너뜁니다("우회"). 기본값은 false입니다.  
+이 값을 true로 설정하면 KMS 키를 관리할 수 없게 될 위험이 높아집니다. 이 값을 무분별하게 true로 설정하지 마십시오.  
+자세한 내용은 *AWS Key Management Service 개발자 안내서*의 기본 키 정책을 참조하세요.
+요청을 수행하는 보안 주체가 KMS 키에 대한 후속 PutKeyPolicy 요청을 하지 못하도록 하려는 경우에만 이 파라미터를 사용합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`Description`  
+KMS 키에 대한 설명입니다. 이 KMS 키를 계정의 다른 KMS 키와 구별하는 데 도움이 되는 설명(예: 용도)을 사용합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `0`  
+_최대_: `8192`  
+_업데이트 필요 사항_: 중단 없음
+
+`Enabled`  
+KMS 키를 사용할 수 있는지 여부를 지정합니다. 비활성화된 KMS 키는 암호화 작업에 사용할 수 없습니다.  
+가 인 경우 `Enabled` `true` * KMS 키의 *키 상태는 `Enabled`입니다. 가 인 경우 `Enabled` `false`KMS 키의 키 상태는 `Disabled`입니다. 기본값은 `true`입니다.  
+KMS 키의 실제 키 상태는 EnableKey, DisableKey 또는 ScheduleKeyDeletion 작업 실행과 같이 CloudFormation 외부에서 수행된 작업의 영향을 받을 수 있습니다.  
+KMS 키의 키 상태에 대한 자세한 내용은 _AWS Key Management Service 개발자 안내서의 키 상태: KMS 키에 미치는 영향을 참조하세요_.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`EnableKeyRotation`  
+지정된 KMS 키에 대한 키 구성 요소의 자동 교체를 활성화합니다. 기본적으로 자동 키 회전은 활성화되어 있지 않습니다.  
+AWS KMS는 대칭 암호화 KMS 키( = )에 대해서만 자동 교체를 지원합니다`KeySpec``SYMMETRIC_DEFAULT`. 비대칭 KMS 키, HMAC KMS 키 및 오리진이 있는 KMS 키의 경우 속성을 `EXTERNAL`생략 `EnableKeyRotation` 하거나 로 설정합니다`false`.  
+다중 리전 KMS 키에 대한 키 구성 요소의 자동 키 교체를 활성화하려면 `EnableKeyRotation` 기본 키(를 사용하여 생성 `true` 됨)로 `AWS::KMS::Key` 설정합니다. AWS KMS는 교체 상태를 모든 복제본 키에 복사합니다. 자세한 내용은 *AWS Key Management Service 개발자 안내서*의 다중 리전 키 교체를 참조하세요.  
+자동 교체를 활성화하면 AWS KMS는 활성화 날짜 이후 1년 후와 그 이후에는 매년 KMS 키에 대한 새 키 구성 요소를 자동으로 생성합니다. AWS KMS는 KMS 키를 삭제할 때까지 모든 키 구성 요소를 보관합니다. 자동 키 교체에 대한 자세한 내용은 _AWS Key Management Service 개발자 안내서의 KMS 키 교체를 참조하세요_.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`KeyPolicy` KMS 키에 연결할 키 정책입니다.  
+키 정책을 제공하는 경우 다음 기준을 충족해야 합니다.
+
+- 키 정책은 호출자가 KMS 키에 대한 후속 PutKeyPolicy 요청을 수행할 수 있도록 허용해야 합니다. 이렇게 하면 KMS 키를 관리할 수 없게 될 위험이 줄어듭니다. 자세한 내용은 *AWS Key Management Service 개발자 안내서*의 기본 키 정책을 참조하세요. (이 조건을 생략하려면 `BypassPolicyLockoutSafetyCheck` true로 설정합니다.)
+- 키 정책의 각 문에는 하나 이상의 보안 주체가 포함되어야 합니다. 키 정책의 보안 주체가 존재해야 하며 AWS KMS에 표시되어야 합니다. 새 AWS 보안 주체(예: IAM 사용자 또는 역할)를 생성할 때 새 보안 주체가 AWS KMS에 즉시 표시되지 않을 수 있으므로 키 정책에 새 보안 주체를 포함하기 전에 지연을 적용해야 할 수 있습니다. 자세한 내용은 *AWS Identity and Access Management 사용 설명서*의 변경 사항이 항상 즉시 표시되는 것은 아닙니다.를 참조하세요.
+  키 정책을 제공하지 않으면 AWS KMS가 기본 키 정책을 KMS 키에 연결합니다. 자세한 내용은 *AWS Key Management Service 개발자 안내서*의 기본 키 정책을 참조하세요.  
+  키 정책 문서에는 다음 문자만 포함될 수 있습니다.
+- 인쇄 가능한 ASCII 문자
+- Basic Latin 및 Latin-1 Supplement 문자 집합의 인쇄 가능한 문자
+- 탭(),`u0009` 줄 바꿈(`u000A`) 및 캐리지 리턴(`u000D`) 특수 문자
+  _최소_: `1`  
+  _최대_: 필수`32768`: \*  
+  *아니요  
+  *형식*: Json  
+  *업데이트 필요 사항\*: 중단 없음
+
+`KeySpec`  
+생성할 KMS 키의 유형을 지정합니다. 기본값 `SYMMETRIC_DEFAULT`은 암호화 및 복호화를 위해 256비트 대칭 키를 사용하여 KMS 키를 생성합니다. 중국 리전에서는 `SYMMETRIC_DEFAULT` SM4 암호화를 사용하는 128비트 대칭 키를 생성합니다. `KeySpec` KMS 키를 생성한 후에는 값을 변경할 수 없습니다. KMS 키에 대한 키 사양 선택에 대한 도움말 은 _AWS Key Management Service 개발자 안내서의 KMS 키 유형 선택을 참조하세요_.  
+이 `KeySpec` 속성은 KMS 키의 키 구성 요소 유형과 KMS 키가 지원하는 알고리즘을 결정합니다. KMS 키와 함께 사용할 수 있는 알고리즘을 추가로 제한하려면 키 정책 또는 IAM 정책에서 조건 키를 사용합니다. 자세한 내용은 *AWS Key Management Service 개발자 안내서*의 AWS KMS 조건 키를 참조하세요.  
+`KeySpec` 기존 KMS 키의 속성 값을 변경하면 속성 값에 관계없이 업데이트 요청이 실패합니다 `UpdateReplacePolicy` . 이렇게 하면 변경할 수 없는 속성 값을 변경하여 실수로 KMS 키를 삭제하는 것을 방지할 수 있습니다.
+AWS KMS와 통합된 AWS 서비스는 대칭 암호화 KMS 키를 사용하여 데이터를 보호합니다. 이러한 서비스는 비대칭 KMS 키를 사용한 암호화를 지원하지 않습니다. KMS 키가 비대칭인지 여부를 확인하는 데 도움이 필요하면 *AWS Key Management Service 개발자 안내서*의 비대칭 KMS 키 식별을 참조하세요.
+AWS KMS는 KMS 키에 대해 다음과 같은 키 사양을 지원합니다.
+
+- 대칭 암호화 키(기본값)
+  - `SYMMETRIC_DEFAULT` (AES-256-GCM)
+- HMAC 키(대칭)
+  - `HMAC_224`
+  - `HMAC_256`
+  - `HMAC_384`
+  - `HMAC_512`
+- 비대칭 RSA 키 쌍
+  - `RSA_2048`
+  - `RSA_3072`
+  - `RSA_4096`
+- NIST 권장 비대칭 타원 곡선 키 쌍
+  - `ECC_NIST_P256` (SECP256R1)를 참조하십시오.
+  - `ECC_NIST_P384` (SECP384R1)
+  - `ECC_NIST_P521` (SECP521R1)
+- 다른 비대칭 타원 곡선 키 쌍
+  - `ECC_SECG_P256K1` (secp256k1), 일반적으로 암호화폐에 사용됩니다.
+- SM2 키 페어(중국 리전만 해당)
+  - `SM2`
+    *필수 항목 *여부: 아니요  
+    _유형_: 문자열  
+    _허용되는 값_: `ECC_NIST_P256 | ECC_NIST_P384 | ECC_NIST_P521 | ECC_SECG_P256K1 | HMAC_224 | HMAC_256 | HMAC_384 | HMAC_512 | RSA_2048 | RSA_3072 | RSA_4096 | SM2 | SYMMETRIC_DEFAULT`  
+    _업데이트 필요 사항_: 바꿔 놓음
+
+`KeyUsage`  
+KMS 키를 사용할 수 있는 암호화 작업을 결정합니다. 기본값은 `ENCRYPT_DECRYPT`입니다. 이 속성은 비대칭 KMS 키 및 HMAC KMS 키에 필요합니다. `KeyUsage` KMS 키를 생성한 후에는 값을 변경할 수 없습니다.  
+ `KeyUsage` 기존 KMS 키의 속성 값을 변경하면 속성 값에 관계없이 업데이트 요청이 실패합니다 `UpdateReplacePolicy` . 이렇게 하면 변경할 수 없는 속성 값을 변경하여 실수로 KMS 키를 삭제하는 것을 방지할 수 있습니다.
+유효한 값을 하나만 선택합니다.
+
+- 대칭 암호화 KMS 키의 경우 속성을 생략하거나 `ENCRYPT_DECRYPT`.
+- RSA 키 구성 요소가 있는 비대칭 KMS 키의 경우 `ENCRYPT_DECRYPT` 또는 `SIGN_VERIFY`를 지정합니다.
+- ECC 키 구성 요소가 있는 비대칭 KMS 키의 경우 를 지정합니다 `SIGN_VERIFY`.
+- SM2(중국 리전만 해당) 키 구성 요소가 있는 비대칭 KMS 키의 경우 `ENCRYPT_DECRYPT` 또는 `SIGN_VERIFY`를 지정합니다.
+- HMAC KMS 키(HMAC KMS keys)에서 를 지정합니다`GENERATE_VERIFY_MAC`.
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열  
+  _허용되는 값_: `ENCRYPT_DECRYPT | GENERATE_VERIFY_MAC | SIGN_VERIFY`  
+  _업데이트 필요 사항_: 바꿔 놓음
+
+`MultiRegion`  
+다른 AWS 리전에서 복제할 수 있는 다중 리전 기본 키를 생성합니다. `MultiRegion` KMS 키를 생성한 후에는 값을 변경할 수 없습니다.  
+다중 리전 키가 지원되는 AWS 리전 목록은 *AWS Key Management Service 개발자 안내서*의 AWS KMS의 다중 리전 키를 참조하세요.  
+`MultiRegion` 기존 KMS 키의 속성 값을 변경하면 속성 값에 관계없이 업데이트 요청이 실패합니다 `UpdateReplacePolicy` . 이렇게 하면 변경할 수 없는 속성 값을 변경하여 실수로 KMS 키를 삭제하는 것을 방지할 수 있습니다.
+다중 리전 키의 경우 이 속성을 `true`로 설정합니다. 단일 리전 키의 경우 이 속성을 생략하거나 로 설정합니다`false`. 기본값은 `false`입니다.  
+_다중 리전 키는_ 서로 다른 AWS 리전에서 상호 운용 가능한 여러 KMS 키를 생성할 수 있는 AWS KMS 기능입니다. 이러한 KMS 키는 키 ID, 키 구성 요소 및 기타 메타데이터가 동일하기 때문에 교차 리전 호출을 수행하거나 일반 텍스트 데이터를 노출하지 않고도 한 AWS 리전에서 데이터를 암호화하고 다른 AWS 리전에서 해독하는 데 사용할 수 있습니다. 자세한 내용은 *AWS Key Management Service 개발자 안내서*의 다중 리전 키를 참조하세요.  
+대칭 암호화, HMAC 또는 비대칭 다중 리전 KMS 키를 생성할 수 있으며, 가져온 키 구성 요소를 사용하여 다중 리전 키를 생성할 수 있습니다. 그러나 사용자 지정 키 스토어에서 다중 리전 키를 생성할 수는 없습니다.  
+다른 AWS 리전에서 이 기본 키의 복제본을 생성하려면 복제본 리전의 CloudFormation 스택에 AWS::KMS::ReplicaKey 리소스를 생성합니다. 이 기본 키의 키 ARN을 지정합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Origin`  
+KMS 키에 대한 키 구성 요소의 소스입니다. KMS 키를 생성한 후에는 오리진을 변경할 수 없습니다. 기본값은 `AWS_KMS`이며, 이는 AWS KMS가 키 구성 요소를 생성함을 의미합니다.  
+키 구성 요소 없이 KMS 키를 생성하려면(가져온 키 구성 요소의 경우) 이 값을 로 설정합니다`EXTERNAL`. 키 구성 요소를 AWS KMS로 가져오는 방법에 대한 자세한 내용은 * AWS Key Management Service 개발자 안내서*의 키 구성 요소 가져오기를 참조하십시오.  
+Origin이 인 경우 무시할 수 있습니다 `ENABLED` `EXTERNAL`. 오리진이 있는 KMS 키가 `EXTERNAL` 생성될 때 키 상태는 `PENDING_IMPORT` 및 `ENABLED` 입니다`false`. 키 구성 요소를 가져온 후 `ENABLED` 로 업데이트했습니다`true`. 그런 다음 KMS 키를 암호화 작업에 사용할 수 있습니다.  
+AWS CloudFormation에서는 `Origin` 또는 값 `AWS_CLOUDHSM` 의 파라미터 생성을 `EXTERNAL_KEY_STORE` 지원하지 않습니다 .
+_허용되는 값_: `AWS_KMS` | `EXTERNAL`  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`PendingWindowInDays`  
+AWS KMS가 CloudFormation 스택에서 제거된 KMS 키를 삭제하기 전의 대기 기간(일)을 지정합니다. 7일에서 30일 사이의 값을 입력합니다. 기본값은 30일입니다.  
+CloudFormation 스택에서 KMS 키를 제거하면 AWS KMS가 KMS 키 삭제를 예약하고 필수 대기 기간을 시작합니다. `PendingWindowInDays` 속성은 대기 기간의 길이를 결정합니다. 대기 기간 동안 KMS 키의 키 상태는 `Pending Deletion` 또는 `Pending Replica Deletion`이며, 이로 인해 KMS 키가 암호화 작업에 사용되지 않습니다. 대기 기간이 만료되면 AWS KMS는 KMS 키를 영구적으로 삭제합니다.  
+AWS KMS는 복제본 키가 있는 다중 리전 기본 키를 삭제하지 않습니다. CloudFormation 스택에서 다중 리전 기본 키를 제거하면 키 상태가 로 변경 되어 `PendingReplicaDeletion` 복제하거나 암호화 작업에 사용할 수 없습니다. 이 상태는 무기한 지속될 수 있습니다. 마지막 복제본 키가 삭제되면 기본 키의 키 상태가 로 변경 `PendingDeletion` 되고 지정된 대기 기간이 `PendingWindowInDays` 시작됩니다. 이 대기 기간이 만료되면 AWS KMS가 기본 키를 삭제합니다. 자세한 내용은 *AWS Key Management Service 개발자 안내서*의 다중 리전 키 삭제를 참조하세요.  
+CloudFormation 템플릿을 사용하여 스택에서 KMS 키를 제거한 후에는 대기 기간에 관계없이 삭제를 취소할 수 없습니다. 템플릿에서 이름이 같은 KMS 키를 지정하더라도 CloudFormation에서 새 KMS 키를 생성합니다. KMS 키 삭제를 취소하려면 AWS KMS 콘솔 또는 CancelKeyDeletion 작업을 사용합니다.  
+`Pending Deletion` 및 `Pending Replica Deletion` 키 상태에 대한 자세한 내용은 AWS Key Management Service 개발자 안내서*의 키 상태: KMS 키에 미치는 영향을 참조하세요*. KMS 키 삭제에 대한 자세한 내용은 *AWS Key Management Service API Reference*의 ScheduleKeyDeletion 작업 및 AWS Key Management Service 개발자 안내서*의 KMS 키 삭제 를 참조하세요*.  
+*최소*값: 7  
+_최대_: 30  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`Tags`  
+복제본 키에 하나 이상의 태그를 할당합니다.  
+KMS 키에 태그를 지정하거나 태그를 해제하면 KMS 키에 대한 권한을 허용하거나 거부할 수 있습니다. 자세한 내용은 *AWS Key Management Service 개발자 안내서*의 AWS KMS용 ABAC를 참조하세요.
+AWS KMS의 태그에 대한 자세한 내용은 *AWS Key Management Service 개발자 안내서*의 키 태깅을 참조하세요. CloudFormation의 태그에 대한 자세한 내용은 태그 단원을 참조하십시오.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref`와 `Ref`같은 키 ID를 반환합니다 `1234abcd-12ab-34cd-56ef-1234567890ab`.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`Arn`  
+KMS 키의 Amazon 리소스 이름(ARN)입니다`arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab`.  
+KMS 키의 키 ARN에 대한 자세한 내용은 _AWS Key Management Service 개발자 안내서의 키 ARN을 참조하십시오_.
+
+`KeyId`  
+KMS 키의 키 ID(예: `1234abcd-12ab-34cd-56ef-1234567890ab`.  
+KMS 키의 키 ID에 대한 자세한 내용은 _AWS Key Management Service 개발자 안내서의 키 ID를 참조하십시오_.
+
+## 예제
+
+### 대칭 암호화 KMS 키 생성
+
+다음 예제에서는 대칭 암호화 KMS 키를 생성합니다. KMS 키에 대한 키 정책을 사용하면 `Alice` 키를 관리하고 `Bob` KMS 키를 보고 암호화 작업에 사용할 수 있습니다. 또한 AWS 계정(루트)에 키에 대한 전체 액세스 권한을 허용합니다. 이렇게 하면 둘 다 계정에서 삭제되는 경우 키에 대한 제어권을 잃 `Alice` `Bob` 는 것을 방지할 수 있습니다.
+
+#### JSON (영문)
+
+```
+"myKey": {
+        "Type": "AWS::KMS::Key",
+        "Properties": {
+            "Description": "An example symmetric encryption KMS key",
+            "EnableKeyRotation": true,
+            "PendingWindowInDays": 20,
+            "KeyPolicy": {
+                "Version": "2012-10-17",
+                "Id": "key-default-1",
+                "Statement": [
+                    {
+                        "Sid": "Enable IAM User Permissions",
+                        "Effect": "Allow",
+                        "Principal": {
+                            "AWS": "arn:aws:iam::111122223333:root"
+                        },
+                        "Action": "kms:*",
+                        "Resource": "*"
+                    },
+                    {
+                        "Sid": "Allow administration of the key",
+                        "Effect": "Allow",
+                        "Principal": {
+                            "AWS": "arn:aws:iam::111122223333:user/Alice"
+                        },
+                        "Action": [
+                            "kms:Create*",
+                            "kms:Describe*",
+                            "kms:Enable*",
+                            "kms:List*",
+                            "kms:Put*",
+                            "kms:Update*",
+                            "kms:Revoke*",
+                            "kms:Disable*",
+                            "kms:Get*",
+                            "kms:Delete*",
+                            "kms:ScheduleKeyDeletion",
+                            "kms:CancelKeyDeletion"
+                        ],
+                        "Resource": "*"
+                    },
+                    {
+                        "Sid": "Allow use of the key",
+                        "Effect": "Allow",
+                        "Principal": {
+                            "AWS": "arn:aws:iam::111122223333:user/Bob"
+                        },
+                        "Action": [
+                            "kms:DescribeKey",
+                            "kms:Encrypt",
+                            "kms:Decrypt",
+                            "kms:ReEncrypt*",
+                            "kms:GenerateDataKey",
+                            "kms:GenerateDataKeyWithoutPlaintext"
+                        ],
+                        "Resource": "*"
+                    }
+                ]
+            }
+        }
+    }
+```
+
+### 리소스 태그가 있는 대칭 암호화 KMS 키 생성
+
+다음 예제에서는 하나의 리소스 태그가 있는 대칭 암호화 KMS 키를 생성합니다.
+
+**메모**  
+KMS 키에 태그를 지정하거나 태그를 해제하면 KMS 키에 대한 권한을 허용하거나 거부할 수 있습니다. 자세한 내용은 _AWS Key Management Service 개발자 안내서의 AWS KMS용 ABAC를 참조하세요_.
+
+#### JSON (영문)
+
+```
+"myKeyWithTag": {
+        "Type": "AWS::KMS::Key",
+        "Properties": {
+            "KeyPolicy": {
+                "Version": "2012-10-17",
+                "Id": "key-default-1",
+                "Statement": [
+                    {
+                        "Sid": "Enable IAM User Permissions",
+                        "Effect": "Allow",
+                        "Principal": {
+                            "AWS": {
+                                "Fn::Join": [
+                                    "",
+                                    [
+                                        "arn:aws:iam::",
+                                        {
+                                            "Ref": "AWS::AccountId"
+                                        },
+                                        ":root"
+                                    ]
+                                ]
+                            }
+                        },
+                        "Action": "kms:*",
+                        "Resource": "*"
+                    }
+                ]
+            },
+            "Tags": [
+                {
+                    "Key": {
+                        "Ref": "Key"
+                    },
+                    "Value": {
+                        "Ref": "Value"
+                    }
+                }
+            ]
+        },
+        "Parameters": {
+            "Key": {
+                "Type": "String"
+            },
+            "Value": {
+                "Type": "String"
+            }
+        }
+    }
+```
+
+### 비대칭 KMS 키 생성
+
+다음 예제에서는 서명 및 확인을 위한 RSA 비대칭 KMS 키를 생성합니다. 비대칭 KMS 키의 경우 및 속성을 지정해야 합니다 `KeySpec` `KeyUsage` . `EnableKeyRotation` 이 속성은 생략하거나 로 설정해야 합니다 `false`.
+
+#### JSON (영문)
+
+```
+"RSASigningKey": {
+        "Type": "AWS::KMS::Key",
+        "Properties": {
+            "Description": "RSA-3072 asymmetric KMS key for signing and verification",
+            "KeySpec": "RSA_3072",
+            "KeyUsage": "SIGN_VERIFY",
+            "KeyPolicy": {
+                "Version": "2012-10-17",
+                "Id": "key-default-1",
+                "Statement": [
+                    {
+                        "Sid": "Enable IAM User Permissions",
+                        "Effect": "Allow",
+                        "Principal": {
+                            "AWS": "arn:aws:iam::111122223333:root"
+                        },
+                        "Action": "kms:*",
+                        "Resource": "*"
+                    },
+                    {
+                        "Sid": "Allow administration of the key",
+                        "Effect": "Allow",
+                        "Principal": {
+                            "AWS": "arn:aws:iam::111122223333:role/Admin"
+                        },
+                        "Action": [
+                            "kms:Create*",
+                            "kms:Describe*",
+                            "kms:Enable*",
+                            "kms:List*",
+                            "kms:Put*",
+                            "kms:Update*",
+                            "kms:Revoke*",
+                            "kms:Disable*",
+                            "kms:Get*",
+                            "kms:Delete*",
+                            "kms:ScheduleKeyDeletion",
+                            "kms:CancelKeyDeletion"
+                        ],
+                        "Resource": "*"
+                    },
+                    {
+                        "Sid": "Allow use of the key",
+                        "Effect": "Allow",
+                        "Principal": {
+                            "AWS": "arn:aws:iam::111122223333:role/Developer"
+                        },
+                        "Action": [
+                            "kms:Sign",
+                            "kms:Verify",
+                            "kms:DescribeKey"
+                        ],
+                        "Resource": "*"
+                    }
+                ]
+            }
+        }
+    }
+```
+
+### HMAC KMS 키 생성
+
+다음 예제에서는 HMAC KMS 키를 생성합니다. HMAC KMS 키의 경우 HMAC `KeySpec` 및 속성의 GENERATE_VERIFY_MAC 값을 `KeyUsage` 지정해야 합니다 . `EnableKeyRotation` 속성을 생략하거나 로 설정합니다`false`.
+
+#### JSON (영문)
+
+```
+{
+    "HMACExampleKey": {
+        "Type": "AWS::KMS::Key",
+        "Properties": {
+            "Description": "HMAC_384 key for tokens",
+            "KeySpec": "HMAC_384",
+            "KeyUsage": "GENERATE_VERIFY_MAC",
+            "KeyPolicy": {
+                "Version": "2012-10-17",
+                "Id": "key-default-1",
+                "Statement": [
+                    {
+                        "Sid": "Enable IAM User Permissions",
+                        "Effect": "Allow",
+                        "Principal": {
+                            "AWS": "arn:aws:iam::111122223333:root"
+                        },
+                        "Action": "kms:*",
+                        "Resource": "*"
+                    },
+                    {
+                        "Sid": "Allow administration of the key",
+                        "Effect": "Allow",
+                        "Principal": {
+                            "AWS": "arn:aws:iam::111122223333:role/Admin"
+                        },
+                        "Action": [
+                            "kms:Create*",
+                            "kms:Describe*",
+                            "kms:Enable*",
+                            "kms:List*",
+                            "kms:Put*",
+                            "kms:Update*",
+                            "kms:Revoke*",
+                            "kms:Disable*",
+                            "kms:Get*",
+                            "kms:Delete*",
+                            "kms:ScheduleKeyDeletion",
+                            "kms:CancelKeyDeletion"
+                        ],
+                        "Resource": "*"
+                    },
+                    {
+                        "Sid": "Allow use of the key",
+                        "Effect": "Allow",
+                        "Principal": {
+                            "AWS": "arn:aws:iam::111122223333:role/Developer"
+                        },
+                        "Action": [
+                            "kms:GenerateMac",
+                            "kms:VerifyMac",
+                            "kms:DescribeKey"
+                        ],
+                        "Resource": "*"
+                    }
+                ]
+            }
+        }
+    }
+}
+```
+
+### 다중 리전 기본 키 생성
+
+다음 예제에서는 다중 리전 기본 키를 생성합니다. 이 예제 키는 대칭 암호화 KMS 키이지만 비대칭 KMS 키 및 HMAC KMS 키의 다중 리전 버전을 생성할 수 있습니다.
+
+_다중 리전 키는_ 서로 다른 AWS 리전에서 상호 운용 가능한 여러 KMS 키를 생성할 수 있는 AWS KMS 기능입니다. 이러한 KMS 키는 키 ID, 키 구성 요소 및 기타 메타데이터가 동일하기 때문에 교차 리전 호출을 수행하거나 일반 텍스트 데이터를 노출하지 않고도 한 AWS 리전에서 데이터를 암호화하고 다른 AWS 리전에서 해독하는 데 사용할 수 있습니다. 자세한 내용은 _AWS Key Management Service 개발자 안내서의 다중 리전 키를 참조하세요_.
+
+이 기본 키를 다른 AWS 리전으로 복제하려면 AWS::KMS::ReplicaKey CloudFormation 리소스를 사용합니다.
+
+#### JSON (영문)
+
+```
+"myPrimaryKey": {
+        "Type": "AWS::KMS::Key",
+        "Properties": {
+            "Description": "An example multi-Region primary key",
+            "MultiRegion": true,
+            "EnableKeyRotation": true,
+            "PendingWindowInDays": 10,
+            "KeyPolicy": {
+                "Version": "2012-10-17",
+                "Id": "key-default-1",
+                "Statement": [
+                    {
+                        "Sid": "Enable IAM User Permissions",
+                        "Effect": "Allow",
+                        "Principal": {
+                            "AWS": "arn:aws:iam::111122223333:root"
+                        },
+                        "Action": "kms:*",
+                        "Resource": "*"
+                    },
+                    {
+                        "Sid": "Allow administration of the key",
+                        "Effect": "Allow",
+                        "Principal": {
+                            "AWS": "arn:aws:iam::111122223333:user/Alice"
+                        },
+                        "Action": [
+                            "kms:ReplicateKey",
+                            "kms:Create*",
+                            "kms:Describe*",
+                            "kms:Enable*",
+                            "kms:List*",
+                            "kms:Put*",
+                            "kms:Update*",
+                            "kms:Revoke*",
+                            "kms:Disable*",
+                            "kms:Get*",
+                            "kms:Delete*",
+                            "kms:ScheduleKeyDeletion",
+                            "kms:CancelKeyDeletion"
+                        ],
+                        "Resource": "*"
+                    },
+                    {
+                        "Sid": "Allow use of the key",
+                        "Effect": "Allow",
+                        "Principal": {
+                            "AWS": "arn:aws:iam::111122223333:user/Bob"
+                        },
+                        "Action": [
+                            "kms:DescribeKey",
+                            "kms:Encrypt",
+                            "kms:Decrypt",
+                            "kms:ReEncrypt*",
+                            "kms:GenerateDataKey",
+                            "kms:GenerateDataKeyWithoutPlaintext"
+                        ],
+                        "Resource": "*"
+                    }
+                ]
+            }
+        }
+    }
+```
+
+## 참고 항목
+
+- AWS Key Management Service 개발자 안내서*의 AWS KMS keys*.
+- CreateKeyAWS *Key Management Service API 참조*의 경우.
+- AWS Key Management Service 개발자 안내서*의 키 생성*.
+- AWS Key Management Service 개발자 안내서*의 비대칭 KMS 키 생성*.
+- AWS Key Management Service 개발자 안내서*의 HMAC KMS 키 생성*.
+- AWS Key Management Service 개발자 안내서*의 다중 리전 기본 키 생성*.

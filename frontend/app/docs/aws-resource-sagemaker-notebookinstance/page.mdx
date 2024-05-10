@@ -1,0 +1,246 @@
+# AWS::SageMaker::노트북 인스턴스
+
+리소스 `AWS::SageMaker::NotebookInstance` 는 Amazon SageMaker 노트북 인스턴스를 생성합니다. 노트북 인스턴스는 Jupyter 노트북에서 실행되는 기계 학습(ML) 컴퓨팅 인스턴스입니다. 자세한 내용은 노트북 인스턴스 사용 단원을 참조하십시오.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::SageMaker::NotebookInstance",
+  "Properties" : {
+      "AcceleratorTypes" : [ String, ... ],
+      "AdditionalCodeRepositories" : [ String, ... ],
+      "DefaultCodeRepository" : String,
+      "DirectInternetAccess" : String,
+      "InstanceMetadataServiceConfiguration" : InstanceMetadataServiceConfiguration,
+      "InstanceType" : String,
+      "KmsKeyId" : String,
+      "LifecycleConfigName" : String,
+      "NotebookInstanceName" : String,
+      "PlatformIdentifier" : String,
+      "RoleArn" : String,
+      "RootAccess" : String,
+      "SecurityGroupIds" : [ String, ... ],
+      "SubnetId" : String,
+      "Tags" : [Tag, ... ],
+      "VolumeSizeInGB" : Integer
+    }
+}
+```
+
+## 속성
+
+`AcceleratorTypes`  
+노트북 인스턴스와 연결할 Amazon Elastic Inference(EI) 인스턴스 유형 목록입니다. 현재는 하나의 인스턴스 유형만 노트북 인스턴스와 연결할 수 있습니다. 자세한 내용은 Amazon SageMaker에서 Elastic Inference 사용 단원을 참조하십시오.  
+_유효한 값 :_ `ml.eia1.medium | ml.eia1.large | ml.eia1.xlarge | ml.eia2.medium | ml.eia2.large | ml.eia2.xlarge`.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`AdditionalCodeRepositories`  
+노트북 인스턴스와 연결된 최대 3개의 Git 리포지토리 배열입니다. 이는 계정에 리소스로 저장된 Git 리포지토리의 이름이거나 AWS CodeCommit 또는 다른 Git 리포지토리에 있는 Git 리포지토리의 URL일 수 있습니다. 이러한 리포지토리는 노트북 인스턴스의 기본 리포지토리와 동일한 수준에서 복제됩니다. 자세한 내용은 Git 리포지토리를 SageMaker 노트북 인스턴스와 연결 단원을 참조하십시오.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_최대_: `3`  
+_업데이트 필요 사항_: 중단 없음
+
+`DefaultCodeRepository`  
+노트북 인스턴스와 연결된 Git 리포지토리를 기본 코드 리포지토리로 사용합니다. 계정에 리소스로 저장된 Git 리포지토리의 이름이거나, AWS CodeCommit 또는 다른 Git 리포지토리에 있는 Git 리포지토리의 URL일 수 있습니다. 노트북 인스턴스를 열면 이 리포지토리가 포함된 디렉터리에서 열립니다. 자세한 내용은 Git 리포지토리를 SageMaker 노트북 인스턴스와 연결 단원을 참조하십시오.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `1024`  
+_패턴_: '^some-address  
+_업데이트 필요 사항_: 중단 없음
+
+`DirectInternetAccess`  
+SageMaker가 노트북 인스턴스에 대한 인터넷 액세스를 제공할지 여부를 설정합니다. 이 `Disabled` 값을 이 노트북으로 설정하면 노트북 인스턴스는 VPC의 리소스에만 액세스할 수 있으며, VPC에서 NAT 게이트웨이를 구성하지 않는 한 SageMaker 훈련 및 엔드포인트 서비스에 연결할 수 없습니다.  
+자세한 내용은 노트북 인스턴스는 기본적으로 인터넷을 사용할 수 있습니다 단원을 참조하십시오. 이 매개 변수의 값은 매개 변수 `Disabled` 의 값을 설정한 경우에만 설정할 수 있습니다 `SubnetId` .  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `Disabled | Enabled`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`InstanceMetadataServiceConfiguration`  
+노트북 인스턴스의 IMDS 구성에 대한 정보  
+*필수 항목 *여부: 아니요  
+_형식_: InstanceMetadataServiceConfiguration  
+_업데이트 필요 사항_: 중단 없음
+
+`InstanceType`  
+노트북 인스턴스에 대해 시작할 ML 컴퓨팅 인스턴스의 유형입니다.  
+CloudFormation에서 노트북 인스턴스를 중지했다가 다시 시작하여 업데이트할 때 이 파라미터가 변경되면 서비스가 중단될 수 있습니다.
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_허용되는 값_: `ml.c4.2xlarge | ml.c4.4xlarge | ml.c4.8xlarge | ml.c4.xlarge | ml.c5.18xlarge | ml.c5.2xlarge | ml.c5.4xlarge | ml.c5.9xlarge | ml.c5.xlarge | ml.c5d.18xlarge | ml.c5d.2xlarge | ml.c5d.4xlarge | ml.c5d.9xlarge | ml.c5d.xlarge | ml.g4dn.12xlarge | ml.g4dn.16xlarge | ml.g4dn.2xlarge | ml.g4dn.4xlarge | ml.g4dn.8xlarge | ml.g4dn.xlarge | ml.g5.12xlarge | ml.g5.16xlarge | ml.g5.24xlarge | ml.g5.2xlarge | ml.g5.48xlarge | ml.g5.4xlarge | ml.g5.8xlarge | ml.g5.xlarge | ml.inf1.24xlarge | ml.inf1.2xlarge | ml.inf1.6xlarge | ml.inf1.xlarge | ml.m4.10xlarge | ml.m4.16xlarge | ml.m4.2xlarge | ml.m4.4xlarge | ml.m4.xlarge | ml.m5.12xlarge | ml.m5.24xlarge | ml.m5.2xlarge | ml.m5.4xlarge | ml.m5.xlarge | ml.m5d.12xlarge | ml.m5d.16xlarge | ml.m5d.24xlarge | ml.m5d.2xlarge | ml.m5d.4xlarge | ml.m5d.8xlarge | ml.m5d.large | ml.m5d.xlarge | ml.p2.16xlarge | ml.p2.8xlarge | ml.p2.xlarge | ml.p3.16xlarge | ml.p3.2xlarge | ml.p3.8xlarge | ml.p3dn.24xlarge | ml.p4d.24xlarge | ml.p4de.24xlarge | ml.r5.12xlarge | ml.r5.16xlarge | ml.r5.24xlarge | ml.r5.2xlarge | ml.r5.4xlarge | ml.r5.8xlarge | ml.r5.large | ml.r5.xlarge | ml.t2.2xlarge | ml.t2.large | ml.t2.medium | ml.t2.xlarge | ml.t3.2xlarge | ml.t3.large | ml.t3.medium | ml.t3.xlarge`  
+_업데이트 필요 사항_: 중단 없음
+
+`KmsKeyId`  
+SageMaker가 노트북 인스턴스에 연결된 스토리지 볼륨의 데이터를 암호화하는 데 사용하는 AWS Key Management Service 키의 Amazon 리소스 이름(ARN)입니다. 제공한 KMS 키를 사용하도록 설정해야 합니다. 자세한 내용은 * AWS Key Management Service 개발자 안내서*의 키 활성화 및 비활성화를 참조하십시오.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최대_: `2048`  
+_패턴_: `.*`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`LifecycleConfigName`  
+노트북 인스턴스와 연결할 수명 주기 구성의 이름입니다. 수명 주기 구성에 대한 자세한 내용은 _Amazon SageMaker 개발자 안내서의 노트북 인스턴스 사용자 지정을 참조하십시오_.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최대_: `63`  
+_패턴_: `^a-zA-Z0-9*`  
+_업데이트 필요 사항_: 중단 없음
+
+`NotebookInstanceName`  
+새 노트북 인스턴스의 이름입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최대_: `63`  
+_패턴_: `^a-zA-Z0-9*`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`PlatformIdentifier`  
+노트북 인스턴스 런타임 환경의 플랫폼 식별자입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최대_: `15`  
+_패턴_: `^(notebook-al1-v1|notebook-al2-v1|notebook-al2-v2)$`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`RoleArn`  
+ 노트북 인스턴스에서 AWS 리소스로 요청을 보내면 SageMaker가 이 역할을 맡아 사용자를 대신하여 작업을 수행합니다. SageMaker가 이러한 작업을 수행할 수 있도록 이 역할에 필요한 권한을 부여해야 합니다. 정책은 SageMaker 서비스 보안 주체(sagemaker.amazonaws.com) 권한이 이 역할을 수임할 수 있도록 허용해야 합니다. 자세한 내용은 SageMaker 역할 단원을 참조하십시오.  
+이 역할을 SageMaker에 전달할 수 있으려면 이 API의 호출자에게 권한이 있어야 합니다 `iam:PassRole` .
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `20`  
+_최대_: `2048`  
+_패턴_: `^arn:aws[a-z-]*:iam::d{12}:role/?[a-zA-Z_0-9+=,.@-_/]+$`  
+_업데이트 필요 사항_: 중단 없음
+
+`RootAccess`  
+노트북 인스턴스의 사용자에 대해 루트 액세스가 활성화되었는지 또는 비활성화되었는지 여부입니다. 기본값은 `Enabled`입니다.  
+수명 주기 구성에는 노트북 인스턴스를 설정할 수 있는 루트 액세스 권한이 필요합니다. 이 때문에 노트북 인스턴스와 연결된 수명 주기 구성은 사용자에 대한 루트 액세스를 비활성화하더라도 항상 루트 액세스로 실행됩니다.
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `Disabled | Enabled`  
+_업데이트 필요 사항_: 중단 없음
+
+`SecurityGroupIds`  
+VPC 보안 그룹 ID(sg-xxxxxxxx 형식)입니다. 보안 그룹은 서브넷에 지정된 것과 동일한 VPC에 대한 것이어야 합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_최대_: `5`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`SubnetId`  
+ML 컴퓨팅 인스턴스에서 연결하려는 VPC의 서브넷 ID입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최대_: `32`  
+_패턴_: `[-0-9a-zA-Z]+`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Tags`  
+이 리소스에 적용할 키-값 쌍 목록입니다.  
+자세한 내용은 리소스 태그 및 비용 할당 태그 사용을 참조하십시오.  
+나중에 API를 사용하여 태그를 추가할 수 있습니다 `CreateTags` .  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_최대_: `50`  
+_업데이트 필요 사항_: 중단 없음
+
+`VolumeSizeInGB`  
+노트북 인스턴스에 연결할 ML 스토리지 볼륨의 크기(GB)입니다. 기본값은 5GB입니다.  
+CloudFormation에서 노트북 인스턴스를 중지했다가 다시 시작하여 업데이트할 때 이 파라미터가 변경되면 서비스가 중단될 수 있습니다.
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_최소_: `5`  
+_최대_: `16384`  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`노트북 인스턴스의 Amazon 리소스 이름(ARN)을 반환합니다 `arn:aws:sagemaker:us-west-2:012345678901:notebook-instance/mynotebookinstance`.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+`Fn::GetAtt` 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+####
+
+`NotebookInstanceName`  
+노트북 인스턴스의 이름(예: `MyNotebookInstance`.
+
+## 예제
+
+### SageMaker 노트북 인스턴스 예제
+
+다음 예제에서는 노트북 인스턴스를 생성합니다.
+
+#### JSON (영문)
+
+```
+{
+    "Description": "Create Basic Notebook",
+    "Resources": {
+        "BasicNotebookInstance": {
+            "Type": "AWS::SageMaker::NotebookInstance",
+            "Properties": {
+                "InstanceType": "ml.t2.large",
+                "RoleArn": {
+                    "Fn::GetAtt": [
+                        "ExecutionRole",
+                        "Arn"
+                    ]
+                }
+            }
+        },
+        "ExecutionRole": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+                "AssumeRolePolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Effect": "Allow",
+                            "Principal": {
+                                "Service": [
+                                    "sagemaker.amazonaws.com"
+                                ]
+                            },
+                            "Action": [
+                                "sts:AssumeRole"
+                            ]
+                        }
+                    ]
+                },
+                "Path": "/",
+                "ManagedPolicyArns": [
+                    {
+                        "Fn::Sub": "arn:${AWS::Partition}:iam::aws:policy/AmazonSageMakerFullAccess"
+                    }
+                ]
+            }
+        }
+    },
+    "Outputs": {
+        "BasicNotebookInstanceId": {
+            "Value": {
+                "Ref": "BasicNotebookInstance"
+            }
+        }
+    }
+}
+```

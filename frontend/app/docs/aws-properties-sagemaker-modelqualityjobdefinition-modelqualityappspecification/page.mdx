@@ -1,0 +1,74 @@
+# AWS::SageMaker::ModelQualityJobDefinition ModelQualityApp사양
+
+모니터링 작업에 대한 컨테이너 이미지 구성 개체입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ContainerArguments" : [ String, ... ],
+  "ContainerEntrypoint" : [ String, ... ],
+  "Environment" : {Key: Value, ...},
+  "ImageUri" : String,
+  "PostAnalyticsProcessorSourceUri" : String,
+  "ProblemType" : String,
+  "RecordPreprocessorSourceUri" : String
+}
+```
+
+## 속성
+
+`ContainerArguments`  
+모니터링 작업을 실행하는 데 사용되는 컨테이너에 대한 인수 배열입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_최대_: `50`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ContainerEntrypoint`  
+모니터링 작업이 실행하는 컨테이너의 진입점을 지정합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_최대_: `100`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Environment`  
+모니터링 작업이 실행되는 컨테이너의 환경 변수를 설정합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 맵  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ImageUri`  
+모니터링 작업이 실행하는 컨테이너 이미지의 주소입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최대_: `255`  
+_패턴_: `.*`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`PostAnalyticsProcessorSourceUri`  
+분석이 수행된 후 호출되는 스크립트에 대한 Amazon S3 URI입니다. 기본 제공(자사) 컨테이너에만 적용됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최대_: `1024`  
+_패턴_: `^(https|s3)://([^/]+)/?(.*)$`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ProblemType`  
+모니터링 작업이 모니터링하는 모델의 기계 학습 문제 유형입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_허용되는 값_: `BinaryClassification | MulticlassClassification | Regression`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`RecordPreprocessorSourceUri`  
+분석을 실행하기 전에 행당 호출되는 스크립트에 대한 Amazon S3 URI입니다. 페이로드를 base64로 디코딩하고 기본 제공 컨테이너가 변환된 데이터를 사용할 수 있도록 평면화된 json으로 변환할 수 있습니다. 기본 제공(자사) 컨테이너에만 적용됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최대_: `1024`  
+_패턴_: `^(https|s3)://([^/]+)/?(.*)$`  
+_업데이트 필요 사항_: 바꿔 놓음

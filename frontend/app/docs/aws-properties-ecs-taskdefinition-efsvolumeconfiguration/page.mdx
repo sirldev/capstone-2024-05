@@ -1,0 +1,53 @@
+# AWS::ECS::태스크 정의 EFSVolumeConfiguration
+
+이 파라미터는 태스크 스토리지에 Amazon Elastic File System 파일 시스템을 사용할 때 지정됩니다. 자세한 내용은 _Amazon Elastic Container Service 개발자 안내서의 Amazon EFS 볼륨을 참조하세요_.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "AuthorizationConfig" : AuthorizationConfig,
+  "FilesystemId" : String,
+  "RootDirectory" : String,
+  "TransitEncryption" : String,
+  "TransitEncryptionPort" : Integer
+}
+```
+
+## 속성
+
+`AuthorizationConfig`  
+Amazon EFS 파일 시스템에 대한 권한 부여 구성 세부 정보입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: AuthorizationConfig  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`FilesystemId`  
+사용할 Amazon EFS 파일 시스템 ID입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`RootDirectory`  
+호스트 내에서 루트 디렉터리로 탑재할 Amazon EFS 파일 시스템 내의 디렉터리입니다. 이 파라미터를 생략하면 Amazon EFS 볼륨의 루트가 사용됩니다. 지정 `/` 하면 이 매개 변수를 생략하는 것과 같은 효과가 있습니다.  
+EFS 액세스 포인트가 에 지정된 경우 `authorizationConfig`루트 디렉터리 매개 변수를 생략하거나 `/` EFS 액세스 포인트에 설정된 경로를 적용할 수 있도록 설정해야 합니다.
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`TransitEncryption`  
+Amazon ECS 호스트와 Amazon EFS 서버 간에 전송 중인 Amazon EFS 데이터에 암호화를 사용할지 여부를 결정합니다. Amazon EFS IAM 권한 부여를 사용하는 경우 전송 암호화를 켜야 합니다. 이 매개 변수를 생략하면 기본값이 `DISABLED` 사용됩니다. 자세한 내용은 _Amazon Elastic File System 사용 설명서의 전송 중 데이터 암호화를 참조하세요_.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `DISABLED | ENABLED`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`TransitEncryptionPort`  
+Amazon ECS 호스트와 Amazon EFS 서버 간에 암호화된 데이터를 전송할 때 사용할 포트입니다. 전송 중 암호화 포트를 지정하지 않으면 Amazon EFS 탑재 헬퍼가 사용하는 포트 선택 전략이 사용됩니다. 자세한 내용은 _Amazon Elastic File System 사용 설명서의 EFS 탑재 헬퍼를 참조하세요_.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 바꿔 놓음

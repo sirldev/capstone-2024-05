@@ -1,0 +1,30 @@
+# AWS::EC2::SpotFleet BaselineEbsBandwidthMbpsRequest
+
+Amazon EBS에 대한 최소 및 최대 기준 대역폭(Mbps)입니다. 자세한 내용은 _Amazon EC2 사용 설명서의 Amazon EBS 최적화 인스턴스를 참조하세요_.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Max" : Integer,
+  "Min" : Integer
+}
+```
+
+## 속성
+
+`Max`  
+최대 기준 대역폭(Mbps)입니다. 최대 제한을 지정하지 않으려면 이 매개 변수를 생략합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Min`  
+최소 기준 대역폭(Mbps)입니다. 최소 제한을 지정하지 않으려면 이 매개 변수를 생략합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 바꿔 놓음

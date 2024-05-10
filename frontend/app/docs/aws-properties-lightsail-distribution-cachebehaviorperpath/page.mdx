@@ -1,0 +1,61 @@
+# AWS::Lightsail::D istribution CacheBehaviorPerPath
+
+`CacheBehaviorPerPath` 은 AWS::Lightsail::D istribution 리소스의 속성입니다. Amazon Lightsail 콘텐츠 전송 네트워크(CDN) 배포의 경로별 캐시 동작에 대해 설명합니다.
+
+경로별 캐시 동작을 사용하여 배포의 기본 캐시 동작을 재정의하거나 배포에 예외를 추가할 수 있습니다. 예를 들어, 를 `CacheBehavior` 로 `cache` 설정하면 경로별 캐시 동작을 사용하여 배포에서 캐싱할 디렉터리, 파일 또는 파일 유형을 지정할 수 있습니다. 배포가 지정된 디렉터리, 파일 또는 파일 형식을 캐싱하지 않도록 하려면 경로별 캐시 동작을 로 설정합니다`dont-cache`.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Behavior" : String,
+  "Path" : String
+}
+```
+
+## 속성
+
+`Behavior` 지정된 경로에 대한 캐시 동작입니다.  
+다음과 같은 경로별 캐시 동작 중 하나를 지정할 수 있습니다.
+
+- ** `cache` ** - 이 동작은 지정된 경로를 캐시합니다.
+- ** `dont-cache` ** - 이 동작은 지정된 경로를 캐시하지 않습니다.
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열  
+  _허용되는 값_: `cache | dont-cache`  
+  _업데이트 필요 사항_: 중단 없음
+
+`Path`  
+캐시하거나 캐시하지 않을 디렉터리 또는 파일의 경로입니다. 별표 기호를 사용하여 와일드카드 디렉터리(`path/to/assets/*`)와 파일 형식(`*.html`, , `*jpg` `*js`)을 지정합니다. 디렉터리와 파일 경로는 대소문자를 구분합니다.  
+예제:
+
+- 인스턴스에서 실행 중인 Apache 웹 서버의 문서 루트에 있는 모든 파일을 캐시하려면 다음을 지정합니다.
+
+  `var/www/html/`
+
+- Apache 웹 서버의 문서 루트에 있는 인덱스 페이지만 캐시하려면 다음 파일을 지정합니다.
+
+  `var/www/html/index.html`
+
+- Apache 웹 서버의 문서 루트에 있는 .html 파일만 캐시하려면 다음을 지정합니다.
+
+  `var/www/html/*.html`
+
+- Apache 웹 서버 문서 루트의 images 하위 디렉토리에 있는 .jpg, .png 및 .gif 파일만 캐시하려면 다음을 지정합니다.
+
+  `var/www/html/images/*.jpg`
+
+  `var/www/html/images/*.png`
+
+  `var/www/html/images/*.gif`
+
+  Apache 웹 서버 문서 루트의 images 하위 디렉토리에 있는 모든 파일을 캐시하려면 다음을 지정합니다.
+
+  `var/www/html/images/`
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열  
+  _업데이트 필요 사항_: 중단 없음

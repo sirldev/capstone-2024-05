@@ -1,0 +1,30 @@
+# AWS::EC2::LaunchTemplate 크레딧 사양
+
+T2, T3 또는 T3a 인스턴스의 CPU 사용량에 대한 크레딧 옵션을 지정합니다.
+
+`CreditSpecification` 은 AWS::EC2::LaunchTemplate LaunchTemplateData의 속성입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "CpuCredits" : String
+}
+```
+
+## 속성
+
+`CpuCredits`  
+T 인스턴스의 CPU 사용량에 대한 크레딧 옵션입니다.  
+유효한 값: `standard` | `unlimited`  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+## 참고 항목
+
+- Amazon EC2 API Reference\* \*의 CreditSpecificationRequest

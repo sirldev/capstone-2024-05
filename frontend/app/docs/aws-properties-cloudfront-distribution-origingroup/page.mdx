@@ -1,0 +1,37 @@
+# AWS::CloudFront::D istribution 오리진 그룹
+
+오리진 그룹에는 두 개의 오리진(기본 오리진과 장애 조치할 두 번째 오리진)과 사용자가 지정한 장애 조치 기준이 포함됩니다. CloudFront에서 오리진 장애 조치를 지원하기 위해 오리진 그룹을 생성합니다. 배포를 생성하거나 업데이트할 때 단일 오리진 대신 오리진 그룹을 지정할 수 있으며, CloudFront는 사용자가 선택한 장애 조치 조건에 따라 기본 오리진에서 두 번째 오리진으로 장애 조치합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "FailoverCriteria" : OriginGroupFailoverCriteria,
+  "Id" : String,
+  "Members" : OriginGroupMembers
+}
+```
+
+## 속성
+
+`FailoverCriteria`  
+원본 그룹의 장애 조치(failover) 조건에 대한 정보를 포함하는 복합 형식입니다.  
+_필수 항목 여부_: 예  
+_형식_: OriginGroupFailoverCriteria  
+_업데이트 필요 사항_: 중단 없음
+
+`Id`  
+원본 그룹의 ID입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Members`  
+원본 그룹의 원본에 대한 정보를 포함하는 복합 형식입니다.  
+_필수 항목 여부_: 예  
+_형식_: OriginGroupMembers  
+_업데이트 필요 사항_: 중단 없음

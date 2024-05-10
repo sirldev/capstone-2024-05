@@ -1,0 +1,125 @@
+# AWS::S3Outposts::버킷 정책
+
+이 리소스는 Amazon S3 on Outposts 버킷에 버킷 정책을 적용합니다.
+
+S3 on Outposts 버킷을 소유한 AWS 계정의 루트 사용자 이외의 자격 증명을 사용하는 경우, 이 리소스를 사용하려면 호출 자격 증명에 `s3-outposts:PutBucketPolicy` 지정된 Outposts 버킷에 대한 권한이 있어야 하며 버킷 소유자의 계정에 속 해야 합니다.
+
+권한이 없는 경우 `s3-outposts:PutBucketPolicy` S3 on Outposts에서 오류를 반환합니다 `403 Access Denied` .
+
+**중요하다**  
+Outposts 버킷을 소유한 AWS 계정의 루트 사용자는 \*\* 정책에서 루트 사용자가 이 리소스에 대한 작업을 수행할 수 있는 기능을 명시적으로 거부하더라도 항상 이 리소스를 사용할 수 있습니다.
+
+자세한 내용은 이 안내서의 AWS::IAM::P olicy PolicyDocument 리소스 설명 및 액세스 정책 언어 개요를 참조하세요.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::S3Outposts::BucketPolicy",
+  "Properties" : {
+      "Bucket" : String,
+      "PolicyDocument" : Json
+    }
+}
+```
+
+## 속성
+
+`Bucket`  
+정책이 적용되는 Amazon S3 Outposts 버킷의 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`PolicyDocument`  
+ 지정된 버킷에 추가할 수 있는 권한이 포함된 정책 문서입니다. IAM에서는 정책 문서를 JSON 형식으로 제공해야 합니다. 자세한 내용은 이 안내서의 AWS::IAM::P olicy PolicyDocument 리소스 설명 및 액세스 정책 언어 개요를 참조하세요.  
+_필수 항목 여부_: 예  
+_형식_: Json  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`S3 on Outposts 버킷 Amazon 리소스 이름(ARN)이 반환됩니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+## 예제
+
+### 버킷 정책을 사용하여 Amazon S3 on Outposts 버킷 생성
+
+다음 예제에서는 Amazon S3 on Outposts 버킷을 생성하고 해당 버킷에 버킷 정책을 추가합니다.
+
+**메모**  
+버킷에 버킷 정책을 추가하려면 버킷 정책을 추가하기 전에 또는 동시에 Outposts 버킷을 생성해야 합니다.
+
+#### JSON (영문)
+
+```
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "Bucket with no tags + Bucket Policy",
+    "Resources": {
+        "ExampleS3OutpostsBucket": {
+            "Type": "AWS::S3Outposts::Bucket",
+            "Properties": {
+                "BucketName": "DOC-EXAMPLE-BUCKET",
+                "OutpostID": "op-01ac5d28a6a232904"
+            }
+        },
+        "ExampleS3OutpostsBucketPolicy": {
+            "Type": "AWS::S3Outposts::BucketPolicy",
+            "Properties": {
+                "Bucket": {
+                    "Ref": "ExampleS3OutpostsBucket"
+                },
+                "PolicyDocument": {
+                    "Version": "2012-10-17",
+                    "ID": "BucketPolicy",
+                    "Statement": [
+                        {
+                            "Sid": "st1",
+                            "Effect": "Allow",
+                            "Principal": {
+                                "AWS": "arn:aws:iam::123456789012:root"
+                            },
+                            "Action": "s3-outposts:*",
+                            "Resource": "arn:aws:s3-outposts:us-east-1:123456789012:outpost/op-01ac5d28a6a232904/bucket/DOC-EXAMPLE-BUCKET"
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "Outputs": {
+        "ExampleS3OutpostsBucketARN": {
+            "Description": "The ARN of ExampleS3OutpostsBucket",
+            "Value": {
+                "Ref": "ExampleS3OutpostsBucket"
+            }
+        },
+        "ExampleS3OutpostsBucketPolicyARN": {
+            "Description": "The ARN of the BucketPolicy",
+            "Value": {
+                "Ref": "ExampleS3OutpostsBucketPolicy"
+            }
+        },
+        "ExampleS3OutpostsStackID": {
+            "Description": "The stack ID",
+            "Value": {
+                "Ref": "AWS::StackID"
+            },
+            "Export": {
+                "Name": {
+                    "Fn::Sub": "${AWS::StackName}-StackID"
+                }
+            }
+        }
+    }
+}
+```

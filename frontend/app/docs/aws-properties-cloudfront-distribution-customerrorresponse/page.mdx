@@ -1,0 +1,63 @@
+# AWS::CloudFront::D istribution CustomErrorResponse
+
+다음을 제어하는 복합 형식입니다.
+
+- CloudFront가 최종 사용자에게 응답을 반환하기 전에 4xx 및 5xx 범위의 HTTP 상태 코드를 사용자 지정 오류 메시지로 바꾸는지 여부입니다.
+- CloudFront에서 4xx 및 5xx 범위의 HTTP 상태 코드를 캐싱하는 기간입니다.
+
+사용자 지정 오류 페이지에 대한 자세한 내용은 _Amazon CloudFront 개발자 안내서의 오류 응답 사용자 지정을 참조하십시오_.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ErrorCachingMinTTL" : Double,
+  "ErrorCode" : Integer,
+  "ResponseCode" : Integer,
+  "ResponsePagePath" : String
+}
+```
+
+## 속성
+
+`ErrorCachingMinTTL`  
+CloudFront에서 에 지정된 HTTP 상태 코드를 캐싱할 최소 시간(초)입니다`ErrorCode`. 이 기간이 경과하면 CloudFront는 오리진을 쿼리하여 오류를 일으킨 문제가 해결되었는지, 요청된 객체를 사용할 수 있는지 확인합니다.  
+자세한 내용은 _Amazon CloudFront 개발자 안내서의 오류 응답 사용자 지정을 참조하십시오_.  
+*필수 항목 *여부: 아니요  
+_유형_: 더블  
+_업데이트 필요 사항_: 중단 없음
+
+`ErrorCode`  
+사용자 지정 오류 페이지 및/또는 캐싱 기간을 지정하려는 HTTP 상태 코드입니다.  
+_필수 항목 여부_: 예  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`ResponseCode` CloudFront에서 사용자 지정 오류 페이지와 함께 최종 사용자에게 반환할 HTTP 상태 코드입니다. CloudFront에서 오리진이 CloudFront에 반환한 상태 코드와 다른 상태 코드를 반환하도록 하는 데에는 다음과 같은 여러 가지 이유가 있습니다.
+
+- 일부 인터넷 장치(예: 일부 방화벽 및 회사 프록시)는 HTTP 4xx 및 5xx를 가로채서 응답이 최종 사용자에게 반환되지 않도록 합니다. 를 대체하면 `200`일반적으로 응답이 가로채지 않습니다.
+- 다른 클라이언트 오류 또는 서버 오류를 구분하는 데 신경 쓰지 않는 경우 `400` 모든 4xx 또는 5xx 오류에 대해`500` or `ResponseCode` 를 지정할 수 있습니다.
+- `200` 고객이 웹 사이트가 다운되었다는 사실을 알 수 없도록 상태 코드(OK) 및 정적 웹 사이트를 반환할 수 있습니다.
+  에 대한 값을 지정하는 `ResponseCode`경우 에 대한 값도 지정해야 합니다 `ResponsePagePath`.  
+  _필수_: 조건부  
+  _유형_: Integer  
+  _업데이트 필요 사항_: 중단 없음
+
+`ResponsePagePath`  
+오리진에서 로 지정된 HTTP 상태 코드를 반환할 때 CloudFront에서 최종 사용자에게 반환할 사용자 지정 오류 페이지의 경로 `ErrorCode`입니다 `/4xx-errors/403-forbidden.html`. 객체와 사용자 지정 오류 페이지를 서로 다른 위치에 저장하려면 배포에 다음과 같은 캐시 동작이 포함되어야 합니다.
+
+- 의 값은 `PathPattern` 사용자 지정 오류 메시지의 경로와 일치합니다. 예를 들어, 4xx 오류에 대한 사용자 지정 오류 페이지를 Amazon S3 버킷의 디렉터리에 저장했다고 가정해 보겠습니다 `/4xx-errors`. 배포에는 경로 패턴이 사용자 지정 오류 페이지에 대한 요청을 해당 위치로 라우팅하는 캐시 동작이 포함되어야 합니다(예: `/4xx-errors/*`).
+- value of는 `TargetOriginId` `ID` 사용자 지정 오류 페이지를 포함하는 원본에 대한 요소의 값을 지정합니다.
+  에 대한 값을 지정하는 `ResponsePagePath`경우 에 대한 값도 지정해야 합니다 `ResponseCode`.  
+  사용자 지정 오류 페이지는 Amazon S3 버킷에 저장하는 것이 좋습니다. HTTP 서버에 사용자 지정 오류 페이지를 저장하고 서버가 5xx 오류를 반환하기 시작하는 경우, 오리진 서버를 사용할 수 없기 때문에 CloudFront에서 최종 사용자에게 반환하려는 파일을 가져올 수 없습니다.  
+  _필수_: 조건부  
+  _유형_: 문자열  
+  _업데이트 필요 사항_: 중단 없음
+
+## 참고 항목
+
+- Amazon CloudFront API Reference\* \*의 CustomErrorResponse

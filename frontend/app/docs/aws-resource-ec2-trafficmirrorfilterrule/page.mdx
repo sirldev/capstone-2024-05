@@ -1,0 +1,143 @@
+# AWS::EC2::트래픽 미러 필터 규칙
+
+트래픽 미러 필터 규칙을 만듭니다.
+
+트래픽 미러 규칙은 미러링할 트래픽 미러 소스 트래픽을 정의합니다.
+
+규칙을 만들 때 트래픽 미러 필터 ID가 필요합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::EC2::TrafficMirrorFilterRule",
+  "Properties" : {
+      "Description" : String,
+      "DestinationCidrBlock" : String,
+      "DestinationPortRange" : TrafficMirrorPortRange,
+      "Protocol" : Integer,
+      "RuleAction" : String,
+      "RuleNumber" : Integer,
+      "SourceCidrBlock" : String,
+      "SourcePortRange" : TrafficMirrorPortRange,
+      "TrafficDirection" : String,
+      "TrafficMirrorFilterId" : String
+    }
+}
+```
+
+## 속성
+
+`Description`  
+트래픽 미러 규칙에 대한 설명입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`DestinationCidrBlock`  
+트래픽 미러 규칙에 할당할 대상 CIDR 블록입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`DestinationPortRange`  
+대상 포트 범위입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: TrafficMirrorPortRange  
+_업데이트 필요 사항_: 중단 없음
+
+`Protocol`  
+트래픽 미러 규칙에 할당할 프로토콜(예: UDP)입니다.  
+프로토콜 값에 대한 자세한 내용은 IANA(Internet Assigned Numbers Authority) 웹 사이트의 프로토콜 번호를 참조하십시오.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`RuleAction`  
+필터링된 트래픽에 대해 수행할 작업입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_허용되는 값_: `accept | reject`  
+_업데이트 필요 사항_: 중단 없음
+
+`RuleNumber`  
+트래픽 미러 규칙의 번호입니다. 이 번호는 지정된 방향의 각 트래픽 미러 규칙에 대해 고유해야 합니다. 규칙은 규칙 번호에 따라 오름차순으로 처리됩니다.  
+_필수 항목 여부_: 예  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`SourceCidrBlock`  
+트래픽 미러 규칙에 할당할 소스 CIDR 블록입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`SourcePortRange`  
+원본 포트 범위입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: TrafficMirrorPortRange  
+_업데이트 필요 사항_: 중단 없음
+
+`TrafficDirection`  
+트래픽의 유형입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_허용되는 값_: `egress | ingress`  
+_업데이트 필요 사항_: 중단 없음
+
+`TrafficMirrorFilterId`  
+이 규칙과 연결된 필터의 ID입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`트래픽 미러 필터 규칙의 ID를 반환합니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+## 예제
+
+### 인바운드 UDP 트래픽에 대한 트래픽 미러 필터 규칙 만들기
+
+UDP 트래픽에 대한 필터 규칙입니다.
+
+#### JSON (영문)
+
+```
+{
+  "SampleTrafficMirrorFilterRule": {
+    "Type": "AWS::EC2::TrafficMirrorFilterRule",
+    "Properties": {
+      "Description": "Example traffic mirror filter rule",
+      "TrafficMirrorFilterId": "tmf-04812ff784EXAMPLE",
+      "TrafficDirection": "ingress",
+      "RuleNumber": 10,
+      "DestinationCidrBlock": "10.0.0.0/16",
+      "SourceCidrBlock": "10.0.0.0/16",
+      "RuleAction": "accept",
+      "Protocol": 17,
+      "SourcePortRange": {
+        "FromPort": 10,
+        "ToPort": 50
+      },
+      "DestinationPortRange": {
+        "FromPort": 50,
+        "ToPort": 100
+      }
+    }
+  }
+}
+```
+
+## 참고 항목
+
+- 트래픽 미러링*의 트래픽 미러 필터 및 필터 규칙 *
+- CreateTrafficMirrorFilterRule의 _Amazon EC2 API 참조_

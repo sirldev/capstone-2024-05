@@ -1,0 +1,32 @@
+# AWS::Lightsail::Container ContainerService배포
+
+`ContainerServiceDeployment` 은 AWS::Lightsail::Container 리소스의 속성입니다. 컨테이너 서비스의 컨테이너 배포 구성에 대해 설명합니다.
+
+배포는 컨테이너 서비스에 배포되는 컨테이너의 설정(예: 포트 및 시작 명령)을 지정합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Containers" : [ Container, ... ],
+  "PublicEndpoint" : PublicEndpoint
+}
+```
+
+## 속성
+
+`Containers`  
+배포의 컨테이너에 대한 구성을 설명하는 개체입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 컨테이너 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`PublicEndpoint`  
+배포의 끝점을 설명하는 개체입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: PublicEndpoint  
+_업데이트 필요 사항_: 중단 없음

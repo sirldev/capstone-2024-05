@@ -1,0 +1,67 @@
+# AWS::CloudFront::CachePolicy CachePolicyConfig
+
+캐시 정책 구성입니다.
+
+이 구성은 다음을 결정합니다.
+
+- CloudFront가 캐시 키에 포함하는 값입니다. 이러한 값에는 HTTP 헤더, 쿠키 및 URL 쿼리 문자열이 포함될 수 있습니다. CloudFront는 캐시 키를 사용하여 최종 사용자에게 반환할 수 있는 객체를 캐시에서 찾습니다.
+- 객체를 CloudFront 캐시에 유지하려는 기본, 최소 및 최대 TTL(Time to Live) 값입니다.
+
+캐시 키에 포함된 헤더, 쿠키 및 쿼리 문자열은 CloudFront가 오리진에 보내는 요청에도 포함됩니다. CloudFront는 캐시에서 요청의 캐시 키와 일치하는 유효한 객체를 찾을 수 없을 때 요청을 보냅니다. 오리진에 값을 전송하되 * 캐시 키에 포함*하지 않으려면 `OriginRequestPolicy`.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Comment" : String,
+  "DefaultTTL" : Double,
+  "MaxTTL" : Double,
+  "MinTTL" : Double,
+  "Name" : String,
+  "ParametersInCacheKeyAndForwardedToOrigin" : ParametersInCacheKeyAndForwardedToOrigin
+}
+```
+
+## 속성
+
+`Comment`  
+캐시 정책을 설명하는 주석입니다. 주석은 128자를 초과할 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`DefaultTTL`  
+객체가 업데이트되었는지 확인하기 위해 CloudFront에서 오리진에 다른 요청을 보내기 전에 객체를 CloudFront 캐시에 유지하려는 기본 시간(초)입니다. CloudFront에서는 오리진이 객체와 함께 헤더를 전송하거나 헤더하지 않는 경우에만 이 값을 객체의 TTL(Time to Live)로 사용합니다 ** `Cache-Control` `Expires` . 자세한 내용은 Amazon CloudFront 개발자 안내서의 콘텐츠가 엣지 캐시에 머무는 기간(만료) 관리를 참조하십시오**.  
+이 필드의 기본값은 86400초(1일)입니다. 의 값이 `MinTTL` 86400초를 초과하는 경우 이 필드의 기본값은 의 값과 같습니다`MinTTL`.  
+_필수 항목 여부_: 예  
+_유형_: 더블  
+_업데이트 필요 사항_: 중단 없음
+
+`MaxTTL`  
+객체가 업데이트되었는지 확인하기 위해 CloudFront에서 오리진에 다른 요청을 보내기 전에 객체가 CloudFront 캐시에 유지되는 최대 시간(초)입니다. CloudFront는 오리진이 `Cache-Control` `Expires` 객체와 함께 전송하거나 헤더를 보낼 때만 이 값을 사용합니다. 자세한 내용은 Amazon CloudFront 개발자 안내서의 콘텐츠가 엣지 캐시에 머무는 기간(만료) 관리를 참조하십시오\**.  
+이 필드의 기본값은 31536000초(1년)입니다. `MinTTL` or `DefaultTTL` 값이 31536000초보다 크면 이 필드의 기본값은 의 값과 같습니다`DefaultTTL`.  
+*필수 항목 여부*: 예  
+*유형*: 더블  
+*업데이트 필요 사항\*: 중단 없음
+
+`MinTTL`  
+객체가 업데이트되었는지 확인하기 위해 CloudFront에서 오리진에 다른 요청을 보내기 전에 객체를 CloudFront 캐시에 유지하려는 최소 시간(초)입니다. 자세한 내용은 Amazon CloudFront 개발자 안내서의 콘텐츠가 엣지 캐시에 머무는 기간(만료) 관리를 참조하십시오\**.  
+*필수 항목 여부*: 예  
+*유형*: 더블  
+*업데이트 필요 사항\*: 중단 없음
+
+`Name`  
+캐시 정책을 식별하기 위한 고유한 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`ParametersInCacheKeyAndForwardedToOrigin`  
+캐시 키에 포함할 HTTP 헤더, 쿠키 및 URL 쿼리 문자열입니다. 캐시 키에 포함된 값은 CloudFront에서 오리진에 보내는 요청에도 포함됩니다.  
+_필수 항목 여부_: 예  
+_형식_: ParametersInCacheKeyAndForwardedToOrigin  
+_업데이트 필요 사항_: 중단 없음

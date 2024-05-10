@@ -1,0 +1,54 @@
+# AWS::SageMaker::ModelPackage 추론 사양
+
+학습 작업이 실행된 후 추론 생성을 수행하는 방법을 정의합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Containers" : [ ModelPackageContainerDefinition, ... ],
+  "SupportedContentTypes" : [ String, ... ],
+  "SupportedRealtimeInferenceInstanceTypes" : [ String, ... ],
+  "SupportedResponseMIMETypes" : [ String, ... ],
+  "SupportedTransformInstanceTypes" : [ String, ... ]
+}
+```
+
+## 속성
+
+`Containers`  
+추론 코드가 포함된 도커 이미지의 Amazon ECR 레지스트리 경로입니다.  
+_필수 항목 여부_: 예  
+_형식_: ModelPackageContainerDefinition 목록  
+_최대_: `15`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`SupportedContentTypes`  
+입력 데이터에 대해 지원되는 MIME 유형입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`SupportedRealtimeInferenceInstanceTypes`  
+실시간으로 추론을 생성하는 데 사용되는 인스턴스 유형 목록입니다.  
+이 매개변수는 버전이 지정되지 않은 모델의 경우 필수이며 버전이 지정된 모델의 경우 선택 사항입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`SupportedResponseMIMETypes`  
+출력 데이터에 대해 지원되는 MIME 유형입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`SupportedTransformInstanceTypes`  
+변환 작업을 실행할 수 있거나 엔드포인트를 배포할 수 있는 인스턴스 유형의 목록입니다.  
+이 매개변수는 버전이 지정되지 않은 모델의 경우 필수이며 버전이 지정된 모델의 경우 선택 사항입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 바꿔 놓음

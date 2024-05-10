@@ -1,0 +1,44 @@
+# AWS::RedshiftServerless::작업 그룹 네트워크 인터페이스
+
+Amazon Redshift Serverless 관리형 VPC 엔드포인트의 네트워크 인터페이스에 대한 정보를 포함합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "AvailabilityZone" : String,
+  "NetworkInterfaceId" : String,
+  "PrivateIpAddress" : String,
+  "SubnetId" : String
+}
+```
+
+## 속성
+
+`AvailabilityZone`  
+가용 영역입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`NetworkInterfaceId`  
+네트워크 인터페이스의 고유 식별자입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`PrivateIpAddress`  
+서브넷 내 네트워크 인터페이스의 IPv4 주소입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`SubnetId`  
+서브넷의 고유 식별자입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음

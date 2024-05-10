@@ -1,0 +1,37 @@
+# AWS::ElastiCache::GlobalReplicationGroup GlobalReplicationGroup멤버
+
+글로벌 데이터 스토어의 멤버입니다. 여기에는 복제 그룹 ID, Amazon 리전 및 복제 그룹의 역할이 포함됩니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ReplicationGroupId" : String,
+  "ReplicationGroupRegion" : String,
+  "Role" : String
+}
+```
+
+## 속성
+
+`ReplicationGroupId`  
+글로벌 데이터 저장소 멤버의 복제 그룹 ID입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`ReplicationGroupRegion`  
+글로벌 데이터 스토어 멤버의 Amazon 지역입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Role`  
+복제 그룹의 역할을 나타내 `PRIMARY` 거나 `SECONDARY`.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음

@@ -1,0 +1,31 @@
+# AWS::SageMaker::AppImageConfig 커널게이트웨이 이미지 구성
+
+KernelGateway 앱으로 실행되는 SageMaker 이미지의 파일 시스템 및 커널에 대한 구성입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "FileSystemConfig" : FileSystemConfig,
+  "KernelSpecs" : [ KernelSpec, ... ]
+}
+```
+
+## 속성
+
+`FileSystemConfig`  
+SageMaker 이미지에 대한 Amazon Elastic File System(EFS) 스토리지 구성입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: FileSystemConfig  
+_업데이트 필요 사항_: 중단 없음
+
+`KernelSpecs`  
+이미지의 Jupyter 커널 사양입니다.  
+_필수 항목 여부_: 예  
+_유형_: KernelSpec 목록  
+_최대_: `1`  
+_업데이트 필요 사항_: 중단 없음

@@ -16,7 +16,27 @@ from sqlalchemy.orm import Session
 from utils.gpt import gpt_genereate
 from utils.setup import setup_embedding, setup_pinecone
 
+from fastapi.middleware.cors import CORSMiddleware
+
+
+origins = [
+    "http://localhost.tiangolo.com",
+    "https://localhost.tiangolo.com",
+    "http://localhost",
+    "http://localhost:3000",
+]
+
+
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 models.Base.metadata.create_all(bind=engine)
 db = None
 pc_index = None

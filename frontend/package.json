@@ -8,15 +8,19 @@
     "start": "next start",
     "lint": "next lint",
     "prepare": "husky install",
-    "prettier": "prettier . --write"
+    "prettier": "prettier './**/*.{js,ts,tsx}' --write"
   },
   "dependencies": {
     "@heroicons/react": "^2.1.3",
     "@mantine/core": "^7.7.2",
     "@mantine/hooks": "^7.7.2",
     "@mantine/nprogress": "^7.9.0",
+    "@mdx-js/loader": "^3.0.1",
+    "@mdx-js/react": "^3.0.1",
     "@monaco-editor/react": "^4.6.0",
+    "@next/mdx": "^14.2.3",
     "@tabler/icons-react": "^3.2.0",
+    "@types/mdx": "^2.0.13",
     "next": "14.1.3",
     "react": "^18",
     "react-dom": "^18",

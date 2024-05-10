@@ -1,0 +1,110 @@
+# AWS::Route53::상태 확인
+
+리소스 `AWS::Route53::HealthCheck` 는 Route 53 상태 확인에 대한 설정을 포함하는 Route 53 리소스 유형입니다.
+
+상태 확인을 레코드와 연결하는 방법에 대한 자세한 내용은 ChangeResourceRecordSets의 HealthCheckId를 참조하십시오.
+
+**메모**  
+단순 라우팅으로는 상태 확인을 생성할 수 없습니다.
+
+**ELB 로드 밸런서**
+
+Elastic Load Balancing(ELB) 로드 밸런서에 EC2 인스턴스를 등록하는 경우 EC2 인스턴스에 대한 Amazon Route 53 상태 확인을 생성하지 마십시오. EC2 인스턴스를 로드 밸런서에 등록할 때 Route 53 상태 확인과 유사한 기능을 수행하는 ELB 상태 확인에 대한 설정을 구성합니다.
+
+**프라이빗 호스팅 영역**
+
+상태 확인을 프라이빗 호스팅 영역의 장애 조치 레코드와 연결할 수 있습니다. 다음 사항에 유의하세요.
+
+- Route 53 상태 확인 프로그램은 VPC 외부에 있습니다. IP 주소로 VPC 내 엔드포인트의 상태를 확인하려면 VPC의 인스턴스에 퍼블릭 IP 주소를 할당해야 합니다.
+- 데이터베이스 서버와 같이 인스턴스가 의존하는 외부 리소스의 상태를 확인하도록 상태 검사기를 구성할 수 있습니다.
+- CloudWatch 지표를 생성하고, 경보를 지표와 연결한 다음, 경보 상태를 기반으로 상태 확인을 생성할 수 있습니다. 예를 들어, Amazon EC2 지표의 상태를 확인하는 CloudWatch 지표를 생성 `StatusCheckFailed` 하고, 지표에 경보를 추가한 다음, 경보 상태를 기반으로 하는 상태 확인을 생성할 수 있습니다. CloudWatch 콘솔을 사용하여 CloudWatch 지표 및 경보를 생성하는 방법에 대한 자세한 내용은 Amazon CloudWatch 사용 설명서를 참조하십시오.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::Route53::HealthCheck",
+  "Properties" : {
+      "HealthCheckConfig" : HealthCheckConfig,
+      "HealthCheckTags" : [ HealthCheckTag, ... ]
+    }
+}
+```
+
+## 속성
+
+`HealthCheckConfig`  
+하나의 상태 확인에 대한 자세한 정보를 포함하는 복합 형식입니다.  
+에 입력할 값은 `HealthCheckConfig`HealthCheckConfig를 참조하십시오  
+_필수 항목 여부_: 예  
+_유형_: HealthCheckConfig  
+_업데이트 필요 사항_: 중단 없음
+
+`HealthCheckTags`  
+이 `HealthCheckTags` 속성은 리소스와 연결된 키-값 쌍을 설명합니다 `AWS::Route53::HealthCheck` .  
+*필수 항목 *여부: 아니요  
+_유형_: HealthCheckTag 목록  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref`상태 `Ref`확인 ID(예: )를 반환합니다 `e0a123b4-4dba-4650-935e-example`.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`HealthCheckId` 상태 확인을 생성할 때 Amazon Route 53이 상태 확인에 할당한 식별자입니다. 리소스 레코드 세트를 추가하거나 업데이트할 때 이 값을 사용하여 사용할 상태 확인을 지정합니다. 값은 최대 64자까지 가능합니다.
+
+## 예제
+
+### 상태 확인 만들기
+
+다음 예제에서는 HTTP 요청을 지정된 엔드포인트로 전송하는 Amazon Route 53 상태 확인을 생성합니다.
+
+#### JSON (영문)
+
+```
+{
+   "myHealthCheck": {
+      "Type": "AWS::Route53::HealthCheck",
+      "Properties": {
+         "HealthCheckConfig": {
+            "IPAddress": "192.0.2.44",
+            "Port": "80",
+            "Type": "HTTP",
+            "ResourcePath": "/example/index.html",
+            "FullyQualifiedDomainName": "example.com",
+            "RequestInterval": "30",
+            "FailureThreshold": "3"
+         },
+         "HealthCheckTags": [
+            {
+               "Key": "SampleKey1",
+               "Value": "SampleValue1"
+            },
+            {
+               "Key": "SampleKey2",
+               "Value": "SampleValue2"
+            }
+         ]
+      }
+   }
+}
+```
+
+## 참고 항목
+
+- Amazon Route 53 API 참조*의 CreateHealthCheck *

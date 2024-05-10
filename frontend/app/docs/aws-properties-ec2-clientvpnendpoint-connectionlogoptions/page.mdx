@@ -1,0 +1,37 @@
+# AWS::EC2::ClientVpnEndpoint 연결 로그 옵션
+
+Client VPN 엔드포인트에 대한 클라이언트 연결 로깅 옵션을 설명합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "CloudwatchLogGroup" : String,
+  "CloudwatchLogStream" : String,
+  "Enabled" : Boolean
+}
+```
+
+## 속성
+
+`CloudwatchLogGroup`  
+CloudWatch Logs 로그 그룹의 이름입니다. 연결 로깅을 사용하는 경우 필요합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`CloudwatchLogStream`  
+연결 데이터가 게시되는 CloudWatch Logs 로그 스트림의 이름입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Enabled`  
+연결 로깅을 사용할 수 있는지 여부를 나타냅니다.  
+_필수 항목 여부_: 예  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음

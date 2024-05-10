@@ -1,0 +1,43 @@
+# AWS::CloudFront::ResponseHeadersPolicy 레퍼러 정책
+
+CloudFront에 HTTP 응답 헤더와 헤더의 값이`Referrer-Policy` 포함되어 있는지 여부를 결정합니다.
+
+HTTP 응답 헤더에 대한 자세한 `Referrer-Policy` 내용은 MDN Web Docs의 Referrer-Policy를 참조하십시오.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Override" : Boolean,
+  "ReferrerPolicy" : String
+}
+```
+
+## 속성
+
+`Override`  
+CloudFront가 `Referrer-Policy` 오리진에서 수신한 HTTP 응답 헤더를 이 응답 헤더 정책에 지정된 헤더로 재정의할지 여부를 결정하는 부울입니다.  
+_필수 항목 여부_: 예  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`ReferrerPolicy`  
+ `Referrer-Policy` HTTP 응답 헤더의 값입니다. 유효한 값은 다음과 같습니다.
+
+- `no-referrer`
+- `no-referrer-when-downgrade`
+- `origin`
+- `origin-when-cross-origin`
+- `same-origin`
+- `strict-origin`
+- `strict-origin-when-cross-origin`
+- `unsafe-url`
+  이 값들에 대한 자세한 내용은 MDN Web Docs의 Referrer-Policy를 참조하십시오.  
+  _필수 항목 여부_: 예  
+  _유형_: 문자열  
+  _허용되는 값_: `no-referrer | no-referrer-when-downgrade | origin | origin-when-cross-origin | same-origin | strict-origin | strict-origin-when-cross-origin | unsafe-url`  
+  _업데이트 필요 사항_: 중단 없음

@@ -1,0 +1,33 @@
+# AWS::CloudFront::D istribution 함수 연결
+
+CloudFront 배포의 캐시 동작과 연결된 CloudFront 함수입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "EventType" : String,
+  "FunctionARN" : String
+}
+```
+
+## 속성
+
+`EventType`  
+함수의 이벤트 유형(또는 `viewer-request` `viewer-response`. 오리진 지향 이벤트 유형(`origin-request` 및 `origin-response`)은 CloudFront 함수와 함께 사용할 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `origin-request | origin-response | viewer-request | viewer-response`  
+_업데이트 필요 사항_: 중단 없음
+
+`FunctionARN`  
+함수의 Amazon 리소스 이름(ARN)입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최대_: `108`  
+_패턴_: `arn:aws:cloudfront::[0-9]{12}:function/[a-zA-Z0-9-_]{1,64}$`  
+_업데이트 필요 사항_: 중단 없음

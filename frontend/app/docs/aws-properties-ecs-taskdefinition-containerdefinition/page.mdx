@@ -1,0 +1,375 @@
+# AWS::ECS::태스크 정의 컨테이너 정의
+
+이 `ContainerDefinition` 속성은 컨테이너 정의를 지정합니다. 컨테이너 정의는 작업의 일부로 시작되는 다양한 컨테이너를 설명하기 위해 작업 정의에 사용됩니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Command" : [ String, ... ],
+  "Cpu" : Integer,
+  "DependsOn" : [ ContainerDependency, ... ],
+  "DisableNetworking" : Boolean,
+  "DnsSearchDomains" : [ String, ... ],
+  "DnsServers" : [ String, ... ],
+  "DockerLabels" : {Key: Value, ...},
+  "DockerSecurityOptions" : [ String, ... ],
+  "EntryPoint" : [ String, ... ],
+  "Environment" : [ KeyValuePair, ... ],
+  "EnvironmentFiles" : [ EnvironmentFile, ... ],
+  "Essential" : Boolean,
+  "ExtraHosts" : [ HostEntry, ... ],
+  "FirelensConfiguration" : FirelensConfiguration,
+  "HealthCheck" : HealthCheck,
+  "Hostname" : String,
+  "Image" : String,
+  "Interactive" : Boolean,
+  "Links" : [ String, ... ],
+  "LinuxParameters" : LinuxParameters,
+  "LogConfiguration" : LogConfiguration,
+  "Memory" : Integer,
+  "MemoryReservation" : Integer,
+  "MountPoints" : [ MountPoint, ... ],
+  "Name" : String,
+  "PortMappings" : [ PortMapping, ... ],
+  "Privileged" : Boolean,
+  "PseudoTerminal" : Boolean,
+  "ReadonlyRootFilesystem" : Boolean,
+  "RepositoryCredentials" : RepositoryCredentials,
+  "ResourceRequirements" : [ ResourceRequirement, ... ],
+  "Secrets" : [ Secret, ... ],
+  "StartTimeout" : Integer,
+  "StopTimeout" : Integer,
+  "SystemControls" : [ SystemControl, ... ],
+  "Ulimits" : [ Ulimit, ... ],
+  "User" : String,
+  "VolumesFrom" : [ VolumeFrom, ... ],
+  "WorkingDirectory" : String
+}
+```
+
+## 속성
+
+`Command`  
+컨테이너에 전달되는 명령입니다. 이 파라미터 `Cmd` 는 Docker Remote API의 컨테이너 만들기 섹션과 `COMMAND` docker run에 대한 파라미터에 매핑됩니다. 자세한 내용은 some-address를 참조하세요. 인수가 여러 개인 경우 각 인수는 배열에서 분리된 문자열입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Cpu`  
+ `cpu` 컨테이너에 예약된 단위 수입니다. 이 파라미터는 `CpuShares` Docker Remote API의 컨테이너 만들기 섹션과 `--cpu-shares` docker run 옵션에 매핑됩니다.  
+이 필드는 Fargate 시작 유형을 사용하는 태스크의 경우 선택 사항이며, 유일한 요구 사항은 태스크 내의 모든 컨테이너에 예약된 총 CPU 양이 태스크 수준 값보다 작아야 한다는 것입니다 `cpu` .  
+Amazon EC2 인스턴스 세부 정보 페이지에서 해당 인스턴스 유형에 대해 나열된 vCPU에 1,024를 곱하여 EC2 인스턴스 유형별로 사용 가능한 CPU 단위 수를 확인할 수 있습니다.
+Linux 컨테이너는 할당되지 않은 CPU 단위를 할당된 양과 동일한 비율로 컨테이너 인스턴스의 다른 컨테이너와 공유합니다. 예를 들어, 해당 컨테이너에 대해 512개의 CPU 단위가 지정된 단일 코어 인스턴스 유형에서 단일 컨테이너 작업을 실행하고 컨테이너 인스턴스에서 실행되는 유일한 작업인 경우 해당 컨테이너는 지정된 시간에 전체 1,024 CPU 단위 공유를 사용할 수 있습니다. 그러나 해당 컨테이너 인스턴스에서 동일한 작업의 다른 복사본을 시작한 경우 각 작업은 필요할 때 최소 512개의 CPU 단위를 보장합니다. 또한 각 컨테이너는 다른 컨테이너가 사용하지 않는 경우 더 높은 CPU 사용량으로 플로팅될 수 있습니다. 두 태스크가 항상 100% 활성 상태인 경우 512 CPU 단위로 제한됩니다.  
+Linux 컨테이너 인스턴스에서 컨테이너 인스턴스의 Docker 데몬은 CPU 값을 사용하여 실행 중인 컨테이너에 대한 상대적 CPU 공유 비율을 계산합니다. 자세한 내용은 Docker 설명서의 CPU 공유 제약 조건을 참조하세요. Linux 커널에서 허용하는 유효한 최소 CPU 공유 값은 2입니다. 그러나 CPU 파라미터는 필수가 아니며 컨테이너 정의에서 2 미만의 CPU 값을 사용할 수 있습니다. CPU 값이 2 미만(null 포함)인 경우 Amazon ECS 컨테이너 에이전트 버전에 따라 동작이 달라집니다.
+
+- **1.1.0보다 작거나 같은 에이전트 버전:** Null 및 0 CPU 값은 Docker에 0으로 전달되며, Docker는 이를 1,024개의 CPU 공유로 변환합니다. CPU 값 1은 Docker에 1로 전달되며, Linux 커널은 이를 두 개의 CPU 공유로 변환합니다.
+- **1.2.0보다 크거나 같은 에이전트 버전:** Null, 0 및 CPU 값 1은 Docker에 2로 전달됩니다.
+  Windows 컨테이너 인스턴스에서 CPU 제한은 절대 제한 또는 할당량으로 적용됩니다. Windows 컨테이너는 작업 정의에 설명된 지정된 양의 CPU에만 액세스할 수 있습니다. null 또는 0 CPU 값은 Docker에 as 로 전달되며`0`, Windows는 이를 한 CPU의 1%로 해석합니다.  
+  *필수 항목 *여부: 아니요  
+  _유형_: Integer  
+  _업데이트 필요 사항_: 바꿔 놓음
+
+`DependsOn`  
+컨테이너 시작 및 종료에 대해 정의된 종속성입니다. 컨테이너에는 여러 종속성이 포함될 수 있습니다. 컨테이너 시작에 대한 종속성이 정의되면 컨테이너 종료의 경우 반대가 됩니다.  
+EC2 시작 유형을 사용하는 태스크의 경우 컨테이너 종속성을 켜려면 컨테이너 인스턴스에 컨테이너 에이전트 버전 1.26.0 이상이 필요합니다. 그러나 최신 컨테이너 에이전트 버전을 사용하는 것이 좋습니다. 에이전트 버전 확인 및 최신 버전 업데이트에 대한 자세한 내용은 *Amazon Elastic Container Service 개발자 안내서*의 Amazon ECS 컨테이너 에이전트 업데이트를 참조하세요. Amazon ECS 최적화 Linux AMI를 사용하는 경우 인스턴스에 패키지 버전 1.26.0-1 이상이 필요합니다 `ecs-init` . 컨테이너 인스턴스가 버전 이상에서 시작되는 경우 `20190301` 컨테이너 에이전트의 필수 버전과 . `ecs-init` 자세한 내용은 *Amazon Elastic Container Service 개발자 안내서*의 Amazon ECS 최적화 Linux AMI를 참조하세요.  
+Fargate 시작 유형을 사용하는 태스크의 경우 태스크 또는 서비스에는 다음 플랫폼이 필요합니다.
+
+- Linux 플랫폼 버전 `1.3.0` 이상.
+- Windows 플랫폼 버전 `1.0.0` 이상.
+  AWS::CodeDeploy::D eploymentGroup BlueGreenDeploymentConfiguration을 사용하는 블루/그린 배포에서 작업 정의를 사용하는 경우 `dependsOn` 파라미터가 지원되지 않습니다. 자세한 내용은 GitHub 웹 사이트의 문제 #680을 참조하세요.  
+  *필수 항목 *여부: 아니요  
+  _형식_: ContainerDependency 목록  
+  _업데이트 필요 사항_: 바꿔 놓음
+
+`DisableNetworking`  
+이 매개 변수가 true이면 컨테이너 내에서 네트워킹이 해제됩니다. 이 파라미터는 `NetworkDisabled` Docker Remote API의 컨테이너 만들기 섹션에 매핑됩니다.  
+이 매개 변수는 Windows 컨테이너에 대해 지원되지 않습니다.
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`DnsSearchDomains`  
+컨테이너에 표시되는 DNS 검색 도메인 목록입니다. 이 파라미터는 `DnsSearch` Docker Remote API의 컨테이너 만들기 섹션과 `--dns-search` docker run 옵션에 매핑됩니다.  
+이 매개 변수는 Windows 컨테이너에 대해 지원되지 않습니다.
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`DnsServers`  
+컨테이너에 제공되는 DNS 서버 목록입니다. 이 파라미터는 `Dns` Docker Remote API의 컨테이너 만들기 섹션과 `--dns` docker run 옵션에 매핑됩니다.  
+이 매개 변수는 Windows 컨테이너에 대해 지원되지 않습니다.
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`DockerLabels`  
+컨테이너에 추가할 레이블의 키/값 맵입니다. 이 파라미터는 `Labels` Docker Remote API의 컨테이너 만들기 섹션과 `--label` docker run 옵션에 매핑됩니다. 이 파라미터를 사용하려면 컨테이너 인스턴스에 Docker Remote API 버전 1.18 이상이 필요합니다. 컨테이너 인스턴스에서 Docker Remote API 버전을 확인하려면 컨테이너 인스턴스에 로그인하고 다음 명령을 실행합니다. `sudo docker version --format '{{.Server.APIVersion}}'`  
+_필수 항목 여부_: 아니요  
+_유형_: 문자열 맵  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`DockerSecurityOptions`  
+여러 보안 시스템에 대한 사용자 지정 구성을 제공하는 문자열 목록입니다. 유효한 값에 대한 자세한 내용은 Docker 실행 보안 구성을 참조하세요. 이 필드는 Fargate 시작 유형을 사용하는 태스크의 컨테이너에는 유효하지 않습니다.  
+EC2의 Linux 태스크의 경우 이 파라미터를 사용하여 SELinux 및 AppArmor 다중 레벨 보안 시스템에 대한 사용자 지정 레이블을 참조할 수 있습니다.  
+EC2의 모든 태스크에서 이 파라미터는 Active Directory 인증을 위한 컨테이너를 구성하는 자격 증명 사양 파일을 참조하는 데 사용할 수 있습니다. 자세한 내용은 Amazon Elastic Container Service 개발자 안내서의 Windows 컨테이너에 gMSA 사용 및 Linux 컨테이너에 gMSA 사용을 참조하십시오\**.  
+이 파라미터는 `SecurityOpt` Docker Remote API의 컨테이너 만들기 섹션과 `--security-opt` docker run 옵션에 매핑됩니다.  
+컨테이너 인스턴스에서 실행되는 Amazon ECS 컨테이너 에이전트 는 `ECS_SELINUX_CAPABLE=true` 또는 `ECS_APPARMOR_CAPABLE=true` 환경 변수에 등록해야 해당 인스턴스에 배치된 컨테이너가 이러한 보안 옵션을 사용할 수 있습니다. 자세한 내용은 *Amazon Elastic Container Service 개발자 안내서*의 Amazon ECS 컨테이너 에이전트 구성을 참조하세요.
+유효한 값에 대한 자세한 내용은 Docker 실행 보안 구성을 참조하세요.  
+유효한 값: "no-new-privileges" | "apparmor:프로필" | "레이블:값" | "credentialspec:CredentialSpecFilePath"입니다.  
+*필수 항목 *여부: 아니요  
+*유형*: 문자열 목록  
+*업데이트 필요 사항\*: 바꿔 놓음
+
+`EntryPoint`  
+Amazon ECS 컨테이너 에이전트의 초기 버전은 파라미터를 제대로 처리하지 못합니다 `entryPoint` . 를 사용하는 데 문제가 있는 경우 `entryPoint`컨테이너 에이전트를 업데이트하거나 명령 및 인수를 배열 항목으로 대신 입력합니다 `command` .
+컨테이너에 전달되는 진입점입니다. 이 파라미터는 `Entrypoint` Docker Remote API의 컨테이너 만들기 섹션과 `--entrypoint` docker run 옵션에 매핑됩니다. 자세한 내용은 some-address를 참조하세요  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Environment`  
+컨테이너에 전달할 환경 변수입니다. 이 파라미터는 `Env` Docker Remote API의 컨테이너 만들기 섹션과 `--env` docker run 옵션에 매핑됩니다.  
+자격 증명 데이터와 같은 중요한 정보에는 일반 텍스트 환경 변수를 사용하지 않는 것이 좋습니다.
+*필수 항목 *여부: 아니요  
+_Type_: KeyValuePair 목록  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`EnvironmentFiles`  
+컨테이너에 전달할 환경 변수를 포함하는 파일 목록입니다. 이 매개 변수는 `--env-file` docker run 옵션에 매핑됩니다.  
+최대 10개의 환경 파일을 지정할 수 있습니다. 파일에는 `.env` 파일 확장자가 있어야 합니다. 환경 파일의 각 줄에는 format의 환경 변수가 포함되어 있습니다 `VARIABLE=VALUE` . 로 시작하는 줄 `#` 은 주석으로 처리되고 무시됩니다. 환경 변수 파일 구문에 대한 자세한 내용은 파일에서 기본 환경 변수 선언을 참조하세요.  
+컨테이너 정의에서 매개 변수를 사용하여 지정된 환경 변수가 있는 경우 해당 환경 변수가 `environment` 환경 파일에 포함된 변수보다 우선합니다. 동일한 변수를 포함하는 여러 환경 파일이 지정된 경우 위에서 아래로 처리됩니다. 고유한 변수 이름을 사용하는 것이 좋습니다. 자세한 내용은 _Amazon Elastic Container Service 개발자 안내서의 환경 변수 지정을 참조하십시오_.  
+*필수 항목 *여부: 아니요  
+_형식_: EnvironmentFile 목록  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Essential`  
+`essential` 컨테이너의 매개 변수가 로 표시되어 `true`있고 해당 컨테이너가 어떤 이유로든 실패하거나 중지되면 작업의 일부인 다른 모든 컨테이너가 중지됩니다. `essential` 컨테이너의 매개 변수가 로 표시된 `false` 경우 해당 실패는 작업의 나머지 컨테이너에 영향을 주지 않습니다. 이 매개 변수를 생략하면 컨테이너가 필수 컨테이너로 간주됩니다.  
+모든 작업에는 하나 이상의 필수 컨테이너가 있어야 합니다. 여러 컨테이너로 구성된 애플리케이션이 있는 경우 공통 용도로 사용되는 컨테이너를 구성 요소로 그룹화하고 서로 다른 구성 요소를 여러 작업 정의로 구분합니다. 자세한 내용은 _Amazon Elastic Container Service 개발자 안내서의 애플리케이션 아키텍처를 참조하십시오_.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ExtraHosts`  
+컨테이너의 파일에 추가할 호스트 이름 및 IP 주소 매핑 목록 `/etc/hosts` 입니다. 이 파라미터는 `ExtraHosts` Docker Remote API의 컨테이너 만들기 섹션과 `--add-host` docker run 옵션에 매핑됩니다.  
+이 매개 변수는 네트워크 모드를 사용하는 Windows 컨테이너 또는 작업에 대해 지원되지 않습니다 `awsvpc` .
+*필수 항목 *여부: 아니요  
+_유형_: HostEntry 목록  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`FirelensConfiguration`  
+컨테이너에 대한 FireLens 구성입니다. 컨테이너 로그에 대한 로그 라우터를 지정하고 구성하는 데 사용됩니다. 자세한 내용은 _Amazon Elastic Container Service 개발자 안내서의 사용자 지정 로그 라우팅을 참조하십시오_.  
+*필수 항목 *여부: 아니요  
+_유형_: FirelensConfiguration  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`HealthCheck`  
+컨테이너 상태 확인 명령 및 컨테이너에 대한 관련 구성 매개 변수입니다. 이 파라미터는 `HealthCheck` Docker Remote API의 컨테이너 만들기 섹션과 `HEALTHCHECK` docker run의 파라미터에 매핑됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: HealthCheck  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Hostname`  
+컨테이너에 사용할 호스트 이름입니다. 이 파라미터는 `Hostname` Docker Remote API의 컨테이너 만들기 섹션과 `--hostname` docker run 옵션에 매핑됩니다.  
+`hostname` 네트워크 모드를 사용하는 경우 매개 변수가 지원되지 않습니다 `awsvpc` .
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Image`  
+컨테이너를 시작하는 데 사용되는 이미지입니다. 이 문자열은 Docker 데몬에 직접 전달됩니다. 기본적으로 Docker Hub 레지스트리의 이미지를 사용할 수 있습니다. 다른 저장소는 `repository-url/image:tag` 또는 `repository-url/image@digest` 로 지정됩니다. 최대 255개의 문자(대문자 및 소문자), 숫자, 하이픈, 밑줄, 콜론, 마침표, 슬래시 및 숫자 기호가 허용됩니다. 이 파라미터는 `Image` Docker Remote API의 컨테이너 만들기 섹션과 `IMAGE` docker run의 파라미터에 매핑됩니다.
+
+- 새 작업이 시작되면 Amazon ECS 컨테이너 에이전트는 컨테이너가 사용할 지정된 이미지 및 태그의 최신 버전을 가져옵니다. 그러나 리포지토리 이미지에 대한 후속 업데이트는 이미 실행 중인 작업에 전파되지 않습니다.
+- Amazon ECR 리포지토리의 이미지는 full `registry/repository:tag` 또는 `registry/repository@digest`. 예를 들어, `012345678910.dkr.ecr.<region-name>.amazonaws.com/<repository-name>:latest` 또는 `012345678910.dkr.ecr.<region-name>.amazonaws.com/<repository-name>@sha256:94afd1f2e64d908bc90dbca0035a5b567EXAMPLE`.
+- Docker Hub의 공식 리포지토리에 있는 이미지는 단일 이름(예: `ubuntu` 또는 `mongo`)을 사용합니다.
+- Docker Hub의 다른 리포지토리에 있는 이미지는 조직 이름(예: )으로 한정됩니다. `amazon/amazon-ecs-agent`
+- 다른 온라인 리포지토리의 이미지는 도메인 이름(예: )으로 추가로 한정됩니다. `quay.io/assemblyline/ubuntu`
+  _필수 항목 여부_: 예  
+  _유형_: 문자열  
+  _업데이트 필요 사항_: 바꿔 놓음
+
+`Interactive`  
+이 매개 변수가 인 경우 `true` 또는 할당해야 `stdin`하는 컨테이너화된 애플리케이션을 배포할 수 있습니다 `tty` . 이 파라미터는 `OpenStdin` Docker Remote API의 컨테이너 만들기 섹션과 `--interactive` docker run 옵션에 매핑됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Links`  
+이 `links` 매개 변수를 사용하면 컨테이너가 포트 매핑 없이 서로 통신할 수 있습니다. 이 매개 변수는 작업 정의의 네트워크 모드가 인 경우에만 지원됩니다`bridge`. `name:internalName` 이 구문은 `name:alias` Docker 링크와 유사합니다. 최대 255개의 문자(대문자 및 소문자), 숫자, 밑줄 및 하이픈이 허용됩니다. Docker 컨테이너 연결에 대한 자세한 내용은 Docker 설명서의 레거시 컨테이너 링크를 참조하세요. 이 파라미터는 `Links` Docker Remote API의 컨테이너 만들기 섹션과 `--link` docker run 옵션에 매핑됩니다.  
+이 매개 변수는 Windows 컨테이너에 대해 지원되지 않습니다.
+단일 컨테이너 인스턴스에 배치된 컨테이너는 링크 또는 호스트 포트 매핑 없이 서로 통신할 수 있습니다. 네트워크 격리는 보안 그룹 및 VPC 설정을 사용하여 컨테이너 인스턴스에서 수행됩니다.
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`LinuxParameters`  
+컨테이너에 적용되는 Linux 관련 수정 사항(예: Linux 커널 기능)입니다. 자세한 내용은 KernelCapabilities를 참조하세요.  
+이 매개 변수는 Windows 컨테이너에 대해 지원되지 않습니다.
+*필수 항목 *여부: 아니요  
+_형식_: LinuxParameters  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`LogConfiguration`  
+컨테이너에 대한 로그 구성 사양입니다.  
+이 파라미터는 `LogConfig` Docker Remote API의 컨테이너 만들기 섹션과 `--log-driver` docker run 옵션에 매핑됩니다. 기본적으로 컨테이너는 Docker 데몬이 사용하는 것과 동일한 로깅 드라이버를 사용합니다. 그러나 컨테이너는 컨테이너 정의에서 이 매개 변수를 사용하여 로그 드라이버를 지정하여 Docker 데몬과 다른 로깅 드라이버를 사용할 수 있습니다. 컨테이너에 다른 로깅 드라이버를 사용하려면 컨테이너 인스턴스(또는 원격 로깅 옵션의 경우 다른 로그 서버)에서 로그 시스템을 올바르게 구성해야 합니다. 지원되는 다양한 로그 드라이버에 대한 옵션에 대한 자세한 내용은 Docker 설명서에서 로깅 드라이버 구성을 참조하세요.  
+Amazon ECS는 현재 도커 데몬에서 사용할 수 있는 로깅 드라이버의 하위 집합을 지원합니다(LogConfiguration 데이터 형식에 표시됨). 추가 로그 드라이버는 Amazon ECS 컨테이너 에이전트의 향후 릴리스에서 사용할 수 있습니다.
+이 파라미터를 사용하려면 컨테이너 인스턴스에 Docker Remote API 버전 1.18 이상이 필요합니다. 컨테이너 인스턴스에서 Docker Remote API 버전을 확인하려면 컨테이너 인스턴스에 로그인하고 다음 명령을 실행합니다. `sudo docker version --format '{{.Server.APIVersion}}'`  
+컨테이너 인스턴스에서 실행되는 Amazon ECS 컨테이너 에이전트는 해당 인스턴스에 배치된 컨테이너가 이러한 로그 구성 옵션을 사용하기 전에 해당 인스턴스에서 사용할 수 있는 로깅 드라이버를 환경 변수에 등록해야 `ECS_AVAILABLE_LOGGING_DRIVERS` 합니다 . 자세한 내용은 _Amazon Elastic Container Service 개발자 안내서의 Amazon ECS 컨테이너 에이전트 구성을 참조하세요_.
+*필수 항목 *여부: 아니요  
+_형식_: LogConfiguration  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Memory`  
+컨테이너에 제공할 메모리의 양(MiB)입니다. 컨테이너가 여기에 지정된 메모리를 초과하려고 하면 컨테이너가 종료됩니다. 작업 내의 모든 컨테이너에 예약된 총 메모리 양은 작업 `memory` 값(지정된 경우)보다 작아야 합니다. 이 파라미터는 `Memory` Docker Remote API의 컨테이너 만들기 섹션과 `--memory` docker run 옵션에 매핑됩니다.  
+Fargate 시작 유형을 사용하는 경우 이 파라미터는 선택 사항입니다.  
+EC2 시작 유형을 사용하는 경우 작업 수준 메모리 값 또는 컨테이너 수준 메모리 값을 지정해야 합니다. 컨테이너 수준 `memory` 과 `memoryReservation` 값을 `memory` 모두 지정하는 경우 보다 커야 합니다`memoryReservation`. 를 지정하면 `memoryReservation`컨테이너가 배치된 컨테이너 인스턴스에 사용할 수 있는 메모리 리소스에서 해당 값을 뺍니다. 그렇지 않으면 의 값이 `memory` 사용됩니다.  
+Docker 20.10.0 이상 데몬은 컨테이너에 대해 최소 6MiB의 메모리를 예약하므로 컨테이너에 대해 6MiB 미만의 메모리를 지정해서는 안 됩니다.  
+Docker 19.03.13-ce 또는 이전 데몬은 컨테이너에 대해 최소 4MiB의 메모리를 예약하므로 컨테이너에 대해 4MiB 미만의 메모리를 지정해서는 안 됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`MemoryReservation`  
+컨테이너에 예약할 메모리의 소프트 제한(MiB)입니다. 시스템 메모리가 과도하게 경합하는 경우 Docker는 컨테이너 메모리를 이 소프트 제한으로 유지하려고 합니다. 그러나 컨테이너는 필요할 때 파라미터에 지정된 하드 제한 `memory` (해당하는 경우) 또는 컨테이너 인스턴스에서 사용 가능한 모든 메모리 중 먼저 도래하는 시점까지 더 많은 메모리를 사용할 수 있습니다. 이 파라미터는 `MemoryReservation` Docker Remote API의 컨테이너 만들기 섹션과 `--memory-reservation` docker run 옵션에 매핑됩니다.  
+작업 수준 메모리 값을 지정하지 않으면 컨테이너 정의에서 또는 둘 중 하나 또는 둘 다에 대해 0이 아닌 정수를 지정해야 합니다 `memory` `memoryReservation` . 둘 다 지정하는 경우 `memory` 보다 커야 합니다`memoryReservation`. 를 지정하면 `memoryReservation`컨테이너가 배치된 컨테이너 인스턴스에 사용할 수 있는 메모리 리소스에서 해당 값을 뺍니다. 그렇지 않으면 의 값이 `memory` 사용됩니다.  
+예를 들어 컨테이너가 일반적으로 128MiB의 메모리를 사용하지만 가끔 짧은 시간 동안 256MiB의 메모리로 버스트하는 경우 a `memoryReservation` 를 128MiB로 `memory` 설정하고 하드 제한을 300MiB로 설정할 수 있습니다. 이 구성을 사용하면 컨테이너가 컨테이너 인스턴스의 나머지 리소스에서 128MiB의 메모리만 예약할 수 있지만 필요할 때 컨테이너가 더 많은 메모리 리소스를 사용할 수도 있습니다.  
+Docker 20.10.0 이상 데몬은 컨테이너에 대해 최소 6MiB의 메모리를 예약합니다. 따라서 컨테이너에 대해 6MiB 미만의 메모리를 지정하지 마세요.  
+Docker 19.03.13-ce 이하 데몬은 컨테이너에 대해 최소 4MiB의 메모리를 예약합니다. 따라서 컨테이너에 대해 4MiB 미만의 메모리를 지정하지 마세요.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`MountPoints`  
+컨테이너의 데이터 볼륨에 대한 탑재 지점입니다.  
+이 파라미터는 `Volumes` Docker Remote API의 컨테이너 만들기 섹션과 `--volume` docker run 옵션에 매핑됩니다.  
+Windows 컨테이너는 와 동일한 드라이브에 전체 디렉터리를 탑재할 수 있습니다`$env:ProgramData`. Windows 컨테이너는 다른 드라이브에 디렉터리를 탑재할 수 없으며 탑재 지점은 드라이브 간에 있을 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: MountPoint 목록  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Name`  
+컨테이너의 이름입니다. 작업 정의에서 여러 컨테이너를 함께 연결하는 경우 `name` 한 컨테이너의 컨테이너를 `links` 다른 컨테이너의 컨테이너에 입력하여 컨테이너를 연결할 수 있습니다. 최대 255개의 문자(대문자 및 소문자), 숫자, 밑줄 및 하이픈이 허용됩니다. 이 파라미터는 `name` Docker Remote API의 컨테이너 만들기 섹션과 `--name` docker run 옵션에 매핑됩니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`PortMappings`  
+컨테이너에 대한 포트 매핑 목록입니다. 포트 매핑을 사용하면 컨테이너가 호스트 컨테이너 인스턴스의 포트에 액세스하여 트래픽을 보내거나 받을 수 있습니다.  
+네트워크 모드를 사용하는 작업 정의 의 `awsvpc` 경우 `containerPort`. 는 `hostPort` 비워 둘 수 있으며 와 동일한 값이어야 합니다`containerPort`.  
+Windows의 포트 매핑은 가 `NetNAT` 아닌 게이트웨이 주소를 `localhost` 사용합니다. Windows에는 포트 매핑에 대한 루프백이 없으므로 호스트 자체에서 컨테이너의 매핑된 포트에 액세스할 수 없습니다.  
+이 파라미터는 `PortBindings` Docker Remote API의 컨테이너 만들기 섹션과 `--publish` docker run 옵션에 매핑됩니다. 작업 정의의 네트워크 모드가 로 설정되어 `none`있으면 포트 매핑을 지정할 수 없습니다. 작업 정의의 네트워크 모드가 로 설정된 경우 `host`호스트 포트는 정의되지 않았거나 포트 매핑의 컨테이너 포트와 일치해야 합니다.  
+태스크가 상태에 도달하면 Amazon ECS 콘솔에서 선택한 태스크에 대한 컨테이너 설명의 `RUNNING`네트워크 바인딩 섹션에 ** 수동 및 자동 호스트 및 컨테이너 포트 할당이 표시됩니다 ** . 할당은 `networkBindings` DescribeTasks 응답 섹션에서도 볼 수 있습니다.
+*필수 항목 *여부: 아니요  
+_유형_: PortMapping 목록  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Privileged`  
+이 매개 변수가 true이면 컨테이너에 호스트 컨테이너 인스턴스에 대한 상승된 권한이 부여됩니다(사용자와 유사). `root` 이 파라미터는 `Privileged` Docker Remote API의 컨테이너 만들기 섹션과 `--privileged` docker run 옵션에 매핑됩니다.  
+이 파라미터는 AWS Fargate에서 실행되는 Windows 컨테이너 또는 태스크에 대해서는 지원되지 않습니다.
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`PseudoTerminal`  
+이 매개 변수가 `true`이면 TTY가 할당됩니다. 이 파라미터는 `Tty` Docker Remote API의 컨테이너 만들기 섹션과 `--tty` docker run 옵션에 매핑됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ReadonlyRootFilesystem`  
+이 매개 변수가 true이면 컨테이너에 루트 파일 시스템에 대한 읽기 전용 액세스 권한이 부여됩니다. 이 파라미터는 `ReadonlyRootfs` Docker Remote API의 컨테이너 만들기 섹션과 `--read-only` docker run 옵션에 매핑됩니다.  
+이 매개 변수는 Windows 컨테이너에 대해 지원되지 않습니다.
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`RepositoryCredentials`  
+사용할 개인 리포지토리 인증 자격 증명입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: RepositoryCredentials  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ResourceRequirements`  
+컨테이너에 할당할 리소스의 유형 및 양입니다. 유일하게 지원되는 리소스는 GPU입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: ResourceRequirement 목록  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Secrets`  
+컨테이너에 전달할 비밀입니다. 자세한 내용은 _Amazon Elastic Container Service 개발자 안내서의 민감한 데이터 지정을 참조하십시오_.  
+*필수 항목 *여부: 아니요  
+_유형_: 시크릿 목록  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`StartTimeout`  
+컨테이너에 대한 종속성 확인을 포기하기 전에 대기하는 시간(초)입니다. 예를 들어, containerA가 containerB에 대한 종속성을 갖는 작업 정의에서 , 또는 status에 도달하는 두 개의 컨테이너를 지정합니다 `COMPLETE` `SUCCESS` `HEALTHY` . `startTimeout` containerB에 대해 값이 지정되고 해당 시간 내에 원하는 상태에 도달하지 않으면 containerA가 포기하고 시작하지 않습니다. 이로 인해 작업이 상태로 전환 됩니다 `STOPPED` .  
+`ECS_CONTAINER_START_TIMEOUT` 컨테이너 에이전트 구성 변수를 사용하는 경우 이 시작 제한 시간 값과 독립적으로 적용됩니다.
+Fargate 시작 유형을 사용하는 태스크의 경우 태스크 또는 서비스에는 다음 플랫폼이 필요합니다.
+
+- Linux 플랫폼 버전 `1.3.0` 이상.
+- Windows 플랫폼 버전 `1.0.0` 이상.
+  EC2 시작 유형을 사용하는 태스크의 경우 컨테이너 인스턴스 `1.26.0` 에는 컨테이너 시작 제한 시간 값을 사용할 수 있는 컨테이너 에이전트 버전이 필요합니다. 그러나 최신 컨테이너 에이전트 버전을 사용하는 것이 좋습니다. 에이전트 버전 확인 및 최신 버전 업데이트에 대한 자세한 내용은 *Amazon Elastic Container Service 개발자 안내서*의 Amazon ECS 컨테이너 에이전트 업데이트를 참조하세요. Amazon ECS 최적화 Linux AMI를 사용하는 경우 인스턴스에 최소한 패키지 버전이 필요합니다 `1.26.0-1` `ecs-init` . 컨테이너 인스턴스가 버전 이상에서 시작되는 경우 `20190301` 컨테이너 에이전트의 필수 버전과 . `ecs-init` 자세한 내용은 *Amazon Elastic Container Service 개발자 안내서*의 Amazon ECS 최적화 Linux AMI를 참조하세요.  
+  유효한 값은 2-120초입니다.  
+  *필수 항목 *여부: 아니요  
+  _유형_: Integer  
+  _업데이트 필요 사항_: 바꿔 놓음
+
+`StopTimeout` 컨테이너가 자체적으로 정상적으로 종료되지 않는 경우 강제로 종료되기 전에 대기하는 시간(초)입니다.  
+Fargate 시작 유형을 사용하는 태스크의 경우 태스크 또는 서비스에는 다음 플랫폼이 필요합니다.
+
+- Linux 플랫폼 버전 `1.3.0` 이상.
+- Windows 플랫폼 버전 `1.0.0` 이상.
+  최대 중지 제한시간 값은 120초이며, 매개변수를 지정하지 않으면 기본값인 30초가 사용됩니다.  
+  EC2 시작 유형을 사용하는 태스크의 경우 `stopTimeout` 파라미터를 지정하지 않으면 Amazon ECS 컨테이너 에이전트 구성 변수에 설정된 값이 `ECS_CONTAINER_STOP_TIMEOUT` 사용됩니다. `stopTimeout` 매개변수 또는 `ECS_CONTAINER_STOP_TIMEOUT` 에이전트 구성 변수가 모두 설정되지 않은 경우 Linux 컨테이너의 경우 기본값인 30초, Windows 컨테이너의 경우 30초가 사용됩니다. 컨테이너 인스턴스에서 컨테이너 중지 제한 시간 값을 사용하려면 컨테이너 에이전트 버전 1.26.0 이상이 필요합니다. 그러나 최신 컨테이너 에이전트 버전을 사용하는 것이 좋습니다. 에이전트 버전 확인 및 최신 버전 업데이트에 대한 자세한 내용은 *Amazon Elastic Container Service 개발자 안내서*의 Amazon ECS 컨테이너 에이전트 업데이트를 참조하세요. Amazon ECS 최적화 Linux AMI를 사용하는 경우 인스턴스에 패키지 버전 1.26.0-1 이상이 필요합니다 `ecs-init` . 컨테이너 인스턴스가 버전 이상에서 시작되는 경우 `20190301` 컨테이너 에이전트의 필수 버전과 . `ecs-init` 자세한 내용은 *Amazon Elastic Container Service 개발자 안내서*의 Amazon ECS 최적화 Linux AMI를 참조하세요.  
+  유효한 값은 2-120초입니다.  
+  *필수 항목 *여부: 아니요  
+  _유형_: Integer  
+  _업데이트 필요 사항_: 바꿔 놓음
+
+`SystemControls`  
+컨테이너에 설정할 네임스페이스 커널 매개 변수 목록입니다. 이 파라미터는 `Sysctls` Docker Remote API의 컨테이너 만들기 섹션과 `--sysctl` docker run 옵션에 매핑됩니다. 예를 들어 `net.ipv4.tcp_keepalive_time` 더 오래 지속되는 연결을 유지하도록 설정을 구성할 수 있습니다.  
+`systemControls` 또는 네트워크 모드를 `awsvpc` 사용하는 단일 작업에서 여러 컨테이너에 대한 네트워크 관련 매개 변수를 `host` 지정하지 않는 것이 좋습니다 . 네트워크 모드를 사용하는 작업의 경우 `awsvpc` 마지막으로 시작된 컨테이너에 따라 `systemControls` 적용되는 매개 변수가 결정됩니다. 네트워크 모드를 사용하는 작업의 경우 `host` 컨테이너 인스턴스의 네임스페이스 커널 파라미터와 컨테이너를 변경합니다.
+이 매개 변수는 Windows 컨테이너에 대해 지원되지 않습니다.
+이 파라미터는 태스크가 플랫폼 버전 이상(Linux)을 사용하는 경우 AWS Fargate에서 호스팅되는 태스크에 대해서만 지원됩니다 `1.4.0` . Fargate의 Windows 컨테이너에는 지원되지 않습니다.
+*필수 항목 *여부: 아니요  
+_유형_: SystemControl 목록  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Ulimits`  
+`ulimits` 컨테이너에 설정할 목록입니다. 이 파라미터는 `Ulimits` Docker Remote API의 컨테이너 만들기 섹션과 `--ulimit` docker run 옵션에 매핑됩니다. 유효한 이름 지정 값은 Ulimit 데이터 형식으로 표시됩니다. 이 파라미터를 사용하려면 컨테이너 인스턴스에 Docker Remote API 버전 1.18 이상이 필요합니다. 컨테이너 인스턴스에서 Docker Remote API 버전을 확인하려면 컨테이너 인스턴스에 로그인하고 다음 명령을 실행합니다. `sudo docker version --format '{{.Server.APIVersion}}'`  
+이 매개 변수는 Windows 컨테이너에 대해 지원되지 않습니다.
+*필수 항목 *여부: 아니요  
+_유형_: Ulimit 목록  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`User`  
+컨테이너 내에서 사용할 사용자입니다. 이 파라미터는 `User` Docker Remote API의 컨테이너 만들기 섹션과 `--user` docker run 옵션에 매핑됩니다.  
+네트워크 모드를 사용하여 작업을 실행하는 경우 `host` 루트 사용자(UID 0)를 사용하여 컨테이너를 실행하지 마십시오. 보안을 강화하기 위해 루트가 아닌 사용자를 사용하는 것이 좋습니다.
+`user` 다음 형식을 사용하여 지정할 수 있습니다. UID 또는 GID를 지정하는 경우 양의 정수로 지정해야 합니다.
+
+- `user`
+- `user:group`
+- `uid`
+- `uid:gid`
+- `user:gid`
+- `uid:group`
+  이 매개 변수는 Windows 컨테이너에 대해 지원되지 않습니다.
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열  
+  _업데이트 필요 사항_: 바꿔 놓음
+
+`VolumesFrom`  
+다른 컨테이너에서 탑재할 데이터 볼륨입니다. 이 파라미터는 `VolumesFrom` Docker Remote API의 컨테이너 만들기 섹션과 `--volumes-from` docker run 옵션에 매핑됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: VolumeFrom 목록  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`WorkingDirectory`  
+컨테이너 내에서 명령을 실행할 작업 디렉터리입니다. 이 파라미터는 `WorkingDir` Docker Remote API의 컨테이너 만들기 섹션과 `--workdir` docker run 옵션에 매핑됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음

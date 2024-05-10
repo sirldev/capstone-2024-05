@@ -1,0 +1,30 @@
+# AWS::Lightsail::인스턴스 상태
+
+`State` 은 AWS::Lightsail::Instance 리소스의 속성입니다. 인스턴스의 상태 코드와 상태(예: `running`)를 설명합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Code" : Integer,
+  "Name" : String
+}
+```
+
+## 속성
+
+`Code`  
+인스턴스의 상태 코드입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`Name`  
+인스턴스의 상태(예: `running` 또는 `pending`)입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음

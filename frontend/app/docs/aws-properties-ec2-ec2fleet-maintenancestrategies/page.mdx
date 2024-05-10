@@ -1,0 +1,23 @@
+# AWS::EC2::EC2Fleet 유지 관리 전략
+
+중단될 위험이 높은 스팟 인스턴스를 관리하기 위한 전략입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "CapacityRebalance" : CapacityRebalance
+}
+```
+
+## 속성
+
+`CapacityRebalance`  
+Amazon EC2가 스팟 인스턴스가 중단될 위험이 높다는 신호를 내보낼 때 사용할 전략입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: CapacityRebalance  
+_업데이트 필요 사항_: 바꿔 놓음

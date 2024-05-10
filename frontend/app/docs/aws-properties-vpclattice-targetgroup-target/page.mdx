@@ -1,0 +1,30 @@
+# AWS::VpcLattice::TargetGroup 대상
+
+대상을 설명합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Id" : String,
+  "Port" : Integer
+}
+```
+
+## 속성
+
+`Id`  
+대상의 ID입니다. 대상 그룹 유형이 인 경우 `INSTANCE`인스턴스 ID입니다. 대상 그룹 유형이 인 경우 `IP`IP 주소입니다. 대상 그룹 유형이 인 경우 `LAMBDA`Lambda 함수의 ARN입니다. 대상 그룹 유형이 인 경우 `ALB`Application Load Balancer의 ARN입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Port`  
+대상이 수신 대기 중인 포트입니다. HTTP의 경우 기본값은 80입니다. HTTPS의 경우 기본값은 443입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음

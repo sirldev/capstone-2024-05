@@ -1,0 +1,48 @@
+# AWS::KinesisAnalyticsV2::애플리케이션 S3ContentLocation
+
+응용 프로그램 또는 사용자 지정 아티팩트의 위치입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "BucketARN" : String,
+  "FileKey" : String,
+  "ObjectVersion" : String
+}
+```
+
+## 속성
+
+`BucketARN`  
+애플리케이션 코드가 포함된 S3 버킷의 Amazon 리소스 이름(ARN)입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `2048`  
+_패턴_: `arn:.*`  
+_업데이트 필요 사항_: 중단 없음
+
+`FileKey`  
+응용 프로그램 코드가 포함된 개체의 파일 키입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `1024`  
+_업데이트 필요 사항_: 중단 없음
+
+`ObjectVersion`  
+응용 프로그램 코드가 포함된 개체의 버전입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `0`  
+_최대_: `1024`  
+_업데이트 필요 사항_: 중단 없음
+
+## 참고 항목
+
+- Amazon Kinesis Data Analytics API 참조\* \*의 S3ContentLocation

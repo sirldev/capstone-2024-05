@@ -1,0 +1,402 @@
+# AWS::ElastiCache::캐시 클러스터
+
+AWS::ElastiCache::CacheCluster 유형은 Amazon ElastiCache 캐시 클러스터를 생성합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::ElastiCache::CacheCluster",
+  "Properties" : {
+      "AutoMinorVersionUpgrade" : Boolean,
+      "AZMode" : String,
+      "CacheNodeType" : String,
+      "CacheParameterGroupName" : String,
+      "CacheSecurityGroupNames" : [ String, ... ],
+      "CacheSubnetGroupName" : String,
+      "ClusterName" : String,
+      "Engine" : String,
+      "EngineVersion" : String,
+      "IpDiscovery" : String,
+      "LogDeliveryConfigurations" : [ LogDeliveryConfigurationRequest, ... ],
+      "NetworkType" : String,
+      "NotificationTopicArn" : String,
+      "NumCacheNodes" : Integer,
+      "Port" : Integer,
+      "PreferredAvailabilityZone" : String,
+      "PreferredAvailabilityZones" : [ String, ... ],
+      "PreferredMaintenanceWindow" : String,
+      "SnapshotArns" : [ String, ... ],
+      "SnapshotName" : String,
+      "SnapshotRetentionLimit" : Integer,
+      "SnapshotWindow" : String,
+      "Tags" : [Tag, ... ],
+      "TransitEncryptionEnabled" : Boolean,
+      "VpcSecurityGroupIds" : [ String, ... ]
+    }
+}
+```
+
+## 속성
+
+`AutoMinorVersionUpgrade`  
+Redis 엔진 버전 6.0 이상을 실행 중인 경우 다음 마이너 버전 업그레이드 캠페인에 옵트인하려면 이 파라미터를 yes로 설정합니다. 이 매개 변수는 이전 버전에서는 사용할 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`AZMode`  
+이 Memcached 클러스터의 노드를 단일 가용 영역에서 생성할지 아니면 클러스터 리전의 여러 가용 영역에 걸쳐 생성할지를 지정합니다.  
+이 파라미터는 Memcached 클러스터에서만 지원됩니다.  
+`AZMode` 및 `PreferredAvailabilityZones` 가 지정되지 않은 경우 ElastiCache 는 `single-az` 모드를 가정합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `cross-az | single-az`  
+_업데이트 필요 사항_: 일부 중단
+
+`CacheNodeType`  
+노드 그룹(분할된 데이터베이스)에 있는 노드의 컴퓨팅 및 메모리 용량입니다.  
+ElastiCache에서 지원하는 노드 유형은 다음과 같습니다. 일반적으로 현재 세대 유형은 이전 세대 유형에 비해 더 낮은 비용으로 더 많은 메모리와 계산 능력을 제공합니다. Memcached 인스턴스의 CacheNodeType 변경은 현재 지원되지 않습니다. Memcached를 사용하여 크기를 조정해야 하는 경우 리소스를 변경하여 교체 업데이트를 강제 실행하는 것이 좋습니다 `LogicalResourceId` .
+
+- 범용:
+
+  - 현재 세대:
+
+    **M6g 노드 유형:** `cache.m6g.large`, `cache.m6g.xlarge`, `cache.m6g.2xlarge` `cache.m6g.4xlarge` `cache.m6g.8xlarge` `cache.m6g.12xlarge`, `cache.m6g.16xlarge` `cache.m6g.24xlarge`
+
+    **M5 노드 유형:** `cache.m5.large`, `cache.m5.xlarge`, `cache.m5.2xlarge`, `cache.m5.4xlarge`, `cache.m5.12xlarge` `cache.m5.24xlarge`
+
+    **M4 노드 유형:** `cache.m4.large`, `cache.m4.xlarge`, `cache.m4.2xlarge`, `cache.m4.4xlarge`, `cache.m4.10xlarge`
+
+    **T4g 노드 유형:** `cache.t4g.micro`, `cache.t4g.small`, `cache.t4g.medium`
+
+    **T3 노드 유형:** `cache.t3.micro`, `cache.t3.small`, `cache.t3.medium`
+
+    **T2 노드 유형:** `cache.t2.micro`, `cache.t2.small`, `cache.t2.medium`
+
+  - 이전 세대: (권장하지 않음)
+
+    **T1 노드 유형:** `cache.t1.micro`
+
+    **M1 노드 유형:** `cache.m1.small`, `cache.m1.medium`, `cache.m1.large`, `cache.m1.xlarge`
+
+    **M3 노드 유형:** `cache.m3.medium`, `cache.m3.large`, `cache.m3.xlarge`, `cache.m3.2xlarge`
+
+- 컴퓨팅 최적화:
+
+  - 이전 세대: (권장하지 않음)
+
+    **C1 노드 유형:** `cache.c1.xlarge`
+
+- 메모리 최적화:
+
+  - 현재 세대:
+
+    **R6gd 노드 유형:** `cache.r6gd.xlarge`, `cache.r6gd.2xlarge`, `cache.r6gd.4xlarge`, `cache.r6gd.8xlarge` `cache.r6gd.12xlarge`, , 참고 `cache.r6gd.16xlarge`
+
+---
+
+`r6gd` `us-east-2` `us-east-1` `us-west-2` `us-west-1` `eu-west-1` 패밀리는 , `eu-central-1` `ap-northeast-1`, `ap-southeast-1`, `ap-southeast-2`,
+
+    **R6g 노드 유형:** `cache.r6g.large`, `cache.r6g.xlarge`, `cache.r6g.2xlarge` `cache.r6g.4xlarge` `cache.r6g.8xlarge` `cache.r6g.12xlarge`, , `cache.r6g.16xlarge` `cache.r6g.24xlarge`
+
+    **R5 노드 유형:** `cache.r5.large`, `cache.r5.xlarge`, `cache.r5.2xlarge`, `cache.r5.4xlarge`, `cache.r5.12xlarge` `cache.r5.24xlarge`
+
+    **R4 노드 유형:** `cache.r4.large`, `cache.r4.xlarge`, `cache.r4.2xlarge`, `cache.r4.4xlarge`, `cache.r4.8xlarge`, `cache.r4.16xlarge`
+
+- 이전 세대: (권장하지 않음)
+
+      **M2 노드 유형:** `cache.m2.xlarge`, `cache.m2.2xlarge`, `cache.m2.4xlarge`
+
+      **R3 노드 유형:** `cache.r3.large`, `cache.r3.xlarge`, `cache.r3.2xlarge`, `cache.r3.4xlarge`, `cache.r3.8xlarge`
+
+  지역 가용성에 대한 자세한 내용은 Supported Node Types by Region을 참조하십시오.  
+  **추가 노드 유형 정보**
+
+- 현재 세대의 모든 인스턴스 유형은 기본적으로 Amazon VPC에서 생성됩니다.
+- Redis AOF(추가 전용 파일)는 T1 또는 T2 인스턴스에서 지원되지 않습니다.
+- 자동 장애 조치 기능이 있는 Redis 다중 AZ는 T1 인스턴스에서 지원되지 않습니다.
+- Redis 구성 변수 `appendonly` 이며 `appendfsync` Redis 버전 2.8.22 이상에서는 지원되지 않습니다.
+  _필수 항목 여부_: 예  
+  _유형_: 문자열  
+  _업데이트 필요 사항_: 중단 없음
+
+`CacheParameterGroupName`  
+이 클러스터와 연결할 파라미터 그룹의 이름입니다. 이 인수를 생략하면 지정된 엔진의 기본 파라미터 그룹이 사용됩니다. 클러스터를 생성할 때 가지고 있는 파라미터 그룹은 사용할 수 없습니다 `cluster-enabled='yes'` .  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`CacheSecurityGroupNames`  
+이 클러스터와 연결할 보안 그룹 이름 목록입니다.  
+Amazon Virtual Private Cloud(Amazon VPC) 외부에서 클러스터를 생성할 때만 이 파라미터를 사용합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`CacheSubnetGroupName`  
+클러스터에 사용할 서브넷 그룹의 이름입니다.  
+Amazon Virtual Private Cloud(Amazon VPC)에서 클러스터를 생성할 때만 이 파라미터를 사용합니다.  
+Amazon VPC에서 클러스터를 시작하려는 경우 클러스터 생성을 시작하기 전에 서브넷 그룹을 생성해야 합니다. 자세한 내용은 AWS::ElastiCache::SubnetGroup 단원을 참조하십시오.
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ClusterName`  
+캐시 클러스터의 이름입니다. 이름을 지정하지 않으면 AWSCloudFormation에서 고유한 물리적 ID를 생성하고 해당 ID를 캐시 클러스터에 사용합니다. 자세한 내용은 이름 유형을 참조하십시오.  
+이름에는 1-50자의 영숫자 또는 하이픈이 포함되어야 합니다. 이름은 문자로 시작해야 하며 하이픈으로 끝나거나 두 개의 연속된 하이픈을 포함할 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Engine`  
+이 클러스터에 사용할 캐시 엔진의 이름입니다.  
+이 매개 변수의 유효한 값은 다음과 같습니다. `memcached` `redis`  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`EngineVersion`  
+이 클러스터에 사용할 캐시 엔진의 버전 번호입니다. 지원되는 캐시 엔진 버전을 보려면 DescribeCacheEngineVersions 작업을 사용합니다.  
+ **중요:** 최신 엔진 버전으로 업그레이드할 수 있지만(캐시 엔진 및 버전 선택 참조) 이전 엔진 버전으로 다운그레이드할 수는 없습니다. 이전 엔진 버전을 사용하려면 기존 클러스터 또는 복제 그룹을 삭제하고 이전 엔진 버전으로 새로 생성해야 합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`IpDiscovery`  
+클러스터를 수정할 때 선택하는 네트워크 유형 중 하나 `ipv4` | `ipv6`을 클릭합니다. IPv6는 Nitro 시스템에 구축된 모든 인스턴스에서 Redis 엔진 버전 6.2 이상 또는 Memcached 엔진 버전 1.6.6을 사용하는 워크로드에 대해 지원됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `ipv4 | ipv6`  
+_업데이트 필요 사항_: 중단 없음
+
+`LogDeliveryConfigurations`  
+로그의 대상, 형식 및 유형을 지정합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: LogDeliveryConfigurationRequest 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`NetworkType`  
+다음 중 하나여야 합니다 `ipv4` . `ipv6` | `dual_stack`을 클릭합니다. IPv6는 Nitro 시스템에 구축된 모든 인스턴스에서 Redis 엔진 버전 6.2 이상 또는 Memcached 엔진 버전 1.6.6을 사용하는 워크로드에 대해 지원됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `dual_stack | ipv4 | ipv6`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`NotificationTopicArn`  
+알림이 전송되는 Amazon Simple Notification Service(SNS) 주제의 Amazon 리소스 이름(ARN)입니다.  
+Amazon SNS 주제 소유자는 클러스터 소유자와 동일해야 합니다.
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`NumCacheNodes`  
+캐시 클러스터에 있어야 하는 캐시 노드 수입니다.  
+그러나 `PreferredAvailabilityZone` and `PreferredAvailabilityZones `속성이 이전에 지정되지 않았고 새 값을 지정하지 않은 경우 업데이트를 대체해야 합니다.
+_필수 항목 여부_: 예  
+_유형_: Integer  
+_업데이트 필요 사항_: 일부 중단
+
+`Port`  
+각 캐시 노드가 연결을 수락하는 포트 번호입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`PreferredAvailabilityZone`  
+클러스터가 생성된 EC2 가용 영역입니다.  
+이 클러스터에 속하는 모든 노드는 기본 가용 영역에 배치됩니다. 여러 가용 영역에 걸쳐 노드를 생성하려면 를 사용합니다`PreferredAvailabilityZones`.  
+기본값: 시스템이 선택한 가용 영역입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 일부 중단
+
+`PreferredAvailabilityZones`  
+캐시 노드가 생성되는 가용 영역의 목록입니다. 목록의 영역 순서는 중요하지 않습니다.  
+이 옵션은 Memcached에서만 지원됩니다.  
+Amazon VPC에서 클러스터를 생성하는 경우(권장) 선택한 서브넷 그룹의 서브넷과 연결된 가용 영역에서만 노드를 찾을 수 있습니다.  
+나열된 가용 영역의 수는 의 값과 같아야 합니다`NumCacheNodes`.
+모든 노드를 동일한 가용 영역에 두려면 대신 사용하거나 `PreferredAvailabilityZone` 목록에서 가용 영역을 여러 번 반복합니다.  
+기본값: 시스템이 선택한 가용 영역입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 일부 중단
+
+`PreferredMaintenanceWindow`  
+클러스터에 대한 유지 관리가 수행되는 주간 시간 범위를 지정합니다. ddd:hh24:mi-ddd:hh24:mi(24H Clock UTC) 형식의 범위로 지정됩니다. 최소 유지 관리 기간은 60분입니다. 유효한 값은 `ddd` 다음과 같습니다.  
+클러스터에 대한 유지 관리가 수행되는 주간 시간 범위를 지정합니다. ddd:hh24:mi-ddd:hh24:mi(24H Clock UTC) 형식의 범위로 지정됩니다. 최소 유지 관리 기간은 60분입니다.  
+유효한 값은 `ddd` 다음과 같습니다.
+
+- `sun`
+- `mon`
+- `tue`
+- `wed`
+- `thu`
+- `fri`
+- `sat`
+  예: `sun:23:00-mon:01:30`  
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열  
+  _업데이트 필요 사항_: 중단 없음
+
+`SnapshotArns`  
+Amazon S3에 저장된 Redis RDB 스냅샷 파일을 고유하게 식별하는 Amazon 리소스 이름(ARN)을 포함하는 단일 요소 문자열 목록입니다. 스냅샷 파일은 노드 그룹(샤드)을 채우는 데 사용됩니다. ARN의 Amazon S3 객체 이름에는 쉼표가 포함될 수 없습니다.  
+이 매개 변수는 `Engine` 매개 변수가 인 `redis` 경우에만 유효합니다.
+Amazon S3 ARN의 예: `arn:aws:s3:::my_bucket/snapshot1.rdb`  
+_필수 항목 여부_: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`SnapshotName`  
+데이터를 새 노드 그룹(샤드)으로 복원할 Redis 스냅샷의 이름입니다. 스냅샷 상태는 `restoring` 새 노드 그룹(샤드)이 생성되는 동안으로 변경됩니다.  
+이 매개 변수는 `Engine` 매개 변수가 인 경우에만 유효합니다`redis`.
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`SnapshotRetentionLimit`  
+ElastiCache가 자동 스냅샷을 삭제하기 전에 보관하는 기간(일)입니다. 예를 들어 `SnapshotRetentionLimit` 5로 설정하면 오늘 생성된 스냅샷이 삭제되기 전에 5일 동안 보존됩니다.  
+이 매개 변수는 `Engine` 매개 변수가 인 `redis` 경우에만 유효합니다.
+기본값: 0(즉, 이 캐시 클러스터에 대해 자동 백업이 비활성화됨).  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`SnapshotWindow`  
+ElastiCache가 노드 그룹(샤드)의 일일 스냅샷 생성을 시작하는 일일 시간 범위(UTC)입니다.  
+본보기: `05:00-09:00`  
+이 파라미터를 지정하지 않으면 ElastiCache가 자동으로 적절한 시간 범위를 선택합니다.  
+이 매개 변수는 `Engine` 매개 변수가 인 경우에만 유효합니다`redis`.
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Tags`  
+이 리소스에 추가할 태그 목록입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`TransitEncryptionEnabled`  
+true로 설정된 경우 전송 중 암호화를 사용하도록 설정하는 플래그입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`VpcSecurityGroupIds`  
+클러스터와 연결된 하나 이상의 VPC 보안 그룹입니다.  
+Amazon Virtual Private Cloud(Amazon VPC)에서 클러스터를 생성할 때만 이 파라미터를 사용합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID가 `Ref` 내장 함수 에 제공되면 `Ref` 리소스 이름을 반환합니다.
+
+함수 사용에 대한 자세한 `Ref` 내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`ConfigurationEndpoint.Address`  
+ 캐시 노드의 DNS 호스트 이름입니다.  
+Redis(클러스터 모드 비활성화됨) 복제 그룹에는 이 속성이 없습니다. 따라서 `Fn::GetAtt` 복제 그룹이 클러스터된 경우에만 이 특성에 대한 값을 반환합니다. 그렇지 않으면 `Fn::GetAtt` 실패합니다.
+
+`ConfigurationEndpoint.Port`  
+Memcached 캐시 클러스터에 대한 구성 엔드포인트의 포트 번호입니다.  
+Redis(클러스터 모드 비활성화됨) 복제 그룹에는 이 속성이 없습니다. 따라서 `Fn::GetAtt` 복제 그룹이 클러스터된 경우에만 이 특성에 대한 값을 반환합니다. 그렇지 않으면 `Fn::GetAtt` 실패합니다.
+
+`RedisEndpoint.Address` Redis 캐시 클러스터에 대한 구성 엔드포인트의 DNS 주소입니다.
+
+`RedisEndpoint.Port` Redis 캐시 클러스터에 대한 구성 엔드포인트의 포트 번호입니다.
+
+## 예제
+
+### 기본 VPC의 클러스터
+
+다음 코드 조각은 기본 VPC에 있는 보안 그룹의 Elastiache 클러스터에 대해 설명합니다. 일반적으로 VPC의 보안 그룹에는 VPC ID를 지정해야 합니다. 이 경우 보안 그룹이 기본 VPC를 사용하기 때문에 VPC ID가 필요하지 않습니다. 보안 그룹에 대한 VPC를 지정하려면 해당 속성을 지정합니다 `VpcId` .
+
+캐시 클러스터의 경우 `VpcSecurityGroupIds` 이 속성은 클러스터를 보안 그룹과 연결하는 데 사용됩니다. 속성에는 `VpcSecurityGroupIds` 보안 그룹 이름(보안 그룹 이름이 아님)이 필요하기 때문에 템플릿 코드 조각은 리소스 `Fn::GetAtt` 의 함수 `Ref` 대신 함수를 사용합니다 `ElasticacheSecurityGroup` . 함수는 `Ref` 보안 그룹 이름을 반환합니다. 보안 그룹에 VPC ID를 지정하는 경우 `Ref` 보안 그룹 ID를 반환합니다.
+
+`InstanceSecurityGroup` 이 예제에서는 실제로 정의되지 않은 보안 그룹의 논리적 이름을 나타냅니다. 속성에 대한 자세한 `SourceSecurityGroupName` 내용은 AWS::EC2::SecurityGroupIngress 단원을 참조하십시오.
+
+#### JSON (영문)
+
+```
+{
+    "ElasticacheSecurityGroup": {
+        "Type": "AWS::EC2::SecurityGroup",
+        "Properties": {
+            "GroupDescription": "Elasticache Security Group",
+            "SecurityGroupIngress": [
+                {
+                    "IpProtocol": "tcp",
+                    "FromPort": 11211,
+                    "ToPort": 11211,
+                    "SourceSecurityGroupName": {
+                        "Ref": "InstanceSecurityGroup"
+                    }
+                }
+            ]
+        }
+    },
+    "ElasticacheCluster": {
+        "Type": "AWS::ElastiCache::CacheCluster",
+        "Properties": {
+            "Engine": "memcached",
+            "CacheNodeType": "cache.t2.micro",
+            "NumCacheNodes": "1",
+            "VpcSecurityGroupIds": [
+                {
+                    "Fn::GetAtt": [
+                        "ElasticacheSecurityGroup",
+                        "GroupId"
+                    ]
+                }
+            ]
+        }
+    }
+}
+```
+
+### 여러 가용 영역의 Memcached 노드
+
+다음 예제에서는 us-west-2a에 두 개의 노드가 생성되고 us-west-2b에 하나의 노드가 생성되는 세 개의 노드가 있는 캐시 클러스터를 시작합니다.
+
+#### JSON (영문)
+
+```
+{
+    "myCacheCluster": {
+        "Type": "AWS::ElastiCache::CacheCluster",
+        "Properties": {
+            "AZMode": "cross-az",
+            "CacheNodeType": "cache.m3.medium",
+            "Engine": "memcached",
+            "NumCacheNodes": "3",
+            "PreferredAvailabilityZones": [
+                "us-west-2a",
+                "us-west-2a",
+                "us-west-2b"
+            ]
+        }
+    }
+}
+```
+
+## 참고 항목
+
+- - Amazon ElastiCache API 참조 안내서\*의 CreateCacheParameterGroup
+- - Amazon ElastiCache API 참조 안내서\*의 ModifyCacheParameterGroup

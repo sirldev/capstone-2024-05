@@ -1,0 +1,24 @@
+# AWS::EC2::SpotFleet TargetGroupsConfig
+
+스팟 집합에 연결할 대상 그룹을 설명합니다. 스팟 집합은 실행 중인 스팟 인스턴스를 이러한 대상 그룹에 등록합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "TargetGroups" : [ TargetGroup, ... ]
+}
+```
+
+## 속성
+
+`TargetGroups`  
+하나 이상의 대상 그룹.  
+_필수 항목 여부_: 예  
+_유형_: TargetGroup 목록  
+_최대_: `5`  
+_업데이트 필요 사항_: 바꿔 놓음

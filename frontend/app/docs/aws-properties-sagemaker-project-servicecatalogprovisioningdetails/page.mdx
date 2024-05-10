@@ -1,0 +1,53 @@
+# AWS::SageMaker::P roject ServiceCatalogProvisioning세부 정보
+
+서비스 카탈로그 제품을 프로비저닝하기 위해 지정하는 세부 정보입니다. Service Catalog에 대한 자세한 내용은 AWS Service Catalog란 무엇인가를 참조하십시오.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "PathId" : String,
+  "ProductId" : String,
+  "ProvisioningArtifactId" : String,
+  "ProvisioningParameters" : [ ProvisioningParameter, ... ]
+}
+```
+
+## 속성
+
+`PathId`  
+제품의 경로 식별자입니다. 이 값은 제품에 기본 경로가 있는 경우 선택 사항이며 제품에 둘 이상의 경로가 있는 경우 필수입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `100`  
+_패턴_: `^[a-zA-Z0-9_-]*`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ProductId`  
+프로비저닝할 제품의 ID입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `100`  
+_패턴_: `^[a-zA-Z0-9_-]*`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ProvisioningArtifactId`  
+프로비저닝 아티팩트의 ID입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `100`  
+_패턴_: `^[a-zA-Z0-9_-]*`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ProvisioningParameters`  
+제품을 프로비저닝할 때 지정하는 키 값 쌍의 목록입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: ProvisioningParameter 목록  
+_업데이트 필요 사항_: 바꿔 놓음

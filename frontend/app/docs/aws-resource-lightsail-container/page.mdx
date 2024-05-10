@@ -1,0 +1,105 @@
+# AWS::Lightsail::컨테이너
+
+리소스는 `AWS::Lightsail::Container` 컨테이너 서비스를 지정합니다.
+
+Lightsail 컨테이너 서비스는 컨테이너를 배포할 수 있는 컴퓨팅 리소스입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::Lightsail::Container",
+  "Properties" : {
+      "ContainerServiceDeployment" : ContainerServiceDeployment,
+      "IsDisabled" : Boolean,
+      "Power" : String,
+      "PublicDomainNames" : [ PublicDomainName, ... ],
+      "Scale" : Integer,
+      "ServiceName" : String,
+      "Tags" : [Tag, ... ]
+    }
+}
+```
+
+## 속성
+
+`ContainerServiceDeployment`  
+컨테이너 서비스의 현재 컨테이너 배포를 설명하는 개체입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: ContainerServiceDeployment  
+_업데이트 필요 사항_: 일부 중단
+
+`IsDisabled`  
+컨테이너 서비스가 비활성화되었는지 여부를 나타내는 부울 값입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`Power`  
+컨테이너 서비스의 전원 사양입니다.  
+power는 RAM 용량, vCPU 수 및 컨테이너 서비스의 기본 가격을 지정합니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_허용되는 값_: `large | medium | micro | nano | small | xlarge`  
+_업데이트 필요 사항_: 중단 없음
+
+`PublicDomainNames`  
+컨테이너 서비스의 공용 도메인 이름(예: `example.com` 및 `www.example.com`)입니다.  
+컨테이너 서비스에 대해 최대 4개의 퍼블릭 도메인 이름을 지정할 수 있습니다. 지정하는 도메인 이름은 컨테이너 서비스의 퍼블릭 엔드포인트로 구성된 컨테이너를 사용하여 배포를 생성할 때 사용됩니다.  
+퍼블릭 도메인 이름을 지정하지 않으면 컨테이너 서비스의 기본 도메인을 사용할 수 있습니다.  
+컨테이너 서비스에서 퍼블릭 도메인 이름을 사용하려면 먼저 SSL/TLS 인증서를 생성하고 검증해야 합니다. AWS::Lightsail::Certificate 리소스를 사용하여 컨테이너 서비스에 사용할 퍼블릭 도메인 이름에 대한 인증서를 생성합니다.
+*필수 항목 *여부: 아니요  
+_유형_: PublicDomainName 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`Scale`  
+컨테이너 서비스의 규모 사양입니다.  
+크기 조정은 컨테이너 서비스의 할당된 컴퓨팅 노드를 지정합니다.  
+_필수 항목 여부_: 예  
+_유형_: Integer  
+_최소_: `1`  
+_최대_: `20`  
+_업데이트 필요 사항_: 중단 없음
+
+`ServiceName`  
+컨테이너 서비스의 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Tags`  
+이 리소스에 적용할 키-값 쌍의 배열입니다.  
+자세한 내용은 _AWS CloudFormation 사용 설명서의 태그를 참조하세요_.  
+`Value` of `Tags` 는 Lightsail 리소스의 선택 사항입니다.
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref`이 `Ref`리소스에 대한 고유 식별자를 반환합니다.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`ContainerArn` 컨테이너의 Amazon 리소스 이름(ARN)입니다.
+
+`Url` 공개적으로 액세스할 수 있는 컨테이너 서비스의 URL입니다.  
+현재 배포에 퍼블릭 엔드포인트가 지정되지 않은 경우 이 URL은 404 응답을 반환합니다.
+
+## 발언
+
+_컨테이너 배포 실패_
+
+배포가 실패하면 스택이 드리프트 `ContainerService` 됩니다. 이는 템플릿이 컨테이너 서비스와 다른 배포를 갖기 때문입니다.

@@ -1,0 +1,26 @@
+# AWS::Lambda::EventSource매핑 AmazonManagedKafkaEventSourceConfig
+
+Amazon Managed Streaming for Apache Kafka(Amazon MSK) 이벤트 소스에 대한 특정 구성 설정입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ConsumerGroupId" : String
+}
+```
+
+## 속성
+
+`ConsumerGroupId`  
+가입할 Kafka 소비자 그룹의 식별자입니다. 소비자 그룹 ID는 모든 Kafka 이벤트 소스 간에 고유해야 합니다. 지정된 소비자 그룹 ID를 사용하여 Kafka 이벤트 소스 매핑을 생성한 후에는 이 값을 업데이트할 수 없습니다. 자세한 내용은 사용자 지정 가능한 소비자 그룹 ID를 참조하세요.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `200`  
+_패턴_: `[a-zA-Z0-9-/*:_+=.@-]*`  
+_업데이트 필요 사항_: 바꿔 놓음

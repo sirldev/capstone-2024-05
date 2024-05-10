@@ -1,0 +1,30 @@
+# AWS::S3::StorageLens 암호화
+
+이 리소스에는 Amazon S3 Storage Lens 지표 내보내기를 암호화하는 데 사용되는 서버 측 암호화 유형이 포함되어 있습니다. 유효한 값은 _Amazon S3 API Reference의 StorageLensDataExportEncryption을 참조하십시오_.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "SSEKMS" : SSEKMS,
+  "SSES3" : Json
+}
+```
+
+## 속성
+
+`SSEKMS`  
+AWS Key Management Service 키(SSE-KMS)를 사용하여 S3 Storage Lens 지표 내보내기 파일을 암호화하도록 지정합니다.  
+*필수 항목 *여부: 아니요  
+_형식_: SSEKMS  
+_업데이트 필요 사항_: 중단 없음
+
+`SSES3`  
+Amazon S3 관리형 키(SSE-S3)를 사용하여 S3 Storage Lens 지표 내보내기 파일을 암호화하도록 지정합니다.  
+*필수 항목 *여부: 아니요  
+_형식_: Json  
+_업데이트 필요 사항_: 중단 없음

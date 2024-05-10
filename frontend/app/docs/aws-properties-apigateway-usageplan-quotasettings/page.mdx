@@ -1,0 +1,44 @@
+# AWS::ApiGateway::UsagePlan 할당량 설정
+
+`QuotaSettings` 은 사용자가 REST API에 대해 수행할 수 있는 최대 요청 수에 대한 대상을 지정하는 AWS::ApiGateway::UsagePlan 리소스의 속성입니다.
+
+경우에 따라 클라이언트가 설정한 목표를 초과할 수 있습니다. 비용을 제어하기 위해 사용량 계획에 의존하지 마십시오. AWS Budgets를 사용하여 비용을 모니터링하고 AWS WAF를 사용하여 API 요청을 관리하는 것이 좋습니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Limit" : Integer,
+  "Offset" : Integer,
+  "Period" : String
+}
+```
+
+## 속성
+
+`Limit`  
+지정된 기간 동안 수행할 수 있는 대상 최대 요청 수입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`Offset`  
+초기 기간 동안 지정된 제한에서 뺀 요청 수입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`Period`  
+제한이 적용되는 기간입니다. 유효한 값은 "DAY", "WEEK" 또는 "MONTH"입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `DAY | MONTH | WEEK`  
+_업데이트 필요 사항_: 중단 없음
+
+## 참고 항목
+
+- Amazon API Gateway REST API 참조*의 UsagePlan *

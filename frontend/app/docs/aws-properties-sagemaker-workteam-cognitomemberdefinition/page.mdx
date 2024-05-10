@@ -1,0 +1,37 @@
+# AWS::SageMaker::Workteam CognitoMemberDefinition
+
+Amazon Cognito 사용자 그룹을 식별합니다. 사용자 그룹은 하나 이상의 작업 팀에서 사용할 수 있습니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "CognitoClientId" : String,
+  "CognitoUserGroup" : String,
+  "CognitoUserPool" : String
+}
+```
+
+## 속성
+
+`CognitoClientId`  
+응용 프로그램 클라이언트의 식별자입니다. Amazon Cognito를 사용하여 앱 클라이언트 ID를 생성해야 합니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`CognitoUserGroup`  
+사용자 그룹의 식별자입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`CognitoUserPool`  
+사용자 풀의 식별자입니다. 사용자 풀은 호출하는 서비스와 동일한 리전에 있어야 합니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음

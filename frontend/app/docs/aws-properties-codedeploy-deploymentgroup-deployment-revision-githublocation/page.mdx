@@ -1,0 +1,31 @@
+# AWS::CodeDeploy::D eploymentGroup GitHubLocation
+
+`GitHubLocation` 는 GitHub에 저장된 애플리케이션 개정의 위치를 지정하는 CodeDeploy DeploymentGroup Revision 속성의 속성입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "CommitId" : String,
+  "Repository" : String
+}
+```
+
+## 속성
+
+`CommitId`  
+애플리케이션 수정 버전에 대한 번들 아티팩트를 나타내는 GitHub 커밋의 SHA1 커밋 ID입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Repository`  
+애플리케이션 개정에 대한 번들 아티팩트를 나타내는 커밋에 대한 참조를 저장하는 GitHub 계정 및 리포지토리 쌍입니다.  
+값을 로 지정합니다 `account/repository`.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음

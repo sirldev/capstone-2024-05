@@ -1,0 +1,51 @@
+# AWS::Route53복구 준비::리소스 세트 DNSTargetResource
+
+DNS/라우팅 제어 준비 검사 및 아키텍처 검사를 위한 구성 요소입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "DomainName" : String,
+  "HostedZoneArn" : String,
+  "RecordSetId" : String,
+  "RecordType" : String,
+  "TargetResource" : TargetResource
+}
+```
+
+## 속성
+
+`DomainName`  
+수신 역할을 하는 도메인 이름은 고객 애플리케이션의 일부를 가리킵니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`HostedZoneArn`  
+대상 리소스의 제공된 이름과 함께 DNS 레코드를 포함하는 호스팅 영역 Amazon 리소스 이름(ARN)입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`RecordSetId`  
+이름과 유형이 지정된 DNS 레코드를 고유하게 식별하는 Amazon Route 53 레코드 세트 ID입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`RecordType`  
+대상 리소스의 DNS 레코드 유형입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`TargetResource`  
+Route 53 레코드가 가리키는 대상 리소스입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: TargetResource  
+_업데이트 필요 사항_: 중단 없음

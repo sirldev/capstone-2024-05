@@ -1,0 +1,118 @@
+# AWS::RDS::이벤트 구독
+
+이 `AWS::RDS::EventSubscription` 리소스를 사용하면 Amazon Simple Notification Service(Amazon SNS)를 통해 Amazon Relational Database Service 이벤트에 대한 알림을 받을 수 있습니다. 자세한 내용은 Amazon RDS 사용 설명서의 Amazon RDS 이벤트 알림 사용을 참조하십시오\*\*.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::RDS::EventSubscription",
+  "Properties" : {
+      "Enabled" : Boolean,
+      "EventCategories" : [ String, ... ],
+      "SnsTopicArn" : String,
+      "SourceIds" : [ String, ... ],
+      "SourceType" : String,
+      "SubscriptionName" : String,
+      "Tags" : [Tag, ... ]
+    }
+}
+```
+
+## 속성
+
+`Enabled`  
+구독을 활성화할지 여부를 나타내는 값입니다. 이벤트 알림 구독이 활성화되지 않은 경우 구독이 생성되지만 활성화되지는 않습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`EventCategories`  
+구독하려는 특정 소스 유형()에 대한 이벤트 범주 목록`SourceType`입니다. some-address 또는 some-address 작업을 사용하여 이 목록을 볼 수도 있습니다 `DescribeEventCategories` .  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`SnsTopicArn`  
+이벤트 알림을 위해 생성된 SNS 주제의 Amazon 리소스 이름(ARN)입니다. ARN은 주제를 생성하고 구독할 때 Amazon SNS에 의해 생성됩니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`SourceIds` 이벤트가 반환되는 이벤트 원본의 식별자 목록입니다. 지정하지 않으면 모든 소스가 응답에 포함됩니다. 식별자는 문자로 시작해야 하며 ASCII 문자, 숫자 및 하이픈만 포함해야 합니다. 하이픈으로 끝나거나 두 개의 연속 하이픈을 포함할 수 없습니다.  
+제약 조건:
+
+- `SourceIds` 값이 제공되면 `SourceType` 값도 제공해야 합니다.
+- 소스 유형이 DB 인스턴스인 경우 `DBInstanceIdentifier` 값을 제공해야 합니다.
+- 소스 유형이 DB 클러스터인 경우 `DBClusterIdentifier` 값을 제공해야 합니다.
+- 소스 유형이 DB 파라미터 그룹인 경우 `DBParameterGroupName` 값을 제공해야 합니다.
+- 원본 유형이 DB 보안 그룹인 경우 `DBSecurityGroupName` 값을 제공해야 합니다.
+- 소스 유형이 DB 스냅샷인 경우 `DBSnapshotIdentifier` 값을 제공해야 합니다.
+- 소스 유형이 DB 클러스터 스냅샷인 경우 `DBClusterSnapshotIdentifier` 값을 제공해야 합니다.
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열 목록  
+  _업데이트 필요 사항_: 중단 없음
+
+`SourceType`  
+이벤트를 생성하는 원본의 형식입니다. 예를 들어 DB 인스턴스에서 생성된 이벤트에 대한 알림을 받으려면 이 파라미터를 로 설정합니다`db-instance`. 이 값을 지정하지 않으면 모든 이벤트가 반환됩니다.  
+유효한 값: `db-instance` | `db-cluster` | `db-parameter-group` | `db-security-group` | `db-snapshot` | `db-cluster-snapshot`  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`SubscriptionName`  
+구독의 이름입니다.  
+제약 조건: 이름은 255자 미만이어야 합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Tags`  
+이 구독에 적용할 키-값 쌍의 선택적 배열입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`RDS 이벤트 구독의 이름을 반환합니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+## 예제
+
+###
+
+다음 예에서는 기존 데이터베이스 인스턴스에 대한 이벤트 구독 과 `db-instance-1`동일한 템플릿의 다른 위치에 선언된 `myDBInstance` 논리적 ID가 있는 데이터베이스를 만듭니다.
+
+#### JSON (영문)
+
+```
+{
+    "myEventSubscription": {
+        "Type": "AWS::RDS::EventSubscription",
+        "Properties": {
+            "EventCategories": [
+                "configuration change",
+                "failure",
+                "deletion"
+            ],
+            "SnsTopicArn": "arn:aws:sns:us-west-2:123456789012:example-topic",
+            "SourceIds": [
+                "db-instance-1",
+                {
+                    "Ref": "myDBInstance"
+                }
+            ],
+            "SourceType": "db-instance",
+            "Enabled": false
+        }
+    }
+}
+```

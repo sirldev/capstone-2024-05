@@ -1,0 +1,85 @@
+# AWS::EC2::볼륨 첨부 파일
+
+Amazon EBS 볼륨을 실행 중인 인스턴스에 연결하고 지정된 디바이스 이름을 가진 인스턴스에 노출합니다.
+
+이 리소스를 삭제하기 전에(따라서 볼륨이 분리되면) 먼저 인스턴스에서 볼륨을 마운트 해제해야 합니다. 이렇게 하지 않으면 분리를 시도하는 동안 볼륨이 사용 중 상태로 고정되어 파일 시스템이나 포함된 데이터가 손상될 수 있습니다.
+
+Amazon EBS 볼륨이 인스턴스의 루트 디바이스인 경우 인스턴스가 "실행 중" 상태인 동안에는 분리할 수 없습니다. 루트 볼륨을 분리하려면 먼저 인스턴스를 중지합니다.
+
+루트 볼륨이 AWS Marketplace 제품 코드가 있는 인스턴스에서 분리된 경우 해당 볼륨의 제품 코드는 더 이상 인스턴스와 연결되지 않습니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::EC2::VolumeAttachment",
+  "Properties" : {
+      "Device" : String,
+      "InstanceId" : String,
+      "VolumeId" : String
+    }
+}
+```
+
+## 속성
+
+`Device`  
+장치 이름(예: `/dev/sdh` 또는 `xvdh`).  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`InstanceId`  
+볼륨이 연결되는 인스턴스의 ID입니다. 이 값은 일부 주소 리소스에 대한 참조이거나 기존 EC2 인스턴스의 물리적 ID일 수 있습니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`VolumeId`  
+Amazon EBS 볼륨의 ID입니다. 볼륨과 인스턴스는 동일한 가용 영역 내에 있어야 합니다. 이 값은 일부 주소 리소스에 대한 참조이거나 기존 Amazon EBS 볼륨의 볼륨 ID일 수 있습니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+## 예제
+
+### 실행 중인 인스턴스에 EBS 볼륨 연결
+
+이 예제에서는 논리적 이름이 "Ec2Instance"인 EC2 인스턴스에 EC2 EBS 볼륨을 연결합니다.
+
+#### JSON (영문)
+
+```
+"NewVolume" : {
+   "Type" : "AWS::EC2::Volume",
+   "Properties" : {
+      "Size" : "100",
+      "AvailabilityZone" : { "Fn::GetAtt" : [ "Ec2Instance", "AvailabilityZone" ] },
+      "Tags" : [ {
+         "Key" : "MyTag",
+          "Value" : "TagValue"
+      } ]
+   }
+},
+
+"MountPoint" : {
+   "Type" : "AWS::EC2::VolumeAttachment",
+   "Properties" : {
+      "InstanceId" : { "Ref" : "Ec2Instance" },
+      "VolumeId"  : { "Ref" : "NewVolume" },
+      "Device" : "/dev/sdh"
+   }
+}
+```
+
+## 참고 항목
+
+- Amazon EC2 사용 설명서*의 Amazon Elastic Block Store(Amazon EBS) *
+- Amazon EC2 사용 설명서*의 인스턴스에 EBS 볼륨 연결 *
+- 인스턴스에서 EBS 볼륨 분리 의 _Amazon EC2 사용 설명서_
+- Amazon EC2 API 참조*의 AttachVolume *
+- Amazon EC2 API 참조*의 DetachVolume *

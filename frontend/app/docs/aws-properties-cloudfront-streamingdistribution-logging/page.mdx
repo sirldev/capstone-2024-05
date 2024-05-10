@@ -1,0 +1,41 @@
+# AWS::CloudFront::StreamingDistribution 로깅
+
+스트리밍 배포를 위해 액세스 로그를 기록할지 여부를 제어하는 복합 형식입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Bucket" : String,
+  "Enabled" : Boolean,
+  "Prefix" : String
+}
+```
+
+## 속성
+
+`Bucket`  
+액세스 로그를 저장할 Amazon S3 버킷(예: `myawslogbucket.s3.amazonaws.com`.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Enabled`  
+CloudFront에서 액세스 로그를 Amazon S3 버킷에 저장할지 여부를 지정합니다. 스트리밍 배포를 생성할 때 로깅을 활성화하지 않거나 기존 스트리밍 배포에 대한 로깅을 비활성화하려면 `false` for `Enabled`를 지정하고 `empty Bucket` and `Prefix` elements 를 지정합니다 . for를 지정 `false` 하지만 `Enabled` 및 에 `Bucket` 대한 값을 지정 `Prefix` 하면 값이 자동으로 삭제됩니다.  
+_필수 항목 여부_: 예  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`Prefix`  
+CloudFront에서 이 스트리밍 배포의 액세스 로그 파일 이름에 접두사로 붙일 선택적 문자열(예: `myprefix/`). 로깅을 사용하도록 설정하되 접두사를 지정하지 않으려는 경우에도 요소에 빈 요소를 포함해야 합니다 `Prefix` `Logging` .  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+## 참고 항목
+
+- Amazon CloudFront API 참조\* \*의 StreamingLoggingConfig

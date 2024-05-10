@@ -1,0 +1,32 @@
+# AWS::AutoScaling::AutoScalingGroup 액셀러레이터TotalMemoryMiBRequest
+
+`AcceleratorTotalMemoryMiBRequest` 은 `InstanceRequirements` 인스턴스 유형에 대한 액셀러레이터의 최소 및 최대 총 메모리 크기(MiB)를 설명하는 AWS::AutoScaling::AutoScalingGroup LaunchTemplateOverrides 속성 유형의 속성 속성입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Max" : Integer,
+  "Min" : Integer
+}
+```
+
+## 속성
+
+`Max`  
+최대 메모리(MiB)입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_최소_: `0`  
+_업데이트 필요 사항_: 중단 없음
+
+`Min`  
+최소 메모리(MiB)입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_최소_: `0`  
+_업데이트 필요 사항_: 중단 없음

@@ -1,0 +1,66 @@
+# AWS::CloudTrail::리소스 정책
+
+AWS 외부의 이벤트 소스와의 통합에 사용되는 CloudTrail 채널에 리소스 기반 권한 정책을 연결합니다. 리소스 기반 정책에 대한 자세한 내용은 CloudTrail 사용 설명서의 CloudTrail 리소스 기반 정책 예제를 참조하세요\*\*.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::CloudTrail::ResourcePolicy",
+  "Properties" : {
+      "ResourceArn" : String,
+      "ResourcePolicy" : Json
+    }
+}
+```
+
+## 속성
+
+`ResourceArn`  
+ 리소스 기반 정책에 연결된 CloudTrail 채널의 Amazon 리소스 이름(ARN)입니다. 다음은 리소스 ARN의 형식입니다 `arn:aws:cloudtrail:us-east-2:123456789012:channel/MyChannel`.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `3`  
+_최대_: `256`  
+_패턴_: `^[a-zA-Z0-9._/-:]+$`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ResourcePolicy` AWS 리소스 기반 정책에 대한 JSON 형식 문자열입니다.  
+리소스 정책에 대한 요구 사항은 다음과 같습니다.
+
+- cloudtrail-data:PutAuditEvents 작업 하나만 포함
+- 하나 이상의 명령문을 포함합니다. 정책에는 최대 20개의 문이 있을 수 있습니다.
+- 각 문에는 하나 이상의 보안 주체가 포함됩니다. 문에는 최대 50개의 보안 주체가 있을 수 있습니다.
+  _필수 항목 여부_: 예  
+  _형식_: Json  
+  _최소_: `1`  
+  _최대_: `8192`  
+  _업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID가 Ref 내장 함수에 제공되면 `Ref` 리소스를 반환합니다. 리소스는 리소스 기반 정책 문서와 채널 ARN의 조합입니다.
+
+## 예제
+
+### 본보기
+
+다음 예제에서는 AWS 계정 ID 가 정책에서 리소스 ARN으로 정의된 채널을 `111122223333` 호출할 수 `PutAuditEvents` 있도록 허용하는 리소스 정책을 생성합니다 . 리소스 정책 생성에 대한 자세한 내용은 AWS CloudTrail User Guide의 AWS CloudTrail 리소스 기반 정책 예제를 참조하세요\*\*.
+
+#### JSON (영문)
+
+```
+{
+  "Type": "AWS:CloudTrail:ResourcePolicy",
+  "Properties": {
+    "ResourceArn": "arn:aws:cloudtrail:us-east-1:01234567890:channel/EXAMPLE8-0558-4f7e-a06a-43969EXAMPLE",
+    "ResourcePolicy": "{ \"Version\": \"2012-10-17\", \"Statement\": [ { \"Sid\": \"DeliverEventsThroughChannel\", \"Effect\": \"Allow\", \"Principal\": { \"AWS\": [ \"arn:aws:iam::111122223333:root\" ] }, \"Action\":\"cloudtrail-data:PutAuditEvents\", \"Resource\": \"arn:aws:cloudtrail:us-east-1:01234567890:channel/EXAMPLE8-0558-4f7e-a06a-43969EXAMPLE\" } ] }"
+  }
+}
+```

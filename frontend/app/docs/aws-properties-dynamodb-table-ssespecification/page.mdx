@@ -1,0 +1,38 @@
+# AWS::D ynamoDB::테이블 SSES사양
+
+서버 쪽 암호화를 사용하도록 설정하는 데 사용되는 설정을 나타냅니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "KMSMasterKeyId" : String,
+  "SSEEnabled" : Boolean,
+  "SSEType" : String
+}
+```
+
+## 속성
+
+`KMSMasterKeyId`  
+AWS KMS 암호화에 사용해야 하는 AWS KMS 키입니다. 키를 지정하려면 키 ID, Amazon 리소스 이름(ARN), 별칭 이름 또는 별칭 ARN을 사용합니다. 키가 기본 DynamoDB 키와 다른 경우에만 이 파라미터를 제공해야 합니다`alias/aws/dynamodb`.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`SSEEnabled`  
+서버 측 암호화가 AWS 관리형 키 또는 AWS 소유 키를 사용하여 수행되는지 여부를 나타냅니다. 활성화되면(true) 서버 측 암호화 유형이 로 설정 `KMS` 되고 AWS 관리형 키가 사용됩니다(AWS KMS 요금 적용). 비활성화(false)되거나 지정되지 않은 경우 서버 측 암호화가 AWS 소유 키로 설정됩니다.  
+_필수 항목 여부_: 예  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`SSEType` 서버 쪽 암호화 유형입니다. 유일하게 지원되는 값은 다음과 같습니다.
+
+- `KMS` - AWS Key Management Service를 사용하는 서버 측 암호화. 키는 계정에 저장되고 AWS KMS에서 관리합니다(AWS KMS 요금 적용).
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열  
+  _업데이트 필요 사항_: 중단 없음

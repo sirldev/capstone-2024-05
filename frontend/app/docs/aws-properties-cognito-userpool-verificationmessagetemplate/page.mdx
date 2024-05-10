@@ -1,0 +1,74 @@
+# AWS::Cognito::UserPool VerificationMessage템플릿
+
+확인 메시지의 템플릿입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "DefaultEmailOption" : String,
+  "EmailMessage" : String,
+  "EmailMessageByLink" : String,
+  "EmailSubject" : String,
+  "EmailSubjectByLink" : String,
+  "SmsMessage" : String
+}
+```
+
+## 속성
+
+`DefaultEmailOption`  
+기본 이메일 옵션입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `CONFIRM_WITH_CODE | CONFIRM_WITH_LINK`  
+_업데이트 필요 사항_: 중단 없음
+
+`EmailMessage`  
+Amazon Cognito가 사용자에게 보내는 이메일 메시지의 템플릿입니다. `EmailMessage` EmailSendingAccount 값이 인 경우에만 템플릿을 설정할 수 있습니다`DEVELOPER`. EmailSendingAccount가 인 경우 `DEVELOPER`사용자 풀은 자체 Amazon SES 구성으로 이메일 메시지를 보냅니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `6`  
+_최대_: `20000`  
+_패턴_: `[p{L}p{M}p{S}p{N}p{P}s*]*{####}[p{L}p{M}p{S}p{N}p{P}s*]*`  
+_업데이트 필요 사항_: 중단 없음
+
+`EmailMessageByLink`  
+사용자에게 확인 링크를 보내기 위한 이메일 메시지 템플릿입니다. `EmailMessageByLink` EmailSendingAccount 값이 인 경우에만 템플릿을 설정할 수 있습니다`DEVELOPER`. EmailSendingAccount가 인 경우 `DEVELOPER`사용자 풀은 자체 Amazon SES 구성으로 이메일 메시지를 보냅니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `6`  
+_최대_: `20000`  
+_패턴_: `[p{L}p{M}p{S}p{N}p{P}s*]*{##[p{L}p{M}p{S}p{N}p{P}s*]*##}[p{L}p{M}p{S}p{N}p{P}s*]*`  
+_업데이트 필요 사항_: 중단 없음
+
+`EmailSubject`  
+전자 메일 메시지 템플릿의 제목 줄입니다. `EmailSubject` EmailSendingAccount 값이 인 경우에만 템플릿을 설정할 수 있습니다`DEVELOPER`. EmailSendingAccount가 인 경우 `DEVELOPER`사용자 풀은 자체 Amazon SES 구성으로 이메일 메시지를 보냅니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `140`  
+_패턴_: `[p{L}p{M}p{S}p{N}p{P}s]+`  
+_업데이트 필요 사항_: 중단 없음
+
+`EmailSubjectByLink`  
+사용자에게 확인 링크를 보내기 위한 전자 메일 메시지 템플릿의 제목 줄입니다. `EmailSubjectByLink` EmailSendingAccount 값이 인 경우에만 템플릿을 설정할 수 있습니다`DEVELOPER`. EmailSendingAccount가 인 경우 `DEVELOPER`사용자 풀은 자체 Amazon SES 구성으로 이메일 메시지를 보냅니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `140`  
+_패턴_: `[p{L}p{M}p{S}p{N}p{P}s]+`  
+_업데이트 필요 사항_: 중단 없음
+
+`SmsMessage`  
+Amazon Cognito가 사용자에게 보내는 SMS 메시지의 템플릿입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `6`  
+_최대_: `140`  
+_패턴_: `.*{####}.*`  
+_업데이트 필요 사항_: 중단 없음

@@ -1,0 +1,30 @@
+# AWS::VpcLattice::규칙 경로 일치
+
+들어오는 요청의 경로를 일치시킬 때 적용할 수 있는 조건에 대해 설명합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "CaseSensitive" : Boolean,
+  "Match" : PathMatchType
+}
+```
+
+## 속성
+
+`CaseSensitive`  
+일치 항목이 대/소문자를 구분하는지 여부를 나타냅니다. 기본값은 false입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`Match`  
+경로 일치의 유형입니다.  
+_필수 항목 여부_: 예  
+_유형_: PathMatchType  
+_업데이트 필요 사항_: 중단 없음

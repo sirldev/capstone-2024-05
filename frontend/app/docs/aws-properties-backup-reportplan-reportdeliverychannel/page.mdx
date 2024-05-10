@@ -1,0 +1,37 @@
+# AWS::백업::보고서 계획 ReportDeliveryChannel
+
+보고서를 전송할 위치, 특히 Amazon S3 버킷 이름, S3 키 접두사 및 보고서 형식에 대한 보고서 계획의 정보가 포함되어 있습니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Formats" : [ String, ... ],
+  "S3BucketName" : String,
+  "S3KeyPrefix" : String
+}
+```
+
+## 속성
+
+`Formats`  
+보고서 형식 목록: `CSV`, `JSON`또는 둘 다. 지정하지 않으면 기본 형식은 `CSV`입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`S3BucketName`  
+보고서를 수신하는 S3 버킷의 고유 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`S3KeyPrefix`  
+AWS Backup Audit Manager가 Amazon S3에 보고서를 전달하는 접두사입니다. 접두사는 s3://your-bucket-name/`prefix`/Backup/us-west-2/year/month/day/report-name 경로의 일부입니다. 지정하지 않으면 접두사가 없습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음

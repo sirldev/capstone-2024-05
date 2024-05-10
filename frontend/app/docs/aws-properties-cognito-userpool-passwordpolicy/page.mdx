@@ -1,0 +1,63 @@
+# AWS::Cognito::UserPool 암호 정책
+
+암호 정책 유형입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "MinimumLength" : Integer,
+  "RequireLowercase" : Boolean,
+  "RequireNumbers" : Boolean,
+  "RequireSymbols" : Boolean,
+  "RequireUppercase" : Boolean,
+  "TemporaryPasswordValidityDays" : Integer
+}
+```
+
+## 속성
+
+`MinimumLength`  
+설정한 정책에 있는 암호의 최소 길이입니다. 이 값은 6보다 작을 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_최소_: `6`  
+_최대_: `99`  
+_업데이트 필요 사항_: 중단 없음
+
+`RequireLowercase`  
+설정한 암호 정책에서 사용자가 암호에 하나 이상의 소문자를 사용하도록 요구했는지 여부를 나타냅니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`RequireNumbers`  
+설정한 암호 정책에서 사용자가 암호에 하나 이상의 숫자를 사용하도록 요구했는지 여부를 나타냅니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`RequireSymbols`  
+설정한 암호 정책에서 사용자가 암호에 하나 이상의 기호를 사용하도록 요구했는지 여부를 나타냅니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`RequireUppercase`  
+설정한 암호 정책에서 사용자가 암호에 하나 이상의 대문자를 사용하도록 요구했는지 여부를 나타냅니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`TemporaryPasswordValidityDays`  
+임시 암호가 암호 정책에서 유효한 기간(일)입니다. 이 시간 동안 사용자가 로그인하지 않으면 관리자가 암호를 재설정해야 합니다.  
+`TemporaryPasswordValidityDays` 사용자 풀에 대해 설정하면 해당 사용자 풀의 legacy 파라미터 값을 더 이상 설정할 수 없습니다 `UnusedAccountValidityDays` .
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_최소_: `0`  
+_최대_: `365`  
+_업데이트 필요 사항_: 중단 없음

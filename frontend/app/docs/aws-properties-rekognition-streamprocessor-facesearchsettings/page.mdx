@@ -1,0 +1,33 @@
+# AWS::Rekognition::StreamProcessor FaceSearchSettings
+
+Amazon Rekognition 스트림 프로세서에서 분석한 스트리밍 비디오에서 얼굴을 인식하는 데 사용되는 입력 파라미터입니다. `FaceSearchSettings` 는 CreateStreamProcessor에 대한 요청 매개 변수입니다. 자세한 내용은 FaceSearchSettings를 참조하십시오.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "CollectionId" : String,
+  "FaceMatchThreshold" : Double
+}
+```
+
+## 속성
+
+`CollectionId`  
+검색할 얼굴이 포함된 컬렉션의 ID입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `255`  
+_패턴_: `[a-zA-Z0-9_.-]+`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`FaceMatchThreshold`  
+인식된 얼굴에 대한 결과를 반환하기 위해 충족해야 하는 최소 얼굴 일치 신뢰도 점수입니다. 기본값은 80입니다. 0은 가장 낮은 신뢰도입니다. 100은 가장 높은 신뢰도입니다. 0에서 100 사이의 값을 사용할 수 있으며 80보다 작은 값은 80으로 설정됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 더블  
+_업데이트 필요 사항_: 바꿔 놓음

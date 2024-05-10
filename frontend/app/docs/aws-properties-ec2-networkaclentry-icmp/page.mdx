@@ -1,0 +1,30 @@
+# AWS::EC2::NetworkAclEntry Icmp
+
+ICMP 유형 및 코드에 대해 설명합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Code" : Integer,
+  "Type" : Integer
+}
+```
+
+## 속성
+
+`Code`  
+ICMP(Internet Control Message Protocol) 코드입니다. -1을 사용하여 지정된 ICMP 유형에 대한 모든 ICMP 코드를 지정할 수 있습니다. 요구 사항은 조건부: 프로토콜 매개 변수에 1(ICMP)을 지정하는 경우 필수입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`Type`  
+ICMP(Internet Control Message Protocol) 유형입니다. -1을 사용하여 모든 ICMP 유형을 지정할 수 있습니다. 조건부 요구 사항: 프로토콜 매개 변수에 1(ICMP)을 지정하는 경우 필요합니다 `CreateNetworkAclEntry` .  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음

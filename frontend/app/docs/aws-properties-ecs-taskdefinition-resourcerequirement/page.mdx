@@ -1,0 +1,33 @@
+# AWS::ECS::TaskDefinition 리소스 요구 사항
+
+컨테이너에 할당할 리소스의 유형 및 양입니다. 지원되는 리소스 유형은 GPU 및 Elastic Inference 액셀러레이터입니다. 자세한 내용은 Amazon Elastic Container Service 개발자 안내서의 Amazon ECS에서 GPU 작업 또는 Amazon ECS에서 Amazon Elastic Inference 작업을 참조하세요 \*\*
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : String,
+  "Value" : String
+}
+```
+
+## 속성
+
+`Type`  
+컨테이너에 할당할 리소스의 유형입니다. 지원되는 값은 `GPU` 또는 `InferenceAccelerator`입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_허용되는 값_: `GPU | InferenceAccelerator`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Value`  
+지정된 리소스 종류에 대한 값입니다.  
+`GPU` 유형을 사용하는 경우 값은 Amazon ECS 컨테이너 에이전트가 컨테이너에 예약한 물리적 수의 수입니다 `GPUs` . 작업의 모든 컨테이너에 예약된 GPU 수는 작업이 시작된 컨테이너 인스턴스에서 사용 가능한 GPU 수를 초과할 수 없습니다.  
+`InferenceAccelerator` 형식을 사용하는 `value` `deviceName` 경우 작업 정의에 지정된 InferenceAccelerator의 형식과 일치합니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음

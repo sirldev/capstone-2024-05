@@ -1,0 +1,45 @@
+# AWS::EC2::ClientVpnEndpoint ClientAuthenticationRequest
+
+Client VPN 엔드포인트에서 사용할 인증 방법을 설명합니다. 자세한 내용은 * AWS Client VPN 관리자 안내서*의 인증을 참조하십시오.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ActiveDirectory" : DirectoryServiceAuthenticationRequest,
+  "FederatedAuthentication" : FederatedAuthenticationRequest,
+  "MutualAuthentication" : CertificateAuthenticationRequest,
+  "Type" : String
+}
+```
+
+## 속성
+
+`ActiveDirectory`  
+해당하는 경우 사용할 Active Directory에 대한 정보입니다. 유형이 인 경우 이 정보를 제공해야 합니다 \**\*\* `directory-service-authentication`.  
+*필수 항목 *여부: 아니요  
+*형식*: DirectoryServiceAuthenticationRequest  
+*업데이트 필요 사항\*: 중단 없음
+
+`FederatedAuthentication`  
+IAM SAML 자격 증명 공급자에 대한 정보(해당하는 경우).  
+*필수 항목 *여부: 아니요  
+_형식_: FederatedAuthenticationRequest  
+_업데이트 필요 사항_: 중단 없음
+
+`MutualAuthentication`  
+해당하는 경우 사용할 인증 인증서에 대한 정보입니다. 유형이 인 경우 이 정보를 제공해야 합니다 \**\*\* `certificate-authentication`.  
+*필수 항목 *여부: 아니요  
+*유형*: CertificateAuthenticationRequest  
+*업데이트 필요 사항\*: 중단 없음
+
+`Type`  
+사용할 클라이언트 인증의 유형입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_허용되는 값_: `certificate-authentication | directory-service-authentication | federated-authentication`  
+_업데이트 필요 사항_: 중단 없음

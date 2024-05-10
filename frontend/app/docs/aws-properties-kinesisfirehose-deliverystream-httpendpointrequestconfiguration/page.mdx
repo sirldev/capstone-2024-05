@@ -1,0 +1,32 @@
+# AWS::KinesisFirehose::D eliveryStream HttpEndpointRequestConfiguration
+
+HTTP 엔드포인트 요청의 구성입니다. Kinesis Firehose는 Datadog, MongoDB 및 New Relic을 포함하여 지원되는 타사 서비스 공급자가 소유한 모든 사용자 지정 HTTP 엔드포인트 또는 HTTP 엔드포인트를 지원합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "CommonAttributes" : [ HttpEndpointCommonAttribute, ... ],
+  "ContentEncoding" : String
+}
+```
+
+## 속성
+
+`CommonAttributes`  
+HTTP 끝점 대상으로 전송되는 메타데이터에 대해 설명합니다.  
+*필수 항목 *여부: 아니요  
+_형식_: HttpEndpointCommonAttribute 목록  
+_최대_: `50`  
+_업데이트 필요 사항_: 중단 없음
+
+`ContentEncoding`  
+Kinesis Data Firehose는 요청을 대상으로 전송하기 전에 콘텐츠 인코딩을 사용하여 요청 본문을 압축합니다. 더 많은 정보를 원하시면, 공식 Mozilla 문서인 Content-Encoding in MDN Web Docs를 참고하세요.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `GZIP | NONE`  
+_업데이트 필요 사항_: 중단 없음

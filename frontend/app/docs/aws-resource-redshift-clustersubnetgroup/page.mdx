@@ -1,0 +1,91 @@
+# AWS::Redshift::클러스터서브넷 그룹
+
+Amazon Redshift 서브넷 그룹을 지정합니다. Amazon Redshift 서브넷 그룹을 생성할 때 기존 Amazon Virtual Private Cloud(Amazon VPC)에 하나 이상의 서브넷 목록을 제공해야 합니다.
+
+서브넷 그룹에 대한 자세한 내용은 Amazon Redshift Cluster Management Guide의 Amazon Redshift Cluster Subnet Groups를 참조하십시오\*\*.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::Redshift::ClusterSubnetGroup",
+  "Properties" : {
+      "Description" : String,
+      "SubnetIds" : [ String, ... ],
+      "Tags" : [Tag, ... ]
+    }
+}
+```
+
+## 속성
+
+`Description`  
+서브넷 그룹에 대한 설명입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최대_: `2147483647`  
+_업데이트 필요 사항_: 중단 없음
+
+`SubnetIds`  
+VPC 서브넷 ID의 배열입니다. 단일 요청에서 최대 20개의 서브넷을 수정할 수 있습니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`Tags`  
+이 서브넷 그룹과 연결할 임의의 태그 집합(키-값 페어)을 지정합니다. 태그를 사용하여 리소스를 관리합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`리소스 이름이 반환됩니다. 예를 들어:
+
+`{ "Ref": "myClusterSubnetGroup" }`
+
+Amazon Redshift 서브넷 그룹의 경우 `myClusterSubnetGroup`Ref는 클러스터 서브넷 그룹의 이름을 반환합니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`ClusterSubnetGroupName` 클러스터 서브넷 그룹의 이름입니다.
+
+## 예제
+
+### 서브넷 지정
+
+다음 예제에서는 Amazon Redshift 클러스터 서브넷 그룹에 대해 하나의 서브넷을 지정합니다.
+
+#### JSON (영문)
+
+```
+"myClusterSubnetGroup": {
+  "Type": "AWS::Redshift::ClusterSubnetGroup",
+  "Properties": {
+    "Description": "My ClusterSubnetGroup",
+    "SubnetIds": [
+      "subnet-7fbc2813"
+    ],
+    "Tags": [
+      {
+        "Key": "foo",
+        "Value": "bar"
+      }
+    ]
+  }
+}
+```

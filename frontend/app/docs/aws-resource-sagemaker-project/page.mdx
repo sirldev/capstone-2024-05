@@ -1,0 +1,103 @@
+# AWS::SageMaker::P roject
+
+학습에서 승인된 모델 배포까지 ML 파이프라인을 설정하는 하나 이상의 템플릿을 포함할 수 있는 기계 학습(ML) 프로젝트를 만듭니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::SageMaker::Project",
+  "Properties" : {
+      "ProjectDescription" : String,
+      "ProjectName" : String,
+      "ServiceCatalogProvisionedProductDetails" : ServiceCatalogProvisionedProductDetails,
+      "ServiceCatalogProvisioningDetails" : ServiceCatalogProvisioningDetails,
+      "Tags" : [Tag, ... ]
+    }
+}
+```
+
+## 속성
+
+`ProjectDescription`  
+프로젝트에 대한 설명입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최대_: `1024`  
+_패턴_: `[p{L}p{M}p{Z}p{S}p{N}p{P}]*`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ProjectName`  
+프로젝트의 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `32`  
+_패턴_: `^a-zA-Z0-9{0,31}`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ServiceCatalogProvisionedProductDetails`  
+속성 설명을 사용할 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_형식_: ServiceCatalogProvisionedProductDetails  
+_업데이트 필요 사항_: 중단 없음
+
+`ServiceCatalogProvisioningDetails`  
+서비스 카탈로그를 프로비저닝하기 위한 제품 ID 및 프로비저닝 아티팩트 ID입니다. 자세한 내용은 AWS Service Catalog란 무엇인가를 참조하십시오.  
+_필수 항목 여부_: 예  
+_형식_: ServiceCatalogProvisioningDetails  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Tags`  
+이 리소스에 적용할 키-값 쌍 목록입니다.  
+자세한 내용은 * AWS Billing and Cost Management 사용 설명서*의 리소스 태그 및 비용 할당 태그 사용을 참조하십시오.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 바꿔 놓음
+
+## 반환 값
+
+### 참고문헌
+
+### Fn::GetAtt
+
+####
+
+`CreationTime` 프로젝트를 만든 시간입니다.
+
+`ProjectArn` 프로젝트의 Amazon 리소스 이름(ARN)입니다.
+
+`ProjectId` 프로젝트의 ID입니다. 이 ID는 이 프로젝트와 연결된 모든 엔터티 앞에 추가됩니다.
+
+`ProjectStatus` 프로젝트의 상태입니다.
+
+## 예제
+
+### SageMaker 프로젝트 예제
+
+다음 예제에서는 SageMaker 프로젝트를 생성합니다.
+
+#### JSON (영문)
+
+```
+{
+   "Description": "AWS SageMaker Project basic template",
+   "Resources": {
+      "SampleProject": {
+         "Type": "AWS::SageMaker::Project",
+         "Properties": {
+            "ProjectName": "project1",
+            "ProjectDescription": "Project Description",
+            "ServiceCatalogProvisioningDetails": {
+               "ProductId": "prod-53ibyqbj2cgmo",
+               "ProvisioningArtifactId": "pa-sm4pjfuzictpe"
+            }
+         }
+      }
+   }
+}
+```

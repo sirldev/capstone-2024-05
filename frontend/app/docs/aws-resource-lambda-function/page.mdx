@@ -1,0 +1,280 @@
+# AWS::람다::함수
+
+`AWS::Lambda::Function` 리소스는 Lambda 함수를 생성합니다. 함수를 만들려면 배포 패키지와 실행 역할이 필요합니다. 배포 패키지는 함수 코드가 포함된 .zip 파일 아카이브 또는 컨테이너 이미지입니다. 실행 역할은 로그 스트리밍을 위한 Amazon CloudWatch Logs 및 요청 추적을 위한 AWS X-Ray와 같은 AWS 서비스를 사용할 수 있는 권한을 함수에 부여합니다.
+
+패키지 유형을 `Image` 배포 패키지가 컨테이너 이미지인 경우로 설정합니다. 컨테이너 이미지의 경우 code 속성에는 Amazon ECR 레지스트리에 있는 컨테이너 이미지의 URI가 포함되어야 합니다. handler 및 runtime 속성을 지정할 필요가 없습니다.
+
+패키지 유형을 `Zip` 배포 패키지가 .zip 파일 아카이브인 경우로 설정합니다. .zip 파일 아카이브의 경우 code 속성은 .zip 파일의 위치를 지정합니다. 처리기 및 런타임 속성도 지정해야 합니다. Python 예제는 .zip 파일 아카이브를 사용하여 Python Lambda 함수 배포 섹션을 참조하세요.
+
+배포 패키지가 .zip 파일 보관 파일인 경우 코드 서명을 사용할 수 있습니다. 이 함수에 대한 코드 서명을 활성화하려면 코드 서명 구성의 ARN을 지정합니다. 사용자가 를 사용하여 코드 패키지를 배포하려고 하면 `UpdateFunctionCode`Lambda는 코드 패키지에 신뢰할 수 있는 게시자의 유효한 서명이 있는지 확인합니다. 코드 서명 구성에는 이 함수에 대한 신뢰할 수 있는 게시자를 정의하는 서명 프로필 집합이 포함되어 있습니다.
+
+프로비저닝된 동시성은 a `AWS::Lambda::Version` 또는 a `AWS::Lambda::Alias`에서 구성합니다.
+
+Lambda 함수에 대한 전체 소개는 Lambda 개발자 안내서의 Lambda란 무엇입니까?를 참조하십시오 _._
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::Lambda::Function",
+  "Properties" : {
+      "Architectures" : [ String, ... ],
+      "Code" : Code,
+      "CodeSigningConfigArn" : String,
+      "DeadLetterConfig" : DeadLetterConfig,
+      "Description" : String,
+      "Environment" : Environment,
+      "EphemeralStorage" : EphemeralStorage,
+      "FileSystemConfigs" : [ FileSystemConfig, ... ],
+      "FunctionName" : String,
+      "Handler" : String,
+      "ImageConfig" : ImageConfig,
+      "KmsKeyArn" : String,
+      "Layers" : [ String, ... ],
+      "MemorySize" : Integer,
+      "PackageType" : String,
+      "ReservedConcurrentExecutions" : Integer,
+      "Role" : String,
+      "Runtime" : String,
+      "RuntimeManagementConfig" : RuntimeManagementConfig,
+      "SnapStart" : SnapStart,
+      "Tags" : [Tag, ... ],
+      "Timeout" : Integer,
+      "TracingConfig" : TracingConfig,
+      "VpcConfig" : VpcConfig
+    }
+}
+```
+
+## 속성
+
+`Architectures`  
+함수가 지원하는 명령 집합 아키텍처입니다. 유효한 값(arm64 또는 x86_64) 중 하나를 사용하여 string형 배열을 입력합니다. 기본값은 `x86_64`입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_최대_: `1`  
+_업데이트 필요 사항_: 중단 없음
+
+`Code`  
+함수에 대한 코드입니다.  
+_필수 항목 여부_: 예  
+_유형_: 코드  
+_업데이트 필요 사항_: 중단 없음
+
+`CodeSigningConfigArn`  
+이 함수에 대한 코드 서명을 활성화하려면 코드 서명 구성의 ARN을 지정합니다. 코드 서명 구성에는 이 함수에 대한 신뢰할 수 있는 게시자를 정의하는 서명 프로필 집합이 포함됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최대_: `200`  
+_패턴_: `arn:(aws[a-zA-Z-]*)?:lambda:[a-z]{2}((-gov)|(-iso(b?)))?-[a-z]+-d{1}:d{12}:code-signing-config:csc-[a-z0-9]{17}`  
+_업데이트 필요 사항_: 중단 없음
+
+`DeadLetterConfig`  
+배달 못한 편지 대기열 구성으로, Lambda가 처리에 실패할 때 비동기 이벤트를 전송하는 대기열 또는 주제를 지정합니다. 자세한 정보는 배달 못한 편지 대기열의 내용을 참조하십시오.  
+*필수 항목 *여부: 아니요  
+_형식_: DeadLetterConfig  
+_업데이트 필요 사항_: 중단 없음
+
+`Description`  
+함수에 대한 설명입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `0`  
+_최대_: `256`  
+_업데이트 필요 사항_: 중단 없음
+
+`Environment`  
+실행 중에 함수 코드에서 액세스할 수 있는 환경 변수입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 환경  
+_업데이트 필요 사항_: 중단 없음
+
+`EphemeralStorage`  
+함수 디렉터리의 크기( `/tmp` MB)입니다. 기본값은 512이지만 512MB에서 10,240MB 사이의 정수일 수 있습니다.  
+*필수 항목 *여부: 아니요  
+_형식_: EphemeralStorage  
+_업데이트 필요 사항_: 중단 없음
+
+`FileSystemConfigs`  
+Amazon EFS 파일 시스템에 대한 연결 설정입니다. 함수를 파일 시스템에 연결하려면 함수가 연결되는 모든 가용 영역에서 탑재 대상을 사용할 수 있어야 합니다. 템플릿에 AWS::EFS::MountTarget 리소스가 포함되어 있는 경우 `DependsOn` 함수를 실행하기 전에 탑재 대상이 생성되거나 업데이트되도록 속성도 지정해야 합니다.  
+특성 사용에 대한 자세한 `DependsOn` 내용은 DependsOn 특성을 참조하십시오.  
+*필수 항목 *여부: 아니요  
+_유형_: FileSystemConfig 목록  
+_최대_: `1`  
+_업데이트 필요 사항_: 중단 없음
+
+`FunctionName`  
+Lambda 함수의 이름(최대 64자)입니다. 이름을 지정하지 않으면 AWS CloudFormation에서 이름을 생성합니다.  
+이름을 지정하면 이 리소스를 대체해야 하는 업데이트를 수행할 수 없습니다. 중단이 필요 없거나 약간의 중단이 필요한 업데이트를 수행할 수 있습니다. 리소스를 바꿔야 하는 경우 새 이름을 지정합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Handler`  
+Lambda가 함수를 실행하기 위해 호출하는 코드 내의 메서드 이름입니다. 배포 패키지가 .zip 파일 아카이브인 경우 Handler가 필요합니다. 형식에는 파일 이름이 포함됩니다. 또한 런타임에 따라 네임스페이스 및 기타 한정자를 포함할 수 있습니다. 자세한 내용은 Lambda 프로그래밍 모델을 참조하세요.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최대_: `128`  
+_패턴_: `[^s]+`  
+_업데이트 필요 사항_: 중단 없음
+
+`ImageConfig`  
+컨테이너 이미지 Dockerfile 설정을 재정의하는 구성 값입니다. 자세한 내용은 컨테이너 이미지 설정을 참조하세요.  
+*필수 항목 *여부: 아니요  
+_유형_: ImageConfig  
+_업데이트 필요 사항_: 중단 없음
+
+`KmsKeyArn`  
+함수의 환경 변수를 암호화하는 데 사용되는 AWS Key Management Service(AWS KMS) 고객 관리형 키의 ARN입니다. Lambda SnapStart가 활성화되면 Lambda는 이 키를 사용하여 함수의 스냅샷을 암호화합니다. 컨테이너 이미지를 사용하여 함수를 배포하는 경우 Lambda는 배포 시 이 키를 사용하여 함수를 암호화합니다. 이 키는 Amazon Elastic Container Registry(Amazon ECR)에서 컨테이너 이미지를 보호하는 데 사용되는 키와 동일하지 않습니다. 고객 관리형 키를 제공하지 않으면 Lambda는 기본 서비스 키를 사용합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_패턴_: `(arn:(aws[a-zA-Z-]*)?:[a-z0-9-.]+:.*)|()`  
+_업데이트 필요 사항_: 중단 없음
+
+`Layers`  
+함수의 실행 환경에 추가할 함수 계층 목록입니다. 버전을 포함하여 ARN으로 각 계층을 지정합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`MemorySize`  
+런타임 시 함수에 사용할 수 있는 메모리의 양입니다. 함수 메모리를 늘리면 CPU 할당도 증가합니다. 기본값은 128MB입니다. 값은 1MB의 배수일 수 있습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_최소_: `128`  
+_최대_: `10240`  
+_업데이트 필요 사항_: 중단 없음
+
+`PackageType`  
+배포 패키지의 유형입니다. `Image` 컨테이너 이미지에 대해 설정하고 `Zip` .zip 파일 아카이브에 대해 설정합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `Image | Zip`  
+_업데이트 필요 사항_: 중단 없음
+
+`ReservedConcurrentExecutions`  
+함수에 대해 예약할 동시 실행 수입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_최소_: `0`  
+_업데이트 필요 사항_: 중단 없음
+
+`Role`  
+함수 실행 역할의 Amazon 리소스 이름(ARN)입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_패턴_: `arn:(aws[a-zA-Z-]*)?:iam::d{12}:role/?[a-zA-Z_0-9+=,.@-_/]+`  
+_업데이트 필요 사항_: 중단 없음
+
+`Runtime`  
+함수 런타임의 식별자입니다. 배포 패키지가 .zip 파일 아카이브인 경우 런타임이 필요합니다.  
+다음 목록에는 더 이상 사용되지 않는 런타임이 포함되어 있습니다. 자세한 내용은 런타임 사용 중단 정책을 참조하세요.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `dotnet6 | dotnetcore1.0 | dotnetcore2.0 | dotnetcore2.1 | dotnetcore3.1 | go1.x | java11 | java17 | java8 | java8.al2 | nodejs | nodejs10.x | nodejs12.x | nodejs14.x | nodejs16.x | nodejs18.x | nodejs4.3 | nodejs4.3-edge | nodejs6.10 | nodejs8.10 | provided | provided.al2 | python2.7 | python3.10 | python3.11 | python3.6 | python3.7 | python3.8 | python3.9 | ruby2.5 | ruby2.7 | ruby3.2`  
+_업데이트 필요 사항_: 중단 없음
+
+`RuntimeManagementConfig`  
+함수 버전에 대한 런타임 관리 구성을 설정합니다. 자세한 내용은 런타임 업데이트를 참조하세요.  
+*필수 항목 *여부: 아니요  
+_형식_: RuntimeManagementConfig  
+_업데이트 필요 사항_: 중단 없음
+
+`SnapStart`  
+함수의 AWS Lambda SnapStart 설정입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: SnapStart  
+_업데이트 필요 사항_: 중단 없음
+
+`Tags`  
+함수에 적용할 태그 목록입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`Timeout`  
+Lambda가 함수를 중지하기 전에 실행할 수 있도록 허용하는 시간(초)입니다. 기본값은 3초입니다. 허용되는 최대값은 900초입니다. 자세한 내용은 Lambda 실행 환경 섹션을 참조하세요.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_최소_: `1`  
+_업데이트 필요 사항_: 중단 없음
+
+`TracingConfig`  
+`Mode` `Active` X-Ray를 사용하여 수신 요청의 하위 집합을 샘플링하고 추적하려면 로 설정합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: TracingConfig  
+_업데이트 필요 사항_: 중단 없음
+
+`VpcConfig`  
+VPC의 AWS 리소스에 대한 네트워크 연결의 경우 VPC의 보안 그룹 및 서브넷 목록을 지정합니다. 함수를 VPC에 연결하면 해당 VPC를 통해서만 리소스와 인터넷에 액세스할 수 있습니다. 자세한 내용은 VPC의 리소스에 액세스하도록 Lambda 함수 구성을 참조하세요.  
+*필수 항목 *여부: 아니요  
+_유형_: VpcConfig  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`리소스 이름이 반환됩니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`Arn` 함수의 Amazon 리소스 이름(ARN)입니다.
+
+`SnapStartResponse` 속성 설명을 사용할 수 없습니다.
+
+`SnapStartResponse.ApplyOn` 속성 설명을 사용할 수 없습니다.
+
+`SnapStartResponse.OptimizationStatus` 속성 설명을 사용할 수 없습니다.
+
+## 예제
+
+### 기능
+
+Node.js 함수를 만듭니다.
+
+#### JSON (영문)
+
+```
+"AMIIDLookup": {
+    "Type": "AWS::Lambda::Function",
+    "Properties": {
+        "Handler": "index.handler",
+        "Role": {
+            "Fn::GetAtt": [
+                "LambdaExecutionRole",
+                "Arn"
+            ]
+        },
+        "Code": {
+            "S3Bucket": "lambda-functions",
+            "S3Key": "amilookup.zip"
+        },
+        "Runtime": "nodejs18.x",
+        "Timeout": 25,
+        "TracingConfig": {
+            "Mode": "Active"
+        }
+    }
+}
+```
+
+### 인라인 함수(Inline Function)
+
+에 Amazon S3 버킷을 나열하는 인라인 Node.js 함수 `us-east-1`입니다. 이 예제를 사용하기 전에 실행 역할에 Amazon S3 읽기 권한이 있는지 확인합니다.
+
+### VPC 함수
+
+VPC에 연결된 기능.

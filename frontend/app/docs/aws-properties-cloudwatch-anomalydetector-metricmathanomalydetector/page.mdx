@@ -1,0 +1,23 @@
+# AWS::CloudWatch::AnomalyDetector MetricMathAnomalyDetector
+
+이상 탐지기가 입력으로 사용하는 시계열을 제공하는 CloudWatch 수학 표현식을 나타냅니다. 지정된 수학 식은 단일 시계열을 반환해야 합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "MetricDataQueries" : [ MetricDataQuery, ... ]
+}
+```
+
+## 속성
+
+`MetricDataQueries`  
+지표 수학 표현식의 결과를 기반으로 이상 탐지기를 생성할 수 있는 지표 데이터 쿼리 구조의 배열입니다. 의 각 항목은 `MetricDataQueries` 메트릭을 가져오거나 수학 표현식을 수행합니다. 의 한 항목은 `MetricDataQueries` 변칙 탐지기가 입력으로 사용하는 시계열을 제공하는 식입니다. 배열에서 `ReturnData` `true` 이 개체에 대해 to로 설정하여 표현식을 지정합니다. 다른 모든 표현식 및 지표의 경우 `ReturnData` 로 `false` 설정합니다. 지정된 식은 단일 시계열을 반환해야 합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: MetricDataQuery 목록  
+_업데이트 필요 사항_: 바꿔 놓음

@@ -1,0 +1,34 @@
+# AWS::ElasticBeanstalk::애플리케이션 애플리케이션 버전 수명 주기 구성
+
+응용 프로그램에 대한 응용 프로그램 버전 수명 주기 설정입니다. Elastic Beanstalk가 애플리케이션 버전에 대한 리전당 제한에 도달하지 않도록 애플리케이션 버전에 적용하는 규칙을 정의합니다.
+
+Elastic Beanstalk가 데이터베이스에서 애플리케이션 버전을 삭제하면 더 이상 해당 버전을 환경에 배포할 수 없습니다. 소스 번들은 삭제하도록 규칙을 구성하지 않는 한 S3에 남아 있습니다.
+
+`ApplicationVersionLifecycleConfig` 은 ApplicationResourceLifecycleConfig 속성 형식의 속성입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "MaxAgeRule" : MaxAgeRule,
+  "MaxCountRule" : MaxCountRule
+}
+```
+
+## 속성
+
+`MaxAgeRule`  
+최대 사용 기간 규칙을 지정하여 응용 프로그램에 대해 응용 프로그램 버전이 보존되는 기간을 제한합니다.  
+*필수 항목 *여부: 아니요  
+_형식_: MaxAgeRule  
+_업데이트 필요 사항_: 중단 없음
+
+`MaxCountRule`  
+최대 개수 규칙을 지정하여 응용 프로그램에 대해 보존되는 응용 프로그램 버전 수를 제한합니다.  
+*필수 항목 *여부: 아니요  
+_형식_: MaxCountRule  
+_업데이트 필요 사항_: 중단 없음

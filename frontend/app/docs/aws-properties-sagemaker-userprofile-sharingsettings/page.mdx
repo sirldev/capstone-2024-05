@@ -1,0 +1,42 @@
+# AWS::SageMaker::사용자 프로필 공유 설정
+
+Amazon SageMaker Studio 노트북을 공유할 때 옵션을 지정합니다. 이러한 설정은 `DefaultUserSettings` CreateDomain API가 호출될 때와 `UserSettings` CreateUserProfile API가 호출될 때의 일부로 지정됩니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "NotebookOutputOption" : String,
+  "S3KmsKeyId" : String,
+  "S3OutputPath" : String
+}
+```
+
+## 속성
+
+`NotebookOutputOption`  
+Notebook을 공유할 때 Notebook 셀 출력을 포함할지 여부입니다. 기본값은 `Disabled`입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `Allowed | Disabled`  
+_업데이트 필요 사항_: 중단 없음
+
+`S3KmsKeyId`  
+인 경우 `NotebookOutputOption` `Allowed`Amazon S3 버킷의 노트북 셀 출력을 암호화하는 데 사용되는 AWS Key Management Service(KMS) 암호화 키 ID입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최대_: `2048`  
+_패턴_: `.*`  
+_업데이트 필요 사항_: 중단 없음
+
+`S3OutputPath`  
+is `NotebookOutputOption` 인 `Allowed` 경우 공유 노트북 스냅샷을 저장하는 데 사용되는 Amazon S3 버킷입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최대_: `1024`  
+_패턴_: `^(https|s3)://([^/]+)/?(.*)$`  
+_업데이트 필요 사항_: 중단 없음

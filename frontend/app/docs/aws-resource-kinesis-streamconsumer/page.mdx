@@ -1,0 +1,96 @@
+# AWS::Kinesis::스트림 소비자
+
+AWS CloudFormation `AWS::Kinesis::StreamConsumer` 리소스를 사용하여 Kinesis 데이터 스트림에 소비자를 등록합니다. 그런 다음 등록한 소비자는 SubscribeToShard를 호출하여 구독하는 모든 샤드에 대해 초당 최대 2MiB의 속도로 향상된 팬아웃을 사용하여 스트림에서 데이터를 수신할 수 있습니다. 이 비율은 동일한 스트림에서 읽는 총 소비자 수의 영향을 받지 않습니다.
+
+스트림당 최대 5명의 소비자를 등록할 수 있습니다. 그러나 Kinesis Data Streams 제한 양식을 사용하여 한도 증가를 요청할 수 있습니다. 지정된 소비자는 한 번에 하나의 스트림에만 등록할 수 있습니다.
+
+자세한 내용은 Using Consumers with Enhanced Fan-Out을 참조하십시오.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::Kinesis::StreamConsumer",
+  "Properties" : {
+      "ConsumerName" : String,
+      "StreamARN" : String
+    }
+}
+```
+
+## 속성
+
+`ConsumerName`  
+소비자의 이름은 소비자를 등록할 때 선택하는 것입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `128`  
+_패턴_: `[a-zA-Z0-9_.-]+`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`StreamARN`  
+소비자를 등록한 스트림의 ARN입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `2048`  
+_패턴_: `arn:aws.*:kinesis:.*:d{12}:stream/S+`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+## 반환 값
+
+### 참고문헌
+
+리소스의 논리적 ID를 `AWS::Kinesis::StreamConsumer` 내장 Ref 함수에 전달하면 이 함수는 소비자 ARN을 반환합니다. ARN 형식의 예는 ARN 예제 단원을 참조하십시오.
+
+Ref 함수 사용에 대한 자세한 내용은 Ref를 참조하십시오.
+
+### Fn::GetAtt
+
+`Fn::GetAtt` 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+Fn::GetAtt 사용에 대한 자세한 내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`ConsumerARN` 소비자를 등록하면 Kinesis Data Streams가 소비자에 대한 ARN을 생성합니다. SubscribeToShard를 호출하려면 이 ARN이 필요합니다.  
+소비자를 삭제한 다음 동일한 이름으로 새 소비자를 생성하면 ARN이 동일하지 않습니다. 소비자 ARN에 생성 타임스탬프가 포함되어 있기 때문입니다. 소비자 ARN을 참조하는 IAM 정책이 있는 경우 이 점을 염두에 두어야 합니다.
+
+`ConsumerCreationTimestamp` 소비자가 생성된 시간입니다.
+
+`ConsumerName` 소비자를 등록할 때 소비자에게 지정한 이름입니다.
+
+`ConsumerStatus`  
+소비자는 or 상태에 있는 동안 데이터를 읽을 수 없습니다 `CREATING` `DELETING` .
+
+`StreamARN` 소비자가 등록된 데이터 스트림의 ARN입니다.
+
+## 예제
+
+### Kinesis Data Stream에 소비자 등록
+
+#### JSON (영문)
+
+```
+{
+    "Parameters": {
+        "TestStreamARN": {
+            "Type": "String" },
+        "TestConsumerName": {
+            "Type": "String" } },
+    "Resources": {
+        "StreamConsumer": {
+            "Type": "AWS::Kinesis::StreamConsumer",
+            "Properties": {
+                "StreamARN": { "Ref" : TestStreamARN },
+                "ConsumerName": { "Ref" : TestConsumerName }
+                }
+        }
+   }
+}
+```

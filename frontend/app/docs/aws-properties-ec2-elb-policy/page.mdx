@@ -1,0 +1,74 @@
+# AWS::ElasticLoadBalancing::LoadBalancer 정책
+
+Classic Load Balancer에 대한 정책을 지정합니다.
+
+정책을 리스너와 연결하려면 리스너의 PolicyNames 속성을 사용합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Attributes" : [ Json, ... ],
+  "InstancePorts" : [ String, ... ],
+  "LoadBalancerPorts" : [ String, ... ],
+  "PolicyName" : String,
+  "PolicyType" : String
+}
+```
+
+## 속성
+
+`Attributes`  
+정책 속성입니다.  
+_필수 항목 여부_: 예  
+_유형_: Json 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`InstancePorts`  
+정책의 인스턴스 포트입니다. 일부 정책 유형에만 필요합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`LoadBalancerPorts`  
+정책에 대한 부하 분산 장치 포트입니다. 일부 정책 유형에만 필요합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`PolicyName`  
+정책의 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`PolicyType`  
+정책 유형의 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+## 예제
+
+###
+
+#### JSON (영문)
+
+```
+"Policies": [{
+    "PolicyName": "My-SSLNegotiation-Policy",
+    "PolicyType": "SSLNegotiationPolicyType",
+    "Attributes": [{
+        "Name": "Reference-Security-Policy",
+        "Value": "ELBSecurityPolicy-TLS-1-2-2017-01"
+    }]
+}]
+```
+
+## 참고 항목
+
+- Elastic Load Balancing API 참조(버전 2012-06-01)\* \*의 CreateLoadBalancerPolicy

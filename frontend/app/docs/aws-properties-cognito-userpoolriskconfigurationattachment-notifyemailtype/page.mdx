@@ -1,0 +1,46 @@
+# AWS::Cognito::UserPoolRiskConfigurationAttachment NotifyEmailType
+
+알림 이메일 유형입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "HtmlBody" : String,
+  "Subject" : String,
+  "TextBody" : String
+}
+```
+
+## 속성
+
+`HtmlBody`  
+이메일 HTML 본문입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `6`  
+_최대_: `20000`  
+_패턴_: `[p{L}p{M}p{S}p{N}p{P}s*]+`  
+_업데이트 필요 사항_: 중단 없음
+
+`Subject`  
+이메일 제목입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `140`  
+_패턴_: `[p{L}p{M}p{S}p{N}p{P}s]+`  
+_업데이트 필요 사항_: 중단 없음
+
+`TextBody`  
+이메일 텍스트 본문입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `6`  
+_최대_: `20000`  
+_패턴_: `[p{L}p{M}p{S}p{N}p{P}s*]+`  
+_업데이트 필요 사항_: 중단 없음

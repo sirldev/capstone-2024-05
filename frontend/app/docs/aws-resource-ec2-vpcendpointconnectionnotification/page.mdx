@@ -1,0 +1,57 @@
+# AWS::EC2::VPCEndpoint연결 알림
+
+VPC 엔드포인트 또는 VPC 엔드포인트 서비스에 대한 연결 알림을 지정합니다. 연결 알림은 특정 끝점 이벤트를 알려줍니다. 알림을 받으려면 SNS 주제를 생성해야 합니다. 자세한 내용은 _Amazon Simple Notification Service 개발자 안내서의 주제 생성을 참조하십시오_.
+
+인터페이스 끝점에 대해서만 연결 알림을 만들 수 있습니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::EC2::VPCEndpointConnectionNotification",
+  "Properties" : {
+      "ConnectionEvents" : [ String, ... ],
+      "ConnectionNotificationArn" : String,
+      "ServiceId" : String,
+      "VPCEndpointId" : String
+    }
+}
+```
+
+## 속성
+
+`ConnectionEvents`  
+알림을 받을 끝점 이벤트입니다. 유효한 값은 `Accept`, `Connect`, `Delete`및 `Reject`입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`ConnectionNotificationArn`  
+알림에 대한 SNS 주제의 ARN입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`ServiceId`  
+끝점 서비스의 ID입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`VPCEndpointId`  
+엔드포인트의 ID입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`VPC 엔드포인트 연결의 ID를 반환합니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.

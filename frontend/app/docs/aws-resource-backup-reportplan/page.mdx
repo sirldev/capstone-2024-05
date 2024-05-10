@@ -1,0 +1,76 @@
+# AWS::백업::보고서 계획
+
+보고서 계획을 만듭니다. 보고서 계획은 보고서의 내용과 AWS Backup에서 보고서를 전달할 위치에 대한 정보가 포함된 문서입니다.
+
+이미 존재하는 계획을 사용하여 `CreateReportPlan`호출 하면 예외가 발생합니다 `AlreadyExistsException` .
+
+샘플 AWS CloudFormation 템플릿은 AWS Backup 개발자 안내서를 참조하십시오.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::Backup::ReportPlan",
+  "Properties" : {
+      "ReportDeliveryChannel" : ReportDeliveryChannel,
+      "ReportPlanDescription" : String,
+      "ReportPlanName" : String,
+      "ReportPlanTags" : [Tag, ... ],
+      "ReportSetting" : ReportSetting
+    }
+}
+```
+
+## 속성
+
+`ReportDeliveryChannel`  
+보고서를 전송하는 위치와 방법, 특히 Amazon S3 버킷 이름, S3 키 접두사 및 보고서 형식에 대한 정보가 포함되어 있습니다.  
+_필수 항목 여부_: 예  
+_형식_: ReportDeliveryChannel  
+_업데이트 필요 사항_: 중단 없음
+
+`ReportPlanDescription`  
+최대 1,024자의 보고서 계획에 대한 선택적 설명입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `0`  
+_최대_: `1024`  
+_패턴_: `.*S.*`  
+_업데이트 필요 사항_: 중단 없음
+
+`ReportPlanName`  
+보고서 계획의 고유 이름입니다. 이 이름은 문자로 시작하는 1자에서 256자 사이이며 문자(a-z, A-Z), 숫자(0-9) 및 밑줄(\_)로 구성됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `256`  
+_패턴_: `[a-zA-Z][_a-zA-Z0-9]*`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ReportPlanTags`  
+보고서 계획에 태그를 지정할 태그 목록입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`ReportSetting`  
+보고서의 보고서 템플릿을 식별합니다. 보고서는 보고서 템플릿을 사용하여 작성됩니다. 보고서 템플릿은 다음과 같습니다.  
+ `RESOURCE_COMPLIANCE_REPORT | CONTROL_COMPLIANCE_REPORT | BACKUP_JOB_REPORT | COPY_JOB_REPORT | RESTORE_JOB_REPORT`  
+보고서 템플릿이 `RESOURCE_COMPLIANCE_REPORT` 또는 `CONTROL_COMPLIANCE_REPORT`인 경우 이 API 리소스는 AWS 리전 및 프레임워크별 보고서 적용 범위도 설명합니다.  
+_필수 항목 여부_: 예  
+_형식_: ReportSetting  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+### Fn::GetAtt
+
+####
+
+`ReportPlanArn` 보고서 계획의 Amazon 리소스 이름(ARN)입니다.

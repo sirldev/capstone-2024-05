@@ -1,0 +1,82 @@
+# AWS::RDS::D BProxyTargetGroup
+
+`AWS::RDS::DBProxyTargetGroup` 리소스는 프록시가 연결할 수 있는 RDS DB 인스턴스, Aurora DB 클러스터 또는 둘 다의 집합을 나타냅니다. 현재 각 대상 그룹은 정확히 하나의 RDS DB 인스턴스 또는 Aurora DB 클러스터와 연결되어 있습니다.
+
+이 데이터 형식은 작업에서 응답 요소로 사용됩니다 `DescribeDBProxyTargetGroups` .
+
+Amazon RDS용 RDS Proxy에 대한 자세한 내용은 Amazon RDS 사용 설명서의 Amazon RDS Proxy와의 연결 관리를 참조하십시오\*\*.
+
+Amazon Aurora용 RDS Proxy에 대한 자세한 내용은 Amazon Aurora 사용 설명서의 Amazon RDS Proxy를 사용한 연결 관리를 참조하십시오\*\*.
+
+DB 프록시를 생성하고 DB 인스턴스를 등록하는 샘플 템플릿은 AWS::RDS::D BProxy의 예제 단원을 참조하십시오.
+
+**메모**  
+DB 엔진 버전 제한 및 AWS 리전 제한을 포함하여 RDS Proxy에 대한 제한이 적용됩니다.  
+Amazon RDS용 RDS Proxy에 적용되는 제한 사항에 대한 자세한 내용은 *Amazon RDS 사용 설명서*의 RDS Proxy에 대한 제한 사항을 참조하십시오.  
+Amazon Aurora용 RDS Proxy에 적용되는 방법에 대한 자세한 내용은 Amazon Aurora 사용 설명서의 RDS Proxy에 대한 제한 사항을 참조하세요\*\*.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::RDS::DBProxyTargetGroup",
+  "Properties" : {
+      "ConnectionPoolConfigurationInfo" : ConnectionPoolConfigurationInfoFormat,
+      "DBClusterIdentifiers" : [ String, ... ],
+      "DBInstanceIdentifiers" : [ String, ... ],
+      "DBProxyName" : String,
+      "TargetGroupName" : String
+    }
+}
+```
+
+## 속성
+
+`ConnectionPoolConfigurationInfo`  
+와 연결된 연결 풀의 크기와 동작을 제어하는 설정입니다`DBProxyTargetGroup`.  
+*필수 항목 *여부: 아니요  
+_형식_: ConnectionPoolConfigurationInfoFormat  
+_업데이트 필요 사항_: 중단 없음
+
+`DBClusterIdentifiers`  
+하나 이상의 DB 클러스터 식별자입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`DBInstanceIdentifiers`  
+하나 이상의 DB 인스턴스 식별자입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`DBProxyName`  
+`DBProxy` 와 연관된 의 식별자 입니다`DBProxyTargetGroup`.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`TargetGroupName`  
+대상 그룹의 식별자입니다.  
+현재 이 속성은 로 설정해야 합니다 `default`.
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`대상 그룹의 ARN을 반환합니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+####
+
+`TargetGroupArn` 대상 그룹을 나타내는 Amazon 리소스 이름(ARN)입니다.

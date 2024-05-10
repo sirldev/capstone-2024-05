@@ -1,0 +1,143 @@
+# AWS::CloudFormation::HookDefaultVersion
+
+`HookDefaultVersion` 리소스는 후크의 기본 버전을 지정합니다. 후크의 기본 버전은 이 AWS 계정 및 AWS 리전에 대한 CloudFormation 작업에 사용됩니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::CloudFormation::HookDefaultVersion",
+  "Properties" : {
+      "TypeName" : String,
+      "TypeVersionArn" : String,
+      "VersionId" : String
+    }
+}
+```
+
+## 속성
+
+`TypeName`  
+후크의 이름입니다.  
+`TypeVersionArn`, 또는 `TypeName` 및 를 지정해야 합니다`VersionId`.  
+_필수_: 조건부  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `255`  
+_업데이트 필요 사항_: 중단 없음
+
+`TypeVersionArn`  
+형식 구성의 버전 ID입니다.  
+`TypeVersionArn`, 또는 `TypeName` 및 를 지정해야 합니다`VersionId`.  
+_필수_: 조건부  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `128`  
+_패턴_: `[A-Za-z0-9-]+`  
+_업데이트 필요 사항_: 중단 없음
+
+`VersionId`  
+지정된 형식의 버전 ID입니다.  
+`TypeVersionArn`, 또는 `TypeName` 및 를 지정해야 합니다`VersionId`.  
+_필수_: 조건부  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `128`  
+_패턴_: `[A-Za-z0-9-]+`  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`리소스 버전의 Amazon 리소스 이름(ARN)을 반환합니다. 예를 들어:
+
+`arn:aws:cloudformation:us-west-2:012345678901:type/hook/Sample-CloudFormation-Hook/00000001`
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`Arn` 이 계정 및 리전에서 활성화된 익스텐션의 Amazon 리소스 번호(ARN)입니다.
+
+## 예제
+
+### 후크 기본 버전 지정
+
+다음 예제에서는 새 후크 버전을 지정하고 Ref 반환 값을 사용하여 해당 버전을 기본 버전으로 설정하는 방법을 보여 줍니다.
+
+#### JSON (영문)
+
+```
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Resources": {
+        "HookVersion": {
+            "Type": "AWS::CloudFormation::HookVersion",
+            "Properties": {
+                "TypeName": "My::Sample::Hook",
+                "SchemaHandlerPackage": "s3://my-sample-hookversion-bucket/my-sample-hook.zip"
+            }
+        },
+        "HookDefaultVersion": {
+            "Type": "AWS::CloudFormation::HookDefaultVersion",
+            "Properties": {
+                "TypeVersionArn": {
+                    "Ref": "HookVersion"
+                }
+            }
+        }
+    }
+}
+```
+
+### TypeVersionArn을 사용하여 후크 기본 버전 지정
+
+다음 예제에서는 속성 형식을 통해 후크 버전을 기본 버전으로 설정하는 방법을 보여 줍니다 `TypeVersionArn` .
+
+#### JSON (영문)
+
+```
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Resources": {
+        "HookDefaultVersion": {
+            "Type": "AWS::CloudFormation::HookDefaultVersion",
+            "Properties": {
+                "TypeVersionArn": "arn:aws:cloudformation:us-west-2:123456789012:type/hook/My-Sample-Hook/00000001"
+            }
+        }
+    }
+}
+```
+
+### TypeName 및 VersionId를 사용하여 후크 기본 버전 지정
+
+다음 예제에서는 속성 형식을 통해 후크 버전을 기본 버전으로 설정하는 방법을 보여 줍니다 `VersionId` .
+
+#### JSON (영문)
+
+```
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Resources": {
+        "HookDefaultVersion": {
+            "Type": "AWS::CloudFormation::HookDefaultVersion",
+            "Properties": {
+                "TypeName": "My::Sample::Hook",
+                "VersionId": 1
+            }
+        }
+    }
+}
+```

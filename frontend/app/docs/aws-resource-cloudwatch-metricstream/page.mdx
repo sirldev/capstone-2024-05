@@ -1,0 +1,154 @@
+# AWS::CloudWatch::메트릭스트림
+
+지표 스트림을 생성하거나 업데이트합니다. 지표 스트림은 CloudWatch 지표를 Amazon S3를 포함한 AWS 대상 및 여러 타사 솔루션으로 자동으로 스트리밍할 수 있습니다. 자세한 정보는 지표 스트림을 참조하십시오.
+
+지표 스트림을 생성하려면 `iam:PassRole` 권한과 **CloudWatchFullAccess** 정책 또는 `cloudwatch:PutMetricStream` 권한이 있는 계정에 로그인해야 합니다.
+
+지표 스트림을 생성하거나 업데이트할 때 다음 중 하나를 선택합니다.
+
+- 계정의 모든 지표 네임스페이스에서 지표를 스트리밍합니다.
+- 에 나열한 네임스페이스를 제외한 계정의 모든 지표 네임스페이스에서 지표를 스트리밍 합니다`ExcludeFilters`.
+- 에 나열한 지표 네임스페이스에서만 지표를 스트리밍합니다 `IncludeFilters`.
+
+지표 스트림을 생성하면 스트림이 `running` 해당 상태로 생성됩니다. 기존 지표 스트림을 업데이트해도 상태는 변경되지 않습니다.
+
+CloudWatch 교차 계정 관찰 기능에서 모니터링 계정으로 설정된 계정에서 지표 스트림을 생성하는 경우 연결된 소스 계정의 지표를 지표 스트림에 포함할지 여부를 선택할 수 있습니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::CloudWatch::MetricStream",
+  "Properties" : {
+      "ExcludeFilters" : [ MetricStreamFilter, ... ],
+      "FirehoseArn" : String,
+      "IncludeFilters" : [ MetricStreamFilter, ... ],
+      "IncludeLinkedAccountsMetrics" : Boolean,
+      "Name" : String,
+      "OutputFormat" : String,
+      "RoleArn" : String,
+      "StatisticsConfigurations" : [ MetricStreamStatisticsConfiguration, ... ],
+      "Tags" : [Tag, ... ]
+    }
+}
+```
+
+## 속성
+
+`ExcludeFilters`  
+이 파라미터를 지정하면 스트림은 여기에서 지정한 네임스페이스를 제외한 모든 지표 네임스페이스에서 지표를 전송합니다. 동일한 지표 스트림에서 `IncludeFilters` AND를 `ExcludeFilters` 둘 다 지정할 수는 없습니다 .  
+`IncludeFilters` `ExcludeFilters` 어떤 방식으로든 기존 지표 스트림의 OR을 수정하면 지표 스트림이 효과적으로 다시 시작되므로 이러한 변경 후에는 업데이트 시간 이후에 타임스탬프가 있는 데이터 포인트만 가져옵니다.  
+*필수 항목 *여부: 아니요  
+_유형_: MetricStreamFilter 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`FirehoseArn`  
+이 지표 스트림에 사용할 Amazon Kinesis Firehose 전송 스트림의 ARN입니다. 이 Amazon Kinesis Firehose 전송 스트림은 이미 존재해야 하며 지표 스트림과 동일한 계정에 있어야 합니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`IncludeFilters`  
+이 파라미터를 지정하면 스트림은 여기에서 지정한 지표 네임스페이스의 지표만 전송합니다. 동일한 지표 스트림에서 `IncludeFilters` AND를 `ExcludeFilters` 둘 다 지정할 수는 없습니다 .  
+`IncludeFilters` `ExcludeFilters` 어떤 방식으로든 기존 지표 스트림의 OR을 수정하면 지표 스트림이 효과적으로 다시 시작되므로 이러한 변경 후에는 업데이트 시간 이후에 타임스탬프가 있는 데이터 포인트만 가져옵니다.  
+*필수 항목 *여부: 아니요  
+_유형_: MetricStreamFilter 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`IncludeLinkedAccountsMetrics`  
+모니터링 계정에서 지표 스트림을 생성하는 경우 `true` 이 모니터링 계정에 연결된 소스 계정의 지표를 지표 스트림에 포함하도록 지정합니다. 기본값은 `false`입니다.  
+계정 연결에 대한 자세한 내용은 CloudWatch 교차 계정 관찰 섹션을 참조하세요  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`Name`  
+새 지표 스트림을 생성하는 경우 새 스트림의 이름입니다. 이름은 이 계정 및 리전에 있는 다른 지표 스트림의 이름과 달라야 합니다.  
+지표 스트림을 업데이트하는 경우 여기에 해당 스트림의 이름을 지정합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`OutputFormat`  
+스트림의 출력 형식입니다. 유효한 값은 다음과 같습니다 `json` . 지표 `opentelemetry0.7` 스트림 출력 형식에 대한 자세한 내용은 지표 스트림 출력 형식 섹션을 참조하세요.  
+이 매개 변수는 필수입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`RoleArn`  
+이 지표 스트림이 Amazon Kinesis Firehose 리소스에 액세스하는 데 사용할 IAM 역할의 ARN입니다. 이 IAM 역할은 이미 존재해야 하며 지표 스트림과 동일한 계정에 있어야 합니다. 이 IAM 역할에는 `firehose:PutRecord` and `firehose:PutRecordBatch` 권한이 포함되어야 합니다 .  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`StatisticsConfigurations`  
+기본적으로 지표 스트림은 스트리밍되는 각 지표에 대해 항상 MAX, MIN, SUM 및 SAMPLECOUNT 통계를 전송합니다. 이 파라미터를 사용하여 지표 스트림이 스트림에 추가 통계를 전송하도록 할 수 있습니다. 이 배열에는 최대 100개의 멤버가 있을 수 있습니다.  
+이 배열의 각 항목에 대해 하나 이상의 지표와 해당 지표에 대해 스트리밍할 추가 통계 목록을 지정합니다. 스트리밍할 수 있는 추가 통계는 스트림의 `OutputFormat`. `OutputFormat` 인 `json` 경우 CloudWatch 통계 정의에 나열된 CloudWatch에서 지원하는 추가 통계를 스트리밍할 수 있습니다. 가 `OutputFormat` `opentelemetry0`.7이면 백분위수 통계를 스트리밍할 수 있습니다*(p??)*을 클릭합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: MetricStreamStatisticsConfiguration 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`Tags`  
+지표 스트림에 적용할 키-값 페어의 배열입니다.  
+자세한 내용은 태그를 참조하십시오.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`지표 스트림의 이름을 반환합니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`Arn` 지표 스트림의 ARN입니다.
+
+`CreationDate` 지표 스트림이 처음 생성된 날짜입니다.
+
+`LastUpdateDate` 지표 스트림이 가장 최근에 업데이트된 날짜입니다.
+
+`State`  
+지표 스트림의 상태( `running` 또는 `stopped`.
+
+## 예제
+
+### 메트릭 스트림 예시
+
+다음 예제에서는 및 네임스페이스의 지표만 스트리밍하는 지표 스트림 `AWS/ELB` `AWS/EC2` 을 생성합니다.
+
+#### JSON (영문)
+
+```
+{
+  "Type" : "AWS::CloudWatch::MetricStream",
+  "Properties" : {
+    "FirehoseArn" : "arn:aws:firehose:us-east-1:123456789012:deliverystream/MyDeliveryStream",
+    "IncludeFilters" : [
+      {
+        "Namespace": "AWS/ELB"
+      },
+      {
+        "Namespace": "AWS/EC2"
+      }
+    ],
+    "Name" : "MyMetricStream",
+    "OutputFormat" : "json",
+    "RoleArn" : "arn:aws:iam::123456789012:role/service-role/MyRole"
+  }
+}
+```

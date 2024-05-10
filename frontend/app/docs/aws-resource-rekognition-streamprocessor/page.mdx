@@ -1,0 +1,438 @@
+# AWS::Rekognition::스트림 프로세서
+
+이 `AWS::Rekognition::StreamProcessor` 유형은 얼굴을 감지 및 인식하거나 스트리밍 비디오에서 연결된 홈 레이블을 감지하는 데 사용되는 스트림 프로세서를 만듭니다. Amazon Rekognition Video는 Amazon Kinesis Video Streams의 라이브 비디오 소비자입니다. Amazon Rekognition의 스트림 프로세서에는 얼굴 감지와 커넥티드 홈 기능을 위한 두 가지 설정이 있습니다.
+
+얼굴을 감지하기 위한 스트림 프로세서를 생성하는 경우 Kinesis 비디오 스트림(입력)과 Kinesis 데이터 스트림(출력)을 제공합니다. FaceSearchSettings에서 얼굴 인식 기준도 지정합니다. 예를 들어 인식하려는 얼굴이 포함된 컬렉션입니다.
+
+커넥티드 홈 레이블 감지를 위한 스트림 프로세서를 생성하는 경우 Amazon S3 버킷 및 Amazon SNS 주제의 입력 및 출력에 대한 Kinesis 비디오 스트림을 제공합니다. KMS 키 ID를 제공하여 Amazon S3 버킷으로 전송되는 데이터를 암호화할 수도 있습니다. ConnectedHomeSettings에서 감지할 항목(예: 사람, 패키지 및 애완 동물)을 지정합니다.
+
+Amazon Rekognition이 BoundingBoxRegionsOfInterest 및 PolygonRegionsOfInterest를 사용하여 모니터링할 프레임의 위치를 지정할 수도 있습니다. Name은 스트림 프로세서를 관리하는 데 사용되며 스트림 프로세서의 식별자입니다. 리소스는 `AWS::Rekognition::StreamProcessor` Amazon CloudFormation 스택을 생성하는 리전과 동일한 리전에 스트림 프로세서를 생성합니다.
+
+자세한 내용은 CreateStreamProcessor 단원을 참조하십시오.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::Rekognition::StreamProcessor",
+  "Properties" : {
+      "BoundingBoxRegionsOfInterest" : [ BoundingBox, ... ],
+      "ConnectedHomeSettings" : ConnectedHomeSettings,
+      "DataSharingPreference" : DataSharingPreference,
+      "FaceSearchSettings" : FaceSearchSettings,
+      "KinesisDataStream" : KinesisDataStream,
+      "KinesisVideoStream" : KinesisVideoStream,
+      "KmsKeyId" : String,
+      "Name" : String,
+      "NotificationChannel" : NotificationChannel,
+      "PolygonRegionsOfInterest" : Json,
+      "RoleArn" : String,
+      "S3Destination" : S3Destination,
+      "Tags" : [Tag, ... ]
+    }
+}
+```
+
+## 속성
+
+`BoundingBoxRegionsOfInterest`  
+BoundingBox 개체의 목록으로, 각 개체는 화면의 관심 영역을 나타냅니다. 자세한 내용은 RegionOfInterest의 BoundingBox 필드를 참조하십시오.  
+*필수 항목 *여부: 아니요  
+_형식_: BoundingBox 목록  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ConnectedHomeSettings`  
+스트리밍 비디오에 사용할 커넥티드 홈 설정입니다. 커넥티드 홈 기능에 스트림 프로세서를 사용하고 스트림 프로세서가 감지할 항목(예: 사람 또는 애완동물)을 선택할 수 있습니다. 스트림 프로세서가 시작되면 지정된 각 오브젝트 클래스에 대해 하나의 알림이 전송됩니다. 자세한 내용은 StreamProcessorSettings의 ConnectedHome 섹션을 참조하세요.  
+*필수 항목 *여부: 아니요  
+_형식_: ConnectedHomeSettings  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`DataSharingPreference`  
+Rekognition과 데이터를 공유하도록 옵트인 또는 옵트아웃하여 모델 성능을 개선할 수 있습니다. 이 옵션은 계정 수준 또는 스트림별로 선택할 수 있습니다. 계정 수준에서 옵트아웃하면 개별 스트림에서 이 설정이 무시됩니다. 자세한 내용은 StreamProcessorDataSharingPreference를 참조하세요.  
+*필수 항목 *여부: 아니요  
+_형식_: DataSharingPreference  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`FaceSearchSettings`  
+Amazon Rekognition 스트림 프로세서에서 분석한 스트리밍 비디오에서 얼굴을 인식하는 데 사용되는 입력 파라미터입니다. 매개 변수의 내용에 대한 자세한 내용은 FaceSearchSettings를 참조하세요.  
+*필수 항목 *여부: 아니요  
+_형식_: FaceSearchSettings  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`KinesisDataStream`  
+Amazon Rekognition의 비디오 스트림 프로세서는 Kinesis 비디오 스트림을 입력으로 사용합니다. Amazon Rekognition 스트림 프로세서가 분석 결과를 스트리밍하는 Amazon Kinesis Data Streams 인스턴스입니다. KinesisDataStream에 지정된 제약 조건 내에서 생성해야 합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: KinesisDataStream  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`KinesisVideoStream`  
+Amazon Rekognition Video 스트림 프로세서에 대한 스트리밍 비디오의 소스를 제공하는 Kinesis 비디오 스트림입니다. 자세한 내용은 KinesisVideoStream 단원을 참조하십시오.  
+_필수 항목 여부_: 예  
+_유형_: KinesisVideoStream  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`KmsKeyId`  
+ Amazon Key Management Service 키(Amazon KMS 키)의 식별자입니다. Amazon S3 버킷에 게시된 결과 및 데이터를 암호화하는 데 사용되는 커넥티드 홈 스트림 프로세서에 대한 선택적 파라미터입니다. 자세한 내용은 CreateStreamProcessor의 KMSKeyId 섹션을 참조하세요.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Name`  
+ Name 특성은 스트림 프로세서의 이름을 지정하며 StreamProcessor의 Name 섹션에 설명된 제약 조건 내에 있어야 합니다. 이름을 지정하지 않으면 Amazon CloudFormation에서 고유 ID를 생성하고 해당 ID를 스트림 프로세서 이름으로 사용합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `128`  
+_패턴_: `[a-zA-Z0-9_.-]+`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`NotificationChannel`  
+ Amazon Simple Notification Service Amazon Rekognition이 객체 탐지 결과 및 비디오 분석 작업의 완료 상태를 게시하는 주제입니다. Amazon Rekognition Rekognition은 비디오 스트림에서 관심 있는 객체나 사람이 처음 감지될 때 알림을 게시합니다. 또한 Amazon Rekognition은 스트림 처리 세션이 완료되면 요약과 함께 세션 종료 알림을 게시합니다. 자세한 내용은 StreamProcessorNotificationChannel을 참조하세요.  
+*필수 항목 *여부: 아니요  
+_형식_: NotificationChannel  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`PolygonRegionsOfInterest`  
+Point 개체의 정렬된 목록 집합입니다. 세트의 각 항목에는 화면에서 관심 영역을 나타내는 다각형이 포함되어 있습니다. 각 다각형은 Point 개체의 정렬된 목록입니다. 자세한 내용은 RegionOfInterest의 Polygon 필드를 참조하십시오.  
+*필수 항목 *여부: 아니요  
+_형식_: Json  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`RoleArn`  
+스트림 프로세서에 대한 액세스를 허용하는 IAM 역할의 ARN입니다. IAM 역할은 Kinesis 스트림에 대한 Rekognition 읽기 권한을 제공합니다. 또한 커넥티드 홈 스트림 프로세서에 대한 Amazon S3 버킷 및 Amazon Simple Notification Service 주제에 대한 쓰기 권한을 제공합니다. 이는 얼굴 검색과 연결된 홈 스트림 프로세서 모두에 필요합니다. 제약 조건에 대한 자세한 내용은 CreateStreamProcessor의 RoleArn 섹션을 참조하세요.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`S3Destination`  
+Amazon Rekognition이 비디오 분석 작업의 세부 추론 결과를 게시하는 Amazon S3 버킷 위치입니다. 자세한 내용은 StreamProcessorOutput의 S3Destination 섹션을 참조하세요.  
+*필수 항목 *여부: 아니요  
+_유형_: S3Destination  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Tags`  
+스트림 프로세서에 연결하려는 태그 집합(키-값 쌍)입니다. 자세한 내용은 CreateStreamProcessor의 태그 섹션을 참조하세요.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`스트림 프로세서의 이름을 반환합니다. 예를 들어:
+
+`{ "Ref": "MyStreamProcessor" }`
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt` 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다. 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`Arn` 새로 생성된 스트림 프로세서의 Amazon 리소스 이름입니다.
+
+`Status` Amazon Rekognition 스트림 프로세서의 현재 상태입니다.
+
+`StatusMessage` 스트림 프로세서에 대한 자세한 상태 메시지입니다.
+
+## 예제
+
+### 입력 Rekognition Collection이 주어지면 얼굴을 인식하도록 구성된 StreamProcessor
+
+이 템플릿은 컬렉션에 정의된 얼굴을 인식하도록 구성된 스트림 프로세서를 만듭니다 컬렉션 ID `ExampleCollection`. 구성된 Kinesis 데이터 스트림에 결과를 출력합니다.
+
+#### JSON (영문)
+
+```
+{
+    "ExampleStreamProcessor": {
+        "Type": "AWS::Rekognition::StreamProcessor",
+        "Properties": {
+            "RoleArn": "arn:aws:iam::123456789012:role/Admin",
+            "KinesisVideoStream": {
+                "Arn": "arn:aws:kinesisvideo:us-east-1:123456789012:stream/my-stream/0123456789012"
+            },
+            "FaceSearchSettings": {
+                "CollectionId": {
+                    "Ref": "ExampleCollection"
+                },
+                "FaceMatchThreshold": 90
+            },
+            "KinesisDataStream": {
+                "Arn": "arn:aws:kinesis:us-east-1:123456789012:stream/my-stream"
+            },
+            "Tags": [
+                {
+                    "Key": "Key1",
+                    "Value": "Value1"
+                },
+                {
+                    "Key": "Key2",
+                    "Value": "Value2"
+                }
+            ]
+        }
+    }
+}
+```
+
+### 특정 관심 영역을 구성하지 않고 ConnectedHome 레이블을 감지하는 StreamProcessor
+
+이 템플릿은 지원되는 모든 레이블을 검색하도록 구성된 스트림 프로세서를 만듭니다. 템플릿은 `BoundingBoxRegionsOfInterest` 및/또는 `PolygonRegionsOfInterest` 를 사용하여 특정 관심 영역을 구성하지 않으므로 Rekognition은 전체 프레임에서 관심 레이블을 감지하고 출력합니다.
+
+#### JSON (영문)
+
+```
+{
+    "ExampleStreamProcessor": {
+        "Type": "AWS::Rekognition::StreamProcessor",
+        "Properties": {
+            "RoleArn": "arn:aws:iam::123456789012:role/RoleForRekognition",
+            "KinesisVideoStream": {
+                "Arn": "arn:aws:kinesisvideo:us-east-1:123456789012:stream/my-stream/0123456789012"
+            },
+            "ConnectedHomeSettings": {
+                "Labels": [
+                    "ALL"
+                ]
+            },
+            "S3Destination": {
+                "BucketName": "MyS3Bucket"
+            },
+            "NotificationChannel": {
+                "Arn": "arn:aws:sns:us-east-1:123456789012:mystack-mytopic-ABCDEFGHIJKL"
+            }
+        }
+    }
+}
+```
+
+### StreamProcessor는 특정 경계 상자 기반 관심 영역과 다각형 기반 관심 영역 및 다각형이 구성된 ConnectedHome 레이블을 감지합니다.
+
+이 템플릿은 PERSON 및 PACKAGE를 검색하도록 구성된 스트림 프로세서를 만듭니다. 템플릿은 및 를 사용하여 특정 관심 영역을 구성 `BoundingBoxRegionsOfInterest` `PolygonRegionsOfInterest`하므로 Rekognition은 정의된 경계 상자와 다각형 내에서 감지된 관심 레이블을 출력합니다. 또한 템플릿은 Rekognition이 Amazon S3 버킷에 데이터를 게시하는 동안 결과를 암호화하는 데 사용하는 선택적 KMS 키 ID를 지정합니다.
+
+#### JSON (영문)
+
+```
+{
+    "ExampleStreamProcessor": {
+        "Type": "AWS::Rekognition::StreamProcessor",
+        "Properties": {
+            "RoleArn": "arn:aws:iam::123456789012:role/RoleForRekognition",
+            "KmsKeyId": "1234abcd-12ab-34cd-56ef-1234567890ab",
+            "KinesisVideoStream": {
+                "Arn": "arn:aws:kinesisvideo:us-east-1:123456789012:stream/my-stream/0123456789012"
+            },
+            "ConnectedHomeSettings": {
+                "Labels": [
+                    "PERSON",
+                    "PACKAGE"
+                ],
+                "MinConfidence": 60
+            },
+            "S3Destination": {
+                "BucketName": "MyS3Bucket",
+                "ObjectKeyPrefix": "/my/prefix/"
+            },
+            "NotificationChannel": {
+                "Arn": "arn:aws:sns:us-east-1:123456789012:mystack-mytopic-ABCDEFGHIJKL"
+            },
+            "BoundingBoxRegionsOfInterest": [
+                {
+                    "Height": 0.4,
+                    "Width": 0.2,
+                    "Left": 0.1,
+                    "Top": 0.5
+                },
+                {
+                    "Height": 0.2,
+                    "Width": 0.4,
+                    "Left": 0.1,
+                    "Top": 0.3
+                }
+            ],
+            "PolygonRegionsOfInterest": [
+                [
+                    {
+                        "X": 0.2,
+                        "Y": 0.4
+                    },
+                    {
+                        "X": 0.1,
+                        "Y": 0.5
+                    },
+                    {
+                        "X": 0.6,
+                        "Y": 0.6
+                    }
+                ],
+                [
+                    {
+                        "X": 0.6,
+                        "Y": 0.3
+                    },
+                    {
+                        "X": 0.2,
+                        "Y": 0.7
+                    },
+                    {
+                        "X": 0.1,
+                        "Y": 0.1
+                    }
+                ]
+            ],
+            "Tags": [
+                {
+                    "Key": "Key1",
+                    "Value": "Value1"
+                },
+                {
+                    "Key": "Key2",
+                    "Value": "Value2"
+                }
+            ]
+        }
+    }
+}
+```
+
+### StreamProcessor는 특정 경계 상자 기반 관심 영역 및 다각형 기반 관심 영역이 구성된 ConnectedHome 레이블을 감지합니다.
+
+이 템플릿은 PERSON 및 PACKAGE를 검색하도록 구성된 스트림 프로세서를 만듭니다. 템플릿은 를 사용하여 특정 관심 영역을 구성 `BoundingBoxRegionsOfInterest` 하므로 Rekognition은 정의된 경계 상자 내에서 감지된 관심 레이블을 출력합니다. 또한 템플릿은 Rekognition이 Amazon S3 버킷에 데이터를 게시하는 동안 결과를 암호화하는 데 사용하는 선택적 KMS 키 ID를 지정합니다.
+
+#### JSON (영문)
+
+```
+{
+    "ExampleStreamProcessor": {
+        "Type": "AWS::Rekognition::StreamProcessor",
+        "Properties": {
+            "RoleArn": "arn:aws:iam::123456789012:role/RoleForRekognition",
+            "KmsKeyId": "1234abcd-12ab-34cd-56ef-1234567890ab",
+            "KinesisVideoStream": {
+                "Arn": "arn:aws:kinesisvideo:us-east-1:123456789012:stream/my-stream/0123456789012"
+            },
+            "ConnectedHomeSettings": {
+                "Labels": [
+                    "PERSON",
+                    "PACKAGE"
+                ],
+                "MinConfidence": 60
+            },
+            "S3Destination": {
+                "BucketName": "MyS3Bucket",
+                "ObjectKeyPrefix": "/my/prefix/"
+            },
+            "NotificationChannel": {
+                "Arn": "arn:aws:sns:us-east-1:123456789012:mystack-mytopic-ABCDEFGHIJKL"
+            },
+            "BoundingBoxRegionsOfInterest": [
+                {
+                    "Height": 0.4,
+                    "Width": 0.2,
+                    "Left": 0.1,
+                    "Top": 0.5
+                },
+                {
+                    "Height": 0.2,
+                    "Width": 0.4,
+                    "Left": 0.1,
+                    "Top": 0.3
+                }
+            ],
+            "Tags": [
+                {
+                    "Key": "Key1",
+                    "Value": "Value1"
+                },
+                {
+                    "Key": "Key2",
+                    "Value": "Value2"
+                }
+            ]
+        }
+    }
+}
+```
+
+### StreamProcessor는 특정 다각형이 구성된 ConnectedHome 레이블을 감지합니다.
+
+이 템플릿은 PERSON 및 PACKAGE를 검색하도록 구성된 스트림 프로세서를 만듭니다. 템플릿은 를 사용하여 특정 관심 영역을 구성 `PolygonRegionsOfInterest` 하므로 Rekognition은 정의된 폴리곤 내에서 감지된 관심 레이블을 출력합니다. 또한 템플릿은 Rekognition이 Amazon S3 버킷에 데이터를 게시하는 동안 결과를 암호화하는 데 사용하는 선택적 KMS 키 ID를 지정합니다.
+
+#### JSON (영문)
+
+```
+{
+    "ExampleStreamProcessor": {
+        "Type": "AWS::Rekognition::StreamProcessor",
+        "Properties": {
+            "RoleArn": "arn:aws:iam::123456789012:role/RoleForRekognition",
+            "KmsKeyId": "1234abcd-12ab-34cd-56ef-1234567890ab",
+            "KinesisVideoStream": {
+                "Arn": "arn:aws:kinesisvideo:us-east-1:123456789012:stream/my-stream/0123456789012"
+            },
+            "ConnectedHomeSettings": {
+                "Labels": [
+                    "PERSON",
+                    "PACKAGE"
+                ],
+                "MinConfidence": 60
+            },
+            "S3Destination": {
+                "BucketName": "MyS3Bucket",
+                "ObjectKeyPrefix": "/my/prefix/"
+            },
+            "NotificationChannel": {
+                "Arn": "arn:aws:sns:us-east-1:123456789012:mystack-mytopic-ABCDEFGHIJKL"
+            },
+            "PolygonRegionsOfInterest": [
+                [
+                    {
+                        "X": 0.2,
+                        "Y": 0.4
+                    },
+                    {
+                        "X": 0.1,
+                        "Y": 0.5
+                    },
+                    {
+                        "X": 0.6,
+                        "Y": 0.6
+                    }
+                ],
+                [
+                    {
+                        "X": 0.6,
+                        "Y": 0.3
+                    },
+                    {
+                        "X": 0.2,
+                        "Y": 0.7
+                    },
+                    {
+                        "X": 0.1,
+                        "Y": 0.1
+                    }
+                ]
+            ],
+            "Tags": [
+                {
+                    "Key": "Key1",
+                    "Value": "Value1"
+                },
+                {
+                    "Key": "Key2",
+                    "Value": "Value2"
+                }
+            ]
+        }
+    }
+}
+```

@@ -1,0 +1,44 @@
+# AWS::SageMaker::ModelPackage 모델 지표
+
+모델에서 캡처된 메트릭을 포함합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Bias" : Bias,
+  "Explainability" : Explainability,
+  "ModelDataQuality" : ModelDataQuality,
+  "ModelQuality" : ModelQuality
+}
+```
+
+## 속성
+
+`Bias`  
+모델에서 bais를 측정하는 메트릭입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 바이어스  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Explainability`  
+모델을 설명하는 데 도움이 되는 메트릭입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 설명 가능성  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ModelDataQuality`  
+모델에 대한 입력 데이터의 품질을 측정하는 메트릭입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: ModelDataQuality  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ModelQuality`  
+모델의 품질을 측정하는 메트릭입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: ModelQuality  
+_업데이트 필요 사항_: 바꿔 놓음

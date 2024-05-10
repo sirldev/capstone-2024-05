@@ -1,0 +1,79 @@
+# AWS::CloudFront::함수
+
+CloudFront 함수를 생성합니다.
+
+함수를 만들려면 함수 코드와 함수에 대한 몇 가지 구성 정보를 제공합니다. 응답에는 함수와 함수의 단계를 고유하게 식별하는 Amazon 리소스 이름(ARN)이 포함되어 있습니다.
+
+기본적으로 함수를 생성하면 스테이지에 있습니다 `DEVELOPMENT` . 이 단계에서는 CloudFront 콘솔(또는 `TestFunction` CloudFront API)에서 함수를 테스트할 수 있습니다.
+
+CloudFront 배포에서 함수를 사용할 준비가 되면 함수를 스테이지에 게시합니다 `LIVE` . CloudFront 콘솔에서, `PublishFunction` CloudFront API를 사용하거나, `AWS::CloudFront::Function` 속성을 로 설정하여 `AutoPublish` 리소스를 `true` 업데이트하여 이 작업을 수행할 수 있습니다. 함수가 단계에 게시되면 `LIVE` 함수의 ARN을 사용하여 배포의 캐시 동작에 연결할 수 있습니다.
+
+함수를 만들 때 스테이지`LIVE`에 자동으로 게시하려면 `AutoPublish` 속성을 `true`로 설정합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::CloudFront::Function",
+  "Properties" : {
+      "AutoPublish" : Boolean,
+      "FunctionCode" : String,
+      "FunctionConfig" : FunctionConfig,
+      "FunctionMetadata" : FunctionMetadata,
+      "Name" : String
+    }
+}
+```
+
+## 속성
+
+`AutoPublish`  
+함수가 생성될 때 스테이지에 자동으로 게시할지 여부를 결정하는 플래그 `LIVE` 입니다 . 스테이지에 자동으로 게시하려면 `LIVE` 이 속성을 `true`로 설정합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`FunctionCode`  
+함수 코드입니다. CloudFront 함수 작성에 대한 자세한 내용은 Amazon CloudFront 개발자 안내서의 CloudFront 함수에 대한 함수 코드 작성을 참조하십시오\**.  
+*필수 항목 여부*: 예  
+*유형*: 문자열  
+*업데이트 필요 사항\*: 중단 없음
+
+`FunctionConfig`  
+CloudFront 함수에 대한 구성 정보를 포함합니다.  
+_필수 항목 여부_: 예  
+_형식_: FunctionConfig  
+_업데이트 필요 사항_: 중단 없음
+
+`FunctionMetadata`  
+CloudFront 함수에 대한 메타데이터를 포함합니다.  
+*필수 항목 *여부: 아니요  
+_형식_: FunctionMetadata  
+_업데이트 필요 사항_: 중단 없음
+
+`Name`  
+함수를 식별하기 위한 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `64`  
+_패턴_: `^[a-zA-Z0-9-_]{1,64}$`  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### Fn::GetAtt
+
+####
+
+`FunctionARN`  
+함수의 ARN입니다. 예를 들어:  
+`arn:aws:cloudfront::123456789012:function/ExampleFunction`을 클릭합니다.  
+함수 ARN을 가져오려면 다음 구문을 사용합니다.  
+`!GetAtt Function_Logical_ID.FunctionMetadata.FunctionARN`
+
+`FunctionMetadata.FunctionARN` 함수의 Amazon 리소스 이름(ARN)입니다. ARN은 함수를 고유하게 식별합니다.

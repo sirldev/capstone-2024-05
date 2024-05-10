@@ -1,0 +1,124 @@
+# AWS::ApiGateway::RequestValidator
+
+리소스는 `AWS::ApiGateway::RequestValidator` API로 들어오는 요청에 대한 기본 유효성 검사 규칙을 설정합니다. 자세한 내용은 API Gateway 개발자 안내서의 API Gateway에서 API에 대한 기본 요청 확인 활성화를 참조하십시오\*\*.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::ApiGateway::RequestValidator",
+  "Properties" : {
+      "Name" : String,
+      "RestApiId" : String,
+      "ValidateRequestBody" : Boolean,
+      "ValidateRequestParameters" : Boolean
+    }
+}
+```
+
+## 속성
+
+`Name`  
+이 RequestValidator의 이름  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`RestApiId`  
+연결된 RestApi의 문자열 식별자입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ValidateRequestBody`  
+구성된 모델 스키마에 따라 요청 본문의 유효성을 검사할지 여부를 나타내는 부울 플래그입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`ValidateRequestParameters`  
+요청 매개 변수()의 유효성을 검사할지 여부`true`()를 나타내는 부울 플래그입니다`false`.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`요청 유효성 검사기의 ID(예: )를 반환합니다 `abc123`.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`RequestValidatorId`  
+요청 유효성 검사기의 ID입니다. 예를 들면 다음과 같습니다 `abc123`.
+
+## 예제
+
+### 요청 검사기 만들기
+
+다음 예제에서는 제공된 파라미터를 기반으로 연결된 요청 검사기가 있는 API Gateway API를 생성합니다.
+
+#### JSON (영문)
+
+```
+{
+    "Parameters": {
+        "apiName": {
+            "Type": "String"
+        },
+        "validatorName": {
+            "Type": "String"
+        },
+        "validateRequestBody": {
+            "Type": "String"
+        },
+        "validateRequestParameters": {
+            "Type": "String"
+        }
+    },
+    "Resources": {
+        "RestApi": {
+            "Type": "AWS::ApiGateway::RestApi",
+            "Properties": {
+                "Name": {
+                    "Ref": "apiName"
+                }
+            }
+        },
+        "RequestValidator": {
+            "Type": "AWS::ApiGateway::RequestValidator",
+            "Properties": {
+                "Name": {
+                    "Ref": "validatorName"
+                },
+                "RestApiId": {
+                    "Ref": "RestApi"
+                },
+                "ValidateRequestBody": {
+                    "Ref": "validateRequestBody"
+                },
+                "ValidateRequestParameters": {
+                    "Ref": "validateRequestParameters"
+                }
+            }
+        }
+    }
+}
+```
+
+## 참고 항목
+
+- requestvalidator:_create(Amazon API Gateway REST API 참조)_

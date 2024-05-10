@@ -1,0 +1,45 @@
+# AWS::KinesisAnalyticsV2::ApplicationReferenceDataSource 참조 스키마
+
+SQL 기반 Managed Service for Apache Flink 애플리케이션의 경우, 스트리밍 소스의 데이터 형식 및 각 데이터 요소가 인애플리케이션 스트림에서 작성된 해당 컬럼에 맵핑되는 방법을 설명합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "RecordColumns" : [ RecordColumn, ... ],
+  "RecordEncoding" : String,
+  "RecordFormat" : RecordFormat
+}
+```
+
+## 속성
+
+`RecordColumns`  
+개체 목록입니다 `RecordColumn` .  
+_필수 항목 여부_: 예  
+_유형_: RecordColumn 목록  
+_최대_: `1000`  
+_업데이트 필요 사항_: 중단 없음
+
+`RecordEncoding`  
+스트리밍 원본에 있는 레코드의 인코딩을 지정합니다. 예를 들어 UTF-8입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `5`  
+_최대_: `5`  
+_패턴_: `UTF-8`  
+_업데이트 필요 사항_: 중단 없음
+
+`RecordFormat`  
+스트리밍 원본의 레코드 형식을 지정합니다.  
+_필수 항목 여부_: 예  
+_유형_: RecordFormat  
+_업데이트 필요 사항_: 중단 없음
+
+## 참고 항목
+
+- Amazon Kinesis Data Analytics API 참조\* \*의 SourceSchema

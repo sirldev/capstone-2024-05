@@ -1,0 +1,48 @@
+# AWS::CloudFront::D istribution LambdaFunctionAssociation
+
+Lambda@Edge 함수 연결을 포함하는 복합 형식입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "EventType" : String,
+  "IncludeBody" : Boolean,
+  "LambdaFunctionARN" : String
+}
+```
+
+## 속성
+
+`EventType` Lambda@Edge 함수 호출을 트리거하는 이벤트 유형을 지정합니다. 다음 값을 지정할 수 있습니다.
+
+- `viewer-request`: 이 함수는 CloudFront가 최종 사용자로부터 요청을 받을 때와 요청된 객체가 엣지 캐시에 있는지 여부를 확인하기 전에 실행됩니다.
+- `origin-request`: 이 함수는 CloudFront가 오리진에 요청을 보낼 때만 실행됩니다. 요청된 객체가 에지 캐시에 있으면 함수가 실행되지 않습니다.
+- `origin-response`: 이 함수는 CloudFront가 오리진으로부터 응답을 수신한 후 응답에서 객체를 캐싱하기 전에 실행됩니다. 요청된 객체가 에지 캐시에 있으면 함수가 실행되지 않습니다.
+- `viewer-response`: CloudFront에서 요청된 객체를 최종 사용자에게 반환하기 전에 함수가 실행됩니다. 이 함수는 객체가 이미 에지 캐시에 있었는지 여부에 관계없이 실행됩니다.
+
+오리진이 HTTP 200(OK) 이외의 HTTP 상태 코드를 반환하면 함수가 실행되지 않습니다.
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `origin-request | origin-response | viewer-request | viewer-response`  
+_업데이트 필요 사항_: 중단 없음
+
+`IncludeBody`  
+Lambda@Edge 함수가 본문 콘텐츠에 대한 읽기 권한을 가질 수 있도록 하는 플래그입니다. 자세한 내용은 Amazon CloudFront 개발자 안내서의 본문 포함 옵션을 선택하여 요청 본문에 액세스를 참조하십시오.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`LambdaFunctionARN`  
+Lambda@Edge 함수의 ARN입니다. 함수 버전의 ARN을 지정해야 합니다. 별칭 또는 $LATEST 지정할 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+## 참고 항목
+
+- Amazon CloudFront API 참조\* \*의 LambdaFunctionAssociation

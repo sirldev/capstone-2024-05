@@ -1,0 +1,30 @@
+# AWS::CloudFormation::StackSet 파라미터
+
+매개 변수 데이터 형식입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ParameterKey" : String,
+  "ParameterValue" : String
+}
+```
+
+## 속성
+
+`ParameterKey`  
+매개 변수와 연결된 키입니다. 특정 파라미터에 대한 키와 값을 지정하지 않으면 AWS CloudFormation에서는 템플릿에 지정된 기본값을 사용합니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`ParameterValue`  
+매개 변수와 연결된 입력 값입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음

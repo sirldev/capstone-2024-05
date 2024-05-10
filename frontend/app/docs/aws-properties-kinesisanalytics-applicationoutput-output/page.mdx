@@ -1,0 +1,55 @@
+# AWS::KinesisAnalytics::ApplicationOutput 출력
+
+인애플리케이션 스트림과 인애플리케이션 스트림 데이터를 기록할 대상을 식별하는 애플리케이션 출력 구성에 대해 설명합니다. 대상은 Amazon Kinesis 스트림 또는 Amazon Kinesis Firehose 전송 스트림일 수 있습니다.
+
+응용 프로그램이 작성할 수 있는 대상 수에 대한 제한 및 기타 제한 사항은 제한 사항을 참조하십시오.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "DestinationSchema" : DestinationSchema,
+  "KinesisFirehoseOutput" : KinesisFirehoseOutput,
+  "KinesisStreamsOutput" : KinesisStreamsOutput,
+  "LambdaOutput" : LambdaOutput,
+  "Name" : String
+}
+```
+
+## 속성
+
+`DestinationSchema`  
+레코드가 대상에 기록될 때의 데이터 형식에 대해 설명합니다. 자세한 내용은 응용 프로그램 출력 구성을 참조하십시오.  
+_필수 항목 여부_: 예  
+_형식_: DestinationSchema  
+_업데이트 필요 사항_: 중단 없음
+
+`KinesisFirehoseOutput`  
+Amazon Kinesis Firehose 전송 스트림을 대상으로 식별합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: KinesisFirehoseOutput  
+_업데이트 필요 사항_: 중단 없음
+
+`KinesisStreamsOutput`  
+Amazon Kinesis 스트림을 대상으로 식별합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: KinesisStreamsOutput  
+_업데이트 필요 사항_: 중단 없음
+
+`LambdaOutput`  
+AWS Lambda 함수를 대상으로 식별합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: LambdaOutput  
+_업데이트 필요 사항_: 중단 없음
+
+`Name`  
+인애플리케이션 스트림의 이름입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `1`  
+_최대_: `32`  
+_업데이트 필요 사항_: 바꿔 놓음

@@ -1,0 +1,46 @@
+# AWS::CloudFront::OriginAccessControl (영문)
+
+CloudFront에서 새 오리진 액세스 제어를 생성합니다. 오리진 액세스 제어를 생성한 후 CloudFront 배포의 오리진에 추가하여 CloudFront에서 인증된(서명된) 요청을 오리진에 전송하도록 할 수 있습니다.
+
+이렇게 하면 오리진에 대한 퍼블릭 액세스를 차단하여 최종 사용자(사용자)가 CloudFront를 통해서만 오리진의 콘텐츠에 액세스할 수 있습니다.
+
+CloudFront 오리진 액세스 제어 사용에 대한 자세한 내용은 _Amazon CloudFront 개발자 안내서의 AWS 오리진에 대한 액세스 제한을 참조하세요_.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::CloudFront::OriginAccessControl",
+  "Properties" : {
+      "OriginAccessControlConfig" : OriginAccessControlConfig
+    }
+}
+```
+
+## 속성
+
+`OriginAccessControlConfig`  
+오리진 액세스 제어입니다.  
+_필수 항목 여부_: 예  
+_형식_: OriginAccessControlConfig  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`Id` 원본 액세스 제어의 고유 식별자입니다.

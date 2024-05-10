@@ -1,0 +1,33 @@
+# AWS::D ynamoDB::GlobalTable 속성 정의
+
+테이블 및 인덱스에 대한 키 스키마를 설명하기 위한 특성을 나타냅니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "AttributeName" : String,
+  "AttributeType" : String
+}
+```
+
+## 속성
+
+`AttributeName`  
+특성의 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`AttributeType` 속성의 데이터 형식으로, 다음과 같습니다.
+
+- `S` - 속성은 String 유형입니다.
+- `N` - 속성은 숫자 유형입니다.
+- `B` - 속성은 Binary 유형입니다.
+  _필수 항목 여부_: 예  
+  _유형_: 문자열  
+  _업데이트 필요 사항_: 중단 없음

@@ -1,0 +1,34 @@
+# AWS::SageMaker::D eviceFleet EdgeOutputConfig
+
+플릿에서 수집한 샘플 데이터를 저장하기 위한 출력 구성입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "KmsKeyId" : String,
+  "S3OutputLocation" : String
+}
+```
+
+## 속성
+
+`KmsKeyId`  
+Amazon SageMaker가 컴파일 작업 후 스토리지 볼륨의 데이터를 암호화하는 데 사용하는 AWS Key Management Service(AWS KMS) 키입니다. KMS 키 ID를 제공하지 않으면 Amazon SageMaker는 역할 계정에 대해 Amazon S3의 기본 KMS 키를 사용합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최대_: `2048`  
+_패턴_: `.*`  
+_업데이트 필요 사항_: 중단 없음
+
+`S3OutputLocation`  
+Amazon Simple Storage(S3) 버킷 URI입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최대_: `1024`  
+_패턴_: `^(https|s3)://([^/]+)/?(.*)$`  
+_업데이트 필요 사항_: 중단 없음

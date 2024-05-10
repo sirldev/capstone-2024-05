@@ -1,0 +1,25 @@
+# AWS::Lambda::EventSourceMapping 크기 조정 구성
+
+(Amazon SQS만 해당) 이벤트 원본에 대한 크기 조정 구성입니다. 구성을 제거하려면 빈 값을 전달합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "MaximumConcurrency" : Integer
+}
+```
+
+## 속성
+
+`MaximumConcurrency`  
+Amazon SQS 이벤트 소스가 호출할 수 있는 동시 인스턴스 수를 제한합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_최소_: `2`  
+_최대_: `1000`  
+_업데이트 필요 사항_: 중단 없음

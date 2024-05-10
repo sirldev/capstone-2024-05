@@ -1,0 +1,29 @@
+# AWS::KinesisAnalyticsV2::애플리케이션 입력병렬 처리
+
+SQL 기반 Managed Service for Apache Flink 애플리케이션의 경우, 지정된 스트리밍 소스에 대해 작성할 인애플리케이션 스트림의 수를 설명합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Count" : Integer
+}
+```
+
+## 속성
+
+`Count`  
+생성할 인애플리케이션 스트림의 수입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_최소_: `1`  
+_최대_: `64`  
+_업데이트 필요 사항_: 중단 없음
+
+## 참고 항목
+
+- Amazon Kinesis Data Analytics API Reference\* \*의 InputParallelism

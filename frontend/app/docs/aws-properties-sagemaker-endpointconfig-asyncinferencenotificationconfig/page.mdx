@@ -1,0 +1,39 @@
+# AWS::SageMaker::엔드포인트 구성 AsyncInferenceNotificationConfig
+
+비동기 유추에 대한 유추 결과 알림에 대한 구성을 지정합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ErrorTopic" : String,
+  "IncludeInferenceResponseIn" : [ String, ... ],
+  "SuccessTopic" : String
+}
+```
+
+## 속성
+
+`ErrorTopic`  
+추론이 실패할 때 알림을 게시할 Amazon SNS 주제입니다. 주제가 제공되지 않으면 실패 시 알림이 전송되지 않습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`IncludeInferenceResponseIn`  
+추론 응답을 포함할 Amazon SNS 주제입니다.  
+추론 응답은 응답 크기가 128KB보다 작거나 같은 경우에만 포함됩니다.
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_최대_: `2`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`SuccessTopic`  
+추론이 성공적으로 완료되었을 때 알림을 게시할 Amazon SNS 주제입니다. 주제가 제공되지 않으면 성공 시 알림이 전송되지 않습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음

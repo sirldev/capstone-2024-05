@@ -1,0 +1,205 @@
+# AWS::EC2::네트워크 인터페이스
+
+AWS CloudFormation에 대한 Amazon EC2 인스턴스의 네트워크 인터페이스에 대해 설명합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::EC2::NetworkInterface",
+  "Properties" : {
+      "Description" : String,
+      "GroupSet" : [ String, ... ],
+      "InterfaceType" : String,
+      "Ipv4PrefixCount" : Integer,
+      "Ipv4Prefixes" : [ Ipv4PrefixSpecification, ... ],
+      "Ipv6AddressCount" : Integer,
+      "Ipv6Addresses" : [ InstanceIpv6Address, ... ],
+      "Ipv6PrefixCount" : Integer,
+      "Ipv6Prefixes" : [ Ipv6PrefixSpecification, ... ],
+      "PrivateIpAddress" : String,
+      "PrivateIpAddresses" : [ PrivateIpAddressSpecification, ... ],
+      "SecondaryPrivateIpAddressCount" : Integer,
+      "SourceDestCheck" : Boolean,
+      "SubnetId" : String,
+      "Tags" : [Tag, ... ]
+    }
+}
+```
+
+## 속성
+
+`Description`  
+네트워크 인터페이스에 대한 설명입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`GroupSet`  
+이 네트워크 인터페이스와 연결된 보안 그룹 ID입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`InterfaceType`  
+네트워크 인터페이스의 유형입니다. 기본값은 `interface`입니다. 지원되는 값은 `efa` 및 `trunk`입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `branch | efa | trunk`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Ipv4PrefixCount`  
+네트워크 인터페이스에 자동으로 할당되는 IPv4 접두사 수입니다. 이 옵션을 사용하는 경우 이 옵션을 사용할 수 없습니다 `Ipv4Prefix` .  
+네트워크 인터페이스를 생성할 때 특정 IPv4 접두사, 특정 프라이빗 IPv4 주소 또는 프라이빗 IPv4 주소 수 중 하나를 지정한 경우 IPv4 접두사 수를 지정할 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`Ipv4Prefixes`  
+네트워크 인터페이스에 할당된 IPv4 위임 접두사입니다.  
+네트워크 인터페이스를 생성할 때 IPv4 접두사 수, 특정 프라이빗 IPv4 주소 또는 프라이빗 IPv4 주소 수 중 하나를 지정한 경우 IPv4 접두사를 지정할 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_형식_: Ipv4PrefixSpecification 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`Ipv6AddressCount`  
+네트워크 인터페이스에 할당할 IPv6 주소의 수입니다. Amazon EC2는 서브넷 범위에서 IPv6 주소를 자동으로 선택합니다. 특정 IPv6 주소를 지정하려면 `Ipv6Addresses` 이 속성을 사용하고 이 속성을 지정하지 마세요.  
+네트워크 인터페이스를 만들 때 특정 IPv6 주소, 특정 IPv6 접두사 또는 IPv6 접두사 수 중 하나를 지정한 경우 IPv6 주소 수를 지정할 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`Ipv6Addresses`  
+서브넷의 IPv6 CIDR 블록 범위에서 네트워크 인터페이스와 연결할 하나 이상의 특정 IPv6 주소입니다. 여러 IPv6 주소를 지정하는 경우 `Ipv6AddressCount` 이 속성을 사용하고 이 속성을 지정하지 마세요.  
+네트워크 인터페이스를 만들 때 IPv6 주소 수, 특정 IPv6 접두사 또는 IPv6 접두사 수 중 하나를 지정한 경우 IPv6 주소를 지정할 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: InstanceIpv6Address 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`Ipv6PrefixCount`  
+네트워크 인터페이스에 자동으로 할당되는 IPv6 접두사 수입니다. 이 옵션을 사용하는 경우 이 옵션을 사용할 수 없습니다 `Ipv6Prefix` .  
+네트워크 인터페이스를 만들 때 특정 IPv6 접두사, 특정 IPv6 주소 또는 IPv6 주소 수 중 하나를 지정한 경우 IPv6 접두사 수를 지정할 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`Ipv6Prefixes`  
+네트워크 인터페이스에 할당된 IPv6 위임 접두사입니다.  
+네트워크 인터페이스를 만들 때 IPv6 접두사 수, 특정 IPv6 주소 또는 IPv6 주소 수 중 하나를 지정한 경우 IPv6 접두사를 지정할 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_형식_: Ipv6PrefixSpecification 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`PrivateIpAddress`  
+기본 개인 IP 주소로 사용되는 단일 개인 IP 주소를 네트워크 인터페이스에 할당합니다. 여러 개인 IP 주소를 지정하려면 `PrivateIpAddresses` 이 속성을 사용합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`PrivateIpAddresses`  
+네트워크 인터페이스에 개인 IP 주소를 할당합니다. 속성 값을 in the property로 설정하여 기본 개인 IP 주소를 지정할 수 있습니다 `Primary` `true` `PrivateIpAddressSpecification` . EC2에서 프라이빗 IP 주소를 자동으로 할당하려면 이 `SecondaryPrivateIpAddressCount` 속성을 사용하고 이 속성을 지정하지 마십시오.  
+네트워크 인터페이스를 생성할 때 프라이빗 IPv4 주소 수, 특정 IPv4 접두사 또는 IPv4 접두사 수 중 하나를 지정한 경우 프라이빗 IPv4 주소를 지정할 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_형식_: PrivateIpAddressSpecification 목록  
+_업데이트 필요 사항_: 일부 중단
+
+`SecondaryPrivateIpAddressCount`  
+네트워크 인터페이스에 할당할 보조 프라이빗 IPv4 주소의 수입니다. 여러 보조 IPv4 주소를 지정하면 Amazon EC2가 서브넷의 IPv4 CIDR 범위 내에서 이러한 IP 주소를 선택합니다. 이 옵션을 지정할 수 없으며 를 사용하여 둘 이상의 개인 IP 주소를 지정할 수 없습니다`privateIpAddresses`.  
+네트워크 인터페이스를 생성할 때 특정 프라이빗 IPv4 주소, 특정 IPv4 접두사 또는 IPv4 접두사 수 중 하나를 지정한 경우 프라이빗 IPv4 주소 수를 지정할 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`SourceDestCheck`  
+소스/대상 검사를 활성화하거나 비활성화하여 인스턴스가 수신하는 모든 트래픽의 소스 또는 대상인지 확인합니다. 값이 `true`이면 소스/대상 확인이 활성화되고, 그렇지 않으면 비활성화됩니다. 기본값은 `true`입니다. 인스턴스가 네트워크 주소 변환, 라우팅 또는 방화벽과 같은 서비스를 실행하는 경우 소스/대상 확인을 비활성화해야 합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`SubnetId`  
+네트워크 인터페이스와 연결할 서브넷의 ID입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Tags`  
+이 네트워크 인터페이스에 대한 임의의 태그 집합(키-값 쌍)입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`네트워크 인터페이스의 ID를 반환합니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`Id` 네트워크 인터페이스의 ID입니다.
+
+`PrimaryPrivateIpAddress`  
+네트워크 인터페이스의 기본 개인 IP 주소입니다. 예를 들어, `10.0.0.192`.
+
+`SecondaryPrivateIpAddresses`  
+네트워크 인터페이스의 보조 개인 IP 주소입니다. 예를 들어, `["10.0.0.161", "10.0.0.162", "10.0.0.163"]`.
+
+## 예제
+
+### 기본 네트워크 인터페이스
+
+이 예제에서는 독립형 탄력적 네트워크 인터페이스(ENI)를 생성합니다. 시작 시 이 네트워크 인터페이스를 인스턴스에 연결하는 방법을 알아보려면 이 페이지의 다음 예제를 참조하세요.
+
+#### JSON (영문)
+
+```
+"myENI" : {
+   "Type" : "AWS::EC2::NetworkInterface",
+   "Properties" : {
+      "Tags": [{"Key":"stack","Value":"production"}],
+      "Description": "A nice description.",
+      "SourceDestCheck": "false",
+      "GroupSet": ["sg-75zzz219"],
+      "SubnetId": "subnet-3z648z53",
+      "PrivateIpAddress": "10.0.0.16"
+   }
+}
+```
+
+### 시작 시 EC2 인스턴스에 네트워크 인터페이스 연결
+
+이 예제에서는 EC2 인스턴스에 네트워크 인터페이스를 연결합니다. NetworkInterface 속성을 사용하여 둘 이상의 네트워크 인터페이스를 추가할 수 있습니다. 그러나 모든 네트워크 인터페이스에 개인 IP 주소만 있는 경우(연결된 공용 IP 주소 없음) 여러 네트워크 인터페이스를 지정할 수 있습니다. 퍼블릭 IP 주소가 있는 네트워크 인터페이스가 있는 경우 인스턴스를 시작할 때를 지정한 다음 를 사용하여 `AWS::EC2::NetworkInterfaceAttachment` 추가 네트워크 인터페이스를 연결합니다.
+
+#### JSON (영문)
+
+```
+"Ec2Instance" : {
+   "Type" : "AWS::EC2::Instance",
+   "Properties" : {
+      "ImageId" : { "Fn::FindInMap" : [ "RegionMap", { "Ref" : "AWS::Region" }, "AMI" ]},
+      "KeyName" : { "Ref" : "KeyName" },
+      "SecurityGroupIds" : [{ "Ref" : "WebSecurityGroup" }],
+      "SubnetId" : { "Ref" : "SubnetId" },
+      "NetworkInterfaces" : [ {
+         "NetworkInterfaceId" : {"Ref" : "myENI"}, "DeviceIndex" : "1" } ],
+      "Tags" : [ {"Key" : "Role", "Value" : "Test Instance"}],
+      "UserData" : { "Fn::Base64" : { "Ref" : "WebServerPort" }}
+   }
+}
+```
+
+## 참고 항목
+
+- Amazon EC2 API Reference*의 NetworkInterface *

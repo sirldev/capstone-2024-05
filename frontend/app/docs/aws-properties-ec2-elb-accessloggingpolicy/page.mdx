@@ -1,0 +1,50 @@
+# AWS::ElasticLoadBalancing::LoadBalancer AccessLoggingPolicy
+
+Classic Load Balancer에 대한 액세스 로그가 저장되는 위치와 방법을 지정합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "EmitInterval" : Integer,
+  "Enabled" : Boolean,
+  "S3BucketName" : String,
+  "S3BucketPrefix" : String
+}
+```
+
+## 속성
+
+`EmitInterval`  
+액세스 로그를 게시하는 간격입니다. 간격은 5분 또는 60분으로 지정할 수 있습니다.  
+기본값: 60분  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`Enabled`  
+로드 밸런서에 대해 액세스 로그를 사용할 수 있는지 여부를 지정합니다.  
+_필수 항목 여부_: 예  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`S3BucketName`  
+액세스 로그가 저장되는 Amazon S3 버킷의 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`S3BucketPrefix`  
+Amazon S3 버킷에 대해 생성한 논리적 계층 구조(예: `my-bucket-prefix/prod`. 접두사를 제공하지 않으면 로그가 버킷의 루트 수준에 배치됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+## 참고 항목
+
+- Elastic Load Balancing API 참조(버전 2012-06-01)\* \*의 ModifyLoadBalancerAttributes
+- Classic Load Balancer* 사용 설명서*의 액세스 로그

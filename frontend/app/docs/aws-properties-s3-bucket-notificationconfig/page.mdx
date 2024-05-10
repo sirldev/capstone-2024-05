@@ -1,0 +1,88 @@
+# AWS::S3::버킷 알림 구성
+
+Amazon S3 버킷에 대한 알림 구성을 설명합니다.
+
+**메모**  
+대상 리소스와 관련 권한을 동일한 템플릿에서 만드는 경우 순환 종속성이 있을 수 있습니다.  
+예를 들어, 리소스를 사용하여 `AWS::Lambda::Permission` AWS Lambda 함수를 호출할 수 있는 권한을 버킷에 부여할 수 있습니다. 그러나 AWS CloudFormation에서는 버킷에 함수를 호출할 수 있는 권한이 있을 때까지 버킷을 생성할 수 없습니다(AWS CloudFormation에서는 버킷이 함수를 호출할 수 있는지 여부를 확인함). Refs를 사용하여 버킷 이름을 전달하는 경우 순환 종속성이 발생합니다.  
+이 종속성을 피하려면 알림 구성을 지정하지 않고 모든 리소스를 만들 수 있습니다. 그런 다음 알림 구성으로 스택을 업데이트합니다.  
+권한에 대한 자세한 내용은 AWS::Lambda::P ermission 및 이벤트 알림 메시지를 대상에 게시할 수 있는 권한 부여 단원을 참조하십시오.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "EventBridgeConfiguration" : EventBridgeConfiguration,
+  "LambdaConfigurations" : [ LambdaConfiguration, ... ],
+  "QueueConfigurations" : [ QueueConfiguration, ... ],
+  "TopicConfigurations" : [ TopicConfiguration, ... ]
+}
+```
+
+## 속성
+
+`EventBridgeConfiguration`  
+Amazon EventBridge로 이벤트를 전송할 수 있습니다.  
+*필수 항목 *여부: 아니요  
+_형식_: EventBridgeConfiguration  
+_업데이트 필요 사항_: 중단 없음
+
+`LambdaConfigurations`  
+호출할 AWS Lambda 함수와 이를 호출할 이벤트에 대해 설명합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: LambdaConfiguration 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`QueueConfigurations`  
+Amazon Simple Queue Service는 메시지를 게시할 대상과 메시지를 게시할 이벤트를 대기열에 넣습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: QueueConfiguration 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`TopicConfigurations`  
+알림이 전송되는 주제와 알림이 생성되는 이벤트입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: TopicConfiguration 목록  
+_업데이트 필요 사항_: 중단 없음
+
+## 예제
+
+### SNS 주제에 대한 S3 버킷 알림 수신
+
+다음 예제 템플릿은 S3가 객체의 모든 복제본을 손실했을 때 지정된 SNS 주제로 이벤트를 전송하는 알림 구성이 있는 Amazon S3 버킷을 보여줍니다.
+
+#### JSON (영문)
+
+```
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Resources": {
+        "S3Bucket": {
+            "Type": "AWS::S3::Bucket",
+            "Properties": {
+                "AccessControl": "Private",
+                "NotificationConfiguration": {
+                    "TopicConfigurations": [
+                        {
+                            "Topic": "arn:aws:sns:us-east-1:123456789012:TestTopic",
+                            "Event": "s3:ReducedRedundancyLostObject"
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "Outputs": {
+        "BucketName": {
+            "Value": {
+                "Ref": "S3Bucket"
+            },
+            "Description": "Name of the sample Amazon S3 bucket with a notification configuration."
+        }
+    }
+}
+```

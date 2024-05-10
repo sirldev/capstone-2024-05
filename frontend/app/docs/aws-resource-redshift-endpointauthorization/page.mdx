@@ -1,0 +1,71 @@
+# AWS::Redshift::엔드포인트 권한 부여
+
+AWS 계정 전체에서 클러스터에 대한 Redshift 관리형 VPC 엔드포인트 액세스 권한을 부여하기 위한 엔드포인트 권한 부여에 대해 설명합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::Redshift::EndpointAuthorization",
+  "Properties" : {
+      "Account" : String,
+      "ClusterIdentifier" : String,
+      "Force" : Boolean,
+      "VpcIds" : [ String, ... ]
+    }
+}
+```
+
+## 속성
+
+`Account`  
+클러스터 소유자(부여자) 또는 피부여자의 AWS 계정 ID입니다. `Grantee` parameter가 true이면, `Account` 값은 부여자의 값입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최대_: `2147483647`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ClusterIdentifier`  
+클러스터 식별자입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최대_: `2147483647`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Force`  
+취소 작업을 강제 적용할지 여부를 나타냅니다. true인 경우 엔드포인트 권한 부여와 연결된 Redshift 관리형 VPC 엔드포인트도 삭제됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+`VpcIds`  
+액세스 권한을 부여할 Virtual Private Cloud(VPC) 식별자입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### Fn::GetAtt
+
+####
+
+`AllowedAllVPCs` 피부여자 계정의 모든 VPC가 클러스터에 액세스할 수 있는지 여부를 나타냅니다.
+
+`AllowedVPCs` VPC가 클러스터에 대한 액세스를 허용했습니다.
+
+`AuthorizeTime` 권한 부여가 생성된 시간(UTC)입니다.
+
+`ClusterStatus` 클러스터의 상태입니다.
+
+`EndpointCount` 권한 부여를 위해 생성된 Redshift 관리형 VPC 엔드포인트의 수입니다.
+
+`Grantee` 클러스터 피부여자의 AWS 계정 ID입니다.
+
+`Grantor` 클러스터 소유자의 AWS 계정 ID입니다.
+
+`Status` 권한 부여 작업의 상태입니다.

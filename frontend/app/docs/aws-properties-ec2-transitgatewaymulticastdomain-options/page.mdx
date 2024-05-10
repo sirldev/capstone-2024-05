@@ -1,0 +1,40 @@
+# AWS::EC2::TransitGatewayMulticastDomain 옵션
+
+transit gateway 멀티캐스트 도메인에 대한 옵션입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "AutoAcceptSharedAssociations" : String,
+  "Igmpv2Support" : String,
+  "StaticSourcesSupport" : String
+}
+```
+
+## 속성
+
+`AutoAcceptSharedAssociations`  
+Transit Gateway 멀티캐스트 도메인과 연결된 교차 계정 서브넷 연결을 자동으로 수락할지 여부를 나타냅니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `disable | enable`  
+_업데이트 필요 사항_: 중단 없음
+
+`Igmpv2Support`  
+Transit Gateway 멀티캐스트 도메인에 대해 IGMP(Internet Group Management Protocol) 버전 2를 활성화할지 여부를 지정합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `disable | enable`  
+_업데이트 필요 사항_: 중단 없음
+
+`StaticSourcesSupport`  
+도메인에 대해 정적으로 멀티캐스트 그룹 소스를 구성하기 위한 지원을 활성화할지 여부를 지정합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `disable | enable`  
+_업데이트 필요 사항_: 중단 없음

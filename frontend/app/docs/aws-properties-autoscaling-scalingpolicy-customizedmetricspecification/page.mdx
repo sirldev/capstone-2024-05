@@ -1,0 +1,62 @@
+# AWS::AutoScaling::ScalingPolicy 사용자 지정 메트릭 사양
+
+Amazon EC2 Auto Scaling의 대상 추적 조정 정책에 대한 사용자 지정 지표 사양 정보가 포함되어 있습니다.
+
+사용자 지정된 메트릭 사양을 만들려면:
+
+- CloudWatch에서 각 필수 속성에 대한 값을 추가합니다. 기존 메트릭 또는 새로 만든 메트릭을 사용할 수 있습니다. 자체 지표를 사용하려면 먼저 지표를 CloudWatch에 게시해야 합니다. 자세한 내용은 _Amazon CloudWatch 사용 설명서의 사용자 지정 지표 게시를 참조하십시오_.
+- 용량에 비례하여 변경되는 메트릭을 선택합니다. 메트릭의 값은 용량 단위 수에 반비례하여 증가하거나 감소해야 합니다. 즉, 용량이 증가하면 메트릭 값이 감소해야 합니다.
+
+CloudWatch에 대한 자세한 내용은 Amazon CloudWatch 개념을 참조하십시오.
+
+`CustomizedMetricSpecification` 은 AWS::AutoScaling::ScalingPolicy TargetTrackingConfiguration 속성 유형의 속성입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Dimensions" : [ MetricDimension, ... ],
+  "MetricName" : String,
+  "Namespace" : String,
+  "Statistic" : String,
+  "Unit" : String
+}
+```
+
+## 속성
+
+`Dimensions`  
+지표의 차원입니다.  
+조건부: 차원을 사용하여 지표를 게시한 경우 조정 정책에서 동일한 차원을 지정해야 합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: MetricDimension 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`MetricName`  
+메트릭의 이름입니다. 정확한 지표 이름, 네임스페이스 및 차원을 가져오려면 ListMetrics 호출에서 반환되는 Metric 객체를 검사합니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Namespace`  
+메트릭의 네임스페이스입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Statistic`  
+메트릭의 통계입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_허용되는 값_: `Average | Maximum | Minimum | SampleCount | Sum`  
+_업데이트 필요 사항_: 중단 없음
+
+`Unit`  
+메트릭의 단위입니다. CloudWatch가 지원하는 단위의 전체 목록은 _Amazon CloudWatch API Reference의 MetricDatum 데이터 형식을 참조하십시오_.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음

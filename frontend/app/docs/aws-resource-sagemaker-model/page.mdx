@@ -1,0 +1,227 @@
+# AWS::SageMaker::모델
+
+`AWS::SageMaker::Model` Amazon SageMaker 엔드포인트에서 호스팅할 모델을 생성하기 위한 리소스입니다. 자세한 내용은 Amazon SageMaker 개발자 안내서의 Amazon SageMaker 호스팅 서비스에 모델 배포를 참조하세요\*\*.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::SageMaker::Model",
+  "Properties" : {
+      "Containers" : [ ContainerDefinition, ... ],
+      "EnableNetworkIsolation" : Boolean,
+      "ExecutionRoleArn" : String,
+      "InferenceExecutionConfig" : InferenceExecutionConfig,
+      "ModelName" : String,
+      "PrimaryContainer" : ContainerDefinition,
+      "Tags" : [Tag, ... ],
+      "VpcConfig" : VpcConfig
+    }
+}
+```
+
+## 속성
+
+`Containers`  
+유추 파이프라인의 컨테이너를 지정합니다.  
+*필수 항목 *여부: 아니요  
+_형식_: ContainerDefinition 목록  
+_최대_: `15`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`EnableNetworkIsolation`  
+모델 컨테이너를 격리합니다. 모델 컨테이너에 대한 인바운드 또는 아웃바운드 네트워크 호출은 수행할 수 없습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ExecutionRoleArn`  
+SageMaker가 ML 컴퓨팅 인스턴스에 배포하거나 배치 변환 작업을 위해 모델 아티팩트 및 도커 이미지에 액세스하기 위해 수임할 수 있는 IAM 역할의 Amazon 리소스 이름(ARN)입니다. ML 컴퓨팅 인스턴스에 배포하는 것은 모델 호스팅의 일부입니다. 자세한 내용은 SageMaker 역할 단원을 참조하십시오.  
+이 역할을 SageMaker에 전달할 수 있으려면 이 API의 호출자에게 권한이 있어야 합니다 `iam:PassRole` .
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_최소_: `20`  
+_최대_: `2048`  
+_패턴_: `^arn:aws[a-z-]*:iam::d{12}:role/?[a-zA-Z_0-9+=,.@-_/]+$`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`InferenceExecutionConfig`  
+다중 컨테이너 끝점의 컨테이너가 호출되는 방법에 대한 세부 정보를 지정합니다.  
+*필수 항목 *여부: 아니요  
+_형식_: InferenceExecutionConfig  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`ModelName`  
+새 모델의 이름입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최대_: `63`  
+_패턴_: `^a-zA-Z0-9*`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`PrimaryContainer`  
+모델이 예측을 위해 배포될 때 추론 코드가 사용하는 추론 코드, 연결된 아티팩트 및 사용자 지정 환경 맵을 포함하는 기본 Docker 이미지의 위치입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: ContainerDefinition  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Tags`  
+이 리소스에 적용할 키-값 쌍 목록입니다.  
+자세한 내용은 _AWS Billing and Cost Management 사용 설명서의 리소스 태그 및 비용 할당 태그 사용을 참조하세요_.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_최대_: `50`  
+_업데이트 필요 사항_: 중단 없음
+
+`VpcConfig`  
+모델을 연결할 VPC를 지정하는 VpcConfig 객체입니다. VPC를 구성하여 모델 컨테이너에 대한 액세스를 제어합니다. `VpcConfig` 호스팅 서비스 및 일괄 변환에 사용됩니다. 자세한 내용은 Amazon Virtual Private Cloud를 사용하여 엔드포인트 보호 및 Amazon Virtual Private Cloud를 사용하여 배치 변환 작업의 데이터 보호 단원을 참조하십시오.  
+*필수 항목 *여부: 아니요  
+_유형_: VpcConfig  
+_업데이트 필요 사항_: 바꿔 놓음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref`모델의 `Ref`Amazon 리소스 이름(ARN)을 반환합니다 `arn:aws:sagemaker:us-west-2:012345678901:model/mymodel`.
+
+리소스의 논리적 ID를 `AWS::SageMaker::Model` 내장 함수에 `Ref` 전달하면 함수는 모델의 Amazon 리소스 이름(ARN)을 반환합니다`arn:aws:sagemaker:us-west-2:012345678901:model/mymodel`.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+`Fn::GetAtt` 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+####
+
+`ModelName`  
+모델의 이름(예: )입니다 `MyModel`.
+
+## 예제
+
+### SageMaker 모델 엔드포인트 예제
+
+다음 예제에서는 학습된 모델에서 끝점 구성을 만든 다음, 끝점을 만듭니다.
+
+#### JSON (영문)
+
+```
+{
+  "Description": "Basic Hosting entities test.  We need models to create endpoint configs.",
+  "Mappings": {
+    "RegionMap": {
+      "us-west-2": {
+        "NullTransformer": "12345678901.dkr.ecr.us-west-2.amazonaws.com/mymodel:latest"
+      },
+      "us-east-2": {
+        "NullTransformer": "12345678901.dkr.ecr.us-east-2.amazonaws.com/mymodel:latest"
+      },
+      "us-east-1": {
+        "NullTransformer": "12345678901.dkr.ecr.us-east-1.amazonaws.com/mymodel:latest"
+      },
+      "eu-west-1": {
+        "NullTransformer": "12345678901.dkr.ecr.eu-west-1.amazonaws.com/mymodel:latest"
+      },
+      "ap-northeast-1": {
+        "NullTransformer": "12345678901.dkr.ecr.ap-northeast-1.amazonaws.com/mymodel:latest"
+      },
+      "ap-northeast-2": {
+        "NullTransformer": "12345678901.dkr.ecr.ap-northeast-2.amazonaws.com/mymodel:latest"
+      },
+      "ap-southeast-2": {
+        "NullTransformer": "12345678901.dkr.ecr.ap-southeast-2.amazonaws.com/mymodel:latest"
+      },
+      "eu-central-1": {
+        "NullTransformer": "12345678901.dkr.ecr.eu-central-1.amazonaws.com/mymodel:latest"
+      }
+    }
+  },
+  "Resources": {
+    "Endpoint": {
+      "Type": "AWS::SageMaker::Endpoint",
+      "Properties": {
+        "EndpointConfigName": { "Fn::GetAtt" : ["EndpointConfig", "EndpointConfigName" ] }
+      }
+    },
+    "EndpointConfig": {
+      "Type": "AWS::SageMaker::EndpointConfig",
+      "Properties": {
+        "ProductionVariants": [
+          {
+            "InitialInstanceCount": 1,
+            "InitialVariantWeight": 1,
+            "InstanceType": "ml.t2.large",
+            "ModelName": { "Fn::GetAtt" : ["Model", "ModelName" ] },
+            "VariantName": { "Fn::GetAtt" : ["Model", "ModelName" ] }
+          }
+        ]
+      }
+    },
+    "Model": {
+      "Type": "AWS::SageMaker::Model",
+      "Properties": {
+        "PrimaryContainer": {
+          "Image": { "Fn::FindInMap" : [ "AWS::Region", "NullTransformer"] }
+        },
+        "ExecutionRoleArn": { "Fn::GetAtt" : [ "ExecutionRole", "Arn" ] }
+      }
+    },
+    "ExecutionRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": [
+                  "sagemaker.amazonaws.com"
+                ]
+              },
+              "Action": [
+                "sts:AssumeRole"
+              ]
+            }
+          ]
+        },
+        "Path": "/",
+        "Policies": [
+          {
+            "PolicyName": "root",
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": "*",
+                  "Resource": "*"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  },
+  "Outputs": {
+    "EndpointId": {
+      "Value": { "Ref" : "Endpoint" }
+    },
+    "EndpointName": {
+      "Value": { "Fn::GetAtt" : [ "Endpoint", "EndpointName" ] }
+    }
+
+  }
+
+}
+```

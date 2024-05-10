@@ -1,0 +1,25 @@
+# AWS::KinesisFirehose::D eliveryStream ElasticsearchRetryOptions
+
+`ElasticsearchRetryOptions` 속성 유형은 Amazon Kinesis Data Firehose(Kinesis Data Firehose)가 Amazon Elasticsearch Service(Amazon ES)로 데이터를 전송할 수 없는 경우의 재시도 동작을 구성합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "DurationInSeconds" : Integer
+}
+```
+
+## 속성
+
+`DurationInSeconds`  
+Amazon ES로 전송에 처음 실패한 후 Kinesis Data Firehose가 전송을 다시 시도하는 총 시간(첫 번째 시도 포함)입니다. Kinesis Data Firehose가 지정된 시간 내에 데이터를 전송할 수 없는 경우 백업 S3 버킷에 데이터를 씁니다. 유효한 값은 `DurationInSeconds`Amazon Kinesis Data Firehose API Reference*의 ElasticsearchRetryOptions 데이터 형식에 대한 내용을 * 참조하십시오.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_최소_: `0`  
+_최대_: `7200`  
+_업데이트 필요 사항_: 중단 없음

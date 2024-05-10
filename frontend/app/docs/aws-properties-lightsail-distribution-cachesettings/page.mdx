@@ -1,0 +1,87 @@
+# AWS::Lightsail::D istribution CacheSettings
+
+`CacheSettings` 은 AWS::Lightsail::D istribution 리소스의 속성입니다. Amazon Lightsail 콘텐츠 전송 네트워크(CDN) 배포의 캐시 설정에 대해 설명합니다.
+
+이러한 설정은 `CacheBehaviors` `Behavior` 가 `cache` 있는 배포에만 적용됩니다. 여기에는 `DefaultCacheBehavior`.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "AllowedHTTPMethods" : String,
+  "CachedHTTPMethods" : String,
+  "DefaultTTL" : Integer,
+  "ForwardedCookies" : CookieObject,
+  "ForwardedHeaders" : HeaderObject,
+  "ForwardedQueryStrings" : QueryStringObject,
+  "MaximumTTL" : Integer,
+  "MinimumTTL" : Integer
+}
+```
+
+## 속성
+
+`AllowedHTTPMethods` 처리되어 배포의 오리진으로 전달되는 HTTP 메서드입니다.  
+다음 옵션을 지정할 수 있습니다.
+
+- `GET,HEAD` - 배포는 `GET` 및 `HEAD` 메서드를 전달합니다.
+- `GET,HEAD,OPTIONS` - 배포판은 `GET`, `HEAD`, 및 `OPTIONS` 메서드를 전달합니다.
+- `GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE` - 배포는 `GET`, `HEAD`, , `OPTIONS` `PUT`, `PATCH`, 및 `POST` `DELETE` 메서드를 전달합니다.
+  를 지정하는 경우 `GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE`사용자가 원하지 않는 작업을 수행할 수 없도록 배포의 오리진에 대한 액세스를 제한해야 할 수 있습니다. 예를 들어 오리진에서 객체를 삭제할 수 있는 권한을 사용자에게 부여하지 않도록 할 수 있습니다.  
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열  
+  _패턴_: `.*S.*`  
+  _업데이트 필요 사항_: 중단 없음
+
+`CachedHTTPMethods` 배포에 의해 캐시되는 HTTP 메서드 응답입니다.  
+다음 옵션을 지정할 수 있습니다.
+
+- `GET,HEAD` - 배포는 및 메서드에 대한 응답을 캐시합니다 `GET` `HEAD` .
+- `GET,HEAD,OPTIONS`- 배포는 , `GET`, 및 `HEAD` 메서드 에 대한 응답을 캐시합니다 `OPTIONS` .
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열  
+  _패턴_: `.*S.*`  
+  _업데이트 필요 사항_: 중단 없음
+
+`DefaultTTL`  
+배포가 콘텐츠가 업데이트되었는지 여부를 확인하기 위해 오리진에 다른 요청을 전달하기 전에 객체가 배포의 캐시에 유지되는 기본 시간입니다.  
+지정된 값은 오리진이 , 및 와 같은 HTTP 헤더를 객체에 추가하지 않는 경우에만 적용됩니다 `Cache-Control max-age` `Cache-Control s-maxage` `Expires` .
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`ForwardedCookies`  
+오리진에 전달되는 쿠키를 설명하는 객체입니다. 귀하의 콘텐츠는 전달된 쿠키를 기반으로 캐시됩니다.  
+*필수 항목 *여부: 아니요  
+_형식_: CookieObject  
+_업데이트 필요 사항_: 중단 없음
+
+`ForwardedHeaders`  
+오리진에 전달되는 헤더를 설명하는 개체입니다. 콘텐츠는 전달된 헤더에 따라 캐시됩니다.  
+*필수 항목 *여부: 아니요  
+_형식_: HeaderObject  
+_업데이트 필요 사항_: 중단 없음
+
+`ForwardedQueryStrings`  
+오리진에 전달되는 쿼리 문자열을 설명하는 객체입니다. 콘텐츠는 전달된 쿼리 문자열에 따라 캐시됩니다.  
+*필수 항목 *여부: 아니요  
+_형식_: QueryStringObject  
+_업데이트 필요 사항_: 중단 없음
+
+`MaximumTTL`  
+배포가 객체가 업데이트되었는지 여부를 확인하기 위해 오리진에 다른 요청을 전달하기 전에 객체가 배포의 캐시에 머무르는 최대 시간입니다.  
+지정된 값은 오리진이 객체에 , 및 와 같은 HTTP 헤더를 추가하는 경우에만 적용됩니다 `Cache-Control max-age` `Cache-Control s-maxage` `Expires` .  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`MinimumTTL`  
+객체가 업데이트되었는지 여부를 확인하기 위해 배포가 오리진에 다른 요청을 전달하기 전에 객체가 배포의 캐시에 머무르는 최소 시간입니다.  
+`0` `minimumTTL` 배포가 모든 헤더를 오리진에 전달하도록 구성된 경우 값을 지정해야 합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음

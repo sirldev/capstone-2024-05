@@ -1,0 +1,27 @@
+# `AWS::CloudFormation::Interface` 파라미터 그룹
+
+`ParameterGroup` 는 `AWS::CloudFormation::Interface` 파라미터 그룹과 그룹에 포함할 파라미터를 정의하는 리소스의 속성입니다.
+
+## 통사론
+
+### JSON (영문)
+
+```
+{
+  "Label" : Label,
+  "Parameters" : [ String, ... ]
+}
+```
+
+## 속성
+
+`Label`  
+파라미터 그룹의 이름입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: `AWS::CloudFormation::Interface Label`
+
+`Parameters`  
+그룹에 포함할 대/소문자를 구분하는 파라미터 논리적 ID의 목록입니다. 매개 변수는 템플릿의 섹션에 이미 정의되어 있어야 합니다 `Parameters` . 파라미터는 하나의 파라미터 그룹에만 포함될 수 있습니다.  
+콘솔에는 파라미터 그룹과 연결하지 않은 파라미터가 그룹의 알파벳 순서로 나열됩니다 `Other parameters` .  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 값 목록

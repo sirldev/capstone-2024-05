@@ -1,0 +1,86 @@
+# AWS::ApiGateway::UsagePlanKey
+
+`AWS::ApiGateway::UsagePlanKey` 리소스는 API 키를 사용량 계획과 연결합니다. 이 연결은 사용량 계획이 적용되는 사용자를 결정합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::ApiGateway::UsagePlanKey",
+  "Properties" : {
+      "KeyId" : String,
+      "KeyType" : String,
+      "UsagePlanId" : String
+    }
+}
+```
+
+## 속성
+
+`KeyId`  
+UsagePlanKey 리소스의 ID입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`KeyType`  
+플랜 고객에 대한 UsagePlanKey 리소스의 유형입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`UsagePlanId`  
+계획 고객을 나타내는 UsagePlanKey 리소스를 포함하는 사용량 계획을 나타내는 UsagePlan 리소스의 ID입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`":"와 결합된 키 ID와 사용량 계획 ID를 반환합니다 `123abcdef:abc123`.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`Id`  
+사용량 계획 키의 ID입니다. 예를 들면 다음과 같습니다 `abc123`.
+
+## 예제
+
+### 사용량 계획 키 생성
+
+#### JSON (영문)
+
+```
+{
+    "usagePlanKey": {
+        "Type": "AWS::ApiGateway::UsagePlanKey",
+        "Properties": {
+            "KeyId": {
+                "Ref": "myApiKey"
+            },
+            "KeyType": "API_KEY",
+            "UsagePlanId": {
+                "Ref": "myUsagePlan"
+            }
+        }
+    }
+}
+```
+
+## 참고 항목
+
+- usageplankey:_create(Amazon API Gateway REST API 참조)_

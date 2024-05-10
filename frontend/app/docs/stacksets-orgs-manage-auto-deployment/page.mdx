@@ -1,0 +1,52 @@
+# 서비스 관리형 권한이 있는 스택 세트에 대한 자동 배포 관리
+
+자동 배포가 활성화되면 StackSets는 나중에 대상 조직 또는 조직 단위(OU)에 추가되는 계정에 자동으로 배포됩니다. 스택 보관을 활성화하면 대상 OU에서 계정이 제거될 때 계정의 스택 리소스가 유지됩니다. 스택 세트를 생성할 때 지정한 자동 배포 설정은 언제든지 조정할 수 있습니다.
+
+**메모**  
+재정의된 파라미터 값은 현재 대상 OU에 있는 계정과 하위 OU에만 적용됩니다. 향후 대상 OU 및 하위 OU에 추가되는 계정은 재정의된 값이 아닌 스택 세트 기본값을 사용합니다.
+
+**항목**
+
+- AWS CloudFormation 콘솔을 사용하여 자동 배포 관리
+- AWS CLI를 사용하여 자동 배포 관리
+- 자동 배포 예제
+
+## AWS CloudFormation 콘솔을 사용하여 자동 배포 관리
+
+1. some-address에서 AWS CloudFormation 콘솔을 엽니다.
+
+1. 탐색 창에서 [StackSets**]를 선택합니다\*\*.
+
+1. [StackSets**] \*\* 페이지에서 서비스 관리형 권한으로 스택 세트 생성에서 생성한 스택 세트를 선택합니다.
+
+1. 스택 세트를 선택한 상태에서 **[Actions] 메뉴에서 **[Edit automatic deployment**]를 \*\* 선택합니다 . 자동 배포는 스택 세트 수준에서 설정됩니다. OU, 계정 또는 리전에 대해 자동 배포를 선택적으로 조정할 수 없습니다.
+
+1. **자동 배포 편집** 모달에서 **자동 배포** 및 **계정 제거 동작** 설정을 관리합니다.  
+   **메모**  
+   **[Retain stacks**]를 선택하면 스택 인스턴스가 스택 세트에서 제거되지만 스택 및 관련 리소스는 유지됩니다. 리소스는 현재 상태로 유지되지만 더 이상 스택 세트의 일부가 아닙니다.
+
+1. 저장(Save**)을 선택합니다**.
+
+## AWS CLI를 사용하여 자동 배포 관리
+
+1. AWS CLI를 엽니다.
+
+1. `update-stack-set` 서비스 관리형 권한으로 스택 세트 생성에서 생성한 스택 세트를 지정하여 명령을 실행합니다. 자동 배포는 스택 세트 수준에서 설정됩니다. _ 스택 세트 업데이트에서 _--auto-deployment를 지정하는 경우 _--deployment-targets_ 또는 _--regions를 지정할 수 없습니다_.
+
+```
+aws cloudformation update-stack-set --stack-set-name StackSet_myApp --auto-deployment Enabled=false
+```
+
+1.  2단계에서 출력 `operation-id` 의 일부로 반환 된 `update-stack-set`를 사용하여 `describe-stack-set-operation` 스택 세트가 성공적으로 업데이트되었는지 확인합니다.
+
+```
+aws cloudformation describe-stack-set-operation --operation-id operation_ID
+```
+
+## 자동 배포 예제
+
+자동 배포를 사용하도록 설정하면 계정이 대상 조직 또는 OU에 추가되거나, 대상 조직 또는 OU에서 제거되거나, 대상 OU 간에 이동할 때 자동 배포가 트리거됩니다.
+
+예를 들어, 스택 세트 `StackSet1` 는 리전의 OU `OU1`를 `us-east-1` 대상으로 합니다 . 스택 세트 `StackSet2` 는 리전의 OU를 대상으로 `OU2`합니다 `us-east-1` . `OU1` 계정, `AccountA`.
+
+자동 배포가 활성화된 상태에서 에서 `AccountA` 로 `OU1`이동 `OU2` 하면 StackSets는 자동으로 삭제 작업을 실행하여 `StackSet1` 인스턴스를 제거하고 `AccountA` 인스턴스를 `StackSet2`에`AccountA` 추가하는 생성 작업을 대기열에 넣습니다.

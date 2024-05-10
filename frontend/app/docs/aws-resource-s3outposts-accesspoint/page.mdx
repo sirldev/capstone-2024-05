@@ -1,0 +1,130 @@
+# AWS::S3Outposts::액세스 포인트
+
+AWS::S3Outposts::AccessPoint 리소스는 액세스 포인트를 지정하고 지정된 Amazon S3 on Outposts 버킷에 연결합니다. 자세한 정보는 Amazon S3 액세스 포인트를 사용한 데이터 액세스 관리을 참조하십시오.
+
+**메모**  
+S3 on Outposts는 VPC 스타일 액세스 포인트만 지원합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::S3Outposts::AccessPoint",
+  "Properties" : {
+      "Bucket" : String,
+      "Name" : String,
+      "Policy" : Json,
+      "VpcConfiguration" : VpcConfiguration
+    }
+}
+```
+
+## 속성
+
+`Bucket`  
+이 액세스 포인트와 연결된 S3 on Outposts 버킷의 Amazon 리소스 이름(ARN)입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Name`  
+이 액세스 포인트의 이름입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Policy`  
+이 액세스 포인트와 연결된 액세스 포인트 정책입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: Json  
+_업데이트 필요 사항_: 중단 없음
+
+`VpcConfiguration`  
+이 액세스 포인트에 대한 Virtual Private Cloud(VPC) 구성(있는 경우).  
+_필수 항목 여부_: 예  
+_유형_: VpcConfiguration  
+_업데이트 필요 사항_: 바꿔 놓음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`액세스 포인트 ARN이 반환됩니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+####
+
+`Arn` 이 리소스에는 S3 on Outposts 버킷 액세스 포인트 ARN의 세부 정보가 포함되어 있습니다. 이 리소스는 읽기 전용입니다.
+
+## 예제
+
+### CloudFormation을 사용하여 Amazon S3 on Outposts에 대한 액세스 포인트 정책으로 액세스 포인트 생성
+
+다음 예제에서는 동일한 CFN 스택에서 S3 on Outposts 버킷과 S3 on Outposts 액세스 포인트를 생성하는 방법을 보여줍니다.
+
+**메모**  
+액세스 포인트를 생성하려면 S3 on Outposts 버킷 ARN이 이미 있어야 합니다. 즉, 액세스 포인트를 생성하기 전에 또는 동시에 Outposts 버킷을 생성해야 합니다.
+
+#### JSON (영문)
+
+```
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "Bucket, no tags, no lifecycle configuration with access point",
+    "Resources": {
+        "ExampleS3OutpostsBucket": {
+            "Type": "AWS::S3Outposts::Bucket",
+            "Properties": {
+                "BucketName": "DOC-EXAMPLE-BUCKET",
+                "OutpostID": "op-01ac5d28a6a232904"
+            }
+        },
+        "ExampleS3OutpostsAccessPoint": {
+            "Type": "AWS::S3Outposts::AccessPoint",
+            "Properties": {
+                "Bucket": {
+                    "Ref": "ExampleS3OutpostsBucket"
+                },
+                "Name": "ExampleAccessPoint",
+                "VpcConfiguration": {
+                    "VpcID": "vpc-12345"
+                },
+                "Policy": {
+                    "Version":"2012-10-17",
+                    "ID":"AccessPointPolicy",
+                    "Statement":[{
+                        "Sid":"st1",
+                        "Effect":"Allow",
+                        "Principal":{"AWS":"arn:aws:iam::123456789012:root"},
+                        "Action":"s3-outposts:*",
+                        "Resource": "arn:aws:s3-outposts:us-east-1:123456789012:outpost/op-01ac5d28a6a232904/accesspoint/ExampleAccessPoint"
+                    }]
+                }
+
+            }
+        }
+    },
+    "Outputs": {
+        "ExampleS3OutpostsBucketARN": {
+            "Description": "The ARN of ExampleS3OutpostsBucket",
+            "Value": { "Ref": "ExampleS3OutpostsBucket" }
+        },
+        "ExampleS3OutpostsAccessPointARN": {
+            "Description": "The ARN of ExampleS3OutpostsAccessPoint",
+            "Value": {"Ref": "ExampleS3OutpostsAccessPoint" }
+        },
+        "ExampleS3OutpostsStackID": {
+            "Description": "The stack ID",
+            "Value": { "Ref": "AWS::StackID" },
+            "Export": { "Name": {"Fn::Sub": "${AWS::StackName}-StackID"}}
+        }
+    }
+}
+```

@@ -1,0 +1,38 @@
+# AWS::ECS::태스크 정의 시스템 컨트롤
+
+컨테이너에 설정할 네임스페이스 커널 매개 변수 목록입니다. 이 파라미터는 `Sysctls` Docker Remote API의 컨테이너 만들기 섹션과 `--sysctl` docker run 옵션에 매핑됩니다.
+
+단일 작업에서 여러 컨테이너에 대한 네트워크 관련 매개 변수를 지정하지 않는 것이 좋습니다 `systemControls` . 이 작업은 `awsvpc` 또는 `host` 네트워크 모드도 사용합니다. 다음과 같은 이유로 그렇게합니다.
+
+- 네트워크 모드를 `awsvpc`사용하는 태스크의 경우 `systemControls` 컨테이너에 대해 설정하면 태스크의 모든 컨테이너에 적용됩니다. `systemControls` 단일 작업에서 여러 컨테이너에 대해 다르게 설정하는 경우 마지막으로 시작된 컨테이너에 `systemControls` 따라 적용되는 컨테이너가 결정됩니다.
+- 네트워크 모드를 사용하는 태스크 `host` 의 경우, 파라미터는 `systemControls` 컨테이너 인스턴스의 커널 파라미터와 해당 컨테이너 인스턴스에서 실행 중인 모든 태스크의 모든 컨테이너에 적용됩니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Namespace" : String,
+  "Value" : String
+}
+```
+
+## 속성
+
+`Namespace`  
+를 설정할 네임스페이스가 있는 커널 매개 변수입니다 `value` .  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Value`  
+를 설정할 네임스페이스가 있는 커널 매개 변수입니다 `value` .  
+유효한 IPC 네임스페이스 값: `"kernel.msgmax" | "kernel.msgmnb" | "kernel.msgmni" | "kernel.sem" | "kernel.shmall" | "kernel.shmmax" | "kernel.shmmni" | "kernel.shm_rmid_forced"`로 `Sysctls` 시작하고 `"fs.mqueue.*"`  
+유효한 네트워크 네임스페이스 값: `Sysctls` 다음으로 시작하는 `"net.*"`값  
+이러한 모든 값은 Fargate에서 지원됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음

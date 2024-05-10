@@ -1,0 +1,59 @@
+# AWS::Cognito::IdentityPoolPrincipalTag
+
+액세스 제어를 위한 속성에 대한 자격 증명 풀 보안 주체 태그 할당 목록입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::Cognito::IdentityPoolPrincipalTag",
+  "Properties" : {
+      "IdentityPoolId" : String,
+      "IdentityProviderName" : String,
+      "PrincipalTags" : Json,
+      "UseDefaults" : Boolean
+    }
+}
+```
+
+## 속성
+
+`IdentityPoolId`  
+이 보안 주체 태그 맵과 연결하려는 자격 증명 풀입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`IdentityProviderName`  
+이 보안 주체 태그 맵과 연결하려는 자격 증명 풀 자격 증명 공급자(IdP)입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`PrincipalTags`  
+JSON 형식의 사용자 클레임 및 연결하려는 보안 주체 태그 목록입니다. Amazon Cognito는 자격 증명을 요청할 때 보안 주체 태그의 값을 사용자의 클레임 값으로 설정합니다.  
+*필수 항목 *여부: 아니요  
+_형식_: Json  
+_업데이트 필요 사항_: 중단 없음
+
+`UseDefaults`  
+사용자 지정 맵 대신 이 공급자에 대한 클레임과 태그 간의 기본 매핑 집합을 사용합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Boolean  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref`와 `Ref`같은 보안 주체 태그 기본 ID를 반환합니다 `us-east-1:1cf667a2-49a6-454b-9e45-23199EXAMPLE|graph.facebook.com`.
+
+## 예제
+
+### 자격 증명 풀에 대한 새 보안 주체 태그 속성 맵 생성
+
+다음 예제에서는 클레임을 `aud` 보안 주체 태그 `app_id` 에 매핑하고 클레임을 `sub` 자격 증명 풀에 `user_id` 매핑 합니다 `Example_pool.`

@@ -1,0 +1,30 @@
+# AWS::EC2::SpotFleet 로드 밸런서 구성
+
+스팟 집합 요청에 연결할 Classic Load Balancer 및 대상 그룹을 지정합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ClassicLoadBalancersConfig" : ClassicLoadBalancersConfig,
+  "TargetGroupsConfig" : TargetGroupsConfig
+}
+```
+
+## 속성
+
+`ClassicLoadBalancersConfig`  
+Classic Load Balancer입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: ClassicLoadBalancersConfig  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`TargetGroupsConfig`  
+대상 그룹입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: TargetGroupsConfig  
+_업데이트 필요 사항_: 바꿔 놓음

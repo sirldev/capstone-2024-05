@@ -1,0 +1,86 @@
+# AWS::EC2::LaunchTemplate 배치
+
+인스턴스(instance)의 배치를 지정합니다.
+
+`Placement` 은 AWS::EC2::LaunchTemplate LaunchTemplateData의 속성입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Affinity" : String,
+  "AvailabilityZone" : String,
+  "GroupId" : String,
+  "GroupName" : String,
+  "HostId" : String,
+  "HostResourceGroupArn" : String,
+  "PartitionNumber" : Integer,
+  "SpreadDomain" : String,
+  "Tenancy" : String
+}
+```
+
+## 속성
+
+`Affinity`  
+전용 호스트의 인스턴스에 대한 선호도 설정입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`AvailabilityZone`  
+인스턴스의 가용 영역입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`GroupId`  
+배치 그룹의 그룹 ID입니다. 배치 그룹 그룹 ID(Placement Group **Group Id**)를 지정하여 공유 배치 그룹에서 인스턴스를 시작해야 합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`GroupName`  
+인스턴스에 대한 배치 그룹의 이름입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`HostId`  
+인스턴스에 대한 전용 호스트의 ID입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`HostResourceGroupArn`  
+인스턴스를 시작할 호스트 리소스 그룹의 ARN입니다. 호스트 리소스 그룹 ARN을 지정하는 경우 **Tenancy** 파라미터를 생략 하거나 로 설정합니다`host`.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`PartitionNumber`  
+인스턴스가 시작되어야 하는 파티션의 번호입니다. 배치 그룹 전략이 로 설정된 경우에만 유효합니다`partition`.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`SpreadDomain`  
+나중에 사용할 수 있도록 예약되어 있습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Tenancy`  
+인스턴스의 테넌시입니다. dedicated의 테넌시가 있는 인스턴스는 단일 테넌트 하드웨어에서 실행됩니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_허용되는 값_: `dedicated | default | host`  
+_업데이트 필요 사항_: 중단 없음
+
+## 참고 항목
+
+- Amazon EC2 API Reference\* \*의 LaunchTemplatePlacementRequest

@@ -1,0 +1,31 @@
+# AWS::백업::백업 계획 CopyActionResourceType
+
+백업 규칙에 의해 생성된 백업을 다른 자격 증명 모음에 복사합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "DestinationBackupVaultArn" : String,
+  "Lifecycle" : LifecycleResourceType
+}
+```
+
+## 속성
+
+`DestinationBackupVaultArn`  
+복사된 백업의 대상 백업 볼트를 고유하게 식별하는 Amazon 리소스 이름(ARN)입니다. 예를 들어, `arn:aws:backup:us-east-1:123456789012:vault:aBackupVault.`  
+_필수_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`Lifecycle`  
+보호된 리소스가 콜드 스토리지로 전환되는 시기와 만료되는 시점을 정의합니다. AWS Backup은 사용자가 정의한 수명 주기에 따라 백업을 자동으로 전환하고 만료합니다. 수명 주기를 지정하지 않으면 AWS Backup은 소스 백업의 수명 주기 정책을 대상 백업에 적용합니다.  
+콜드 스토리지로 전환된 백업은 최소 90일 동안 콜드 스토리지에 보관해야 합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: LifecycleResourceType  
+_업데이트 필요 사항_: 중단 없음

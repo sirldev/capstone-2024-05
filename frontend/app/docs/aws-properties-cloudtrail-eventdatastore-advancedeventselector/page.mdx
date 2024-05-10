@@ -1,0 +1,42 @@
+# AWS::CloudTrail::EventDataStore AdvancedEventSelector
+
+고급 이벤트 선택기를 사용하면 다음 AWS CloudTrail 이벤트 레코드 필드에 대한 세분화된 선택기를 생성할 수 있습니다. 중요한 이벤트만 기록하여 비용을 제어하는 데 도움이 됩니다. 고급 이벤트 선택기에 대한 자세한 내용은 * AWS CloudTrail 사용 설명서*의 데이터 이벤트 로깅을 참조하세요.
+
+- `readOnly`
+- `eventSource`
+- `eventName`
+- `eventCategory`
+- `resources.type`
+- `resources.ARN`
+
+이벤트 선택기와 고급 이벤트 선택기를 모두 추적에 적용할 수는 없습니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "FieldSelectors" : [ AdvancedFieldSelector, ... ],
+  "Name" : String
+}
+```
+
+## 속성
+
+`FieldSelectors`  
+고급 이벤트 선택기의 모든 선택기 문을 포함합니다.  
+_필수 항목 여부_: 예  
+_유형_: AdvancedFieldSelector 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`Name`  
+고급 이벤트 선택기에 대한 설명이 포함된 선택적 이름(예: "Log data events for only two S3 buckets")입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `0`  
+_최대_: `1000`  
+_패턴_: `.*`  
+_업데이트 필요 사항_: 중단 없음

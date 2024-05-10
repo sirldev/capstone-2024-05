@@ -1,0 +1,61 @@
+# AWS::RDS::D BProxyTargetGroup 연결 풀구성 정보 형식
+
+와 연결된 연결 풀의 크기와 동작을 제어하는 설정을 지정합니다 `DBProxyTargetGroup`.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ConnectionBorrowTimeout" : Integer,
+  "InitQuery" : String,
+  "MaxConnectionsPercent" : Integer,
+  "MaxIdleConnectionsPercent" : Integer,
+  "SessionPinningFilters" : [ String, ... ]
+}
+```
+
+## 속성
+
+`ConnectionBorrowTimeout`  
+프록시가 연결 풀에서 연결을 사용할 수 있을 때까지 대기하는 시간(초)입니다. 프록시가 최대 연결 수를 열었고 모든 연결이 클라이언트 세션에서 사용 중인 경우에만 적용됩니다.  
+기본값: 120  
+제약 조건: 1에서 3600 사이 또는 무제한을 나타내는 0  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`InitQuery`  
+각각의 새 데이터베이스 연결을 열 때 실행할 프록시에 대한 하나 이상의 SQL문입니다. 일반적으로 `SET` 각 연결에 표준 시간대 및 문자 집합과 같은 동일한 설정이 있는지 확인하기 위해 문과 함께 사용됩니다. 여러 문의 경우 세미콜론을 구분 기호로 사용합니다. 와 같이 단일 문에 여러 변수를 포함할 수도 있습니다 `SET` `SET x=1, y=2`.  
+기본값: 초기화 쿼리 없음  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`MaxConnectionsPercent`  
+대상 그룹의 각 대상에 대한 연결 풀의 최대 크기입니다. 이 값은 `max_connections` 대상 그룹에서 사용하는 RDS DB 인스턴스 또는 Aurora DB 클러스터에 대한 설정의 백분율로 표시됩니다.  
+를 지정하는 경우 `MaxIdleConnectionsPercent`이 매개 변수의 값도 포함해야 합니다.  
+기본값: RDS for Microsoft SQL Server의 경우 10, 기타 모든 엔진의 경우 100  
+제약 조건: 1에서 100 사이여야 합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`MaxIdleConnectionsPercent`  
+프록시가 연결 풀에서 유휴 데이터베이스 연결을 닫는 정도를 제어합니다. 이 값은 `max_connections` 대상 그룹에서 사용하는 RDS DB 인스턴스 또는 Aurora DB 클러스터에 대한 설정의 백분율로 표시됩니다. 값이 높으면 프록시는 높은 비율의 유휴 데이터베이스 연결을 열어 둡니다. 값이 낮으면 프록시가 더 많은 유휴 연결을 닫고 데이터베이스로 반환합니다.  
+이 매개 변수를 지정하는 경우 에 대한 값도 포함해야 합니다`MaxConnectionsPercent`.  
+기본값: 기본값은 값 의 절반입니다`MaxConnectionsPercent`. 예를 들어, `MaxConnectionsPercent` 가 80이면 디폴트 값은 `MaxIdleConnectionsPercent` 40입니다. 값을 `MaxConnectionsPercent` 지정하지 않으면 SQL Server `MaxIdleConnectionsPercent` 5이고 다른 모든 엔진의 경우 기본값은 50입니다.  
+제약 조건: 0과 값 사이여야 합니다`MaxConnectionsPercent`.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`SessionPinningFilters`  
+목록의 각 항목은 일반적으로 프록시를 사용하는 세션의 모든 이후 문이 동일한 기본 데이터베이스 연결에 고정되도록 하는 SQL 작업의 클래스를 나타냅니다. 목록에 항목을 포함하면 해당 SQL 작업 클래스가 고정 동작에서 제외됩니다.  
+기본값: 세션 고정 필터 없음  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음

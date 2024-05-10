@@ -1,0 +1,65 @@
+# AWS::EC2::VPNConnectionRoute
+
+기존 가상 프라이빗 게이트웨이와 VPN 고객 게이트웨이 간의 VPN 연결을 위한 정적 경로를 지정합니다. 정적 라우팅을 사용하면 가상 프라이빗 게이트웨이에서 VPN 고객 게이트웨이로 트래픽을 라우팅할 수 있습니다.
+
+자세한 내용은 AWS Site-to-Site VPN 사용 설명서의 AWS Site-to-Site* VPN을 참조하세요*.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::EC2::VPNConnectionRoute",
+  "Properties" : {
+      "DestinationCidrBlock" : String,
+      "VpnConnectionId" : String
+    }
+}
+```
+
+## 속성
+
+`DestinationCidrBlock`  
+고객 네트워크의 로컬 서브넷과 연결된 CIDR 블록입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`VpnConnectionId`  
+VPN 연결의 ID입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`VPN 연결 경로의 ID를 반환합니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+## 예제
+
+### VPN 연결 경로
+
+다음 예제에서는 VPN 연결 경로를 지정합니다.
+
+#### JSON (영문)
+
+```
+"MyConnectionRoute0" : {
+   "Type" : "AWS::EC2::VPNConnectionRoute",
+    "Properties" : {
+       "DestinationCidrBlock" : "10.0.0.0/16",
+       "VpnConnectionId" : {"Ref" : "Connection0"}
+    }
+}
+```
+
+## 참고 항목
+
+- Amazon EC2 API 참조*의 CreateVpnConnectionRoute *

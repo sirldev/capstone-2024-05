@@ -1,0 +1,58 @@
+# AWS::Lightsail::컨테이너 HealthCheckConfig
+
+`HealthCheckConfig` 는 PublicEndpoint 속성의 속성입니다. 컨테이너 서비스에서 컨테이너 배포의 상태 점검 구성에 대해 설명합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "HealthyThreshold" : Integer,
+  "IntervalSeconds" : Integer,
+  "Path" : String,
+  "SuccessCodes" : String,
+  "TimeoutSeconds" : Integer,
+  "UnhealthyThreshold" : Integer
+}
+```
+
+## 속성
+
+`HealthyThreshold`  
+컨테이너를 상태로 이동하기 전에 필요한 연속 상태 확인 성공 횟수입니다 `Healthy` . 기본값은 `2`입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`IntervalSeconds`  
+개별 컨테이너의 상태 확인 사이의 대략적인 간격(초)입니다. 사이와 초를 지정할 수 있습니다 `5` `300` . 기본값은 `5`입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`Path`  
+상태 확인을 수행할 컨테이너의 경로입니다. 기본값은 `/`입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`SuccessCodes`  
+컨테이너에서 성공적인 응답을 확인할 때 사용할 HTTP 코드입니다. 와 사이에 값을 지정할 수 있습니다 `200` `499`. 여러 값(예: `200,202`) 또는 값 범위(예: )를 지정할 수 있습니다`200-299`.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+`TimeoutSeconds`  
+응답이 없는 시간 동안 상태 확인이 실패했음을 의미하는 시간(초)입니다. 사이와 초를 지정할 수 있습니다 `2` `60` . 기본값은 `2`입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음
+
+`UnhealthyThreshold`  
+컨테이너를 상태로 이동하기 전에 필요한 연속 상태 확인 실패 횟수입니다 `Unhealthy` . 기본값은 `2`입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_업데이트 필요 사항_: 중단 없음

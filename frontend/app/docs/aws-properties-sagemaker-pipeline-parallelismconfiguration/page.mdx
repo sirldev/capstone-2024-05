@@ -1,0 +1,24 @@
+# AWS::SageMaker::P ipeline 병렬 처리 구성
+
+파이프라인의 병렬 처리를 제어하는 구성입니다. 기본적으로 지정된 병렬 처리 구성은 재정의되지 않는 한 파이프라인의 모든 실행에 적용됩니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "MaxParallelExecutionSteps" : Integer
+}
+```
+
+## 속성
+
+`MaxParallelExecutionSteps`  
+병렬로 실행할 수 있는 최대 단계 수입니다.  
+_필수 항목 여부_: 예  
+_유형_: Integer  
+_최소_: `1`  
+_업데이트 필요 사항_: 중단 없음

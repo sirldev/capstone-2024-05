@@ -1,0 +1,31 @@
+# AWS::SageMaker::D omain 도메인 설정
+
+에 적용되는 설정 모음입니다 `SageMaker Domain`. 이러한 설정은 API 호출을 통해 지정됩니다 `CreateDomain` .
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "RStudioServerProDomainSettings" : RStudioServerProDomainSettings,
+  "SecurityGroupIds" : [ String, ... ]
+}
+```
+
+## 속성
+
+`RStudioServerProDomainSettings`  
+도메인 수준 앱을 구성하는 설정 컬렉션입니다 `RStudioServerPro` .  
+*필수 항목 *여부: 아니요  
+_형식_: RStudioServerProDomainSettings  
+_업데이트 필요 사항_: 중단 없음
+
+`SecurityGroupIds`  
+`Domain` 도메인 수준 앱과 사용자 앱 간의 통신에 사용하는 Amazon Virtual Private Cloud의 보안 그룹입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_최대_: `3`  
+_업데이트 필요 사항_: 중단 없음

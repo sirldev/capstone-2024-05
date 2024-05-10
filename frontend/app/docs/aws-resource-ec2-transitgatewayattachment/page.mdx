@@ -1,0 +1,83 @@
+# AWS::EC2::TransitGatewayAttachment
+
+VPC를 전송 게이트웨이에 연결합니다.
+
+이미 연결된 VPC의 CIDR 범위와 겹치는 CIDR 범위가 있는 VPC를 연결하는 경우 새 VPC CIDR 범위가 기본 전파 라우팅 테이블로 전파되지 않습니다.
+
+연결된 전송 게이트웨이로 VPC 트래픽을 전송하려면 AWS::EC2::Route를 사용하여 VPC 라우팅 테이블에 경로를 추가합니다.
+
+VPC 연결을 생성한 후 연결을 바꾸지 않고 태그를 업데이트하려면 AWS::EC2::TransitGatewayVpcAttachment를 대신 사용합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::EC2::TransitGatewayAttachment",
+  "Properties" : {
+      "Options" : Options,
+      "SubnetIds" : [ String, ... ],
+      "Tags" : [Tag, ... ],
+      "TransitGatewayId" : String,
+      "VpcId" : String
+    }
+}
+```
+
+## 속성
+
+`Options`  
+VPC 연결 옵션입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 옵션  
+_업데이트 필요 사항_: 중단 없음
+
+`SubnetIds`  
+하나 이상의 서브넷 ID입니다. 가용 영역당 하나의 서브넷만 지정할 수 있습니다. 하나 이상의 서브넷을 지정해야 하지만 가용성을 높이기 위해 두 개의 서브넷을 지정하는 것이 좋습니다. Transit Gateway는 지정된 각 서브넷에서 하나의 IP 주소를 사용합니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`Tags`  
+첨부 파일에 대한 태그입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 태그 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`TransitGatewayId`  
+전송 게이트웨이의 ID입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`VpcId`  
+VPC의 ID입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`연결의 ID를 반환합니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`Id` 첨부 파일의 ID입니다.
+
+## 참고 항목
+
+- CreateTransitGatewayVpcAttachment를 참조하십시오\*\*.
+- Amazon EC2 API 참조*의 ModifyTransitGatewayVpcAttachment *

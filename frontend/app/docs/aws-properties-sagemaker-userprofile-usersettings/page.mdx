@@ -1,0 +1,67 @@
+# AWS::SageMaker::사용자 프로필 사용자 설정
+
+Amazon SageMaker Studio 사용자에게 적용되는 설정 모음입니다. 이러한 설정은 CreateUserProfile API가 호출될 때와 `DefaultUserSettings` CreateDomain API가 호출될 때와 같이 지정됩니다.
+
+`SecurityGroups` 는 두 호출에 모두 지정된 경우 집계됩니다. 에 있는 다른 모든 설정의 경우 `UserSettings`에 지정된 값이 에 지정된 값 `CreateUserProfile` 보다 우선합니다 `CreateDomain`.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ExecutionRole" : String,
+  "JupyterServerAppSettings" : JupyterServerAppSettings,
+  "KernelGatewayAppSettings" : KernelGatewayAppSettings,
+  "RStudioServerProAppSettings" : RStudioServerProAppSettings,
+  "SecurityGroups" : [ String, ... ],
+  "SharingSettings" : SharingSettings
+}
+```
+
+## 속성
+
+`ExecutionRole`  
+사용자의 실행 역할입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_최소_: `20`  
+_최대_: `2048`  
+_패턴_: `^arn:aws[a-z-]*:iam::d{12}:role/?[a-zA-Z_0-9+=,.@-_/]+$`  
+_업데이트 필요 사항_: 중단 없음
+
+`JupyterServerAppSettings`  
+Jupyter 서버의 앱 설정입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: JupyterServerAppSettings  
+_업데이트 필요 사항_: 중단 없음
+
+`KernelGatewayAppSettings`  
+커널 게이트웨이 앱 설정입니다.  
+*필수 항목 *여부: 아니요  
+_형식_: KernelGatewayAppSettings  
+_업데이트 필요 사항_: 중단 없음
+
+`RStudioServerProAppSettings`  
+앱과의 사용자 상호 작용을 구성하는 설정 컬렉션입니다 `RStudioServerPro` .  
+*필수 항목 *여부: 아니요  
+_형식_: RStudioServerProAppSettings  
+_업데이트 필요 사항_: 중단 없음
+
+`SecurityGroups`  
+Studio가 통신에 사용하는 Amazon Virtual Private Cloud(VPC)의 보안 그룹입니다.  
+`CreateDomain.AppNetworkAccessType` 매개 변수가 로 설정된 `PublicInternetOnly` 경우 선택 사항입니다.  
+`CreateDomain.AppNetworkAccessType` 매개 변수가 `VpcOnly` 도메인의 일부로 지정되지 않은 경우 `DefaultUserSettings` 필수 입니다.  
+Amazon SageMaker는 SageMaker Studio의 NFS 트래픽을 허용하는 보안 그룹을 추가합니다. 따라서 지정할 수 있는 보안 그룹의 수는 표시된 최대 수보다 하나 적습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: 문자열 목록  
+_최대_: `5`  
+_업데이트 필요 사항_: 중단 없음
+
+`SharingSettings`  
+SageMaker Studio 노트북을 공유하기 위한 옵션을 지정합니다.  
+*필수 항목 *여부: 아니요  
+_유형_: SharingSettings  
+_업데이트 필요 사항_: 중단 없음

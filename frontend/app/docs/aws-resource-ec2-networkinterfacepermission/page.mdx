@@ -1,0 +1,68 @@
+# AWS::EC2::네트워크 인터페이스 권한
+
+Amazon EC2 네트워크 인터페이스에 대한 권한을 지정합니다. 예를 들어, AWS 공인 파트너 계정에 지정된 네트워크 인터페이스를 해당 계정의 인스턴스에 연결할 수 있는 권한을 부여할 수 있습니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::EC2::NetworkInterfacePermission",
+  "Properties" : {
+      "AwsAccountId" : String,
+      "NetworkInterfaceId" : String,
+      "Permission" : String
+    }
+}
+```
+
+## 속성
+
+`AwsAccountId`  
+AWS 계정 ID입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`NetworkInterfaceId`  
+네트워크 인터페이스의 ID입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Permission`  
+부여할 사용 권한의 유형: `INSTANCE-ATTACH` 또는 `EIP-ASSOCIATE`.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_허용되는 값_: `EIP-ASSOCIATE | INSTANCE-ATTACH`  
+_업데이트 필요 사항_: 바꿔 놓음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`리소스 이름이 반환됩니다. 예를 들면 다음과 같습니다 `eni-perm-055663b682ea24b48`.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+## 예제
+
+### INSTANCE-ATTACH 권한 부여
+
+다음 예제에서는 `INSTANCE-ATTACH`지정된 네트워크 인터페이스 및 AWS 계정에 대한 권한()을 생성합니다.
+
+#### JSON (영문)
+
+```
+"MyNetworkInterfacePermission": {
+   "Type": "AWS::EC2::NetworkInterfacePermission",
+   "Properties": {
+      "NetworkInterfaceId": "eni-030e3xxx",
+      "AwsAccountId": "11111111111",
+      "Permission": "INSTANCE-ATTACH"
+   }
+}
+```

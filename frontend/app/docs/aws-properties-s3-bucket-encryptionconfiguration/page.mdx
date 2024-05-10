@@ -1,0 +1,27 @@
+# AWS::S3::버킷 암호화구성
+
+복제된 객체의 대상인 Amazon S3 버킷에 대한 암호화 관련 정보를 지정합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "ReplicaKmsKeyID" : String
+}
+```
+
+## 속성
+
+`ReplicaKmsKeyID`  
+대상 버킷의 AWS Key Management Service(KMS)에 저장된 고객 관리형 AWS KMS 키의 ID(키 ARN 또는 별칭 ARN)를 지정합니다. Amazon S3는 이 키를 사용하여 복제본 객체를 암호화합니다. Amazon S3는 대칭 암호화 KMS 키만 지원합니다. 자세한 내용은 * AWS Key Management Service 개발자 안내서*의 AWS KMS의 비대칭 키를 참조하세요.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_업데이트 필요 사항_: 중단 없음
+
+## 참고 항목
+
+- AWS::S3::버킷 예제

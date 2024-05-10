@@ -1,0 +1,25 @@
+# AWS::KinesisFirehose::D eliveryStream RedshiftRetryOptions
+
+Kinesis Data Firehose가 Amazon Redshift로 문서를 전송할 수 없는 경우 재시도 동작을 구성합니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "DurationInSeconds" : Integer
+}
+```
+
+## 속성
+
+`DurationInSeconds`  
+Kinesis Data Firehose가 실패 후 전송을 재시도하는 기간으로, 초기 요청부터 첫 번째 시도까지 포함됩니다. 기본값은 3600초(60분)입니다. Kinesis Data Firehose는 값이 `DurationInSeconds` 0(영)이거나 첫 번째 전송 시도가 현재 값보다 오래 걸리는 경우 재시도하지 않습니다.  
+*필수 항목 *여부: 아니요  
+_유형_: Integer  
+_최소_: `0`  
+_최대_: `7200`  
+_업데이트 필요 사항_: 중단 없음

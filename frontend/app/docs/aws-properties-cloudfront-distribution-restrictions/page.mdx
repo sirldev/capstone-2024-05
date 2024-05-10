@@ -1,0 +1,27 @@
+# AWS::CloudFront::D istribution 제한
+
+콘텐츠 배포를 제한하는 방법을 식별하는 복합 형식입니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "GeoRestriction" : GeoRestriction
+}
+```
+
+## 속성
+
+`GeoRestriction`  
+콘텐츠가 배포되는 국가를 제어하는 복합 형식입니다. CloudFront는 GeoIP 데이터베이스를 사용하여 사용자의 위치를 결정합니다 `MaxMind` . 지리적 제한을 비활성화하려면 스택 템플릿에서 Restrictions 속성을 제거합니다.  
+_필수 항목 여부_: 예  
+_유형_: GeoRestriction  
+_업데이트 필요 사항_: 중단 없음
+
+## 참고 항목
+
+- Amazon CloudFront API Reference\* \*의 제한 사항

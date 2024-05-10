@@ -1,0 +1,92 @@
+# 스택 세트 업데이트
+
+AWS Management Console에서 또는 AWS CLI에서 AWS CloudFormation 명령을 사용하여 스택 세트를 업데이트할 수 있습니다. 이 연습에서는 전송 채널 구성의 기본 스냅샷 전송 빈도를 **24hours에서 **12hours**로 변경합니다**.
+
+특정 스택 인스턴스에 대한 파라미터 값을 재정의하려면 \*\*스택 인스턴스에서 파라미터 재정의 섹션을 참조하세요.
+
+**항목**
+
+- AWS CloudFormation 콘솔을 사용하여 스택 세트 업데이트
+- AWS CLI를 사용하여 스택 세트 업데이트
+
+## AWS CloudFormation 콘솔을 사용하여 스택 세트 업데이트
+
+1. some-address에서 AWS CloudFormation 콘솔을 엽니다.
+
+1. 탐색 창에서 [StackSets**]를 선택합니다\*\*.
+
+1. [StackSets] 페이지에서 스택 세트 생성에서 생성한 스택 세트를 선택합니다. 이 연습에서는 라는 스택 세트를 생성했습니다 `my-awsconfig-stackset`.
+
+1. 스택 세트를 선택한 상태에서 **[Actions**] 메뉴에서 **[Edit StackSet details**]를 선택합니다 .
+
+1. [Choose a template**] ** 페이지에서 현재 템플릿을 업데이트할지, 다른 템플릿에 대한 S3 URL을 지정할지, 아니면 새 템플릿을 AWS CloudFormation에 업로드할지를 선택합니다. 이 연습에서는 현재 템플릿을 사용합니다. **현재 템플릿 사용(Use current template**)을 선택한 후 다음(Next)을 선택합니다\*\***.
+
+1. [Specify StackSet details**] \*\* 페이지에서 파라미터 값을 수정하고 배포 대상을 지정합니다.
+
+   1. [자체 관리 권한]배포 대상(Deployment targets**) 에서 **계정의 스택 배포(Deploy stacks in accounts**)를 선택합니다**. 대상 계좌 번호를 텍스트 상자에 붙여넣고 여러 숫자를 쉼표로 구분합니다.
+
+      [서비스 관리 권한]배포 대상(Deployment targets**)**에서 배포할 조직의 계정을 선택합니다.
+
+   1. 리전**을 선택합니다**.
+
+   1. 빈도** 매개변수**의 값을 **24hours에서 **12hours**로 변경합니다**.
+
+      이 파라미터와 AWS Config에서 사용하는 값을 지정하는 다른 파라미터에 대한 자세한 내용은 AWS Config 개발자 안내서의 콘솔을 사용하여 AWS Config 설정을 참조하십시오\*\*.
+
+      다른 매개 변수는 변경하지 마세요. 이 연습에서는 Amazon SNS 업데이트를 구성하지 않습니다.
+
+      완료되면 다음(Next)을 선택합니다\*\*\*\*.
+
+1. [Configure StackSet options**] 페이지에서는 ** 변경할 필요가 없지만, 원하는 경우 여기에서 새 태그를 업데이트, 삭제 또는 추가할 수 있습니다. AWS에서 태그를 사용하는 방법에 대한 자세한 내용은 *AWS Billing and Cost Management 사용 설명서*의 비용 할당 태그 사용을 참조하세요. 또한 실행 구성을 관리하여 StackSets가 충돌하지 않는 작업을 동시에 수행할지 여부와 충돌하는 작업을 대기열에 추가할지 여부를 지정할 수 있습니다. 충돌하는 작업이 완료되면 StackSets는 요청 순서대로 대기 중인 작업을 시작합니다.
+   **메모\*\*  
+   이미 실행 중이거나 대기 중인 작업이 있는 경우 StackSets는 충돌하지 않더라도 들어오는 모든 작업을 대기열에 넣습니다.  
+   스택 세트에 대해 실행 중이거나 대기 중인 작업이 있는 동안에는 스택 세트의 실행 구성을 수정할 수 없습니다.
+
+   [Permissions**]를 ** 변경하지 않고 [Next]를 선택합니다\*\***.
+
+1. Set deployment options(배포 옵션 설정**) 페이지에서 **Maximum concurrent accounts(최대 동시 계정**)에 대해 ** 기본값 **1** 및 **By number(번호 기준)를 유지합니다**. 기본값인 **[Failure tolerance**]를 **0으로 유지하고 **[By number**] ** 기본값 옵션을 유지합니다. 다음(Next)을 선택합니다\*\***.
+   **메모**  
+   여기서는 계정 및 리전을 변경할 수 없습니다. 즉, 스택 세트 변경 사항을 일부 계정 및 리전의 스택에는 배포할 수 없지만 다른 계정 및 리전의 스택에는 배포할 수 없습니다.
+
+1. [Review**] ** 페이지에서 선택 사항과 스택 세트의 속성을 검토합니다. 변경하려면 \*\*** 속성을 변경하려는 영역의 오른쪽 위 모서리에 있는 [Edit]를 선택합니다. 스택 세트를 업데이트 하려면 **먼저 [Capabilities**] 영역의 확인란을 입력하여 스택 세트로 업데이트하는 일부 리소스에 새 IAM 리소스 및 권한이 필요할 수 있음을 확인해야 합니다. 잠재적으로 필요한 권한에 대한 자세한 내용은 이 가이드의 AWS CloudFormation 템플릿에서 IAM 리소스 승인을 참조하세요. 스택 세트를 생성할 준비가 되면 **[Submit**]을 선택합니다.
+
+   AWS CloudFormation에서 스택 세트에 업데이트를 적용하기 시작하고, ** 스택 세트 세부 정보 페이지의 **[Operations] 탭을 표시합니다
+
+1. 작업 탭에서 **업데이트 작업의 진행률과 상태를 볼 수 있습니다 ** . **파라미터** 탭에 업데이트된 **주파수** 파라미터가 표시되어야 합니다.
+
+## AWS CLI를 사용하여 스택 세트 업데이트
+
+위임된 관리자 역할을 하는 경우 `--call-as` StackSets 명령을 실행할 때마다`DELEGATED_ADMIN` 매개 변수를 다음으로 설정해야 합니다.
+
+```
+--call-as DELEGATED_ADMIN
+```
+
+`update-stack-set` AWS CLI 명령을 실행하여 스택 세트를 변경합니다. 이 연습에서는 매개 변수의 값을 업데이트합니다 `MaximumExecutionFrequency` . AWS Config 규칙을 생성하거나 업데이트하기 위한 파라미터 이름 및 값에 대한 자세한 내용은 AWS CLI 참조의 put-config-rule을 참조하세요. 템플릿 매개 변수 값을 변경하려면 `--parameters` 매개 변수를 추가합니다. 의 값으로 지정할 수 있는 항목에 대한 자세한 `--parameters`내용은 AWS CloudFormation API Reference의 Parameter 및 AWS CLI Command Reference의 some-address를 참조하십시오\*\*.
+
+여기에 표시된 예제 명령에서는 다음을 사용하여 스택 세트를 업데이트합니다`--parameters`. 특히 배달 채널 구성에 대한 기본 스냅샷 배달 빈도를 **TwentyFour_Hours에서 **Twelve_Hours**로 ** 변경합니다. 여전히 현재 템플릿을 사용하고 있기 때문에 `--use-previous-template` 매개 변수를 추가합니다.
+
+1.  다음 명령을 실행합니다. 스택 _세트 이름(stack set name_)에서 스택 세트 이름을 지정합니다 `my-awsconfig-stackset`.
+
+         다음 예제와 같이 매개 변수 `FailureToleranceCount` 에서 `0`, 및 `MaxConcurrentCount` to `1` 로 설정하여 내결함성 및 최대 동시 계정을 설정합니다 `--operation-preferences` . 대신 백분율을 적용하려면 `FailureTolerancePercentage` 또는 `MaxConcurrentPercentage`를 사용합니다. 이 연습에서는 백분율이 아닌 개수를 사용합니다.
+
+    **메모**  
+    의 값은 `MaxConcurrentCount` 의 값에 따라 달라집니다`FailureToleranceCount`. `MaxConcurrentCount` 는 보다 최대 하나 더 많습니다`FailureToleranceCount`.
+
+    [자체 관리 권한] 업데이트의 대상이 될 계정 ID를 제공합니다.
+
+    ```
+    aws cloudformation update-stack-set --stack-set-name my-awsconfig-stackset --use-previous-template --parameters ParameterKey=MaximumExecutionFrequency,ParameterValue=TwentyFour_Hours\\,Twelve_Hours --operation-preferences FailureToleranceCount=0,MaxConcurrentCount=1 --accounts '["account_ID_1","account_ID_2"]'
+    ```
+
+    [서비스 관리 권한] 업데이트의 대상이 될 조직(루트) ID, OU ID 또는 AWS Organizations 계정 ID를 제공합니다.
+
+    ```
+    aws cloudformation update-stack-set --stack-set-name my-awsconfig-stackset --use-previous-template --parameters ParameterKey=MaximumExecutionFrequency,ParameterValue=TwentyFour_Hours\\,Twelve_Hours --operation-preferences FailureToleranceCount=0,MaxConcurrentCount=1 --deployment-targets OrganizationalUnitIds='["ou-rcuk-1x5j1lwo", "ou-rcuk-slr5lh0a"]' --regions '["eu-west-1"]'
+    ```
+
+1.  업데이트 작업의 상태와 결과를 표시하는 명령을 실행하여 스택 세트가 성공적으로 업데이트되었는지 확인합니다 `describe-stack-set-operation` . 의 `--operation-id` 경우 명령`update-stack-set`에서 반환된 작업 ID를 사용합니다.
+
+    ```
+    aws cloudformation describe-stack-set-operation --operation-id operation_ID
+    ```

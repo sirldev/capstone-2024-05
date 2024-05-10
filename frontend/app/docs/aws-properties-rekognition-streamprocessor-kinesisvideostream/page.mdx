@@ -1,0 +1,24 @@
+# AWS::Rekognition::Stream프로세서 KinesisVideoStream
+
+Amazon Rekognition Video 스트림 프로세서에 대한 스트리밍 비디오의 소스를 제공하는 Kinesis 비디오 스트림입니다. 자세한 내용은 KinesisVideoStream 단원을 참조하십시오.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Arn" : String
+}
+```
+
+## 속성
+
+`Arn`  
+소스 비디오를 스트리밍하는 Kinesis 비디오 스트림 스트림의 ARN입니다.  
+_필수 항목 여부_: 예  
+_유형_: 문자열  
+_패턴_: `(^arn:([a-zd-]+):kinesisvideo:([a-zd-]+):d{12}:.+$)`  
+*업데이트 필요 *사항: 바꿔 놓음

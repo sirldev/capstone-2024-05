@@ -1,0 +1,30 @@
+# AWS::SageMaker::ModelPackage 드리프트 체크모델 품질
+
+모델 패키지를 사용하여 모델 모니터를 설정할 때 사용할 수 있는 드리프트 검사 모델 품질 기준선을 나타냅니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Constraints" : MetricsSource,
+  "Statistics" : MetricsSource
+}
+```
+
+## 속성
+
+`Constraints`  
+드리프트 체크 모델 품질 제약 조건입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: MetricsSource  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Statistics`  
+드리프트 체크 모델 품질 통계입니다.  
+*필수 항목 *여부: 아니요  
+_유형_: MetricsSource  
+_업데이트 필요 사항_: 바꿔 놓음

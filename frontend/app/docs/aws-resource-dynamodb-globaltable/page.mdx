@@ -1,0 +1,180 @@
+# AWS::D ynamoDB::글로벌 테이블
+
+이 `AWS::DynamoDB::GlobalTable` 리소스를 사용하면 버전 2019.11.21 전역 테이블을 만들고 관리할 수 있습니다. 이 리소스는 버전 2017.11.29 전역 테이블을 작성하거나 관리하는 데 사용할 수 없습니다. 자세한 내용은 전역 테이블을 참조하세요.
+
+**중요하다**  
+템플릿 `AWS::DynamoDB::Table` 에서 형식을 변경하여 `AWS::DynamoDB::GlobalTable` 형식의 리소스를 형식의 리소스로 ** 변환할 수 없습니다.이렇게 하면 DynamoDB 테이블이 삭제될 수 있습니다.**  
+대신 GlobalTable 리소스를 사용하여 단일 리전에 새 테이블을 만들 수 있습니다. 이 요금은 단일 리전 테이블과 동일하게 청구됩니다. 나중에 스택을 업데이트하여 다른 리전을 추가하면 글로벌 테이블 요금이 적용됩니다.
+
+DynamoDB 전역 테이블로 작업할 때는 다음과 같은 동작에 유의해야 합니다.
+
+- 스택 작업을 실행하는 IAM 보안 주체는 전역 테이블 복제본을 보유하려는 모든 리전에서 아래 나열된 권한을 가지고 있어야 합니다. IAM 보안 주체의 권한에는 IP 소스 주소를 기반으로 하는 제한이 없어야 합니다. 일부 전역 테이블 작업(예: 복제본 추가)은 비동기식이며, 완료될 때까지 IAM 보안 주체가 유효해야 합니다. CloudFormation에서 스택 업데이트를 완료할 때까지 보안 주체(사용자 또는 IAM 역할)를 삭제해서는 안 됩니다.
+  - `dynamodb:CreateTable`
+  - `dynamodb:UpdateTable`
+  - `dynamodb:DeleteTable`
+  - `dynamodb:DescribeContinuousBackups`
+  - `dynamodb:DescribeContributorInsights`
+  - `dynamodb:DescribeTable`
+  - `dynamodb:DescribeTableReplicaAutoScaling`
+  - `dynamodb:DescribeTimeToLive`
+  - `dynamodb:ListTables`
+  - `dynamodb:UpdateTimeToLive`
+  - `dynamodb:UpdateContributorInsights`
+  - `dynamodb:UpdateContinuousBackups`
+  - `dynamodb:ListTagsOfResource`
+  - `dynamodb:TagResource`
+  - `dynamodb:UntagResource`
+  - `dynamodb:BatchWriteItem`
+  - `dynamodb:CreateTableReplica`
+  - `dynamodb:DeleteItem`
+  - `dynamodb:DeleteTableReplica`
+  - `dynamodb:DisableKinesisStreamingDestination`
+  - `dynamodb:EnableKinesisStreamingDestination`
+  - `dynamodb:GetItem`
+  - `dynamodb:PutItem`
+  - `dynamodb:Query`
+  - `dynamodb:Scan`
+  - `dynamodb:UpdateItem`
+  - `dynamodb:DescribeTableReplicaAutoScaling`
+  - `dynamodb:UpdateTableReplicaAutoScaling`
+  - `iam:CreateServiceLinkedRole`
+  - `kms:CreateGrant`
+  - `kms:DescribeKey`
+  - `application-autoscaling:DeleteScalingPolicy`
+  - `application-autoscaling:DeleteScheduledAction`
+  - `application-autoscaling:DeregisterScalableTarget`
+  - `application-autoscaling:DescribeScalingPolicies`
+  - `application-autoscaling:DescribeScalableTargets`
+  - `application-autoscaling:PutScalingPolicy`
+  - `application-autoscaling:PutScheduledAction`
+  - `application-autoscaling:RegisterScalableTarget`
+- 프로비저닝된 결제 모드를 사용하는 경우 CloudFormation은 각 복제본에 Auto Scaling 정책을 생성하여 쓰기 용량을 제어합니다. 속성을 사용하여 이 정책을 구성해야 합니다 `WriteProvisionedThroughputSettings` . CloudFormation은 모든 복제본이 동일한 쓰기 용량 Auto Scaling 속성을 갖도록 합니다. 전역 테이블의 쓰기 용량 값을 직접 지정할 수 없습니다.
+- 테이블에서 프로비저닝된 용량을 사용하는 경우 리소스에서 직접 Auto Scaling을 구성해야 합니다 `AWS::DynamoDB::GlobalTable` . 테이블 복제본 또는 global secondary index에 대해 API 또는 또는 를 통해 추가 Auto Scaling 정책을 구성해서는 안 `AWS::ApplicationAutoScaling::ScalableTarget` `AWS::ApplicationAutoScaling::ScalingPolicy` 됩니다. 이렇게 하면 예기치 않은 동작이 발생할 수 있으며 지원되지 않습니다.
+- AWS CloudFormation에서 각 전역 테이블은 복제본 수에 관계없이 단일 리전의 단일 스택에 의해 제어됩니다. 템플릿을 배포할 때 CloudFormation은 단일 스택 작업의 일부로 모든 복제본을 생성/업데이트합니다. 여러 지역에 동일한 리소스를 배포해서는 안 `AWS::DynamoDB::GlobalTable` 됩니다. 이렇게 하면 오류가 발생하며 지원되지 않습니다. 응용 프로그램 템플릿을 여러 지역에 배포하는 경우 조건을 사용하여 단일 지역에만 리소스를 만들 수 있습니다. 또는 `AWS::DynamoDB::GlobalTable` 애플리케이션 스택과 별개의 스택에 리소스를 정의하도록 선택하고 단일 리전에만 배포되도록 할 수 있습니다.
+
+## 통사론
+
+AWS CloudFormation 템플릿에서 이 엔터티를 선언하려면 다음 구문을 사용합니다.
+
+### JSON (영문)
+
+```
+{
+  "Type" : "AWS::DynamoDB::GlobalTable",
+  "Properties" : {
+      "AttributeDefinitions" : [ AttributeDefinition, ... ],
+      "BillingMode" : String,
+      "GlobalSecondaryIndexes" : [ GlobalSecondaryIndex, ... ],
+      "KeySchema" : [ KeySchema, ... ],
+      "LocalSecondaryIndexes" : [ LocalSecondaryIndex, ... ],
+      "Replicas" : [ ReplicaSpecification, ... ],
+      "SSESpecification" : SSESpecification,
+      "StreamSpecification" : StreamSpecification,
+      "TableName" : String,
+      "TimeToLiveSpecification" : TimeToLiveSpecification,
+      "WriteProvisionedThroughputSettings" : WriteProvisionedThroughputSettings
+    }
+}
+```
+
+## 속성
+
+`AttributeDefinitions`  
+전역 테이블 및 인덱스에 대한 키 스키마를 설명하는 속성 목록입니다.  
+_필수 항목 여부_: 예  
+_유형_: AttributeDefinition 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`BillingMode` 읽기 및 쓰기 처리량에 대한 요금이 청구되는 방법과 용량을 관리하는 방법을 지정합니다. 유효한 값은 다음과 같습니다.
+
+- `PAY_PER_REQUEST`
+- `PROVISIONED`
+  전역 테이블의 모든 복제본은 동일한 청구 모드를 갖습니다. 결제 모드를 사용하는 경우 `PROVISIONED` 속성을 통해 Auto Scaling 구성을 제공해야 합니다 `WriteProvisionedThroughputSettings` . 이 속성의 기본값은 `PROVISIONED`입니다.  
+  *필수 항목 *여부: 아니요  
+  _유형_: 문자열  
+  _업데이트 필요 사항_: 중단 없음
+
+`GlobalSecondaryIndexes`  
+전역 테이블에 생성할 글로벌 보조 인덱스입니다. 최대 20개의 글로벌 보조 인덱스를 생성할 수 있습니다. 전역 테이블의 각 복제본에는 동일한 global secondary index 설정이 있습니다. 단일 스택 작업에서 하나의 global secondary index만 생성하거나 삭제할 수 있습니다.  
+인덱스를 채우는 데 시간이 오래 걸릴 수 있으므로 CloudFormation은 인덱스가 활성화될 때까지 기다리지 않습니다. 스택 작업이 롤백되는 경우 CloudFormation은 추가된 인덱스를 삭제하지 않을 수 있습니다. 이 경우 인덱스를 수동으로 삭제해야 합니다.  
+*필수 항목 *여부: 아니요  
+_형식_: GlobalSecondaryIndex 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`KeySchema`  
+테이블의 기본 키를 구성하는 특성을 지정합니다. 속성의 특성 `KeySchema` 도 속성에 정의되어야 합니다 `AttributeDefinitions` .  
+_필수 항목 여부_: 예  
+_유형_: KeySchema 목록  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`LocalSecondaryIndexes`  
+테이블에 생성할 local secondary indexes. 최대 5개의 local secondary index를 생성할 수 있습니다. 각 인덱스의 범위는 지정된 해시 키 값으로 지정됩니다. 각 해시 키의 크기는 최대 10GB일 수 있습니다. 전역 테이블의 각 복제본에는 동일한 local secondary index 설정이 있습니다.  
+*필수 항목 *여부: 아니요  
+_형식_: LocalSecondaryIndex 목록  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`Replicas`  
+전역 테이블에 대한 복제본 목록을 지정합니다. 목록에는 하나 이상의 요소, 즉 전역 테이블을 정의하는 스택이 배포되는 지역이 포함되어야 합니다. 예를 들어, us-east-1에 배포된 스택에서 테이블을 정의하는 경우 `Replicas` us-east-1 리전의 항목이 있어야 합니다. 스택 리전에서 복제본을 제거할 수 없습니다.  
+복제본을 추가하는 데 빈 테이블의 경우 몇 분 정도 걸리고 큰 테이블의 경우 최대 몇 시간이 걸릴 수 있습니다. 복제본을 추가하거나 제거하려면 `UpdateStack` 해당 변경 내용만 포함하는 작업을 제출하는 것이 좋습니다.  
+업데이트 중에 복제본을 추가하거나 삭제하는 경우 다른 리소스는 업데이트하지 않는 것이 좋습니다. 스택이 업데이트되지 않고 새 복제본을 추가하는 동안 롤백되는 경우 복제본을 수동으로 삭제해야 할 수 있습니다.
+필요한 만큼의 복제본이 있는 새 전역 테이블을 만들 수 있습니다. 테이블을 만든 후 복제본을 추가하거나 제거할 수 있지만 각 업데이트에서 단일 복제본만 추가하거나 제거할 수 있습니다.  
+_필수 항목 여부_: 예  
+_유형_: ReplicaSpecification 목록  
+_업데이트 필요 사항_: 중단 없음
+
+`SSESpecification`  
+서버 쪽 암호화를 사용하도록 설정하도록 설정합니다. 이러한 설정은 모든 복제본에 적용됩니다. 고객 관리형 KMS 키를 사용하려는 경우 속성을 사용하여 각 복제본에 대한 키를 제공해야 합니다 `ReplicaSpecification.ReplicaSSESpecification` .  
+*필수 항목 *여부: 아니요  
+_유형_: SSES사양  
+_업데이트 필요 사항_: 중단 없음
+
+`StreamSpecification`  
+전역 테이블의 스트림 설정을 지정합니다. 전역 테이블에 둘 이상의 복제본이 포함된 경우 이 속성에 대한 값을 제공해야 합니다. 전역 테이블에 복제본이 하나만 있는 경우에만 스트림 설정을 변경할 수 있습니다.  
+*필수 항목 *여부: 아니요  
+_형식_: StreamSpecification  
+_업데이트 필요 사항_: 중단 없음
+
+`TableName`  
+전역 테이블의 이름입니다. 이름을 지정하지 않으면 AWS CloudFormation에서 고유 ID를 생성하고 해당 ID를 테이블 이름으로 사용합니다. 자세한 내용은 이름 형식을 참조하세요.  
+이름을 지정하면 이 리소스를 대체해야 하는 업데이트를 수행할 수 없습니다. 중단이 필요 없거나 약간의 중단이 필요한 업데이트를 수행할 수 있습니다. 리소스를 바꿔야 하는 경우 새 이름을 지정합니다.
+*필수 항목 *여부: 아니요  
+_유형_: 문자열  
+_업데이트 필요 사항_: 바꿔 놓음
+
+`TimeToLiveSpecification`  
+테이블의 TTL(Time to Live) 설정을 지정합니다. 이 설정은 모든 복제본에 적용됩니다.  
+*필수 항목 *여부: 아니요  
+_형식_: TimeToLiveSpecification  
+_업데이트 필요 사항_: 중단 없음
+
+`WriteProvisionedThroughputSettings`  
+쓰기 용량에 대한 Auto Scaling 정책을 지정합니다. 이 정책은 모든 복제본에 적용됩니다. 가 로 설정된 경우 이 설정을 지정해야 합니다 `BillingMode` `PROVISIONED`.  
+*필수 항목 *여부: 아니요  
+_형식_: WriteProvisionedThroughputSettings  
+_업데이트 필요 사항_: 중단 없음
+
+## 반환 값
+
+### 참고문헌
+
+이 리소스의 논리적 ID를 내장 함수에 전달하면 `Ref` `Ref`테이블 이름이 반환됩니다.
+
+함수 사용에 대한 자세한 `Ref`내용은 Ref를 참조하세요.
+
+### Fn::GetAtt
+
+`Fn::GetAtt`내장 함수는 이 형식의 지정된 특성에 대한 값을 반환합니다. 다음은 사용 가능한 특성 및 샘플 반환 값입니다.
+
+내장 함수 사용에 대한 자세한 `Fn::GetAtt`내용은 Fn::GetAtt 단원을 참조하십시오.
+
+####
+
+`Arn`  
+DynamoDB 테이블의 Amazon 리소스 이름(ARN)입니다 `arn:aws:dynamodb:us-east-2:123456789012:table/myDynamoDBTable`. 반환되는 ARN은 스택이 배포된 리전에 있는 복제본의 ARN입니다.
+
+`StreamArn`  
+DynamoDB 스트림의 ARN(예: `arn:aws:dynamodb:us-east-1:123456789012:table/testddbstack-myDynamoDBTable-012A1SL7SMP5Q/stream/2015-11-30T20:10:00.000`. 반환되는 것은 `StreamArn` 스택이 배포된 지역에 있는 복제본의 복제본입니다.  
+`StreamSpecification` 이 속성을 사용하려면 속성을 지정해야 합니다.
+
+`TableId`  
+테이블의 고유 식별자(예: `a123b456-01ab-23cd-123a-111222aaabbb`. 반환되는 것은 `TableId` 스택이 배포된 지역에 있는 복제본의 복제본입니다.
