@@ -74,9 +74,3 @@ def login(params: LoginBase, db: Session = Depends(get_db)):
     finally:
         db.close()
 
-
-@router.post("/sum")
-def sum_numbers(request: SumRequest, user: str = Depends(get_current_user)):
-    print(12341321)
-    result = request.addend1 + request.addend2
-    return {"addend1": request.addend1, "addend2": request.addend2, "result": result}
