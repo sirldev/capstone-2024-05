@@ -7,7 +7,7 @@ import re
 
 from db import models
 from db.database import get_db
-from db.models import PromptAns, HashTag, PromptAns_HashTag, User
+from db.models import PromptAns, HashTag, PromptAns_HashTag
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 from retrieval.rag import retrieve_doc
@@ -56,17 +56,15 @@ class Prompt(BaseModel):
 
 ########### GET ###########
 @router.get("")
-async def get_templates(db: Session = Depends(get_db), username: str = Depends(get_current_user)):
+async def get_templates(
+    db: Session = Depends(get_db), username: str = Depends(get_current_user)
+):
     try:
-        if not username: # jwt token이 없을 때
+        if not username:  # jwt token이 없을 때
             templates = db.query(PromptAns).filter(PromptAns.uploaded != None).all()
             return templates
         else:
-            templates = (
-            db.query(PromptAns)
-            .filter(PromptAns.username == username)
-            .all()
-        )
+            templates = db.query(PromptAns).filter(PromptAns.username == username).all()
             return templates
     except HTTPException as http_exc:
         raise http_exc
