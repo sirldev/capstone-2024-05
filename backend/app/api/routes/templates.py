@@ -202,9 +202,8 @@ def upload_template(
         prompt_ans = db.query(PromptAns).filter(PromptAns.id == params.id).first()
         if not prompt_ans:
             raise HTTPException(status_code=404, detail="id not found")
-        user = db.query(User).filter(User.username == username).first()
-        if user.id != prompt_ans.user_id:
-            raise HTTPException(status_code=404, detail="user id dose not match")
+        if username != prompt_ans.username:
+            raise HTTPException(status_code=404, detail="user name dose not match")
         prompt_ans.uploaded = datetime.now()
         db.commit()
         return {"detail": "upload success"}
