@@ -7,13 +7,14 @@ import re
 
 from db import models
 from db.database import get_db
-from db.models import PromptAns, HashTag, PromptAns_HashTag
-from fastapi import APIRouter, Depends, HTTPException, Request
+from db.models import PromptAns, HashTag, PromptAns_HashTag, User
+from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 from retrieval.rag import retrieve_doc
 from sqlalchemy.orm import Session
 from sqlalchemy import insert
 from utils.gpt import gpt_genereate
+from utils.auth import get_current_user
 
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 
@@ -55,29 +56,22 @@ class Prompt(BaseModel):
 
 ########### GET ###########
 @router.get("")
-async def get_templates(request: Request, db: Session = Depends(get_db)):
-    # authorization이 있으면 해당 유저의 templates만 보여줌
-    if request.headers.get("Authorization"):
-        user = (
-            db.query(models.User)
-            .filter(models.User.authorization == request.headers.get("Authorization"))
-            .first()
-        )
-        if not user:
-            raise HTTPException(status_code=401, detail="Authorization is not valid")
-        templates = (
-            db.query(models.PromptAns)
-            .filter(models.PromptAns.user_id == user.id)
-            .first()
-        )
-        if templates:
+async def get_templates(db: Session = Depends(get_db), username: str = Depends(get_current_user)):
+    try:
+        if not username: # jwt token이 없을 때
+            templates = db.query(PromptAns).filter(PromptAns.uploaded != None).all()
             return templates
-        else:  # 사용자가 작성한 템플릿이 없을 때
-            raise HTTPException(status_code=404, detail="No templates on this user")
-    # authorization이 없으면 모든 templates 보여줌
-    else:
-        templates = db.query(models.PromptAns).all()
-        return templates
+        else:
+            templates = (
+            db.query(PromptAns)
+            .filter(PromptAns.username == username)
+            .all()
+        )
+            return templates
+    except HTTPException as http_exc:
+        raise http_exc
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=e)
 
 
 @router.get("/{id}")
