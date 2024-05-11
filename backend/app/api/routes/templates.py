@@ -89,11 +89,13 @@ documents_dummy = [
 
 ########### POST ###########
 @router.post("")
-async def create_template(prompt: Prompt, db: Session = Depends(get_db)):
-    # print(request)
-    print(prompt)
-    prompt = prompt.prompt
+async def create_template(
+    prompt: Prompt,
+    db: Session = Depends(get_db),
+    username: str = Depends(get_current_user),
+):
     try:
+        prompt = prompt.prompt
         retrieved_doc = retrieve_doc(
             question=prompt,
             pc_index=app_main.pc_index,
@@ -121,14 +123,18 @@ async def create_template(prompt: Prompt, db: Session = Depends(get_db)):
         template_file = "".join(template_file)
         template_file = json.loads(template_file)
 
-        # TODO : Valid JWT
+        if not username:  # jwt token이 없을 때
+            _username = None
+        else:
+            _username = username
+
         # get user_id from JWT
         db_promptAns = models.PromptAns(
             prompt=prompt,
             template=template_file,
             description=description,
             documents=documents_dummy,
-            # user_id=user_id,
+            username=_username,
         )
         db.add(db_promptAns)
         db.commit()
