@@ -7,13 +7,14 @@ import re
 
 from db import models
 from db.database import get_db
-from db.models import PromptAns, HashTag, PromptAns_HashTag
+from db.models import PromptAns, HashTag, PromptAns_HashTag, User
 from fastapi import APIRouter, Depends, HTTPException, Request
 from pydantic import BaseModel
 from retrieval.rag import retrieve_doc
 from sqlalchemy.orm import Session
 from sqlalchemy import insert
 from utils.gpt import gpt_genereate
+from utils.auth import get_current_user
 
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 
@@ -186,12 +187,24 @@ async def create_template(prompt: Prompt, db: Session = Depends(get_db)):
 
 
 @router.post("/upload")
-def upload_template(params: TemplateUploadBase, db: Session = Depends(get_db)):
-    # TODO : Valid JWT
+def upload_template(
+    params: TemplateUploadBase,
+    db: Session = Depends(get_db),
+    username: str = Depends(get_current_user),
+):
     try:
+        if not username:
+            raise HTTPException(
+                status_code=401,
+                detail="Could not validate credentials",
+                headers={"WWW-Authenticate": "Bearer"},
+            )
         prompt_ans = db.query(PromptAns).filter(PromptAns.id == params.id).first()
         if not prompt_ans:
             raise HTTPException(status_code=404, detail="id not found")
+        user = db.query(User).filter(User.username == username).first()
+        if user.id != prompt_ans.user_id:
+            raise HTTPException(status_code=404, detail="user id dose not match")
         prompt_ans.uploaded = datetime.now()
         db.commit()
         return {"detail": "upload success"}
