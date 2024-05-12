@@ -221,7 +221,6 @@ async def create_template(
                     db.query(HashTag.tag).filter(HashTag.id.in_(tag_ids)).all(),
                 )
             )
-            print(tags)
 
             # db_promptAns를 dictionary로 변환
             db_promptAns_dict = {
