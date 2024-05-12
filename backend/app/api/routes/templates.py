@@ -75,7 +75,29 @@ async def get_templates(
 @router.get("/{id}")
 async def get_single_templates(id: int, db: Session = Depends(get_db)):
     template = db.query(models.PromptAns).filter(models.PromptAns.id == id).first()
-    return template
+    if template:
+        uploaded = template.uploaded
+        if uploaded:
+            username = (
+                db.query(models.User)
+                .filter(models.User.id == template.user_id)
+                .first()
+                .username
+            )
+            template_dict = {
+                c.name: getattr(template, c.name) for c in template.__table__.columns
+            }
+            template_dict["username"] = username
+            return template_dict
+        else:
+            # TODO : Valid JWT
+            # - jwt 유무 판단.
+            # - 있으면 user id조회하고, 생성자가 본인이면 리턴
+            # - jwt가 없으면 에러
+            return template
+
+    else:
+        raise HTTPException(status_code=404, detail="Template not found, invalid id")
 
 
 documents_dummy = [
