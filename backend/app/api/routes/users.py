@@ -3,8 +3,8 @@ from fastapi import APIRouter, HTTPException, Depends
 from sqlalchemy.orm import Session
 
 from db.models import User
-from db.database import SessionLocal, get_db
-from utils.auth import create_access_token
+from db.database import get_db
+from utils.auth import create_access_token, get_current_user
 
 router = APIRouter()
 
@@ -29,6 +29,7 @@ class LoginBase(BaseModel):
 @router.post("/create_user")
 def create_user(params: CreateUserBase, db: Session = Depends(get_db)):
     try:
+        params.username = params.username.strip()
         user = db.query(User).filter(User.username == params.username).first()
         if user:
             raise HTTPException(status_code=400, detail="Username already registered")
@@ -50,7 +51,7 @@ def create_user(params: CreateUserBase, db: Session = Depends(get_db)):
         db.close()
 
 
-@router.post("/login")
+@router.post("/token")
 def login(params: LoginBase, db: Session = Depends(get_db)):
     try:
         user = db.query(User).filter(User.username == params.username).first()
