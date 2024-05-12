@@ -38,8 +38,8 @@ class PromptAns(Base):
         DateTime, nullable=True
     )  # nullable. Hub에 업로드 하게 되면 이 값이 채워짐
 
-    # user_id 필드를 외래 키로 설정합니다. 이 필드는 User 모델의 id 필드를 참조합니다.
-    user_id = Column(Integer, ForeignKey("users.id"))
+    # username 필드를 외래 키로 설정합니다. 이 필드는 User 모델의 username 필드를 참조합니다.
+    username = Column(String, ForeignKey("users.username"))
 
     # relationship 함수를 사용하여 PromptAns 모델과 User 모델 사이의 관계를 정의합니다.
     user = relationship("User", back_populates="promptAnses")
