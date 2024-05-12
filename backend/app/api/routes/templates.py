@@ -1,18 +1,18 @@
+import json
 import os
+import re
 import sys
 from datetime import datetime
 from typing import Dict
-import json
-import re
 
 from db import models
 from db.database import get_db
-from db.models import PromptAns, HashTag, PromptAns_HashTag
-from fastapi import APIRouter, Depends, HTTPException
+from db.models import HashTag, PromptAns, PromptAns_HashTag
+from fastapi import APIRouter, Depends, HTTPException, Request
 from pydantic import BaseModel
 from retrieval.rag import retrieve_doc
-from sqlalchemy.orm import Session
 from sqlalchemy import insert
+from sqlalchemy.orm import Session
 from utils.gpt import gpt_genereate
 from utils.auth import get_current_user
 
@@ -102,7 +102,7 @@ async def create_template(
             embedding=app_main.embedding,
             llm=app_main.llm,
         )
-        result, documents_list = gpt_genereate(
+        result, document_title_list = gpt_genereate(
             instruction=prompt, retrieved_doc=retrieved_doc
         )
 
@@ -133,7 +133,7 @@ async def create_template(
             prompt=prompt,
             template=template_file,
             description=description,
-            documents=documents_dummy,
+            documents=document_title_list,
             username=_username,
         )
         db.add(db_promptAns)
