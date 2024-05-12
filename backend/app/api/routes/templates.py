@@ -1,17 +1,16 @@
 import json
-import os
 import re
+import os
 import sys
 from datetime import datetime
 from typing import Dict
 
-from db import models
 from db.database import get_db
 from db.models import HashTag, PromptAns, PromptAns_HashTag
 from fastapi import APIRouter, Depends, HTTPException, Request
 from pydantic import BaseModel
 from retrieval.rag import retrieve_doc
-from sqlalchemy import insert
+from sqlalchemy import insert, select
 from sqlalchemy.orm import Session
 from utils.gpt import gpt_genereate
 from utils.auth import get_current_user
@@ -38,6 +37,42 @@ def recursive_value_collect(dict_obj):
             yield value
 
 
+def parse_prompt_result(result):
+    template_file, description = [], []
+    state = False
+
+    for l in result.split("\n"):
+        if "```" in l:
+            state = not state
+            continue
+        if state:
+            template_file.append(l + "\n")
+        else:
+            description.append(l + "\n")
+
+    description = "".join(description)
+    description = description.strip()
+
+    template_file = "".join(template_file)
+    template_file = json.loads(template_file)
+
+    return template_file, description
+
+
+# 해시태그 추가함수
+def add_hashtag(template):
+    hashtags = template.hashtags
+    hashtags = list(map(lambda x: x.tag, hashtags))
+    if hashtags:
+        # dictionary로 변환
+        template = {
+            c.name: getattr(template, c.name) for c in template.__table__.columns
+        }
+        # 해시태그 필드 추가
+        template["hashtag"] = hashtags
+    return template
+
+
 # Data Validation
 class TemplateUploadBase(BaseModel):
     id: int
@@ -61,10 +96,12 @@ async def get_templates(
 ):
     try:
         if not username:  # jwt token이 없을 때
-            templates = db.query(PromptAns).filter(PromptAns.uploaded != None).all()
+            templates = db.query(PromptAns).filter(PromptAns.uploaded.isnot(None)).all()
+            templates = [add_hashtag(template) for template in templates]
             return templates
         else:
             templates = db.query(PromptAns).filter(PromptAns.username == username).all()
+            templates = [add_hashtag(template) for template in templates]
             return templates
     except HTTPException as http_exc:
         raise http_exc
@@ -73,40 +110,38 @@ async def get_templates(
 
 
 @router.get("/{id}")
-async def get_single_templates(id: int, db: Session = Depends(get_db)):
-    template = db.query(models.PromptAns).filter(models.PromptAns.id == id).first()
+async def get_single_templates(
+    id: int, db: Session = Depends(get_db), username: str = Depends(get_current_user)
+):
+    template = db.query(PromptAns).filter(PromptAns.id == id).first()
+
     if template:
         uploaded = template.uploaded
         if uploaded:
-            username = (
-                db.query(models.User)
-                .filter(models.User.id == template.user_id)
-                .first()
-                .username
-            )
-            template_dict = {
-                c.name: getattr(template, c.name) for c in template.__table__.columns
-            }
-            template_dict["username"] = username
-            return template_dict
-        else:
-            # TODO : Valid JWT
-            # - jwt 유무 판단.
-            # - 있으면 user id조회하고, 생성자가 본인이면 리턴
-            # - jwt가 없으면 에러
+            template = add_hashtag(template)
             return template
-
+        else:
+            # - jwt 유무 판단.
+            if not username:
+                # - jwt가 없으면 에러
+                raise HTTPException(
+                    status_code=401,
+                    detail="Could not validate credentials",
+                )
+            else:
+                # - 본인이 작성한 템플릿이 아니면 에러발생
+                if username != template.username:
+                    raise HTTPException(
+                        status_code=401,
+                        detail="Could not validate credentials",
+                        headers={"WWW-Authenticate": "Bearer"},
+                    )
+                else:
+                    # - 생성자가 본인이면 리턴
+                    template = add_hashtag(template)
+                    return template
     else:
         raise HTTPException(status_code=404, detail="Template not found, invalid id")
-
-
-documents_dummy = [
-    "AWS_ACMPCA.md",
-    "AWS_APS.md",
-    "AWS_AccessAnalyzer.md",
-    "AWS_AmazonMQ.md",
-    "AWS_Amplify.md",
-]
 
 
 ########### POST ###########
@@ -118,51 +153,36 @@ async def create_template(
 ):
     try:
         prompt = prompt.prompt
+
+        # make retrieved_doc
         retrieved_doc = retrieve_doc(
             question=prompt,
             pc_index=app_main.pc_index,
             embedding=app_main.embedding,
             llm=app_main.llm,
         )
+
+        # generate template
         result, document_title_list = gpt_genereate(
             instruction=prompt, retrieved_doc=retrieved_doc
         )
 
         # parse result
-        template_file, description = [], []
-        state = False
-        for l in result.split("\n"):
-            # print(l)
-            if "```" in l:
-                state = not state
-                continue
-            if state:
-                template_file.append(l + "\n")
-            else:
-                description.append(l + "\n")
-        description = "".join(description)
-        description = description.strip()
-        template_file = "".join(template_file)
-        template_file = json.loads(template_file)
-
-        if not username:  # jwt token이 없을 때
-            _username = None
-        else:
-            _username = username
+        template_file, description = parse_prompt_result(result)
 
         # get user_id from JWT
-        db_promptAns = models.PromptAns(
+        db_promptAns = PromptAns(
             prompt=prompt,
             template=template_file,
             description=description,
             documents=document_title_list,
-            username=_username,
+            username=username if username else None,  # jwt token이 없을 때 None
         )
         db.add(db_promptAns)
         db.commit()
         db.refresh(db_promptAns)
 
-        ##### keword extraction from template
+        ##### keword extraction from template #####
         # value 수집
         values = list(recursive_value_collect(template_file))
         values = "".join(map(str, values))
@@ -173,33 +193,46 @@ async def create_template(
         filtered_keywords = [
             k for k in keywords if k not in ["AWS", "Amazon"] and len(k) > 2
         ]
-        tag_ids = []
-        # find keyword in db. 이미 존재하는 키워드만 필터링
-        for keyword in filtered_keywords:
-            hashtag = (
-                db.query(HashTag).filter(HashTag.tag.ilike(f"%{keyword}%")).first()
-            )
-            if hashtag is not None:
-                tag_ids.append(hashtag.id)
-        # 새로운 키워드 추가
-        for tag_id in tag_ids:
-            stmt = insert(PromptAns_HashTag).values(
-                prompt_ans_id=db_promptAns.id, hashtag_id=tag_id
-            )
-            db.execute(stmt)
-        db.commit()
 
-        # return 할 값 만들기
-        # db_promptAns를 dictionary로 변환
-        db_promptAns_dict = {
-            c.name: getattr(db_promptAns, c.name)
-            for c in db_promptAns.__table__.columns
-        }
-        # 해시태그 필드 추가
-        db_promptAns_dict["hashtag"] = filtered_keywords
+        if not filtered_keywords:
+            # 사전 정의된 키워드 기반이라 키워드가 없는 경우가 존재함
+            return db_promptAns
+        else:
+            tag_ids = []
+            # find keyword in db. 이미 존재하는 키워드만 필터링
+            for keyword in filtered_keywords:
+                hashtag = (
+                    db.query(HashTag).filter(HashTag.tag.ilike(f"%{keyword}%")).first()
+                )
+                if hashtag is not None:
+                    tag_ids.append(hashtag.id)
 
-        # 리턴
-        return db_promptAns_dict
+            # 새로운 키워드 추가
+            for tag_id in tag_ids:
+                stmt = insert(PromptAns_HashTag).values(
+                    prompt_ans_id=db_promptAns.id, hashtag_id=tag_id
+                )
+                db.execute(stmt)
+            db.commit()
+            ##### return 값에 Hashtag 추가하기
+            tags = list(
+                map(
+                    lambda x: x[0],
+                    db.query(HashTag.tag).filter(HashTag.id.in_(tag_ids)).all(),
+                )
+            )
+            print(tags)
+
+            # db_promptAns를 dictionary로 변환
+            db_promptAns_dict = {
+                c.name: getattr(db_promptAns, c.name)
+                for c in db_promptAns.__table__.columns
+            }
+            # 해시태그 필드 추가
+            db_promptAns_dict["hashtag"] = tags
+
+            # 리턴
+            return db_promptAns_dict
     except Exception as e:
         db.rollback()
         raise HTTPException(status_code=500, detail=e)
