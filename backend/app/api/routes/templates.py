@@ -184,12 +184,23 @@ async def create_template(
 
 
 @router.post("/upload")
-def upload_template(params: TemplateUploadBase, db: Session = Depends(get_db)):
-    # TODO : Valid JWT
+def upload_template(
+    params: TemplateUploadBase,
+    db: Session = Depends(get_db),
+    username: str = Depends(get_current_user),
+):
     try:
+        if not username:
+            raise HTTPException(
+                status_code=401,
+                detail="Could not validate credentials",
+                headers={"WWW-Authenticate": "Bearer"},
+            )
         prompt_ans = db.query(PromptAns).filter(PromptAns.id == params.id).first()
         if not prompt_ans:
             raise HTTPException(status_code=404, detail="id not found")
+        if username != prompt_ans.username:
+            raise HTTPException(status_code=404, detail="user name dose not match")
         prompt_ans.uploaded = datetime.now()
         db.commit()
         return {"detail": "upload success"}
