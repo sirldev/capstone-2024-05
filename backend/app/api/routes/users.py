@@ -29,6 +29,7 @@ class LoginBase(BaseModel):
 @router.post("/create_user")
 def create_user(params: CreateUserBase, db: Session = Depends(get_db)):
     try:
+        params.username = params.username.strip()
         user = db.query(User).filter(User.username == params.username).first()
         if user:
             raise HTTPException(status_code=400, detail="Username already registered")
@@ -68,4 +69,3 @@ def login(params: LoginBase, db: Session = Depends(get_db)):
         raise HTTPException(status_code=500, detail=e)
     finally:
         db.close()
-

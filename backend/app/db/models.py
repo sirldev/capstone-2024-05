@@ -10,7 +10,7 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
 class User(Base):
-    __tablename__ = "users"
+    __tablename__ = "User"
 
     id = Column(Integer, primary_key=True, autoincrement=True, nullable=False)
     username = Column(String, unique=True, index=True, nullable=False)
@@ -25,8 +25,17 @@ class User(Base):
         return pwd_context.verify(password, self.hashed_password)
 
 
+# association table HashTag and PromptAns
+PromptAns_HashTag = Table(
+    "PromptAns_HashTag",
+    Base.metadata,
+    Column("prompt_ans_id", Integer, ForeignKey("PromptAns.id")),
+    Column("hashtag_id", Integer, ForeignKey("HashTag.id")),
+)
+
+
 class PromptAns(Base):
-    __tablename__ = "promptAns"
+    __tablename__ = "PromptAns"
 
     id = Column(Integer, primary_key=True, autoincrement=True, nullable=False)
     prompt = Column(String, nullable=False)
@@ -39,22 +48,18 @@ class PromptAns(Base):
     )  # nullable. Hub에 업로드 하게 되면 이 값이 채워짐
 
     # username 필드를 외래 키로 설정합니다. 이 필드는 User 모델의 username 필드를 참조합니다.
-    username = Column(String, ForeignKey("users.username"))
+    username = Column(String, ForeignKey("User.username"))
 
     # relationship 함수를 사용하여 PromptAns 모델과 User 모델 사이의 관계를 정의합니다.
     user = relationship("User", back_populates="promptAnses")
 
+    # 다대다 관계 설정
+    hashtags = relationship(
+        "HashTag", secondary=PromptAns_HashTag, backref="prompt_ans"
+    )
+
 
 class HashTag(Base):
-    __tablename__ = "hashtags"
+    __tablename__ = "HashTag"
     id = Column(Integer, primary_key=True, autoincrement=True, nullable=False)
     tag = Column(String, nullable=False)
-
-
-# association table HashTag and PromptAns
-PromptAns_HashTag = Table(
-    "promptAns-hashtag",
-    Base.metadata,
-    Column("prompt_ans_id", Integer, ForeignKey("promptAns.id")),
-    Column("hashtag_id", Integer, ForeignKey("hashtags.id")),
-)
