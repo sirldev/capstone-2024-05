@@ -53,113 +53,6 @@ export default function TemplateHub() {
     </div>
   );
 
-  const resources = [
-    {
-      group: 'Compute',
-      items: [
-        'Amazon EC2',
-        'AWS Lambda',
-        'Amazon Lightsail',
-        'AWS Batch',
-        'Amazon ECS',
-        'Amazon EKS',
-        'AWS Fargate',
-      ],
-    },
-    {
-      group: 'Storage',
-      items: [
-        'Amazon S3',
-        'Amazon EBS',
-        'Amazon Elastic File System',
-        'AWS Storage Gateway',
-        'Amazon FSx',
-      ],
-    },
-    {
-      group: 'Database',
-      items: [
-        'Amazon RDS',
-        'Amazon DynamoDB',
-        'Amazon ElastiCache',
-        'Amazon Redshift',
-        'Amazon Aurora',
-        'AWS Database Migration Service',
-      ],
-    },
-    {
-      group: 'Networking and Content Delivery',
-      items: [
-        'Amazon VPC',
-        'Amazon Route 53',
-        'AWS Direct Connect',
-        'Amazon CloudFront',
-      ],
-    },
-    {
-      group: 'Developer Tools',
-      items: [
-        'AWS CodeCommit',
-        'AWS CodeBuild',
-        'AWS CodeDeploy',
-        'AWS CodePipeline',
-        'AWS Cloud9',
-      ],
-    },
-    {
-      group: 'Management and Governance',
-      items: [
-        'AWS CloudFormation',
-        'Amazon CloudWatch',
-        'AWS Auto Scaling',
-        'AWS CloudTrail',
-        'AWS Config',
-      ],
-    },
-    {
-      group: 'Security, Identity, and Compliance',
-      items: [
-        'AWS Identity and Access Management',
-        'Amazon GuardDuty',
-        'AWS Key Management Service',
-        'AWS Shield',
-        'AWS WAF',
-      ],
-    },
-    {
-      group: 'Machine Learning',
-      items: [
-        'Amazon SageMaker',
-        'AWS DeepRacer',
-        'Amazon Comprehend',
-        'Amazon Rekognition',
-        'AWS DeepLens',
-      ],
-    },
-    {
-      group: 'Analytics',
-      items: [
-        'Amazon Athena',
-        'Amazon EMR',
-        'AWS Glue',
-        'Amazon QuickSight',
-        'AWS Lake Formation',
-      ],
-    },
-    {
-      group: 'Application Integration',
-      items: ['AWS Step Functions', 'Amazon SQS', 'Amazon SNS', 'AWS AppSync'],
-    },
-    {
-      group: 'Customer Engagement',
-      items: [
-        'Amazon Connect',
-        'Amazon Simple Email Service',
-        'Amazon Pinpoint',
-      ],
-    },
-  ];
-
   const allItems = resources.flatMap((group) => group.items);
 
   // const handleTagsChange = (newTags : any) => {
@@ -201,3 +94,118 @@ export default function TemplateHub() {
     </div>
   );
 }
+
+export const resources = [
+  {
+    group: 'Compute',
+    color: 'red',
+    items: [
+      'EC2',
+      'Lambda',
+      'Batch',
+      'ECS',
+      'EKS',
+      'Fargate',
+    ],
+  },
+  {
+    group: 'Storage',
+    color: 'pink',
+    items: [
+      'S3',
+      'EBS',
+      'Elastic File System',
+      'Storage Gateway',
+      'FSx',
+    ],
+  },
+  {
+    group: 'Database',
+    color: 'grape',
+    items: [
+      'RDS',
+      'DynamoDB',
+      'ElastiCache',
+      'Redshift',
+      'Aurora',
+      'Database Migration Service',
+    ],
+  },
+  {
+    group: 'Networking and Content Delivery',
+    color: 'violet',
+    items: [
+      'VPC',
+      'Route 53',
+      'Direct Connect',
+      'CloudFront',
+    ],
+  },
+  {
+    group: 'Developer Tools',
+    color: 'indigo',
+    items: [
+      'CodeCommit',
+      'CodeBuild',
+      'CodeDeploy',
+      'CodePipeline',
+    ],
+  },
+  {
+    group: 'Management and Governance',
+    color: 'yellow',
+    items: [
+      'CloudFormation',
+      'CloudWatch',
+      'Auto Scaling',
+      'CloudTrail',
+      'Config',
+    ],
+  },
+  {
+    group: 'Security, Identity, and Compliance',
+    color: 'cyan',
+    items: [
+      'Identity and Access Management',
+      'GuardDuty',
+      'Key Management Service',
+      'Shield',
+      'WAF',
+    ],
+  },
+  {
+    group: 'Machine Learning',
+    color: 'green',
+    items: [
+      'SageMaker',
+      'Comprehend',
+      'Rekognition',
+      'DeepLens',
+    ],
+  },
+  {
+    group: 'Analytics',
+    color: 'blue',
+    items: [
+      'Athena',
+      'EMR',
+      'Glue',
+      'QuickSight',
+      'Lake Formation',
+    ],
+  },
+  {
+    group: 'Application Integration',
+    color: 'lime',
+    items: ['Step Functions', 'SQS', 'SNS', 'AppSync'],
+  },
+  {
+    group: 'Customer Engagement',
+    color: 'teal',
+    items: [
+      'Connect',
+      'Simple Email Service',
+      'Pinpoint',
+    ],
+  },
+];

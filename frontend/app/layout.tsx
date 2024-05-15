@@ -3,7 +3,7 @@
 import '@mantine/core/styles.css';
 import '@mantine/nprogress/styles.css';
 import '@/app/globals.css';
-
+import { AuthProvider } from '../context/AuthContext';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { usePathname } from 'next/navigation';
@@ -32,6 +32,7 @@ export default function RootLayout({
   // const showHeader = !pathname.includes('/login'); // 로그인 페이지가 아닐 때 헤더 표시
 
   return (
+    <AuthProvider>
     <html lang="en">
       <head>
         <ColorSchemeScript />
@@ -46,5 +47,6 @@ export default function RootLayout({
         </MantineProvider>
       </body>
     </html>
+    </AuthProvider>
   );
 }
