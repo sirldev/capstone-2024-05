@@ -24,6 +24,7 @@ origins = [
     "https://localhost.tiangolo.com",
     "http://localhost",
     "http://localhost:3000",
+    "https://capstone-2024-05.vercel.app",
 ]
 
 
@@ -111,11 +112,9 @@ def validation_template(request: Request, file_name: str):
 
     with open(f"./static/examples/{file_name}", "r") as file:
         content = file.read()
-
     cmd = " ".join(validation_cmd)
 
     result = subprocess.run(validation_cmd, capture_output=True, text=True)
-
     if result.returncode:
         return templates.TemplateResponse(
             request=request,
