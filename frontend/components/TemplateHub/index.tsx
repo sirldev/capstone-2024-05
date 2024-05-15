@@ -25,7 +25,11 @@ import { IconSearch } from '@tabler/icons-react';
 import React, { useState } from 'react';
 import HubItems from './HubItems';
 
-export default function TemplateHub() {
+interface IHub {
+  templates: any[];
+}
+
+export default function TemplateHub({ templates }: IHub) {
   const [value, setValue] = useState<string[]>([]);
   const [showResults, setShowResults] = useState(false);
   const [searchResults, setSearchResults] = useState<string[]>([]);
@@ -195,7 +199,7 @@ export default function TemplateHub() {
               <h2>{searchResults.join(', ')} 검색 결과</h2>
             </div>
           )}
-          <HubItems />
+          <HubItems templates={templates} />
         </Container>
       </Container>
     </div>
