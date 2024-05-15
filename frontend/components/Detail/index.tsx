@@ -21,11 +21,13 @@ import Result from '@/components/UsePage/Result';
 import References from '@/components/UsePage/References/Index';
 import classes from './Detail.module.css';
 
-export default function DetailPage() {
+export default function DetailPage({ template }: any) {
   const router = useRouter();
 
   const searchParams = useSearchParams();
   const id = searchParams.get('id');
+
+  console.log(template);
 
   return (
     <div className={classes.wrapper}>
@@ -36,7 +38,11 @@ export default function DetailPage() {
 
         <Grid grow mt="xl">
           <Grid.Col span={8}>
-            <Result />
+            <Result
+              prompt={template.prompt}
+              template={JSON.stringify(template.template)}
+              description={template.description}
+            />
           </Grid.Col>
           <Grid.Col span={4}>
             <References />

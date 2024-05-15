@@ -18,11 +18,17 @@ import { IconArrowRight } from '@tabler/icons-react';
 import classes from './userinput.module.css';
 
 interface UserInputProps {
+  text: string;
+  setText: (text: string) => void;
   onButtonClick: () => void; // 여기서 onButtonClick은 매개변수가 없고 반환 값도 없는 함수입니다.
 }
 
-export default function UserInput({ onButtonClick }: UserInputProps) {
-  const [text, setText] = useState('');
+export default function UserInput({
+  text,
+  setText,
+  onButtonClick,
+}: UserInputProps) {
+  // const [text, setText] = useState('');
   const isDisabled = text.length < 10;
 
   return (
@@ -31,10 +37,10 @@ export default function UserInput({ onButtonClick }: UserInputProps) {
         구체적이고 명확하게 입력해 주세요
       </Text>
       <Text size="sm" c="dimmed" lh={1.6}>
-        여러분이 원하는 템플릿의 기능과 구성 요소에 대해 가능한 한 구체적으로
+        {`여러분이 원하는 템플릿의 기능과 구성 요소에 대해 가능한 한 구체적으로
         설명해 주세요. {<br />}예를 들어, "EC2 인스턴스를 생성하고 싶어요"
         보다는 "t2.micro 타입의 EC2 인스턴스를 2개 생성하고, 각 인스턴스에
-        10GB의 EBS 볼륨을 연결하고 싶어요"가 더 도움이 됩니다.
+        10GB의 EBS 볼륨을 연결하고 싶어요"가 더 도움이 됩니다.`}
       </Text>
 
       <Text mt="sm" mb={7}>

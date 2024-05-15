@@ -29,6 +29,7 @@ import FeaturesGrid from '../../LandingSection/FeatureGrid';
 import CloudFormationDescription from '../../LandingSection/CloudFormationDescription';
 import Usage from '../../LandingSection/Usage';
 import Header from '../../Header';
+import { useRouter } from 'next/navigation';
 
 export default function References() {
   const [opened, { toggle }] = useDisclosure(false);
@@ -36,6 +37,7 @@ export default function References() {
     console.log('버튼이 클릭되었습니다!');
   };
 
+  const router = useRouter();
   return (
     <div>
       <Title className={classes.title}>참고 문서</Title>
@@ -45,9 +47,15 @@ export default function References() {
         spacing={{ base: 'xs', md: 20 }}
         verticalSpacing={{ base: 'xl', md: 20 }}
       >
-        <Paper shadow="md" p="md">
-          <Text fw={700} size="sm">
-            설명 어쩌구
+        <Paper
+          shadow="md"
+          p="md"
+          onClick={() => {
+            router.push('/docs/aws-properties-apigateway-apikey-stagekey');
+          }}
+        >
+          <Text fw={700} size="sm" truncate="end">
+            AuroraServerlessDBCluster
           </Text>
           <Text mt={5} c="gray" size="xs">
             Auto scaling을 지원하는 RDS Aurora 클러스터를 만들어줘. 인스턴스

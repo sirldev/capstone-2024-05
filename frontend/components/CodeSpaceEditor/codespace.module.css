@@ -12,7 +12,7 @@
   padding-top: rem(200px);
   padding-bottom: rem(120px);
 
-  @media (max-width: $ mantine-breakpoint-sm) {
+  @media (max-width: $mantine-breakpoint-sm) {
     padding-bottom: rem(80px);
     padding-top: rem(80px);
   }
