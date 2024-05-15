@@ -1,1 +1,1 @@
-{"AWSTemplateFormatVersion": "2010-09-09", "Description": "Create a 50GiB gp2 type Amazon EBS volume with a CloudMigration tag.", "Resources": {"MyVolume": {"Type": "AWS::EC2::Volume", "Properties": {"AvailabilityZone": "us-west-2a", "Size": 50, "VolumeType": "gp2", "Tags": [{"Key": "Project", "Value": "CloudMigration"}]}}}, "Outputs": {"VolumeId": {"Description": "The ID of the created volume.", "Value": {"Ref": "MyVolume"}}}}
+{"Resources": {"MyInstance": {"Type": "AWS::EC2::Instance", "Properties": {"AvailabilityZone": "us-east-1a", "ImageId": "ami-0ff8a91507f77f867"}}}}
