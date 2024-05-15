@@ -1,6 +1,6 @@
-@tailwind base;
+/* @tailwind base;
 @tailwind components;
-@tailwind utilities;
+@tailwind utilities; */
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
 
 * {
@@ -43,13 +43,13 @@ body {
     rgb(var(--background-start-rgb)); */
 }
 
-@layer utilities {
+/* @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
-}
+} */
 
-@keyframes bounceUnder {
+/* @keyframes bounceUnder {
   0%,
   100% {
     transform: translateY(0%);
@@ -59,4 +59,4 @@ body {
     transform: translateY(-25%);
     animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
   }
-}
+} */
