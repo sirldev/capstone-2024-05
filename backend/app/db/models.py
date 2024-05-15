@@ -46,7 +46,7 @@ class PromptAns(Base):
     uploaded = Column(
         DateTime, nullable=True
     )  # nullable. Hub에 업로드 하게 되면 이 값이 채워짐
-
+    execution_cnt = Column(Integer, nullable=False)
     # username 필드를 외래 키로 설정합니다. 이 필드는 User 모델의 username 필드를 참조합니다.
     username = Column(String, ForeignKey("User.username"))
 
