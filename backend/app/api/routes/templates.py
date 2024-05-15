@@ -163,12 +163,9 @@ async def create_template(
         )
 
         # generate template
-        result, document_title_list = gpt_genereate(
+        template_file, description, document_title_list, execution_cnt = gpt_genereate(
             instruction=prompt, retrieved_doc=retrieved_doc
         )
-
-        # parse result
-        template_file, description = parse_prompt_result(result)
 
         # get user_id from JWT
         db_promptAns = PromptAns(
@@ -176,6 +173,7 @@ async def create_template(
             template=template_file,
             description=description,
             documents=document_title_list,
+            execution_cnt=execution_cnt,
             username=username if username else None,  # jwt token이 없을 때 None
         )
         db.add(db_promptAns)
