@@ -17,9 +17,18 @@ import {
 import { useDisclosure } from '@mantine/hooks';
 import { IconArrowRight, IconDownload } from '@tabler/icons-react';
 import classes from './Result.module.css';
+import { Editor } from '@monaco-editor/react';
 
-export default function Result() {
-  const [value, setValue] = useState(TempJson);
+interface IResult {
+  prompt: string;
+  template: string;
+  description: string;
+}
+
+export default function Result({ prompt, template, description }: IResult) {
+  const [value, setValue] = useState(
+    JSON.stringify(JSON.parse(template), null, 2),
+  );
 
   const downloadJson = () => {
     const blob = new Blob([value], { type: 'application/json' });
@@ -39,8 +48,7 @@ export default function Result() {
         사용자 입력
       </Text>
       <Text size="sm" c="dimmed" lh={1.6}>
-        t2.micro 타입의 EC2 인스턴스를 2개 생성하고, 각 인스턴스에 10GB의 EBS
-        볼륨을 연결하고 싶어요
+        {prompt}
       </Text>
 
       <Text size="xl" fw={500} mt="sm">
@@ -58,12 +66,27 @@ export default function Result() {
         minRows={4}
       />
 
+      {/* <Editor
+        height="400px"
+        defaultLanguage="json"
+        defaultValue={value}
+        // onChange={setValue}
+        options={{
+          fontSize: '14px',
+          minimap: {
+            enabled: false,
+          },
+          automaticLayout: true,
+        }}
+        // theme="vs-dark"
+      /> */}
+
       <Text size="xl" fw={500} mt="lg">
         설명
       </Text>
 
       <Text size="md" fw={300} mt="lg">
-        이 CloudFormation 템플릿에는 다음과 같은 요소가 있습니다: <br />
+        {/* 이 CloudFormation 템플릿에는 다음과 같은 요소가 있습니다: <br />
         <br />
         Mappings (매핑): 이 섹션은 지역(Region)과 해당 AMI(Amazon Machine Image)
         간의 매핑을 정의합니다. 예를 들어, us-east-1 지역의 AMI는
@@ -92,7 +115,8 @@ export default function Result() {
         <br />
         이 템플릿은 "EnvType"에 따라 프로덕션, 개발 또는 테스트 환경에 필요한
         AWS 리소스를 생성할 수 있습니다.
-        <br />
+        <br /> */}
+        {description}
       </Text>
 
       <Button

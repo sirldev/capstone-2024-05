@@ -1,43 +1,22 @@
 'use client';
 
-import {
-  Container,
-  Title,
-  LoadingOverlay,
-  Loader,
-  Textarea,
-  Text,
-  Button,
-  Group,
-  AppShell,
-  Burger,
-  Grid,
-  SimpleGrid,
-  Paper,
-} from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
-import {
-  IconGauge,
-  IconCookie,
-  IconUser,
-  IconMessage2,
-  IconLock,
-  IconArrowRight,
-} from '@tabler/icons-react';
-import Link from 'next/link';
+import { Container, Title, LoadingOverlay, Loader, Grid } from '@mantine/core';
 // import { GithubIcon } from '@mantinex/dev-icons';
 import classes from './usepage.module.css';
-import FeaturesGrid from '../LandingSection/FeatureGrid';
-import CloudFormationDescription from '../LandingSection/CloudFormationDescription';
-import Usage from '../LandingSection/Usage';
-import Header from '../Header';
 import UserInput from './UserInput/Index';
 import References from './References/Index';
 import { AWSDescription } from './AWSDescription/Index';
+
+import axios from 'axios';
 import { useState } from 'react';
 import Result from './Result';
 
 export default function UsePage() {
+  const [prompt, setPrompt] = useState('');
+  const [template, setTemplate] = useState('{}');
+  const [description, setDescription] = useState('');
+  const [hashtagList, setHashtagList] = useState([]);
+  const [documentList, setDocumentList] = useState([]);
   const [currentComponent, setCurrentComponent] = useState('AWSDescription');
   const [visible, setVisible] = useState(false);
 
@@ -46,10 +25,34 @@ export default function UsePage() {
     setVisible(true);
 
     // 5초 후에 visible을 false로 설정하여 로딩 오버레이를 비활성화
-    setTimeout(() => {
-      setVisible(false);
-      setCurrentComponent('References'); // 이 부분은 다른 컴포넌트 로직에 맞게 설정
-    }, 3500);
+    // setTimeout(() => {
+    //   setVisible(false);
+    //   setCurrentComponent('References'); // 이 부분은 다른 컴포넌트 로직에 맞게 설정
+    // }, 3500);
+
+    axios
+      .post(
+        `http://ec2-54-180-98-97.ap-northeast-2.compute.amazonaws.com:8000/templates`,
+        {
+          prompt,
+        },
+        {
+          timeout: 60000,
+        },
+      )
+      .then((res) => {
+        console.log(res);
+
+        setTemplate(JSON.stringify(res.data.template));
+        setDescription(res.data.description);
+        setCurrentComponent('References');
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {
+        setVisible(false);
+      });
   };
 
   return (
@@ -82,7 +85,11 @@ export default function UsePage() {
 
           <Grid grow mt="xl">
             <Grid.Col span={8}>
-              <UserInput onButtonClick={handleComponentChange} />
+              <UserInput
+                text={prompt}
+                setText={setPrompt}
+                onButtonClick={handleComponentChange}
+              />
             </Grid.Col>
             <Grid.Col span={4}>
               <AWSDescription />
@@ -104,7 +111,11 @@ export default function UsePage() {
 
           <Grid grow mt="xl">
             <Grid.Col span={8}>
-              <Result />
+              <Result
+                prompt={prompt}
+                template={template}
+                description={description}
+              />
             </Grid.Col>
             <Grid.Col span={4}>
               <References />
