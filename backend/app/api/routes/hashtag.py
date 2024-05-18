@@ -69,7 +69,7 @@ resources = [
 
 
 # 해시태그를 사전에 만들어놓기 위한 코드입니다.
-@router.get("/store_default_to_db")
+@router.get("/store_default_to_db", include_in_schema=False)
 def store_default_to_db(request: Request, db: Session = Depends(get_db)):
     if request.body.text != "재생성할래요":
         return "재생성하지마세요"

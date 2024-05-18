@@ -184,7 +184,7 @@ _업데이트 필요 사항_: 바꿔 놓음
 컨테이너를 시작하는 데 사용되는 이미지입니다. 이 문자열은 Docker 데몬에 직접 전달됩니다. 기본적으로 Docker Hub 레지스트리의 이미지를 사용할 수 있습니다. 다른 저장소는 `repository-url/image:tag` 또는 `repository-url/image@digest` 로 지정됩니다. 최대 255개의 문자(대문자 및 소문자), 숫자, 하이픈, 밑줄, 콜론, 마침표, 슬래시 및 숫자 기호가 허용됩니다. 이 파라미터는 `Image` Docker Remote API의 컨테이너 만들기 섹션과 `IMAGE` docker run의 파라미터에 매핑됩니다.
 
 - 새 작업이 시작되면 Amazon ECS 컨테이너 에이전트는 컨테이너가 사용할 지정된 이미지 및 태그의 최신 버전을 가져옵니다. 그러나 리포지토리 이미지에 대한 후속 업데이트는 이미 실행 중인 작업에 전파되지 않습니다.
-- Amazon ECR 리포지토리의 이미지는 full `registry/repository:tag` 또는 `registry/repository@digest`. 예를 들어, `012345678910.dkr.ecr.<region-name>.amazonaws.com/<repository-name>:latest` 또는 `012345678910.dkr.ecr.<region-name>.amazonaws.com/<repository-name>@sha256:94afd1f2e64d908bc90dbca0035a5b567EXAMPLE`.
+- Amazon ECR 리포지토리의 이미지는 full `registry/repository:tag` 또는 `registry/repository@digest`. 예를 들어, `012345678910.dkr.ecr.&lt;region-name>.amazonaws.com/&lt;repository-name>:latest` 또는 `012345678910.dkr.ecr.&lt;region-name>.amazonaws.com/&lt;repository-name>@sha256:94afd1f2e64d908bc90dbca0035a5b567EXAMPLE`.
 - Docker Hub의 공식 리포지토리에 있는 이미지는 단일 이름(예: `ubuntu` 또는 `mongo`)을 사용합니다.
 - Docker Hub의 다른 리포지토리에 있는 이미지는 조직 이름(예: )으로 한정됩니다. `amazon/amazon-ecs-agent`
 - 다른 온라인 리포지토리의 이미지는 도메인 이름(예: )으로 추가로 한정됩니다. `quay.io/assemblyline/ubuntu`

@@ -209,3 +209,6 @@ document.csv
 
 /.vscode
 .vscode
+
+/backend/app/static/tmp.json
+tmp.json

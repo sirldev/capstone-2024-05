@@ -33,20 +33,20 @@ export default function RootLayout({
 
   return (
     <AuthProvider>
-    <html lang="en">
-      <head>
-        <ColorSchemeScript />
-      </head>
-      <body
-      //  className={inter.className}>
-      >
-        <MantineProvider theme={theme}>
-          <NavigationProgress />
-          <Header />
-          {children}
-        </MantineProvider>
-      </body>
-    </html>
+      <html lang="en">
+        <head>
+          <ColorSchemeScript />
+        </head>
+        <body
+        //  className={inter.className}>
+        >
+          <MantineProvider theme={theme}>
+            <NavigationProgress />
+            <Header />
+            {children}
+          </MantineProvider>
+        </body>
+      </html>
     </AuthProvider>
   );
 }

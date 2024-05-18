@@ -127,7 +127,7 @@ _업데이트 필요 사항_: 바꿔 놓음
 
 `NetworkMode`  
 작업의 컨테이너에 사용할 Docker 네트워킹 모드입니다. 유효한 값은 `none`, `bridge`, `awsvpc`및 `host`입니다. 네트워크 모드를 지정하지 않으면 기본값은 `bridge`입니다.  
-Fargate의 Amazon ECS 태스크의 경우 `awsvpc` 네트워크 모드가 필요합니다. Amazon EC2 Linux 인스턴스의 Amazon ECS 태스크의 경우 모든 네트워크 모드를 사용할 수 있습니다. Amazon EC2 Windows 인스턴스의 Amazon ECS 태스크에 사용 `<default>` 하거나 `awsvpc` , 사용할 수 있습니다. 네트워크 모드가 로 설정된 경우 `none`컨테이너 정의에서 포트 매핑을 지정할 수 없으며 작업 컨테이너에 외부 연결이 없습니다. `host` 및 `awsvpc` 네트워크 모드는 모드에서 제공하는 가상화된 네트워크 스택 대신 EC2 네트워크 스택을 사용하기 때문에 컨테이너에 가장 높은 네트워킹 성능을 제공합니다 `bridge` .  
+Fargate의 Amazon ECS 태스크의 경우 `awsvpc` 네트워크 모드가 필요합니다. Amazon EC2 Linux 인스턴스의 Amazon ECS 태스크의 경우 모든 네트워크 모드를 사용할 수 있습니다. Amazon EC2 Windows 인스턴스의 Amazon ECS 태스크에 사용 `&lt;default>` 하거나 `awsvpc` , 사용할 수 있습니다. 네트워크 모드가 로 설정된 경우 `none`컨테이너 정의에서 포트 매핑을 지정할 수 없으며 작업 컨테이너에 외부 연결이 없습니다. `host` 및 `awsvpc` 네트워크 모드는 모드에서 제공하는 가상화된 네트워크 스택 대신 EC2 네트워크 스택을 사용하기 때문에 컨테이너에 가장 높은 네트워킹 성능을 제공합니다 `bridge` .  
 `host` 및 `awsvpc` 네트워크 모드를 사용하면 노출된 컨테이너 포트가 해당 호스트 포트( `host` 네트워크 모드의 경우) 또는 연결된 탄력적 네트워크 인터페이스 포트( `awsvpc` 네트워크 모드의 경우)에 직접 매핑 되므로 동적 호스트 포트 매핑을 활용할 수 없습니다.  
 `host` 네트워크 모드를 사용하는 경우 루트 사용자(UID 0)를 사용하여 컨테이너를 실행해서는 안 됩니다. 루트가 아닌 사용자를 사용하는 것이 가장 좋습니다.
 네트워크 모드가 인 경우 `awsvpc`작업에 탄력적 네트워크 인터페이스가 할당되며, 서비스를 생성하거나 작업 정의를 사용하여 작업을 실행할 때 NetworkConfiguration 값을 지정해야 합니다. 자세한 내용은 *Amazon Elastic Container Service 개발자 안내서*의 작업 네트워킹을 참조하십시오.  
@@ -393,7 +393,7 @@ _업데이트 필요 사항_: 바꿔 놓음
               },
               {
                 "Name": "command",
-                "Value": "/bin/sh -c \\\"echo '<html> <head> <title>Amazon ECS Sample App</title> <style>body {margin-top: 40px; background-color: #333;} </style> </head><body> <div style=color:white;text-align:center> <h1>Amazon ECS Sample App</h1> <h2>Congratulations!</h2> <p>Your application is now running on a container in Amazon ECS.</p> </div></body></html>' >  /usr/local/apache2/htdocs/index.html && httpd-foreground\\\""
+                "Value": "/bin/sh -c \\\"echo '&lt;html> &lt;head> &lt;title>Amazon ECS Sample App&lt;/title> &lt;style>body {margin-top: 40px; background-color: #333;} &lt;/style> &lt;/head>&lt;body> &lt;div style=color:white;text-align:center> &lt;h1>Amazon ECS Sample App&lt;/h1> &lt;h2>Congratulations!&lt;/h2> &lt;p>Your application is now running on a container in Amazon ECS.&lt;/p> &lt;/div>&lt;/body>&lt;/html>' >  /usr/local/apache2/htdocs/index.html && httpd-foreground\\\""
               }
             ],
             "EnvironmentFiles": []

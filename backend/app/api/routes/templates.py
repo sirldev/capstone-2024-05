@@ -15,6 +15,8 @@ from sqlalchemy.orm import Session
 from utils.gpt import gpt_genereate
 from utils.auth import get_current_user
 
+from utils.gpt import validate_template
+
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 
 import main as app_main
@@ -83,6 +85,10 @@ class PromptAnsBase(BaseModel):
     template: Dict
     description: str
     user_id: int  # FK
+
+
+class Template(BaseModel):
+    template: Dict
 
 
 class Prompt(BaseModel):
@@ -166,7 +172,11 @@ async def create_template(
         template_file, description, document_title_list, execution_cnt = gpt_genereate(
             instruction=prompt, retrieved_doc=retrieved_doc
         )
-
+        if template_file is None:
+            raise HTTPException(
+                status_code=500,
+                detail="[template] 생성 실패3회 시도에서 유효한 템플릿이 나오지 않았습니다. 프롬프트를 수정해주세요",
+            )
         # get user_id from JWT
         db_promptAns = PromptAns(
             prompt=prompt,
@@ -260,4 +270,19 @@ def upload_template(
         raise http_exc
     except Exception as e:
         db.rollback()
+        raise HTTPException(status_code=500, detail=e)
+
+
+@router.post("/validate")
+def validate(params: Template):
+    try:
+        is_valid = True if validate_template(params.template) else False
+        message = (
+            "유효한 template 입니다." if is_valid else "유효하지 않은 template 입니다."
+        )
+        return {
+            "isValid": is_valid,
+            "message": message,
+        }
+    except Exception as e:
         raise HTTPException(status_code=500, detail=e)

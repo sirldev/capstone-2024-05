@@ -124,7 +124,7 @@ _업데이트 필요 사항_: 중단 없음
 `RequestParameters`  
 WebSocket API의 경우 메서드 요청에서 백엔드로 전달되는 요청 파라미터를 지정하는 키-값 맵입니다. 키는 통합 요청 파라미터 이름이고 연결된 값은 메서드 요청 파라미터 값 또는 정적 값으로, 작은따옴표로 묶고 백엔드의 필요에 따라 미리 인코딩해야 합니다. 메서드 요청 매개 변수 값은 `method.request.{location}.{name} `, 여기서 `{location}` , , 또는 ; `querystring` `path` `header` 의 패턴과 일치 `{name}` 해야 하며 유효하고 고유한 메서드 요청 매개 변수 이름이어야 합니다.  
 지정된 HTTP API 통합의 경우 `integrationSubtype`요청 매개 변수는 통합에 전달되는 매개 변수를 지정하는 키-값 맵 `AWS_PROXY` 입니다. 정적 값을 제공하거나 요청 데이터, 단계 변수 또는 런타임 시 평가되는 컨텍스트 변수를 매핑할 수 있습니다. 자세한 내용은 HTTP API에 대한 AWS 서비스 통합 작업을 참조하세요.  
-지정된 요청이 없는 HTTP API 통합의 경우 `integrationSubtype` 파라미터는 HTTP 요청을 백엔드로 보내기 전에 변환하는 방법을 지정하는 키-값 맵입니다. 키는 패턴을 따라야 합니다<action>.<header|querystring|path><location> 여기서 action은 `append`, `overwrite` 또는` remove`. 값의 경우 정적 값을 제공하거나 요청 데이터, 단계 변수 또는 런타임에 평가되는 컨텍스트 변수를 매핑할 수 있습니다. 자세한 내용은 API 요청 및 응답 변환을 참조하세요.  
+지정된 요청이 없는 HTTP API 통합의 경우 `integrationSubtype` 파라미터는 HTTP 요청을 백엔드로 보내기 전에 변환하는 방법을 지정하는 키-값 맵입니다. 키는 패턴을 따라야 합니다&lt;action>.&lt;header|querystring|path>&lt;location> 여기서 action은 `append`, `overwrite` 또는` remove`. 값의 경우 정적 값을 제공하거나 요청 데이터, 단계 변수 또는 런타임에 평가되는 컨텍스트 변수를 매핑할 수 있습니다. 자세한 내용은 API 요청 및 응답 변환을 참조하세요.  
 *필수 항목 *여부: 아니요  
 _형식_: Json  
 _업데이트 필요 사항_: 중단 없음

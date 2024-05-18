@@ -74,7 +74,7 @@ def startup_event():
     llm = ChatOpenAI()
 
 
-@app.post("/generate", response_model=Answer)
+@app.post("/generate", response_model=Answer, include_in_schema=False)
 async def generate(instruction: Instruction):
     inst_sentence = instruction.instruction_sentence
 
@@ -95,48 +95,9 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
 
 
-@app.get("/", response_class=HTMLResponse)
+@app.get("/", response_class=HTMLResponse, include_in_schema=False)
 def read_root(request: Request):
     return templates.TemplateResponse(request=request, name="main.html")
-
-
-@app.get("/template_validation/{file_name}", response_class=HTMLResponse)
-def validation_template(request: Request, file_name: str):
-    validation_cmd = [
-        "aws",
-        "cloudformation",
-        "validate-template",
-        "--template-body",
-        "file://static/examples/" + file_name,
-    ]
-
-    with open(f"./static/examples/{file_name}", "r") as file:
-        content = file.read()
-    cmd = " ".join(validation_cmd)
-
-    result = subprocess.run(validation_cmd, capture_output=True, text=True)
-    if result.returncode:
-        return templates.TemplateResponse(
-            request=request,
-            name="template-validation-fail.html",
-            context={
-                "title": file_name,
-                "result": result.stderr,
-                "cmd": cmd,
-                "content": content,
-            },
-        )
-    else:
-        return templates.TemplateResponse(
-            request=request,
-            name="template-validation-success.html",
-            context={
-                "title": file_name,
-                "result": json.loads(result.stdout),
-                "cmd": cmd,
-                "content": content,
-            },
-        )
 
 
 from api.router import api_router
