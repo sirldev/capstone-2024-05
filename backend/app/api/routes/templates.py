@@ -1,6 +1,6 @@
 import json
-import re
 import os
+import re
 import sys
 from datetime import datetime
 from typing import Dict
@@ -12,10 +12,8 @@ from pydantic import BaseModel
 from retrieval.rag import retrieve_doc
 from sqlalchemy import insert, select
 from sqlalchemy.orm import Session
-from utils.gpt import gpt_genereate
 from utils.auth import get_current_user
-
-from utils.gpt import validate_template
+from utils.gpt import gpt_genereate, validate_template
 
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 
@@ -278,9 +276,9 @@ def upload_template(
 @router.post("/validate")
 def validate(params: Template):
     try:
-        is_valid = True if validate_template(params.template) else False
+        is_valid, error_message = validate_template(params.template)
         message = (
-            "유효한 template 입니다." if is_valid else "유효하지 않은 template 입니다."
+            "유효한 template 입니다." if is_valid else error_message
         )
         return {
             "isValid": is_valid,
