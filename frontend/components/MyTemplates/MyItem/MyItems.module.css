@@ -1,6 +1,8 @@
 .wrapper {
   position: relative;
   box-sizing: border-box;
+  padding-top: rem(80px);
+
   background-color: light-dark(
     var(--mantine-color-white),
     var(--mantine-color-dark-8)
@@ -63,6 +65,67 @@
     padding-right: rem(18px);
     flex: 1;
   }
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-radius: var(--mantine-radius-md);
+  height: rem(90px);
+  background-color: light-dark(
+    var(--mantine-color-white),
+    var(--mantine-color-dark-7)
+  );
+  transition:
+    box-shadow 150ms ease,
+    transform 100ms ease;
+
+  @mixin hover {
+    box-shadow: var(--mantine-shadow-md);
+    transform: scale(1.05);
+  }
+}
+
+.card {
+  border: rem(1px) solid
+    light-dark(var(--mantine-color-gray-1), var(--mantine-color-dark-5));
+  display: flex;
+  flex-direction: column;
+  position: relative; /* 포지셔닝 컨텍스트를 설정 */
+  height: 100%;
+  transition:
+    box-shadow 150ms ease,
+    transform 100ms ease;
+
+  @mixin hover {
+    box-shadow: var(--mantine-shadow-md);
+    transform: scale(1.05);
+  }
+}
+
+.userName {
+  margin-top: auto; /* 나머지 요소들을 위로 밀고 자신은 아래에 위치 */
+  margin-left: auto; /* 왼쪽 내용을 밀고 자신은 오른쪽에 위치 */
+}
+
+.info {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--mantine-spacing-xs);
+}
+
+.cardTitle {
+  /* &::before {
+    content: '';
+    display: block;
+    background-color: var(--mantine-color-blue-filled);
+    width: rem(45px);
+    height: rem(2px);
+    margin-bottom: var(--mantine-spacing-sm);
+  } */
 }
 
 .badges {

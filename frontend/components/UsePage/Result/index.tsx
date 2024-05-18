@@ -13,21 +13,30 @@ import {
   Grid,
   SimpleGrid,
   Paper,
+  Modal,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { IconArrowRight, IconDownload } from '@tabler/icons-react';
+import { IconArrowRight, IconDownload, IconUpload } from '@tabler/icons-react';
 import classes from './Result.module.css';
 import { Editor } from '@monaco-editor/react';
+import axios from 'axios';
+import { useAuth } from '@/context/AuthContext';
 
 interface IResult {
   prompt: string;
   template: string;
   description: string;
+  hasUploaded: boolean;
+  id: number;
 }
 
-export default function Result({ prompt, template, description }: IResult) {
+export default function Result({ template }: any) {
+  const { isLoggedIn, accessToken } = useAuth();
+  const [isUploaded, setIsUploaded] = useState(template.uploaded !== null);
+  const [isModalOpen, { open, close }] = useDisclosure(false);
+
   const [value, setValue] = useState(
-    JSON.stringify(JSON.parse(template), null, 2),
+    JSON.stringify(template.template, null, 2),
   );
 
   const downloadJson = () => {
@@ -42,13 +51,43 @@ export default function Result({ prompt, template, description }: IResult) {
     URL.revokeObjectURL(url); // 생성된 URL을 메모리에서 해제
   };
 
+  const uploadTemplate = () => {
+    setIsUploaded(true);
+    const config: { headers: { Authorization?: string }, timeout?: number } = {
+      headers: {}
+    };
+
+    config.timeout = 60000;
+    if (isLoggedIn) {
+      config.headers['Authorization'] = `${accessToken}`;
+    }
+
+    axios
+      .post(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/templates/upload`,
+        {
+          id: template.id
+        },
+        config
+      )
+      .then((res) => {
+        // console.log(res);
+        open();
+      })
+      .catch((error) => {
+        setIsUploaded(false);
+        console.log(error);
+      })
+
+  };
+
   return (
     <Container className={classes.inner}>
       <Text size="xl" fw={500} mt="sm" mb={7}>
         사용자 입력
       </Text>
       <Text size="sm" c="dimmed" lh={1.6}>
-        {prompt}
+        {template.prompt}
       </Text>
 
       <Text size="xl" fw={500} mt="sm">
@@ -66,57 +105,12 @@ export default function Result({ prompt, template, description }: IResult) {
         minRows={4}
       />
 
-      {/* <Editor
-        height="400px"
-        defaultLanguage="json"
-        defaultValue={value}
-        // onChange={setValue}
-        options={{
-          fontSize: '14px',
-          minimap: {
-            enabled: false,
-          },
-          automaticLayout: true,
-        }}
-        // theme="vs-dark"
-      /> */}
-
       <Text size="xl" fw={500} mt="lg">
         설명
       </Text>
 
       <Text size="md" fw={300} mt="lg">
-        {/* 이 CloudFormation 템플릿에는 다음과 같은 요소가 있습니다: <br />
-        <br />
-        Mappings (매핑): 이 섹션은 지역(Region)과 해당 AMI(Amazon Machine Image)
-        간의 매핑을 정의합니다. 예를 들어, us-east-1 지역의 AMI는
-        "ami-0ff8a91507f77f867"입니다.
-        <br />
-        Parameters (매개변수): 이 부분은 "EnvType"이라는 환경 유형을 지정하는
-        매개변수를 정의합니다. 기본값은 "test"이며, "prod", "dev", "test" 중
-        하나를 선택해야 합니다.
-        <br />
-        Conditions (조건): "CreateProdResources"와 "CreateDevResources"라는 두
-        가지 조건이 정의되어 있습니다. 이들은 "EnvType"에 따라 프로덕션 및 개발
-        환경에 대한 여부를 결정합니다.
-        <br />
-        Resources (리소스):
-        <br />
-        EC2Instance: 이 리소스는 AWS EC2 인스턴스를 생성합니다.
-        <br />
-        이미지 ID는 해당 지역에 대한 매핑에서 가져오며, "EnvType"에 따라
-        인스턴스 유형이 변경됩니다.
-        <br />
-        MountPoint: "CreateProdResources" 조건에 따라서만 생성되는 AWS EC2
-        볼륨을 인스턴스에 첨부하는 볼륨 첨부 리소스입니다.
-        <br />
-        NewVolume: "CreateProdResources" 조건에 따라서만 생성되는 새로운 AWS EC2
-        볼륨을 정의합니다. 크기는 100이며, 인스턴스의 가용 영역에 배치됩니다.
-        <br />
-        이 템플릿은 "EnvType"에 따라 프로덕션, 개발 또는 테스트 환경에 필요한
-        AWS 리소스를 생성할 수 있습니다.
-        <br /> */}
-        {description}
+        {template.description}
       </Text>
 
       <Button
@@ -126,24 +120,24 @@ export default function Result({ prompt, template, description }: IResult) {
       >
         템플릿 파일 다운로드
       </Button>
+
+      {isLoggedIn && (template.uploaded === null) ? (
+        <Button
+          mt={30}
+          ml={10}
+          onClick={uploadTemplate}
+          disabled={isUploaded}
+          bg="cyan"
+          rightSection={<IconUpload size={14} />}
+        >
+          템플릿 업로드
+        </Button>
+        ) : <></>
+      }
+
+        <Modal opened={isModalOpen} onClose={close} title="템플릿 업로드 성공">
+          Template Hub와 My Page에서 확인해 보세요.
+        </Modal>
     </Container>
   );
 }
-
-export const TempJson = `{
-  "AWSTemplateFormatVersion": "2010-09-09",
-  "Description": "Simple AWS CloudFormation Template for an EC2 instance.",
-  "Resources": {
-    "MyEC2Instance": {
-      "Type": "AWS::EC2::Instance",
-      "Properties": {
-        "InstanceType": "t2.micro",
-        "ImageId": "ami-0abcdef1234567890",
-        "KeyName": "MyKeyPair",
-        "SecurityGroups": [
-          "default"
-        ]
-      }
-    }
-  }
-}`;
