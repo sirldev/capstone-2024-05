@@ -73,7 +73,7 @@ def gpt_genereate(instruction: str, retrieved_doc: List[dict], execution_cnt: in
 
   Description의 경우 자세하게 한글로 적어줘.
 """
-    instruction_generation = '답변의 형식은 JSON 형태로 구성하는데, JSON은 "```json"으로 시작해서 "```"로 끝나게 생성해줘. Python3의 "json.loads"를 통해 너가 준 문자열 결과값을 JSON 객체로 변환할건데, JSONDecodeError 에러가 발생하지 않도록 JSON의 형태에 맞게 결과값을 만들어줘.'
+    instruction_generation = '답변은 "```json"으로 시작해서 "```"로 끝나게 생성해줘. Python3의 "json.loads"를 통해 너가 준 문자열 결과값을 JSON 객체로 변환할건데, JSONDecodeError 에러가 발생하지 않도록 JSON의 형태에 맞게 결과값을 만들어줘.'
 
     completion = openai.chat.completions.create(
         model="gpt-4-turbo-preview",
