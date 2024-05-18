@@ -167,7 +167,7 @@ async def create_template(
         )
 
         # generate template
-        template_file, description, document_title_list, execution_cnt = await gpt_genereate(
+        template_file, description, document_title_list, execution_cnt = gpt_genereate(
             instruction=prompt, retrieved_doc=retrieved_doc
         )
         if template_file is None:

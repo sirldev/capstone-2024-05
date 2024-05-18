@@ -29,6 +29,9 @@ def validate_template(template: dict):
     # 254 명령이 성공적으로 구문 분석되고 지정된 서비스에 요청이 전송되었지만, 서비스에서 오류가 반환되었습니다. 일반적으로 이는 잘못된 API 사용 또는 기타 서비스 특정 문제를 나타냅니다.
     # 255 일반적인 캐치올 오류입니다. 명령은 구문 분석이 올바르게 되었을 수 있지만, 명령을 실행하는 동안 명시되지 않은 런타임 오류가 발생했습니다. 이는 일반적인 오류 코드이기 때문에 오류가 255에서 더 구체적인 반환 코드로 변경될 수 있습니다. 255의 반환 코드는 특정한 오류 사례를 결정하기 위해 의존되어서는 안 됩니다.
 
+    print(f"{result.returncode=}")
+    print(f"{result.stderr=}")
+
     is_valid = result.returncode == 0
     error_message = "" if is_valid else result.stderr
     return is_valid, error_message
@@ -36,16 +39,16 @@ def validate_template(template: dict):
 
 # gpt result parsing function
 def parse_prompt_result(result):
-    s_idx = result.find("```json")
-    e_idx = result.find("```", 3)
-    s_idx += 7  # "```json" length
-    raw_json = result[s_idx:e_idx]
-    template_file = json.loads(raw_json)
+    # s_idx = result.find("```json")
+    # e_idx = result.find("```", 3)
+    # s_idx += 7  # "```json" length
+    # raw_json = result[s_idx:e_idx]
+    template_file = json.loads(result)
     description = template_file["Description"]
     return template_file, description
 
 
-async def gpt_genereate(instruction: str, retrieved_doc: List[dict]):
+def gpt_genereate(instruction: str, retrieved_doc: List[dict]):
     docs = "\n\n".join([doc.page_content for doc in retrieved_doc])
     persona = """
 너는 지금부터 AWS의 CloudFormation 템플릿을 생성하는 역할을 할거야. 그러기 위해 너에게 지시 사항과 지시 사항과 관련된 AWS 문서를 함께 제공할거야. 주어진 문서의 내용을 바탕으로, 지시 사항을 수행하는 JSON 형식의 템플릿 파일을 생성해줘.
@@ -77,7 +80,7 @@ async def gpt_genereate(instruction: str, retrieved_doc: List[dict]):
   Description의 경우 자세하게 한글로 적어줘.
 """
 
-    completion = await openai.chat.completions.create(
+    completion = openai.chat.completions.create(
         model="gpt-4-turbo-preview",
         messages=[
             {"role": "system", "content": persona},
@@ -91,16 +94,87 @@ async def gpt_genereate(instruction: str, retrieved_doc: List[dict]):
         },
     )
 
-    response = completion.choices[0]
-    response = response.message.content
+    response = completion.choices[0].message.content
     template, description = parse_prompt_result(response)
-    is_valid = validate_template(template)
+    is_valid, error_message = validate_template(template)
+    print(f"execution_cnt=1, {completion.usage.total_tokens=}")
     if is_valid:
         doc_title_list = [doc.metadata["title"] for doc in retrieved_doc]
         return template, description, doc_title_list, 1
 
     # if there is no valid template
-    return await gpt_generate_retry(instruction, retrieved_doc)
+    return gpt_generate_retry(instruction, retrieved_doc, error_message, template)
+
+
+
+def gpt_generate_retry(instruction, retrieved_doc, error_message, wrong_template):
+    execution_cnt = 2
+
+    while execution_cnt <= 3:
+        docs = "\n\n".join([doc.page_content for doc in retrieved_doc])
+        persona = """
+        너는 지금부터 AWS의 CloudFormation 템플릿을 생성하는 역할을 할거야. 그러기 위해 너에게 지시 사항과 지시 사항과 관련된 AWS 문서를 함께 제공할거야. 주어진 문서의 내용을 바탕으로, 지시 사항을 수행하는 JSON 형식의 템플릿 파일을 생성해줘.
+            
+            - AWS CloudFormation 템플릿의 예시: AWS CloudFormation 템플릿 형태에 대해 설명해줄게.
+            AWS CloudFormation 템플릿 형태에 대해 설명해줄게.
+
+            템플릿 구조
+            JSON
+            {
+            "AWSTemplateFormatVersion" : "version date",
+            "Description" : "JSON string",
+            "Resources" : {
+            set of resources
+            }
+        }
+
+        템플릿 섹션
+        AWSTemplateFormatVersion
+        AWSTemplateFormatVersion 섹션은 템플릿의 기능을 식별합니다. 최신 템플릿 포맷 버전은 2010-09-09이며 현재 유일한 유효 값입니다.
+
+        Description
+        템플릿의 Description 섹션(선택 사항)에 템플릿에 대한 설명을 지정합니다. 설명 선언 값은 0 ~ 1023바이트 길이의 리터럴 문자열이어야 합니다. 파라미터나 함수를 사용하여 설명을 지정할 수 없습니다. 다음 코드 조각은 설명 선언을 보여주는 예입니다.
+
+        Resources
+        필수 Resources 섹션은 Amazon EC2 인스턴스 또는 Amazon S3 버킷 등 스택에 포함시킬 AWS 리소스를 선언합니다.
+        Resources 섹션은 키 이름 Resources로 이루어집니다. 다음 가상 템플릿에는 Resources 섹션이 요약되어 있습니다.
+
+        Description의 경우 자세하게 한글로 적어줘.
+        """
+    
+        instruction_generation = f"""
+        아래 주어진 [에러 메세지]의 내용에 따라 [잘못된 템플릿 파일]을 [지시 사항]에 맞게 수정해줘.
+        [에러 메세지]
+        {error_message}
+        [잘못된 템플릿 파일]
+        {wrong_template}
+        """
+        completion = openai.chat.completions.create(
+            model="gpt-4-turbo-preview",
+            messages=[
+                {"role": "system", "content": persona},
+                {
+                    "role": "user",
+                    "content": f"{instruction_generation}\n[지시 사항]\n{instruction}\n\n[문서]\n{docs}",
+                },
+            ],
+            response_format={
+                "type": "json_object",
+            },
+        )
+
+        response = completion.choices[0].message.content
+        template, description = parse_prompt_result(response)
+        is_valid, error_message = validate_template(template)
+        print(f"{execution_cnt=}, {completion.usage.total_tokens=}")
+        if is_valid:
+            doc_title_list = [doc.metadata["title"] for doc in retrieved_doc]
+            return template, description, doc_title_list, execution_cnt
+        
+        wrong_template = template
+        execution_cnt += 1
+    
+    return None, "", [], 3
 
 
 def gpt_generate_no_rag(instruction: str):
@@ -125,63 +199,3 @@ def gpt_generate_no_rag(instruction: str):
     response = completion.choices[0].message.content
 
     return response
-
-async def gpt_generate_retry(instruction, retrieved_doc):
-    execution_cnt = 2
-
-    while execution_cnt <= 3:
-        print(f"{execution_cnt=}")
-        docs = "\n\n".join([doc.page_content for doc in retrieved_doc])
-        persona = """
-    너는 지금부터 AWS의 CloudFormation 템플릿을 생성하는 역할을 할거야. 그러기 위해 너에게 지시 사항과 지시 사항과 관련된 AWS 문서를 함께 제공할거야. 주어진 문서의 내용을 바탕으로, 지시 사항을 수행하는 JSON 형식의 템플릿 파일을 생성해줘.
-        
-        - AWS CloudFormation 템플릿의 예시: AWS CloudFormation 템플릿 형태에 대해 설명해줄게.
-        AWS CloudFormation 템플릿 형태에 대해 설명해줄게.
-
-        템플릿 구조
-        JSON
-        {
-        "AWSTemplateFormatVersion" : "version date",
-        "Description" : "JSON string",
-        "Resources" : {
-        set of resources
-        }
-    }
-
-    템플릿 섹션
-    AWSTemplateFormatVersion
-    AWSTemplateFormatVersion 섹션은 템플릿의 기능을 식별합니다. 최신 템플릿 포맷 버전은 2010-09-09이며 현재 유일한 유효 값입니다.
-
-    Description
-    템플릿의 Description 섹션(선택 사항)에 템플릿에 대한 설명을 지정합니다. 설명 선언 값은 0 ~ 1023바이트 길이의 리터럴 문자열이어야 합니다. 파라미터나 함수를 사용하여 설명을 지정할 수 없습니다. 다음 코드 조각은 설명 선언을 보여주는 예입니다.
-
-    Resources
-    필수 Resources 섹션은 Amazon EC2 인스턴스 또는 Amazon S3 버킷 등 스택에 포함시킬 AWS 리소스를 선언합니다.
-    Resources 섹션은 키 이름 Resources로 이루어집니다. 다음 가상 템플릿에는 Resources 섹션이 요약되어 있습니다.
-
-    Description의 경우 자세하게 한글로 적어줘.
-    """
-
-        completion = await openai.chat.completions.create(
-            model="gpt-4-turbo-preview",
-            messages=[
-                {"role": "system", "content": persona},
-                {
-                    "role": "user",
-                    "content": f"[지시 사항]\n{instruction}\n\n[문서]\n{docs}",
-                },
-            ],
-            response_format={
-                "type": "json_object",
-            },
-        )
-
-        response = completion.choices[0]
-        response = response.message.content
-        template, description = parse_prompt_result(response)
-        is_valid = validate_template(template)
-        if is_valid:
-            doc_title_list = [doc.metadata["title"] for doc in retrieved_doc]
-            return template, description, doc_title_list, execution_cnt
-        
-        execution_cnt += 1

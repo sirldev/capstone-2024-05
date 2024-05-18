@@ -80,7 +80,7 @@ async def generate(instruction: Instruction):
         question=inst_sentence, pc_index=pc_index, embedding=embedding, llm=llm
     )
 
-    template_file, documents_list = await gpt_genereate(
+    template_file, documents_list = gpt_genereate(
         instruction=instruction, retrieved_doc=retrieved_doc
     )
 
