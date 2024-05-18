@@ -103,25 +103,12 @@ export const resources = [
   {
     group: 'Compute',
     color: 'red',
-    items: [
-      'EC2',
-      'Lambda',
-      'Batch',
-      'ECS',
-      'EKS',
-      'Fargate',
-    ],
+    items: ['EC2', 'Lambda', 'Batch', 'ECS', 'EKS', 'Fargate'],
   },
   {
     group: 'Storage',
     color: 'pink',
-    items: [
-      'S3',
-      'EBS',
-      'Elastic File System',
-      'Storage Gateway',
-      'FSx',
-    ],
+    items: ['S3', 'EBS', 'Elastic File System', 'Storage Gateway', 'FSx'],
   },
   {
     group: 'Database',
@@ -138,22 +125,12 @@ export const resources = [
   {
     group: 'Networking and Content Delivery',
     color: 'violet',
-    items: [
-      'VPC',
-      'Route 53',
-      'Direct Connect',
-      'CloudFront',
-    ],
+    items: ['VPC', 'Route 53', 'Direct Connect', 'CloudFront'],
   },
   {
     group: 'Developer Tools',
     color: 'indigo',
-    items: [
-      'CodeCommit',
-      'CodeBuild',
-      'CodeDeploy',
-      'CodePipeline',
-    ],
+    items: ['CodeCommit', 'CodeBuild', 'CodeDeploy', 'CodePipeline'],
   },
   {
     group: 'Management and Governance',
@@ -180,23 +157,12 @@ export const resources = [
   {
     group: 'Machine Learning',
     color: 'green',
-    items: [
-      'SageMaker',
-      'Comprehend',
-      'Rekognition',
-      'DeepLens',
-    ],
+    items: ['SageMaker', 'Comprehend', 'Rekognition', 'DeepLens'],
   },
   {
     group: 'Analytics',
     color: 'blue',
-    items: [
-      'Athena',
-      'EMR',
-      'Glue',
-      'QuickSight',
-      'Lake Formation',
-    ],
+    items: ['Athena', 'EMR', 'Glue', 'QuickSight', 'Lake Formation'],
   },
   {
     group: 'Application Integration',
@@ -206,10 +172,6 @@ export const resources = [
   {
     group: 'Customer Engagement',
     color: 'teal',
-    items: [
-      'Connect',
-      'Simple Email Service',
-      'Pinpoint',
-    ],
+    items: ['Connect', 'Simple Email Service', 'Pinpoint'],
   },
 ];

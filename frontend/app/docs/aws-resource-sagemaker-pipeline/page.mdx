@@ -101,13 +101,13 @@ _업데이트 필요 사항_: 중단 없음
     "MyPipeline": {
       "Type": "AWS::SageMaker::Pipeline",
       "Properties": {
-        "PipelineName": "<pipeline-name>"
-        "PipelineDisplayName": "<pipeline-display-name>",
-        "PipelineDescription": "<pipeline-description>",
+        "PipelineName": "&lt;pipeline-name>"
+        "PipelineDisplayName": "&lt;pipeline-display-name>",
+        "PipelineDescription": "&lt;pipeline-description>",
         "PipelineDefinition": {
           "PipelineDefinitionBody": "{\"Version\":\"2020-12-01\",\"Parameters\":[{\"Name\":\"InputDataSource\",\"DefaultValue\":\"\"},{\"Name\":\"InstanceCount\",\"Type\":\"Integer\",\"DefaultValue\":1}],\"Steps\":[{\"Name\":\"Training1\",\"Type\":\"Training\",\"Arguments\":{\"InputDataConfig\":[{\"DataSource\":{\"S3DataSource\":{\"S3Uri\":{\"Get\":\"Parameters.InputDataSource\"}}}}],\"OutputDataConfig\":{\"S3OutputPath\":\"s3://my-s3-bucket/\"},\"ResourceConfig\":{\"InstanceType\":\"ml.m5.large\",\"InstanceCount\":{\"Get\":\"Parameters.InstanceCount\"},\"VolumeSizeInGB\":1024}}}]}"
         },
-        "RoleArn": "arn:aws:iam::<account-id>:root"
+        "RoleArn": "arn:aws:iam::&lt;account-id>:root"
       }
     }
   }
@@ -123,16 +123,16 @@ _업데이트 필요 사항_: 중단 없음
     "MyPipeline": {
       "Type": "AWS::SageMaker::Pipeline",
       "Properties": {
-        "PipelineName": "<pipeline-name>",
-        "PipelineDisplayName": "<pipeline-display-name>",
-        "PipelineDescription": "<pipeline-description>",
+        "PipelineName": "&lt;pipeline-name>",
+        "PipelineDisplayName": "&lt;pipeline-display-name>",
+        "PipelineDescription": "&lt;pipeline-description>",
         "PipelineDefinition": {
           "PipelineDefinitionS3Location": {
-            "Bucket": "<S3-bucket-location>",
-            "Key": "<S3-bucket-key>"
+            "Bucket": "&lt;S3-bucket-location>",
+            "Key": "&lt;S3-bucket-key>"
           }
         },
-        "RoleArn": "arn:aws:iam::<account-id>:root"
+        "RoleArn": "arn:aws:iam::&lt;account-id>:root"
       }
     }
   }

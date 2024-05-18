@@ -1,7 +1,15 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Modal, Container, Group, Burger, Text, Menu, Center } from '@mantine/core';
+import {
+  Modal,
+  Container,
+  Group,
+  Burger,
+  Text,
+  Menu,
+  Center,
+} from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import classes from './header.module.css';
 import { IconChevronDown } from '@tabler/icons-react';
@@ -22,18 +30,16 @@ const leftLinks = [
   // { link: '/login', label: 'Login' },
 ];
 
-const loggedInLinks : LinkItem= 
-  {
-    link: '#2',
-    label: 'My Page',
-    links: [
-      { link: '/mypage', label: 'My Page' },
-      { link: '/', label: 'Logout' }
-    ],
-  };
+const loggedInLinks: LinkItem = {
+  link: '#2',
+  label: 'My Page',
+  links: [
+    { link: '/mypage', label: 'My Page' },
+    { link: '/', label: 'Logout' },
+  ],
+};
 
-const loggedOutLinks: LinkItem = 
-  { link: '/login', label: 'Login' };
+const loggedOutLinks: LinkItem = { link: '/login', label: 'Login' };
 
 export default function Header() {
   // useEffect(() => {
@@ -66,48 +72,52 @@ export default function Header() {
       {link.label}
     </Link>
   ));
-  
+
   const rightItems = isLoggedIn ? (
-    
-        <Menu key={loggedInLinks.label} trigger="hover" transitionProps={{ exitDuration: 0 }} withinPortal>
-          <Menu.Target>
-            <a
-              href={loggedInLinks.link}
-              className={classes.link}
-              onClick={(event) => event.preventDefault()}
-            >
-              <Center>
-                <span className={classes.linkLabel}>{loggedInLinks.label}</span>
-                <IconChevronDown size="0.9rem" stroke={1.5} />
-              </Center>
-            </a>
-          </Menu.Target>
-          <Menu.Dropdown>
-          {loggedInLinks.links?.map((item) => (
-              <Link
-                key={item.link}
-                href={item.link}
-                className={classes.link}
-                onClick={(event) => {
-                  if (item.label === 'Logout') {
-                    logout(); // 로그아웃 함수 호출
-                    open();
-                    router.push('/'); // 로그아웃 후 리디렉션
-                  } else {
-                    router.push(item.link);
-                    setActive(item.link);
-                  }
-                  event.preventDefault();
-                  router.push(item.link);
-                  setActive(item.link);
-                }}
-              >
-                {item.label}
-              </Link>
-            ))}
-          </Menu.Dropdown>
-        </Menu> ) :
-        (
+    <Menu
+      key={loggedInLinks.label}
+      trigger="hover"
+      transitionProps={{ exitDuration: 0 }}
+      withinPortal
+    >
+      <Menu.Target>
+        <a
+          href={loggedInLinks.link}
+          className={classes.link}
+          onClick={(event) => event.preventDefault()}
+        >
+          <Center>
+            <span className={classes.linkLabel}>{loggedInLinks.label}</span>
+            <IconChevronDown size="0.9rem" stroke={1.5} />
+          </Center>
+        </a>
+      </Menu.Target>
+      <Menu.Dropdown>
+        {loggedInLinks.links?.map((item) => (
+          <Link
+            key={item.link}
+            href={item.link}
+            className={classes.link}
+            onClick={(event) => {
+              if (item.label === 'Logout') {
+                logout(); // 로그아웃 함수 호출
+                open();
+                router.push('/'); // 로그아웃 후 리디렉션
+              } else {
+                router.push(item.link);
+                setActive(item.link);
+              }
+              event.preventDefault();
+              router.push(item.link);
+              setActive(item.link);
+            }}
+          >
+            {item.label}
+          </Link>
+        ))}
+      </Menu.Dropdown>
+    </Menu>
+  ) : (
     <Link
       key={loggedOutLinks.label}
       href={loggedOutLinks.link}
@@ -125,7 +135,7 @@ export default function Header() {
     >
       {loggedOutLinks.label}
     </Link>
-        );
+  );
 
   return (
     <header className={classes.header}>
@@ -149,7 +159,7 @@ export default function Header() {
         <Group gap={5} visibleFrom="sm">
           {rightItems}
         </Group>
-        
+
         {/* <div className="font-bold text-[#0076E2]">StackOrderFlow</div> */}
 
         <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
@@ -158,9 +168,7 @@ export default function Header() {
           opened={isModalOpen}
           onClose={close}
           title="로그아웃 되었습니다"
-        >
-          
-        </Modal>
+        ></Modal>
       </Container>
     </header>
   );
