@@ -240,6 +240,8 @@ async def create_template(
 
             # 리턴
             return db_promptAns_dict
+    except HTTPException as http_exc:
+        raise http_exc
     except Exception as e:
         db.rollback()
         raise HTTPException(status_code=500, detail=e)
