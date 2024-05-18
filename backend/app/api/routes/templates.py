@@ -274,9 +274,9 @@ def upload_template(
 @router.post("/validate")
 def validate(params: Template):
     try:
-        is_valid = True if validate_template(params.template) else False
+        is_valid, error_message = validate_template(params.template)
         message = (
-            "유효한 template 입니다." if is_valid else "유효하지 않은 template 입니다."
+            "유효한 template 입니다." if is_valid else error_message
         )
         return {
             "isValid": is_valid,

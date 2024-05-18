@@ -29,7 +29,9 @@ def validate_template(template: dict):
     # 254 명령이 성공적으로 구문 분석되고 지정된 서비스에 요청이 전송되었지만, 서비스에서 오류가 반환되었습니다. 일반적으로 이는 잘못된 API 사용 또는 기타 서비스 특정 문제를 나타냅니다.
     # 255 일반적인 캐치올 오류입니다. 명령은 구문 분석이 올바르게 되었을 수 있지만, 명령을 실행하는 동안 명시되지 않은 런타임 오류가 발생했습니다. 이는 일반적인 오류 코드이기 때문에 오류가 255에서 더 구체적인 반환 코드로 변경될 수 있습니다. 255의 반환 코드는 특정한 오류 사례를 결정하기 위해 의존되어서는 안 됩니다.
 
-    return result.returncode == 0
+    is_valid = result.returncode == 0
+    error_message = "" if is_valid else result.stderr
+    return is_valid, error_message
 
 
 # gpt result parsing function
@@ -43,7 +45,7 @@ def parse_prompt_result(result):
     return template_file, description
 
 
-async def gpt_genereate(instruction: str, retrieved_doc: List[dict], execution_cnt: int = 1):
+async def gpt_genereate(instruction: str, retrieved_doc: List[dict]):
     docs = "\n\n".join([doc.page_content for doc in retrieved_doc])
     persona = """
 너는 지금부터 AWS의 CloudFormation 템플릿을 생성하는 역할을 할거야. 그러기 위해 너에게 지시 사항과 지시 사항과 관련된 AWS 문서를 함께 제공할거야. 주어진 문서의 내용을 바탕으로, 지시 사항을 수행하는 JSON 형식의 템플릿 파일을 생성해줘.
