@@ -23,6 +23,7 @@ origins = [
     "http://localhost",
     "http://localhost:3000",
     "https://capstone-2024-05.vercel.app",
+    "https://www.stackorderflow.site",
 ]
 
 
