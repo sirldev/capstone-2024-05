@@ -34,7 +34,7 @@ export default function HubItems({ templates }: { templates: any[] }) {
     router.push(`/hub/${id}`);
   };
 
-    // 이 객체를 통해 각 리소스 이름에 해당하는 색상을 빠르게 검색할 수 있습니다.
+  // 이 객체를 통해 각 리소스 이름에 해당하는 색상을 빠르게 검색할 수 있습니다.
   const resourceColors: { [key: string]: string } = {};
   const tempHubItems = templates?.map((template) => {
     return {
@@ -45,12 +45,12 @@ export default function HubItems({ templates }: { templates: any[] }) {
     };
   });
 
-    // 모든 그룹과 아이템을 순회하며 resourceColors 객체를 생성합니다.
-    resources.forEach(group => {
-      group.items.forEach(item => {
-        resourceColors[item] = group.color;
-      });
+  // 모든 그룹과 아이템을 순회하며 resourceColors 객체를 생성합니다.
+  resources.forEach((group) => {
+    group.items.forEach((item) => {
+      resourceColors[item] = group.color;
     });
+  });
 
   // const items = tempHubItems.map((item) => (
   //   <UnstyledButton key={item.id} className={classes.item}>

@@ -79,111 +79,111 @@ _업데이트 필요 사항_: 중단 없음
 
 - ** `resources.ARN` ** - 모든 연산자를 와 함께 사용할 수 `resources.ARN`있지만, `Equals` 또는 `NotEquals` 를 사용하는 경우 값은 템플릿에서 resources.type의 값으로 지정한 유형의 유효한 리소스의 ARN과 정확히 일치해야 합니다. 예를 들어 resources.type이 인 경우 `AWS::S3::Object`ARN은 다음 형식 중 하나여야 합니다. 특정 S3 버킷의 모든 객체에 대한 모든 데이터 이벤트를 로깅하려면 연산자를 사용하고 `StartsWith` 버킷 ARN만 일치하는 값으로 포함합니다.
 
-후행 슬래시는 의도적인 것입니다. 제외하지 마십시오. 보다 작음과 보다 큼 기호(<>) 사이의 텍스트를 리소스별 정보로 바꿉니다.
+후행 슬래시는 의도적인 것입니다. 제외하지 마십시오. 보다 작음과 보다 큼 기호(&lt;>) 사이의 텍스트를 리소스별 정보로 바꿉니다.
 
-- `arn:<partition>:s3:::<bucket_name>/`
-- `arn:<partition>:s3:::<bucket_name>/<object_path>/`
+- `arn:&lt;partition>:s3:::&lt;bucket_name>/`
+- `arn:&lt;partition>:s3:::&lt;bucket_name>/&lt;object_path>/`
 
 resources.type이 인 경우 `AWS::DynamoDB::Table` 연산자가 `Equals` 또는 `NotEquals` 로 설정된 경우 ARN은 다음 형식이어야 합니다.
 
-- `arn:<partition>:dynamodb:<region>:<account_ID>:table/<table_name>`
+- `arn:&lt;partition>:dynamodb:&lt;region>:&lt;account_ID>:table/&lt;table_name>`
 
 resources.type이 인 경우 `AWS::Lambda::Function` 연산자가 `Equals` 또는 `NotEquals` 로 설정된 경우 ARN은 다음 형식이어야 합니다.
 
-- `arn:<partition>:lambda:<region>:<account_ID>:function:<function_name>`
+- `arn:&lt;partition>:lambda:&lt;region>:&lt;account_ID>:function:&lt;function_name>`
 
 resources.type이 인 경우 `AWS::CloudTrail::Channel` 연산자가 `Equals` 또는 `NotEquals` 로 설정된 경우 ARN은 다음 형식이어야 합니다.
 
-- `arn:<partition>:cloudtrail:<region>:<account_ID>:channel/<channel_UUID>`
+- `arn:&lt;partition>:cloudtrail:&lt;region>:&lt;account_ID>:channel/&lt;channel_UUID>`
 
 resources.type이 인 경우 `AWS::CodeWhisperer::Profile` 연산자가 `Equals` 또는 `NotEquals` 로 설정된 경우 ARN은 다음 형식이어야 합니다.
 
-- `arn:<partition>:codewhisperer:<region>:<account_ID>:profile/<profile_ID>`
+- `arn:&lt;partition>:codewhisperer:&lt;region>:&lt;account_ID>:profile/&lt;profile_ID>`
 
 resources.type이 인 경우 `AWS::Cognito::IdentityPool` 연산자가 `Equals` 또는 `NotEquals` 로 설정된 경우 ARN은 다음 형식이어야 합니다.
 
-- `arn:<partition>:cognito-identity:<region>:<account_ID>:identitypool/<identity_pool_ID>`
+- `arn:&lt;partition>:cognito-identity:&lt;region>:&lt;account_ID>:identitypool/&lt;identity_pool_ID>`
 
 equals `resources.type`이고 연산자가 `AWS::DynamoDB::Stream` or 로 설정된 `Equals` 경우 `NotEquals`ARN은 다음 형식이어야 합니다.
 
-- `arn:<partition>:dynamodb:<region>:<account_ID>:table/<table_name>/stream/<date_time>`
+- `arn:&lt;partition>:dynamodb:&lt;region>:&lt;account_ID>:table/&lt;table_name>/stream/&lt;date_time>`
 
 equals `resources.type`이고 연산자가 `AWS::EC2::Snapshot` or 로 설정된 `Equals` 경우 `NotEquals`ARN은 다음 형식이어야 합니다.
 
-- `arn:<partition>:ec2:<region>::snapshot/<snapshot_ID>`
+- `arn:&lt;partition>:ec2:&lt;region>::snapshot/&lt;snapshot_ID>`
 
 equals `resources.type`이고 연산자가 `AWS::EMRWAL::Workspace` or 로 설정된 `Equals` 경우 `NotEquals`ARN은 다음 형식이어야 합니다.
 
-- `arn:<partition>:emrwal:<region>::workspace/<workspace_name>`
+- `arn:&lt;partition>:emrwal:&lt;region>::workspace/&lt;workspace_name>`
 
 equals `resources.type`이고 연산자가 `AWS::FinSpace::Environment` or 로 설정된 `Equals` 경우 `NotEquals`ARN은 다음 형식이어야 합니다.
 
-- `arn:<partition>:finspace:<region>:<account_ID>:environment/<environment_ID>`
+- `arn:&lt;partition>:finspace:&lt;region>:&lt;account_ID>:environment/&lt;environment_ID>`
 
 equals `resources.type`이고 연산자가 `AWS::Glue::Table` or 로 설정된 `Equals` 경우 `NotEquals`ARN은 다음 형식이어야 합니다.
 
-- `arn:<partition>:glue:<region>:<account_ID>:table/<database_name>/<table_name>`
+- `arn:&lt;partition>:glue:&lt;region>:&lt;account_ID>:table/&lt;database_name>/&lt;table_name>`
 
 equals `resources.type`이고 연산자가 `AWS::GuardDuty::Detector` or 로 설정된 `Equals` 경우 `NotEquals`ARN은 다음 형식이어야 합니다.
 
-- `arn:<partition>:guardduty:<region>:<account_ID>:detector/<detector_ID>`
+- `arn:&lt;partition>:guardduty:&lt;region>:&lt;account_ID>:detector/&lt;detector_ID>`
 
 equals `resources.type`이고 연산자가 `AWS::KendraRanking::ExecutionPlan` or 로 설정된 `Equals` 경우 `NotEquals`ARN은 다음 형식이어야 합니다.
 
-- `arn:<partition>:kendra-ranking:<region>:<account_ID>:rescore-execution-plan/<rescore_execution_plan_ID>`
+- `arn:&lt;partition>:kendra-ranking:&lt;region>:&lt;account_ID>:rescore-execution-plan/&lt;rescore_execution_plan_ID>`
 
 equals `resources.type`이고 연산자가 `AWS::KinesisVideo::Stream` or 로 설정된 `Equals` 경우 `NotEquals`ARN은 다음 형식이어야 합니다.
 
-- `arn:<partition>:kinesisvideo:<region>:<account_ID>:stream/<stream_name/<creation_time>`
+- `arn:&lt;partition>:kinesisvideo:&lt;region>:&lt;account_ID>:stream/&lt;stream_name/&lt;creation_time>`
 
 equals `resources.type`이고 연산자가 `AWS::ManagedBlockchain::Network` or 로 설정된 `Equals` 경우 `NotEquals`ARN은 다음 형식이어야 합니다.
 
-- `arn:<partition>:managedblockchain:::networks/<network_name>`
+- `arn:&lt;partition>:managedblockchain:::networks/&lt;network_name>`
 
 equals `resources.type`이고 연산자가 `AWS::ManagedBlockchain::Node` or 로 설정된 `Equals` 경우 `NotEquals`ARN은 다음 형식이어야 합니다.
 
-- `arn:<partition>:managedblockchain:<region>:<account_ID>:nodes/<node_ID>`
+- `arn:&lt;partition>:managedblockchain:&lt;region>:&lt;account_ID>:nodes/&lt;node_ID>`
 
 equals `resources.type`이고 연산자가 `AWS::MedicalImaging::Datastore` or 로 설정된 `Equals` 경우 `NotEquals`ARN은 다음 형식이어야 합니다.
 
-- `arn:<partition>:medical-imaging:<region>:<account_ID>:datastore/<data_store_ID>`
+- `arn:&lt;partition>:medical-imaging:&lt;region>:&lt;account_ID>:datastore/&lt;data_store_ID>`
 
 equals `resources.type`이고 연산자가 `AWS::PCAConnectorAD::Connector` or 로 설정된 `Equals` 경우 `NotEquals`ARN은 다음 형식이어야 합니다.
 
-- `arn:<partition>:pca-connector-ad:<region>:<account_ID>:connector/<connector_ID>`
+- `arn:&lt;partition>:pca-connector-ad:&lt;region>:&lt;account_ID>:connector/&lt;connector_ID>`
 
 equals `resources.type`이고 연산자가 `AWS::SageMaker::Endpoint` or 로 설정된 `Equals` 경우 `NotEquals`ARN은 다음 형식이어야 합니다.
 
-- `arn:<partition>:sagemaker:<region>:<account_ID>:endpoint/<endpoint_name>`
+- `arn:&lt;partition>:sagemaker:&lt;region>:&lt;account_ID>:endpoint/&lt;endpoint_name>`
 
 equals `resources.type`이고 연산자가 `AWS::SageMaker::ExperimentTrialComponent` or 로 설정된 `Equals` 경우 `NotEquals`ARN은 다음 형식이어야 합니다.
 
-- `arn:<partition>:sagemaker:<region>:<account_ID>:experiment-trial-component/<experiment_trial_component_name>`
+- `arn:&lt;partition>:sagemaker:&lt;region>:&lt;account_ID>:experiment-trial-component/&lt;experiment_trial_component_name>`
 
 equals `resources.type`이고 연산자가 `AWS::SageMaker::FeatureGroup` or 로 설정된 `Equals` 경우 `NotEquals`ARN은 다음 형식이어야 합니다.
 
-- `arn:<partition>:sagemaker:<region>:<account_ID>:feature-group/<feature_group_name>`
+- `arn:&lt;partition>:sagemaker:&lt;region>:&lt;account_ID>:feature-group/&lt;feature_group_name>`
 
 같`resources.type`음이 있고 연산자가 `AWS::S3::AccessPoint` 또는 로 설정된 `Equals` 경우 `NotEquals`ARN은 다음 형식 중 하나여야 합니다. S3 액세스 포인트의 모든 객체에 대한 이벤트를 로깅하려면 액세스 포인트 ARN만 사용하고, 객체 경로를 포함하지 않으며, `StartsWith` or `NotStartsWith` 연산자를 사용하는 것이 좋습니다.
 
-- `arn:<partition>:s3:<region>:<account_ID>:accesspoint/<access_point_name>`
-- `arn:<partition>:s3:<region>:<account_ID>:accesspoint/<access_point_name>/object/<object_path>`
+- `arn:&lt;partition>:s3:&lt;region>:&lt;account_ID>:accesspoint/&lt;access_point_name>`
+- `arn:&lt;partition>:s3:&lt;region>:&lt;account_ID>:accesspoint/&lt;access_point_name>/object/&lt;object_path>`
 
 equals `resources.type`이고 연산자가 `AWS::S3ObjectLambda::AccessPoint` or 로 설정된 `Equals` 경우 `NotEquals`ARN은 다음 형식이어야 합니다.
 
-- `arn:<partition>:s3-object-lambda:<region>:<account_ID>:accesspoint/<access_point_name>`
+- `arn:&lt;partition>:s3-object-lambda:&lt;region>:&lt;account_ID>:accesspoint/&lt;access_point_name>`
 
 equals `resources.type`이고 연산자가 `AWS::S3Outposts::Object` or 로 설정된 `Equals` 경우 `NotEquals`ARN은 다음 형식이어야 합니다.
 
-- `arn:<partition>:s3-outposts:<region>:<account_ID>:<object_path>`
+- `arn:&lt;partition>:s3-outposts:&lt;region>:&lt;account_ID>:&lt;object_path>`
 
 equals `resources.type`이고 연산자가 `AWS::SSMMessages::ControlChannel` or 로 설정된 `Equals` 경우 `NotEquals`ARN은 다음 형식이어야 합니다.
 
-- `arn:<partition>:ssmmessages:<region>:<account_ID>:control-channel/<channel_ID>`
+- `arn:&lt;partition>:ssmmessages:&lt;region>:&lt;account_ID>:control-channel/&lt;channel_ID>`
 
 resources.type이 인 경우 `AWS::VerifiedPermissions::PolicyStore` 연산자가 `Equals` 또는 `NotEquals` 로 설정된 경우 ARN은 다음 형식이어야 합니다.
 
-- `arn:<partition>:verifiedpermissions:<region>:<account_ID>:policy-store/<policy_store_UUID>`
+- `arn:&lt;partition>:verifiedpermissions:&lt;region>:&lt;account_ID>:policy-store/&lt;policy_store_UUID>`
   _필수 항목 여부_: 예  
   _유형_: 문자열  
   _최소_: `1`  
