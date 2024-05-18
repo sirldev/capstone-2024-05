@@ -1,8 +1,9 @@
 <html>
 
 <head>
-    <title>Item Details</title>
-    <link href="{{ url_for('static', path='/styles.css') }}" rel="stylesheet">
+    <title>stackorderflow-api</title>
+    <link rel="icon" href="static/stackorderflow-icon.png"/> 
+    <link rel="apple-touch-icon" href="static/stackorderflow-icon.png"/> 
     <style>
         body {
             display: flex;
@@ -17,7 +18,9 @@
 </head>
 
 <body>
-    <h1>StackOrderFlow</h1>
+    <h1>
+        <img src="{{ url_for('static', path='stackorderflow-logo-whiteBG.png') }}" alt="StackOrderFlow Logo" width="400">
+    </h1>
     <h2>Back-end Server</h2>
     <h3><a href="./docs">-> See API Documnets</a></h3>
 </body>
