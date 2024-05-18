@@ -7,7 +7,7 @@ interface IParams {
 
 async function getTemplate(id: number) {
   const { data } = await axios.get(
-    `http://ec2-54-180-98-97.ap-northeast-2.compute.amazonaws.com:8000/templates/${id}`,
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/templates/${id}`,
   );
 
   return data;

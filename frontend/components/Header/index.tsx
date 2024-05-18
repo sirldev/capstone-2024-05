@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Modal, Container, Group, Burger, Text, Menu, Center } from '@mantine/core';
+import { Modal, Container, Group, Burger, Text, Menu, Center, Image } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import classes from './header.module.css';
 import { IconChevronDown } from '@tabler/icons-react';
@@ -131,16 +131,9 @@ export default function Header() {
     <header className={classes.header}>
       <Container className={classes.inner}>
         <Group>
-          <Text
-            component="span"
-            variant="gradient"
-            gradient={{ from: 'cyan', to: 'black' }}
-            inherit
-            fw={700}
-          >
-            StackOrderFlow
-          </Text>
-
+          <Image className={classes.logo} src="/logo.png" onClick={(event) => {
+              router.push('/');
+            }}/>
           <Group gap={5} visibleFrom="sm">
             {leftItems}
           </Group>

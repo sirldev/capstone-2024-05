@@ -37,3 +37,24 @@
     color: var(--mantine-color-white);
   }
 }
+
+.logo {
+  /* display: block; */
+  line-height: 1;
+  padding: rem(11px);
+  height: rem(54px);
+  width: auto;
+  border-radius: var(--mantine-radius-xl);
+
+  @mixin hover {
+    background-color: light-dark(
+      var(--mantine-color-gray-1),
+      var(--mantine-color-dark-0)
+    );
+  }
+
+  [data-mantine-color-scheme] &[data-active] {
+    background-color: var(--mantine-color-blue-filled);
+    color: var(--mantine-color-white);
+  }
+}
