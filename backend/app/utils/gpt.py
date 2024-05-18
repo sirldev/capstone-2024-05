@@ -1,7 +1,8 @@
-from typing import List
 import json
-import openai
 import subprocess
+from typing import List
+
+import openai
 
 
 # template validation function
@@ -42,7 +43,7 @@ def parse_prompt_result(result):
     return template_file, description
 
 
-def gpt_genereate(instruction: str, retrieved_doc: List[dict], execution_cnt: int = 1):
+async def gpt_genereate(instruction: str, retrieved_doc: List[dict], execution_cnt: int = 1):
     docs = "\n\n".join([doc.page_content for doc in retrieved_doc])
     persona = """
 너는 지금부터 AWS의 CloudFormation 템플릿을 생성하는 역할을 할거야. 그러기 위해 너에게 지시 사항과 지시 사항과 관련된 AWS 문서를 함께 제공할거야. 주어진 문서의 내용을 바탕으로, 지시 사항을 수행하는 JSON 형식의 템플릿 파일을 생성해줘.
@@ -73,31 +74,31 @@ def gpt_genereate(instruction: str, retrieved_doc: List[dict], execution_cnt: in
 
   Description의 경우 자세하게 한글로 적어줘.
 """
-    instruction_generation = '답변의 형식은 JSON 형태로 구성하는데, JSON은 "```json"으로 시작해서 "```"로 끝나게 생성해줘. Python3의 "json.loads"를 통해 너가 준 문자열 결과값을 JSON 객체로 변환할건데, JSONDecodeError 에러가 발생하지 않도록 JSON의 형태에 맞게 결과값을 만들어줘.'
 
-    completion = openai.chat.completions.create(
+    completion = await openai.chat.completions.create(
         model="gpt-4-turbo-preview",
         messages=[
             {"role": "system", "content": persona},
             {
                 "role": "user",
-                "content": f"{instruction_generation}\n[지시 사항]\n{instruction}\n\n[문서]\n{docs}",
+                "content": f"[지시 사항]\n{instruction}\n\n[문서]\n{docs}",
             },
         ],
+        response_format={
+            "type": "json_object",
+        },
     )
 
-    for response in completion.choices:
-        response = response.message.content
-        template, description = parse_prompt_result(response)
-        is_valid = validate_template(template)
-        if is_valid:
-            doc_title_list = [doc.metadata["title"] for doc in retrieved_doc]
-            return template, description, doc_title_list, execution_cnt
+    response = completion.choices[0]
+    response = response.message.content
+    template, description = parse_prompt_result(response)
+    is_valid = validate_template(template)
+    if is_valid:
+        doc_title_list = [doc.metadata["title"] for doc in retrieved_doc]
+        return template, description, doc_title_list, 1
 
-    if execution_cnt >= 3:
-        return None, None, None, execution_cnt
     # if there is no valid template
-    return gpt_genereate(instruction, retrieved_doc, execution_cnt + 1)
+    return await gpt_generate_retry(instruction, retrieved_doc)
 
 
 def gpt_generate_no_rag(instruction: str):
@@ -122,3 +123,63 @@ def gpt_generate_no_rag(instruction: str):
     response = completion.choices[0].message.content
 
     return response
+
+async def gpt_generate_retry(instruction, retrieved_doc):
+    execution_cnt = 2
+
+    while execution_cnt <= 3:
+        print(f"{execution_cnt=}")
+        docs = "\n\n".join([doc.page_content for doc in retrieved_doc])
+        persona = """
+    너는 지금부터 AWS의 CloudFormation 템플릿을 생성하는 역할을 할거야. 그러기 위해 너에게 지시 사항과 지시 사항과 관련된 AWS 문서를 함께 제공할거야. 주어진 문서의 내용을 바탕으로, 지시 사항을 수행하는 JSON 형식의 템플릿 파일을 생성해줘.
+        
+        - AWS CloudFormation 템플릿의 예시: AWS CloudFormation 템플릿 형태에 대해 설명해줄게.
+        AWS CloudFormation 템플릿 형태에 대해 설명해줄게.
+
+        템플릿 구조
+        JSON
+        {
+        "AWSTemplateFormatVersion" : "version date",
+        "Description" : "JSON string",
+        "Resources" : {
+        set of resources
+        }
+    }
+
+    템플릿 섹션
+    AWSTemplateFormatVersion
+    AWSTemplateFormatVersion 섹션은 템플릿의 기능을 식별합니다. 최신 템플릿 포맷 버전은 2010-09-09이며 현재 유일한 유효 값입니다.
+
+    Description
+    템플릿의 Description 섹션(선택 사항)에 템플릿에 대한 설명을 지정합니다. 설명 선언 값은 0 ~ 1023바이트 길이의 리터럴 문자열이어야 합니다. 파라미터나 함수를 사용하여 설명을 지정할 수 없습니다. 다음 코드 조각은 설명 선언을 보여주는 예입니다.
+
+    Resources
+    필수 Resources 섹션은 Amazon EC2 인스턴스 또는 Amazon S3 버킷 등 스택에 포함시킬 AWS 리소스를 선언합니다.
+    Resources 섹션은 키 이름 Resources로 이루어집니다. 다음 가상 템플릿에는 Resources 섹션이 요약되어 있습니다.
+
+    Description의 경우 자세하게 한글로 적어줘.
+    """
+
+        completion = await openai.chat.completions.create(
+            model="gpt-4-turbo-preview",
+            messages=[
+                {"role": "system", "content": persona},
+                {
+                    "role": "user",
+                    "content": f"[지시 사항]\n{instruction}\n\n[문서]\n{docs}",
+                },
+            ],
+            response_format={
+                "type": "json_object",
+            },
+        )
+
+        response = completion.choices[0]
+        response = response.message.content
+        template, description = parse_prompt_result(response)
+        is_valid = validate_template(template)
+        if is_valid:
+            doc_title_list = [doc.metadata["title"] for doc in retrieved_doc]
+            return template, description, doc_title_list, execution_cnt
+        
+        execution_cnt += 1

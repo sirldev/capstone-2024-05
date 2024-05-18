@@ -6,6 +6,7 @@ from typing import List, Union
 from db import models
 from db.database import engine
 from fastapi import FastAPI, Request
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -15,9 +16,6 @@ from retrieval.rag import retrieve_doc
 from sqlalchemy.orm import Session
 from utils.gpt import gpt_genereate
 from utils.setup import setup_embedding, setup_pinecone
-
-from fastapi.middleware.cors import CORSMiddleware
-
 
 origins = [
     "http://localhost.tiangolo.com",
@@ -82,7 +80,7 @@ async def generate(instruction: Instruction):
         question=inst_sentence, pc_index=pc_index, embedding=embedding, llm=llm
     )
 
-    template_file, documents_list = gpt_genereate(
+    template_file, documents_list = await gpt_genereate(
         instruction=instruction, retrieved_doc=retrieved_doc
     )
 

@@ -1,6 +1,6 @@
 import json
-import re
 import os
+import re
 import sys
 from datetime import datetime
 from typing import Dict
@@ -12,10 +12,8 @@ from pydantic import BaseModel
 from retrieval.rag import retrieve_doc
 from sqlalchemy import insert, select
 from sqlalchemy.orm import Session
-from utils.gpt import gpt_genereate
 from utils.auth import get_current_user
-
-from utils.gpt import validate_template
+from utils.gpt import gpt_genereate, validate_template
 
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 
@@ -169,7 +167,7 @@ async def create_template(
         )
 
         # generate template
-        template_file, description, document_title_list, execution_cnt = gpt_genereate(
+        template_file, description, document_title_list, execution_cnt = await gpt_genereate(
             instruction=prompt, retrieved_doc=retrieved_doc
         )
         if template_file is None:
