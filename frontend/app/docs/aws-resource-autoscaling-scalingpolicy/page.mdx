@@ -205,7 +205,7 @@ _업데이트 필요 사항_: 중단 없음
       "Type":"String"
     },
     "Subnets":{
-      "Type": "List<AWS::EC2::Subnet::Id>",
+      "Type": "List&lt;AWS::EC2::Subnet::Id>",
       "Description": "At least two public subnets in different Availability Zones in the selected VPC"
     },
     "VPC":{
@@ -213,7 +213,7 @@ _업데이트 필요 사항_: 중단 없음
       "Description": "A VPC that allows the load balancer access to the Internet"
     },
     "InstanceSecurityGroup":{
-      "Type": "List<AWS::EC2::SecurityGroup::Id>",
+      "Type": "List&lt;AWS::EC2::SecurityGroup::Id>",
       "Description": "A security group in the selected VPC that allows HTTP access on the inbound port"
     },
     "CPUPolicyTargetValue":{

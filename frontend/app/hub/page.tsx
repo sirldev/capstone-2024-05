@@ -3,7 +3,7 @@ import axios from 'axios';
 
 async function getTemplates() {
   const { data } = await axios.get(
-    `http://ec2-54-180-98-97.ap-northeast-2.compute.amazonaws.com:8000/templates`,
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/templates`,
   );
 
   return data;

@@ -60,7 +60,7 @@ _유형_: 문자열
 _업데이트 필요 사항_: 중단 없음
 
 `AuthorizerUri`  
-권한 부여자의 URI(Uniform Resource Identifier)입니다. `REQUEST` 권한 부여자의 경우 올바른 형식의 Lambda 함수 URI여야 합니다(예`arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:{account_id}:function:{lambda_function_name}/invocations`: . 일반적으로 URI의 형식은 다음과 같습니다. `arn:aws:apigateway:{region}:lambda:path/{service_api} `여기서 *{region}*은 Lambda 함수를 호스팅하는 리전과 동일하며, path는 URI의 나머지 하위 문자열이 초기 `/`. Lambda 함수의 경우 일반적으로 `/2015-03-31/functions/[FunctionARN]/invocations`.  
+권한 부여자의 URI(Uniform Resource Identifier)입니다. `REQUEST` 권한 부여자의 경우 올바른 형식의 Lambda 함수 URI여야 합니다(예`arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:&#123;account_id&#125;:function:&#123;lambda_function_name&#125;/invocations`: . 일반적으로 URI의 형식은 다음과 같습니다. `arn:aws:apigateway:&#123;region&#125;:lambda:path/&#123;service_api&#125; `여기서 *&#123;region&#125;*은 Lambda 함수를 호스팅하는 리전과 동일하며, path는 URI의 나머지 하위 문자열이 초기 `/`. Lambda 함수의 경우 일반적으로 `/2015-03-31/functions/[FunctionARN]/invocations`.  
 *필수 항목 *여부: 아니요  
 _유형_: 문자열  
 _업데이트 필요 사항_: 중단 없음
