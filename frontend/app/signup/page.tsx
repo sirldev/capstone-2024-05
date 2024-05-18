@@ -1,6 +1,6 @@
-'use client';
+'use client'
+
 import {
-  Modal,
   TextInput,
   PasswordInput,
   Checkbox,
@@ -14,25 +14,24 @@ import {
   Highlight,
   Center,
 } from '@mantine/core';
-import classes from './Login.module.css';
+import classes from './signup.module.css';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useAuth } from '@/context/AuthContext';
-import { useDisclosure } from '@mantine/hooks';
 
-export default function Login() {
-  const router = useRouter();
-  const { login } = useAuth();
+export default function Signup() {
   const [loading, setLoading] = useState(false);
   const [nickname, setNickname] = useState('');
   const [password, setPassword] = useState('');
+  const [passwordConfirmation, setPasswordConfirmation] = useState('');
   const [nicknameError, setNicknameError] = useState('');
   const [passwordError, setPasswordError] = useState('');
-  const [isModalOpen, { open, close }] = useDisclosure(false);
+  const [passwordConfirmationError, setPasswordConfirmationError] = useState('');
+  const router = useRouter();
 
   const validateNickname = (value : string) => {
     setNickname(value);
     if (value.length < 3) {
+      setNicknameError('닉네임은 최소 3글자 이상 입력되어야 합니다.');
       return false;
     }
     setNicknameError('');
@@ -43,9 +42,20 @@ export default function Login() {
     setPassword(value);
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&.]{8,}$/;
     if (!passwordRegex.test(value)) {
+      setPasswordError('비밀번호는 8자 이상, 영어와 숫자를 포함해야 합니다.');
       return false;
     }
     setPasswordError('');
+    return true;
+  };
+
+  const validatePasswordConfirmation = (value : string) => {
+    setPasswordConfirmation(value);
+    if (value !== password) {
+      setPasswordConfirmationError('비밀번호를 다시 확인해 주세요.');
+      return false;
+    }
+    setPasswordConfirmationError('');
     return true;
   };
 
@@ -55,31 +65,36 @@ export default function Login() {
 
     const isNicknameValid = validateNickname(nickname);
     const isPasswordValid = validatePassword(password);
+    const isPasswordConfirmationValid = validatePasswordConfirmation(passwordConfirmation);
   
-    if (isNicknameValid && isPasswordValid) {
+    if (isNicknameValid && isPasswordValid && isPasswordConfirmationValid) {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/user/token`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/user/create_user`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
             username: nickname,
-            password: password
+            password: password,
+            password_confirmation: passwordConfirmation,
           }),
         });
         
         if (response.ok) {
           const responseData = await response.json();
           console.log('Success:', responseData);
-          login(responseData.access_token);
-          router.push('/'); // 로그인 성공 후 리디렉션
-          setLoading(false);
+          router.push('/login'); // 회원가입 성공 후 리디렉션
         } else {
           const responseData = await response.json(); 
-          open();
-          console.error('로그인 실패:', responseData);
+          if (responseData.detail == 'Username already registered') {
+            setNicknameError('사용된 닉네임입니다')
+          } else {
+            setNicknameError(`${responseData.detail}`)
+          }
+          console.error('회원가입 실패:', responseData);
           setLoading(false);
+
         }
       } catch (error) {
         console.error('Network error:', error);
@@ -87,24 +102,17 @@ export default function Login() {
     }
   };
 
-  const isButtonValid = nickname && password && !nicknameError && !passwordError;
+  const isButtonValid = nickname && password && passwordConfirmation && !nicknameError && !passwordError && !passwordConfirmationError;
+
 
   return (
     <Container size={840} my={120}>
 
       <Paper withBorder shadow="md" p={80} mt={30} radius="md">
         <Title ta="center" className={classes.title}>
-          Stack OrderFlow시작하기
+          Stack OrderFlow 가입하기
         </Title>
-        <Text c="dimmed" size="sm" ta="center" mt={5}>
-          아직 계정이 없다면?{' '}
-          <Anchor size="sm" component="button" onClick={(event) => {
-              router.push('/signup');
-            }}>
-            계정 생성하기
-          </Anchor>
-        </Text>
-
+        <form onSubmit={handleSubmit}>
         <TextInput
           label="닉네임"
           placeholder="stack@order.flow"
@@ -129,14 +137,22 @@ export default function Login() {
           onBlur={() => validatePassword(password)}
           error={passwordError}
         />
-        {/* <Group justify="space-between" mt="lg" ml={40} mr={40}>
-          <Checkbox label="비밀번호 저장" />
-          <Anchor component="button" size="sm">
-            비밀번호 찾기
-          </Anchor>
-        </Group> */}
+
+        <PasswordInput
+          label="비밀번호 확인"
+          placeholder="*********"
+          required
+          mt="xl"
+          ml={40}
+          mr={40}
+          value={passwordConfirmation}
+          onChange={(event) => validatePasswordConfirmation(event.currentTarget.value)}
+          // onBlur={() => validatePasswordConfirmation(passwordConfirmation)}
+          error={passwordConfirmationError}
+        />
+
         <Group justify="center" mt={40} ml={40} mr={40}>
-        <Button
+          <Button
             fullWidth
             type="submit"
             // loading loaderProps={{ type: 'dots' }}
@@ -148,16 +164,9 @@ export default function Login() {
             //   backgroundColor: nickname && password && passwordConfirmation && !nicknameError && !passwordError && !passwordConfirmationError ? undefined : '#grey',
             // }}
           >
-            로그인</Button>
+            가입하기</Button>
         </Group>
-
-        <Modal
-          opened={isModalOpen}
-          onClose={close}
-          title="로그인 실패"
-        >
-          닉네임과 비밀번호를 다시 확인해주세요.
-        </Modal>
+        </form>
       </Paper>
     </Container>
   );

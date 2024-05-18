@@ -1,76 +1,170 @@
-# Welcome to GitHub
+# Stack OrderFlow
 
-캡스톤 팀 생성을 축하합니다.
+> 2024 KookminUniv SW 캡스톤 디자인 5조  
+> Github page : [https://kookmin-sw.github.io/capstone-2024-05/](https://kookmin-sw.github.io/capstone-2024-05/)
 
-## 팀소개 및 페이지를 꾸며주세요.
+<br/>
+<br/>
 
-- 프로젝트 소개
-  - 프로젝트 설치방법 및 데모, 사용방법, 프리뷰등을 readme.md에 작성.
-  - Api나 사용방법등 내용이 많을경우 wiki에 꾸미고 링크 추가.
-
-- 팀페이지 꾸미기
-  - 프로젝트 소개 및 팀원 소개
-  - index.md 예시보고 수정.
-
-- GitHub Pages 리파지토리 Settings > Options > GitHub Pages 
-  - Source를 marster branch
-  - Theme Chooser에서 태마선택
-  - 수정후 팀페이지 확인하여 점검.
-
-**팀페이지 주소** -> https://kookmin-sw.github.io/ '{{자신의 리파지토리 아이디}}'
-
-**예시)** 2023년 0조  https://kookmin-sw.github.io/capstone-2023-00/
+## 📔 목차
+- [💡 프로젝트 소개](#💡-프로젝트-소개)
+- [🛠️ 기술스택](#🛠️-기술스택)
+- [💻 서비스 구조도](#💻-서비스-구조도)
+- [📌 주요 기능](#📌-주요-기능)
+- [🧑‍💻 팀 소개](#🧑‍💻-팀-소개)
 
 
-## 내용에 아래와 같은 내용들을 추가하세요.
+<br/>
+<br/>
 
-### 1. 프로잭트 소개
+## 💡 프로젝트 소개
 
-프로젝트
+### 프로젝트 목표
+Amazon Web Services(AWS) CloudFormation 서비스의 템플릿 파일을 사용자 입력한 자연어를 통하여 생성하여 AWS 리소스 생성에 도움을 주는 프로젝트입니다.   
+[AWS CloudFormation이란?](https://docs.aws.amazon.com/ko_kr/AWSCloudFormation/latest/UserGuide/Welcome.html)
 
-### 2. 소개 영상
+### 프로젝트 개발 배경
+CloudFormation은 AWS 리소스를 자동으로 생성해 주는 서비스입니다. 사용하려는 AWS 리소스를 템플릿 파일로 작성하면, CloudFormation이 이를 분석해서 AWS 리소스를 생성합니다. 하지만 CloudFormation 서비스를 사용하기 위해서는 먼저 CloudFormation의 개념과 템플릿 언어를 학습하여야 합니다. 또 템플릿이 길고 복잡해질 경우 오류를 찾기 힘들고 관리하기가 어려워집니다. 우리는 이에 불편함을 느끼고 CloudFormation의 구체적인 문법을 모르더라도, 자연어를 통해 AWS 인프라를 구성할 수 있는 서비스를 개발하기로 하였습니다.
 
-프로젝트 소개하는 영상을 추가하세요
+### 기대 효과
+* **진입장벽 완화** : 자연어 처리를 통한 CloudFormation 템플릿 생성으로 템플릿 생성에 필요한 언어와 문법에 대한 학습의 진입장벽을 낮출 수 있습니다.
+* **인프라 구축 시간 단축** : 복잡한 JSON 또는 YAML 템플릿을 직접 작성하는 대신, 자연어로 원하는 인프라의 설명을 입력하기만 하면 되므로 인프라 구축에 필요한 시간을 줄일 수 있습니다.
+* **오류 감소** : **'Stack OrderFlow'** 를 통해 생성된 템플릿은 유효성 검사를 진행하므로, 사용자가 직접 템플릿을 작성했을 때 발생할 수 있는 실수를 방지할 수 있습니다.
+* **지식 공유** : 템플릿 파일 허브 기능을 통해 사용자들은 다른 사람들이 어떤 요구사항으로 어떤 템플릿을 생성했는지 볼 수 있어, 리소스 관리에 대한 지식과 영감을 얻을 수 있습니다.
 
-### 3. 팀 소개
+<br/>
+<br/>
 
-팀을 소개하세요.
+## 🛠️ 기술스택
 
-팀원정보 및 담당이나 사진 및 SNS를 이용하여 소개하세요.
+### 🤖 AI
 
-### 4. 사용법
+<div markdown="1" style="text-align:center">
 
-소스코드제출시 설치법이나 사용법을 작성하세요.
+<table>
+  <tr>
+    <td><strong>Framework</strong></td>
+    <td><img src="https://img.shields.io/badge/LangChain-294444?style=&logo=LangChain&logoColor=white" style="margin-top: 6px;"/></td>
+  </tr>
+  <tr>
+    <td><strong>Library</strong></td>
+    <td><img src="https://img.shields.io/badge/PyTorch-EE4C2C?style=&logo=pytorch&logoColor=white" style="margin-top: 6px;"/></td>
+  </tr>
+</table>
 
-### 5. 기타
+</div>
 
-추가적인 내용은 자유롭게 작성하세요.
+<br />
+
+### 💾 Backend
+
+<div markdown="1" style="text-align:center">
+
+<table>
+  <tr>
+    <td><strong>Framework</strong></td>
+    <td><img src="https://img.shields.io/badge/FastAPI-009688?style=&logo=fastapi&logoColor=white" style="margin-top: 6px;"/></td>
+  </tr>
+  <tr>
+    <td><strong>Database</strong></td>
+    <td><img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=&logo=postgreSQL&logoColor=white" style="margin-top: 6px;"/></td>
+  </tr>
+</table>
+
+</div>
+
+<br />
+
+### 🖥️ Frontend
+
+<div markdown="1" style="text-align:center">
+
+<table>
+  <tr>
+    <td><strong>Framework</strong></td>
+    <td><img src="https://img.shields.io/badge/Next.js-000000?style=e&logo=nextdotjs&logoColor=white" style="margin-top: 6px;"/></td>
+  </tr>
+</table>
+
+</div>
+
+<br />
+
+### 📚 Tools
+
+<div markdown="1" style="text-align:center">
+
+<table>
+  <tr>
+    <td><strong>Version Control</strong></td>
+    <td><img src="https://img.shields.io/badge/git-E6484F.svg?style=&logo=git&logoColor=white" style="margin-top: 6px;"/> <img src="https://img.shields.io/badge/github-%23121011.svg?style=&logo=github&logoColor=white" style="margin-top: 6px;"/></td>
+  </tr>
+  <tr>
+    <td><strong>Project Management</strong></td>
+    <td><img src="https://img.shields.io/badge/Notion-000000.svg?&style=&logo=Notion&logoColor=white" style="margin-top: 6px;"/></td>
+  </tr>
+  <tr>
+    <td><strong>Design</strong></td>
+    <td><img src="https://img.shields.io/badge/Figma-F24E1E.svg?&style=&logo=Figma&logoColor=white" style="margin-top: 6px;"/></td>
+  </tr>
+</table>
+
+</div>
+
+<br />
+
+<br/>
+
+## 💻 서비스 구조도
+
+![orderFlow_1](https://github.com/kookmin-sw/capstone-2024-05/assets/81635179/74100128-5140-466f-9cec-8f51b972d233)
+
+![orderFlow_2](https://github.com/kookmin-sw/capstone-2024-05/assets/81635179/d26f17bf-5dde-46c6-96ff-4a4758fa755c)
+
+<br/><br/>
+
+## 📌 주요 기능
+
+* 사용자 프롬프트 기반 템플릿 생성
 
 
-## Markdown을 사용하여 내용꾸미기
+* 템플릿 유효성 검사 
+   
 
-Markdown은 작문을 스타일링하기위한 가볍고 사용하기 쉬운 구문입니다. 여기에는 다음을위한 규칙이 포함됩니다.
+* 템플릿 허브   
+	* 사용자의 서비스 이용 사례 저장 및 공유
 
-```markdown
-Syntax highlighted code block
+* 템플릿 수정 기능
+	* 사용자가 직접 Template에 내용을 추가 / 삭제할 수 있는 기능
 
-# Header 1
-## Header 2
-### Header 3
 
-- Bulleted
-- List
 
-1. Numbered
-2. List
+<br/><br/>
 
-**Bold** and _Italic_ and `Code` text
+## 🧑‍💻 팀 소개
 
-[Link](url) and ![Image](src)
-```
+- 윤상원[팀장]
+> - 학번 : 20181651
+> - position : AI [Leader], BE
+> - Email : yoonsw0532@kookmin.ac.kr
 
-자세한 내용은 [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+- 하준혁 
+> - 학번 : 20181705
+> - position : FE [Leader], BE
+> - Email : sirl@kookmin.ac.kr
 
-### Support or Contact
+- 성창엽
+> - 학번 : 20191611
+> - position : BE [Leader], AI
+> - Email : scy6500@kookmin.ac.kr
 
-readme 파일 생성에 추가적인 도움이 필요하면 [도움말](https://help.github.com/articles/about-readmes/) 이나 [contact support](https://github.com/contact) 을 이용하세요.
+- 이현승
+> - 학번 : 20191653
+> - position : AI, BE
+> - Email : dlgustmd3590@kookmin.ac.kr
+
+- 홍승현
+> - 학번 : 20213100
+> - position : FE
+> - Email : ghdtmdgus100@kookmin.ac.kr
+
