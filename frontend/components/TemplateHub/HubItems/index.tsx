@@ -50,14 +50,14 @@ export default function HubItems({ templates }: { templates: any[] }) {
       prompt: template.prompt,
       userName: template.username,
       hashtags: template.hashtag || [],
-      created: template.created
+      created: template.created,
     };
   });
 
-  const removePrefix = (item:string) => {
-    const prefixes = ["AWS", "Amazon"];
+  const removePrefix = (item: string) => {
+    const prefixes = ['AWS', 'Amazon'];
     for (const prefix of prefixes) {
-      if (item.startsWith(prefix + " ")) {
+      if (item.startsWith(prefix + ' ')) {
         return item.substring(prefix.length + 1);
       }
     }
@@ -74,14 +74,18 @@ export default function HubItems({ templates }: { templates: any[] }) {
       onClick={() => handleHubItemClick(item.id)}
     >
       <div className={classes.badges}>
-      {item.hashtags.map((item: string, index: any) => {
+        {item.hashtags.map((item: string, index: any) => {
           const displayItem = removePrefix(item);
           return (
-              <Badge key={index} variant="light" color={resourceColors[displayItem]}>
-                {displayItem}
-              </Badge>
-            );
-          })}
+            <Badge
+              key={index}
+              variant="light"
+              color={resourceColors[displayItem]}
+            >
+              {displayItem}
+            </Badge>
+          );
+        })}
       </div>
       <Text fz="xs" c="dimmed" fw={500} className={classes.cardTitle} mt="sm">
         사용자 입력

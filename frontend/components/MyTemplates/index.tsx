@@ -43,8 +43,12 @@ export default function MyTemplates({ templates }: IHub) {
     setSearchResults(value);
   };
 
-  const uploadedTemplates = templates.filter(template => template.uploaded !== null);
-  const notUploadedTemplates = templates.filter(template => template.uploaded === null);
+  const uploadedTemplates = templates.filter(
+    (template) => template.uploaded !== null,
+  );
+  const notUploadedTemplates = templates.filter(
+    (template) => template.uploaded === null,
+  );
 
   const iconElement = (
     <div
@@ -75,19 +79,15 @@ export default function MyTemplates({ templates }: IHub) {
         <Title className={classes.title} mt={0}>
           내가 생성한 템플릿 확인하기
         </Title>
-        
+
         {templates.length == 0 ? (
           <div></div>
         ) : (
           <div>
-            <Text mt="xl">
-              업로드한 템플릿
-            </Text>
-            <MyItems templates={uploadedTemplates} isUploaded={true}/>
-            <Text mt="xl">
-              생성한 템플릿
-            </Text>
-            <MyItems templates={notUploadedTemplates} isUploaded={false}/>
+            <Text mt="xl">업로드한 템플릿</Text>
+            <MyItems templates={uploadedTemplates} isUploaded={true} />
+            <Text mt="xl">생성한 템플릿</Text>
+            <MyItems templates={notUploadedTemplates} isUploaded={false} />
           </div>
         )}
       </Container>

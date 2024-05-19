@@ -24,7 +24,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { resources } from '../../TemplateHub';
 
-const formatDate = (dateString:string) => {
+const formatDate = (dateString: string) => {
   const date = new Date(dateString);
   const day = String(date.getDate()).padStart(2, '0');
   const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -34,10 +34,10 @@ const formatDate = (dateString:string) => {
 
 interface IResult {
   templates: any[];
-  isUploaded: boolean
+  isUploaded: boolean;
 }
 
-export default function MyItems({templates, isUploaded} : IResult) {
+export default function MyItems({ templates, isUploaded }: IResult) {
   const router = useRouter();
 
   const handleHubItemClick = (id: number) => {
@@ -51,13 +51,12 @@ export default function MyItems({templates, isUploaded} : IResult) {
 
   const resourceColors: { [key: string]: string } = {};
   const tempHubItems = templates?.map((template) => {
-    
     return {
       id: template.id,
       prompt: template.prompt,
       userName: template.username,
       hashtags: template.hashtag || [],
-      created: template.created
+      created: template.created,
     };
   });
 
@@ -67,10 +66,10 @@ export default function MyItems({templates, isUploaded} : IResult) {
     });
   });
 
-  const removePrefix = (item:string) => {
-    const prefixes = ["AWS", "Amazon"];
+  const removePrefix = (item: string) => {
+    const prefixes = ['AWS', 'Amazon'];
     for (const prefix of prefixes) {
-      if (item.startsWith(prefix + " ")) {
+      if (item.startsWith(prefix + ' ')) {
         return item.substring(prefix.length + 1);
       }
     }
@@ -87,16 +86,20 @@ export default function MyItems({templates, isUploaded} : IResult) {
       onClick={() => handleHubItemClick(item.id)}
     >
       <div className={classes.badges}>
-          {item.hashtags.map((item: string, index: any) => {
+        {item.hashtags.map((item: string, index: any) => {
           const displayItem = removePrefix(item);
           // console.log(displayItem);
           return (
-                // 각 아이템에 대해 Badge 컴포넌트 생성
-              <Badge key={index} variant="light" color={resourceColors[displayItem]}>
-                {displayItem}
-              </Badge>
-            );
-          })}
+            // 각 아이템에 대해 Badge 컴포넌트 생성
+            <Badge
+              key={index}
+              variant="light"
+              color={resourceColors[displayItem]}
+            >
+              {displayItem}
+            </Badge>
+          );
+        })}
       </div>
       <Text fz="xs" c="dimmed" fw={500} className={classes.cardTitle} mt="sm">
         사용자 입력

@@ -86,14 +86,15 @@ export default function Header() {
           href={loggedInLinks.link}
           className={classes.link}
           onClick={(event) => event.preventDefault()}
-          data-active={active === "/mypage" || undefined}
+          data-active={active === '/mypage' || undefined}
         >
           <Center>
             <span className={classes.linkLabel}>{loggedInLinks.label}</span>
             <IconChevronDown
-            // size= {active === "/mypage" ? "0rem" : "0.9rem"}
-            size= "0.9rem"
-            stroke={1.5} />
+              // size= {active === "/mypage" ? "0rem" : "0.9rem"}
+              size="0.9rem"
+              stroke={1.5}
+            />
           </Center>
         </a>
       </Menu.Target>
@@ -146,9 +147,13 @@ export default function Header() {
     <header className={classes.header}>
       <Container className={classes.inner}>
         <Group>
-          <Image className={classes.logo} src="/logo.png" onClick={(event) => {
+          <Image
+            className={classes.logo}
+            src="/logo.png"
+            onClick={(event) => {
               router.push('/');
-            }}/>
+            }}
+          />
           <Group gap={5} visibleFrom="sm">
             {leftItems}
           </Group>

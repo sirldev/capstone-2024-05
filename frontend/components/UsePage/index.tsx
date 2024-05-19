@@ -25,8 +25,8 @@ export default function UsePage() {
   const handleComponentChange = () => {
     // visible을 true로 설정하여 로딩 오버레이를 활성화
     setVisible(true);
-    const config: { headers: { Authorization?: string }, timeout?: number } = {
-      headers: {}
+    const config: { headers: { Authorization?: string }; timeout?: number } = {
+      headers: {},
     };
 
     config.timeout = 60000;
@@ -45,7 +45,7 @@ export default function UsePage() {
         {
           prompt,
         },
-        config
+        config,
       )
       .then((res) => {
         console.log(res);
@@ -118,9 +118,7 @@ export default function UsePage() {
 
           <Grid grow mt="xl">
             <Grid.Col span={8}>
-              <Result
-                template={template}
-              />
+              <Result template={template} />
             </Grid.Col>
             <Grid.Col span={4}>
               <References references={documentList} />

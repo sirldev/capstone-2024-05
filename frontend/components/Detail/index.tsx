@@ -38,9 +38,7 @@ export default function DetailPage({ template }: any) {
 
         <Grid grow mt="xl">
           <Grid.Col span={8}>
-            <Result
-              template={template}
-            />
+            <Result template={template} />
           </Grid.Col>
           <Grid.Col span={4}>
             <References references={template.documents} />

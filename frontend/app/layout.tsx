@@ -18,9 +18,8 @@ export const metadata: Metadata = {
   title: 'StackOrderFlow - 자연어 기반 AWS CloudFormation 템플릿 생성 서비스',
   description: '자연어 기반 AWS CloudFormation 템플릿 생성 서비스',
   icons: {
-    icon: "/icon.png",
+    icon: '/icon.png',
   },
-
 };
 
 const theme = createTheme({

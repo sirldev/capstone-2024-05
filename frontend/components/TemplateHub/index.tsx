@@ -37,8 +37,8 @@ export default function TemplateHub({ templates }: IHub) {
   const [filteredTemplates, setFilteredTemplates] = useState<any[]>([]);
 
   const filterTemplates = () => {
-    const results = templates.filter(template =>
-      searchResults.every(tag => template.hashtag.includes(tag))
+    const results = templates.filter((template) =>
+      searchResults.every((tag) => template.hashtag.includes(tag)),
     );
     setFilteredTemplates(results);
   };
@@ -109,28 +109,29 @@ export default function TemplateHub({ templates }: IHub) {
         <Container mt={80} size={'xl'}>
           {showResults ? (
             <>
-            <div className={classes.badges}>
-            {searchResults.map((item: string, index: any) => {
-                return (
-                    <Badge key={index} variant="light" color={resourceColors[item]}>
+              <div className={classes.badges}>
+                {searchResults.map((item: string, index: any) => {
+                  return (
+                    <Badge
+                      key={index}
+                      variant="light"
+                      color={resourceColors[item]}
+                    >
                       {item}
                     </Badge>
                   );
                 })}
-                <Text >
-                  검색 결과
-                </Text>
-            </div>
-                
+                <Text>검색 결과</Text>
+              </div>
+
               <HubItems templates={filteredTemplates} />
-              </>
+            </>
           ) : (
             <>
               <Text>​</Text>
               <HubItems templates={templates} />
             </>
           )}
-          
         </Container>
       </Container>
     </div>

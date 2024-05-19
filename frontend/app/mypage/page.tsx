@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import axios from 'axios';
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
@@ -44,7 +44,6 @@ import MyTemplates from '@/components/MyTemplates';
 //   return <TemplateHub templates={templateList} />;
 // }
 
-
 export default function MyPage() {
   const [templateList, setTemplateList] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -60,14 +59,14 @@ export default function MyPage() {
 
       const config = {
         headers: {
-          Authorization: `${accessToken}`
-        }
+          Authorization: `${accessToken}`,
+        },
       };
 
       try {
         const { data } = await axios.get(
           `${process.env.NEXT_PUBLIC_API_BASE_URL}/templates`,
-          config
+          config,
         );
         console.log(data);
         setTemplateList(data);
@@ -85,4 +84,4 @@ export default function MyPage() {
   }
 
   return <MyTemplates templates={templateList} />;
-};
+}

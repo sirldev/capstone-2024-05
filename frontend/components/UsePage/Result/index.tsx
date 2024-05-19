@@ -53,8 +53,8 @@ export default function Result({ template }: any) {
 
   const uploadTemplate = () => {
     setIsUploaded(true);
-    const config: { headers: { Authorization?: string }, timeout?: number } = {
-      headers: {}
+    const config: { headers: { Authorization?: string }; timeout?: number } = {
+      headers: {},
     };
 
     config.timeout = 60000;
@@ -66,9 +66,9 @@ export default function Result({ template }: any) {
       .post(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/templates/upload`,
         {
-          id: template.id
+          id: template.id,
         },
-        config
+        config,
       )
       .then((res) => {
         // console.log(res);
@@ -77,8 +77,7 @@ export default function Result({ template }: any) {
       .catch((error) => {
         setIsUploaded(false);
         console.log(error);
-      })
-
+      });
   };
 
   return (
@@ -121,7 +120,7 @@ export default function Result({ template }: any) {
         템플릿 파일 다운로드
       </Button>
 
-      {isLoggedIn && (template.uploaded === null) ? (
+      {isLoggedIn && template.uploaded === null ? (
         <Button
           mt={30}
           ml={10}
@@ -132,12 +131,13 @@ export default function Result({ template }: any) {
         >
           템플릿 업로드
         </Button>
-        ) : <></>
-      }
+      ) : (
+        <></>
+      )}
 
-        <Modal opened={isModalOpen} onClose={close} title="템플릿 업로드 성공">
-          Template Hub와 My Page에서 확인해 보세요.
-        </Modal>
+      <Modal opened={isModalOpen} onClose={close} title="템플릿 업로드 성공">
+        Template Hub와 My Page에서 확인해 보세요.
+      </Modal>
     </Container>
   );
 }
