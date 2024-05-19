@@ -54,9 +54,7 @@ class PromptAns(Base):
     user = relationship("User", back_populates="promptAnses")
 
     # 다대다 관계 설정
-    hashtags = relationship(
-        "HashTag", secondary=PromptAns_HashTag, backref="prompt_ans"
-    )
+    hashtag = relationship("HashTag", secondary=PromptAns_HashTag, backref="prompt_ans")
 
 
 class HashTag(Base):

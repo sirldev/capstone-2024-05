@@ -61,7 +61,7 @@ def parse_prompt_result(result):
 
 # 해시태그 추가함수
 def add_hashtag(template):
-    hashtags = template.hashtags
+    hashtags = template.hashtag
     hashtags = list(map(lambda x: x.tag, hashtags))
     if hashtags:
         # dictionary로 변환
@@ -277,9 +277,7 @@ def upload_template(
 def validate(params: Template):
     try:
         is_valid, error_message = validate_template(params.template)
-        message = (
-            "유효한 template 입니다." if is_valid else error_message
-        )
+        message = "유효한 template 입니다." if is_valid else error_message
         return {
             "isValid": is_valid,
             "message": message,
