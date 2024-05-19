@@ -49,7 +49,7 @@ export default function UsePage() {
       )
       .then((res) => {
         console.log(res);
-        setTemplate(JSON.stringify(res.data.template));
+        setTemplate(res.data);
         setDescription(res.data.description);
         setDocumentList(res.data.documents);
         setCurrentComponent('References');
