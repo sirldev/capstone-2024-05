@@ -45,6 +45,7 @@ export default function UsePage() {
 
         setTemplate(JSON.stringify(res.data.template));
         setDescription(res.data.description);
+        setDocumentList(res.data.documents);
         setCurrentComponent('References');
       })
       .catch((error) => {
@@ -118,7 +119,7 @@ export default function UsePage() {
               />
             </Grid.Col>
             <Grid.Col span={4}>
-              <References />
+              <References references={documentList} />
             </Grid.Col>
           </Grid>
         </Container>

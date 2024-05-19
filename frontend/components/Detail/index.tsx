@@ -45,7 +45,7 @@ export default function DetailPage({ template }: any) {
             />
           </Grid.Col>
           <Grid.Col span={4}>
-            <References />
+            <References references={template.documents} />
           </Grid.Col>
         </Grid>
       </Container>
