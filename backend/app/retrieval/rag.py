@@ -21,7 +21,45 @@ def retrieve_doc(question, pc_index, embedding, llm):
 
     retrieved_docs = retriever_from_llm.get_relevant_documents(query=question)
 
-    return retrieved_docs
+    doc_ids = [doc.metadata["doc-id"] for doc in retrieved_docs]
+    docs = []
+
+    for doc_id in doc_ids:
+        result_syntax = pc_index.query(
+            vector=[0] * 1536,
+            filter={
+                "doc-id": {"$eq": doc_id},
+                "section_title": {"$eq": "통사론"},
+            },
+            top_k=1,
+            include_metadata=True
+        )
+
+        if result_syntax["matches"]:
+            document = {
+                    "title": result_syntax["matches"][0]["metadata"]["title"],
+                    "content": result_syntax["matches"][0]["metadata"]["content"],
+                }
+            docs.append(document)
+
+        result_prop = pc_index.query(
+            vector=[0] * 1536,
+            filter={
+                "doc-id": {"$eq": doc_id},
+                "section_title": {"$eq": "속성"},
+            },
+            top_k=1,
+            include_metadata=True
+        )
+
+        if result_prop["matches"]:
+            document = {
+                    "title": result_prop["matches"][0]["metadata"]["title"],
+                    "content": result_prop["matches"][0]["metadata"]["content"],
+                }
+            docs.append(document)
+
+    return docs
 
 
 if __name__ == "__main__":

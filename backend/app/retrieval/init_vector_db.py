@@ -20,7 +20,7 @@ load_dotenv(os.path.join(BASE_DIR, ".env"))
 
 # pinecone
 PINECONE_APIKEY = os.getenv("PINECONE_APIKEY")
-pc = Pinecone(api_key=f"{PINECONE_APIKEY}", environment="gcp-starter")
+pc = Pinecone(api_key=f"{PINECONE_APIKEY}")
 pc_index = pc.Index("cfn-doc")
 
 # openai
@@ -58,8 +58,8 @@ for record in tqdm(documents["train"]):
             record = {
                 "chunk": i + offset,
                 "content": doc_chunk.page_content,
+                "section_title": doc_chunk.metadata["##"] if "##" in doc_chunk.metadata else None,
                 **metadata,
-                **doc_chunk.metadata,
             }
             metadatas.append(record)
             texts.append(doc_chunk.page_content)
