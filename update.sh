@@ -1,3 +1,4 @@
+cd ./capstone-2024-05
 git pull
 cd ./backend
 pip install -r requirements.txt
