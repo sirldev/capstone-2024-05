@@ -21,6 +21,8 @@ import classes from './Result.module.css';
 import { Editor } from '@monaco-editor/react';
 import axios from 'axios';
 import { useAuth } from '@/context/AuthContext';
+import { useRouter } from 'next/navigation';
+import { ArrowRightIcon } from '@heroicons/react/24/outline';
 
 interface IResult {
   prompt: string;
@@ -34,6 +36,8 @@ export default function Result({ template }: any) {
   const { isLoggedIn, accessToken } = useAuth();
   const [isUploaded, setIsUploaded] = useState(template.uploaded !== null);
   const [isModalOpen, { open, close }] = useDisclosure(false);
+
+  const router = useRouter();
 
   const [value, setValue] = useState(
     JSON.stringify(template.template, null, 2),
@@ -118,6 +122,20 @@ export default function Result({ template }: any) {
         rightSection={<IconDownload size={14} />}
       >
         템플릿 파일 다운로드
+      </Button>
+
+      <Button
+        mt={30}
+        ml={10}
+        onClick={() => {
+          window.open(
+            'https://ap-northeast-2.console.aws.amazon.com/cloudformation/home?region=ap-northeast-2#/stacks/create',
+            '_blank',
+          );
+        }}
+        rightSection={<IconArrowRight size={14} />}
+      >
+        CloudFormation으로 이동하기
       </Button>
 
       {isLoggedIn && template.uploaded === null ? (
