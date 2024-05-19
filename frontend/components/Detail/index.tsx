@@ -39,9 +39,7 @@ export default function DetailPage({ template }: any) {
         <Grid grow mt="xl">
           <Grid.Col span={8}>
             <Result
-              prompt={template.prompt}
-              template={JSON.stringify(template.template)}
-              description={template.description}
+              template={template}
             />
           </Grid.Col>
           <Grid.Col span={4}>

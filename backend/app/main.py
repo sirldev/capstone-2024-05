@@ -6,6 +6,7 @@ from typing import List, Union
 from db import models
 from db.database import engine
 from fastapi import FastAPI, Request
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -16,15 +17,13 @@ from sqlalchemy.orm import Session
 from utils.gpt import gpt_genereate
 from utils.setup import setup_embedding, setup_pinecone
 
-from fastapi.middleware.cors import CORSMiddleware
-
-
 origins = [
     "http://localhost.tiangolo.com",
     "https://localhost.tiangolo.com",
     "http://localhost",
     "http://localhost:3000",
     "https://capstone-2024-05.vercel.app",
+    "https://www.stackorderflow.site",
 ]
 
 

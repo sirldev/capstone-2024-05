@@ -1,5 +1,5 @@
 'use client';
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 
 interface AuthContextType {
   isLoggedIn: boolean;
@@ -14,14 +14,25 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [accessToken, setAccessToken] = useState<string | null>(null);
 
+  useEffect(() => {
+    // 컴포넌트가 처음 렌더링될 때 localStorage에서 로그인 상태를 읽어옴
+    const token = localStorage.getItem('accessToken');
+    if (token) {
+      setIsLoggedIn(true);
+      setAccessToken(token);
+    }
+  }, []);
+
   const login = (token: string) => {
     setIsLoggedIn(true);
     setAccessToken(token);
+    localStorage.setItem('accessToken', token);
   };
 
   const logout = () => {
     setIsLoggedIn(false);
     setAccessToken(null);
+    localStorage.removeItem('accessToken');
   };
 
   return (
