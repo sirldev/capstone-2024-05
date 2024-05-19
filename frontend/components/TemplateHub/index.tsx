@@ -3,6 +3,7 @@
 import {
   Container,
   TagsInput,
+  Badge,
   Title,
   LoadingOverlay,
   UnstyledButton,
@@ -33,6 +34,15 @@ export default function TemplateHub({ templates }: IHub) {
   const [value, setValue] = useState<string[]>([]);
   const [showResults, setShowResults] = useState(false);
   const [searchResults, setSearchResults] = useState<string[]>([]);
+  const [filteredTemplates, setFilteredTemplates] = useState<any[]>([]);
+
+  const filterTemplates = () => {
+    const results = templates.filter(template =>
+      searchResults.every(tag => template.hashtag.includes(tag))
+    );
+    setFilteredTemplates(results);
+  };
+
   const handleIconClick = () => {
     if (value.length > 0) {
       setShowResults(true);
@@ -40,6 +50,7 @@ export default function TemplateHub({ templates }: IHub) {
       setShowResults(false);
     }
     setSearchResults(value);
+    filterTemplates();
   };
 
   const iconElement = (
@@ -69,6 +80,15 @@ export default function TemplateHub({ templates }: IHub) {
     setValue(validTags);
   };
 
+  const resourceColors: { [key: string]: string } = {};
+
+  // 모든 그룹과 아이템을 순회하며 resourceColors 객체를 생성합니다.
+  resources.forEach((group) => {
+    group.items.forEach((item) => {
+      resourceColors[item] = group.color;
+    });
+  });
+
   return (
     <div className={classes.wrapper}>
       <Container size="xl" className={classes.inner}>
@@ -87,12 +107,30 @@ export default function TemplateHub({ templates }: IHub) {
           />
         </Container>
         <Container mt={80} size={'xl'}>
-          {showResults && (
-            <div>
-              <h2>{searchResults.join(', ')} 검색 결과</h2>
+          {showResults ? (
+            <>
+            <div className={classes.badges}>
+            {searchResults.map((item: string, index: any) => {
+                return (
+                    <Badge key={index} variant="light" color={resourceColors[item]}>
+                      {item}
+                    </Badge>
+                  );
+                })}
+                <Text >
+                  검색 결과
+                </Text>
             </div>
+                
+              <HubItems templates={filteredTemplates} />
+              </>
+          ) : (
+            <>
+              <Text>​</Text>
+              <HubItems templates={templates} />
+            </>
           )}
-          <HubItems templates={templates} />
+          
         </Container>
       </Container>
     </div>

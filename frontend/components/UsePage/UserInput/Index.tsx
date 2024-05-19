@@ -57,7 +57,7 @@ export default function UserInput({
         placeholder="필요한 리소스를 설명해 주세요."
         autosize
         minRows={3}
-        maxRows={3}
+        maxRows={10}
         value={text}
         onChange={(event) => setText(event.target.value)}
         // rightSection={icon}

@@ -22,7 +22,7 @@
   font-family:
     Greycliff CF,
     var(--mantine-font-family);
-  font-size: rem(32px);
+  font-size: rem(24px);
   font-weight: 700;
   line-height: 1.2;
   margin: 0;
@@ -63,11 +63,4 @@
     padding-right: rem(18px);
     flex: 1;
   }
-}
-
-.badges {
-  display: flex; /* flexbox 사용 */
-  flex-wrap: wrap; /* 요소들이 한 줄에 담기지 않으면 다음 줄로 넘어가게 함 */
-  gap: 10px; /* 배지 사이의 수직 및 수평 간격 설정 */
-  margin: 0px; /* 컨테이너의 외부 여백 설정 */
 }
