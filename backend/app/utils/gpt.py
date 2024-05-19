@@ -45,7 +45,7 @@ def parse_prompt_result(result):
 
 
 def gpt_genereate(instruction: str, retrieved_doc: List[dict]):
-    docs = "\n\n".join([doc.page_content for doc in retrieved_doc])
+    docs = "\n\n".join([doc["content"] for doc in retrieved_doc])
     persona = """
 너는 지금부터 AWS의 CloudFormation 템플릿을 생성하는 역할을 할거야. 그러기 위해 너에게 지시 사항과 지시 사항과 관련된 AWS 문서를 함께 제공할거야. 주어진 문서의 내용을 바탕으로, 지시 사항을 수행하는 JSON 형식의 템플릿 파일을 생성해줘.
     
@@ -74,6 +74,8 @@ def gpt_genereate(instruction: str, retrieved_doc: List[dict]):
   Resources 섹션은 키 이름 Resources로 이루어집니다. 다음 가상 템플릿에는 Resources 섹션이 요약되어 있습니다.
 
   Description의 경우 자세하게 한글로 적어줘.
+
+  AvailabilityZone의 경우 항상 ap-northeast-2a로 값을 고정해줘
 """
 
     completion = openai.chat.completions.create(
@@ -95,7 +97,7 @@ def gpt_genereate(instruction: str, retrieved_doc: List[dict]):
     is_valid, error_message = validate_template(template)
     print(f"execution_cnt=1, {completion.usage.total_tokens=}")
     if is_valid:
-        doc_title_list = [doc.metadata["title"] for doc in retrieved_doc]
+        doc_title_list = [doc["title"] for doc in retrieved_doc]
         return template, description, doc_title_list, 1
 
     # if there is no valid template
@@ -107,7 +109,7 @@ def gpt_generate_retry(instruction, retrieved_doc, error_message, wrong_template
     execution_cnt = 2
 
     while execution_cnt <= 3:
-        docs = "\n\n".join([doc.page_content for doc in retrieved_doc])
+        docs = "\n\n".join([doc["content"] for doc in retrieved_doc])
         persona = """
         너는 지금부터 AWS의 CloudFormation 템플릿을 생성하는 역할을 할거야. 그러기 위해 너에게 지시 사항과 지시 사항과 관련된 AWS 문서를 함께 제공할거야. 주어진 문서의 내용을 바탕으로, 지시 사항을 수행하는 JSON 형식의 템플릿 파일을 생성해줘.
             
@@ -164,7 +166,7 @@ def gpt_generate_retry(instruction, retrieved_doc, error_message, wrong_template
         is_valid, error_message = validate_template(template)
         print(f"{execution_cnt=}, {completion.usage.total_tokens=}")
         if is_valid:
-            doc_title_list = [doc.metadata["title"] for doc in retrieved_doc]
+            doc_title_list = [doc["title"] for doc in retrieved_doc]
             return template, description, doc_title_list, execution_cnt
         
         wrong_template = template
