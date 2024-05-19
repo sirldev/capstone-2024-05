@@ -1,0 +1,23 @@
+name: updateEC2
+
+on:
+  push:
+    branches:
+      - 'main' # 메인에 푸쉬되었을 때 동작
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: deploy
+        run: |
+          echo "$SSH_PEM_KEY" >> $HOME/key.pem
+          chmod 400 $HOME/key.pem
+          ssh -i $HOME/key.pem -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_KNOWN_HOSTS} '~/capstone-2024-05/update.sh'
+        env:
+          SSH_USER: ${{secrets.SSH_USER}}
+          SSH_KNOWN_HOSTS: ${{secrets.SSH_KNOWN_HOSTS}}
+          SSH_PEM_KEY: ${{secrets.SSH_PEM_KEY}}
