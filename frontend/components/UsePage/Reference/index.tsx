@@ -1,11 +1,9 @@
 import { Text, Paper } from '@mantine/core';
-import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 export default function Reference({ reference }: { reference: string }) {
   const [isExist, setExist] = useState(false);
   const [description, setDescription] = useState('');
-  const router = useRouter();
 
   useEffect(() => {
     fetch(`/docs/${reference.replace('.md', '')}`).then((res) => {
@@ -27,8 +25,10 @@ export default function Reference({ reference }: { reference: string }) {
       shadow="md"
       p="md"
       onClick={() => {
-        router.push(`/docs/${reference.replace('.md', '')}`);
+        window.open(`/docs/${reference.replace('.md', '')}`, '_blank');
+        // router.push(`/docs/${reference.replace('.md', '')}`, {});
       }}
+      style={{ cursor: 'pointer' }}
     >
       <Text fw={700} size="sm" truncate="end">
         {reference.replace('.md', '')}
