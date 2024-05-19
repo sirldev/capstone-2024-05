@@ -10,20 +10,29 @@ import { AWSDescription } from './AWSDescription/Index';
 import axios from 'axios';
 import { useState } from 'react';
 import Result from './Result';
+import { useAuth } from '@/context/AuthContext';
 
 export default function UsePage() {
   const [prompt, setPrompt] = useState('');
-  const [template, setTemplate] = useState('{}');
+  const [template, setTemplate] = useState();
   const [description, setDescription] = useState('');
   const [hashtagList, setHashtagList] = useState([]);
   const [documentList, setDocumentList] = useState([]);
   const [currentComponent, setCurrentComponent] = useState('AWSDescription');
   const [visible, setVisible] = useState(false);
+  const { isLoggedIn, accessToken } = useAuth();
 
   const handleComponentChange = () => {
     // visible을 true로 설정하여 로딩 오버레이를 활성화
     setVisible(true);
+    const config: { headers: { Authorization?: string }; timeout?: number } = {
+      headers: {},
+    };
 
+    config.timeout = 60000;
+    if (isLoggedIn) {
+      config.headers['Authorization'] = `${accessToken}`;
+    }
     // 5초 후에 visible을 false로 설정하여 로딩 오버레이를 비활성화
     // setTimeout(() => {
     //   setVisible(false);
@@ -36,15 +45,13 @@ export default function UsePage() {
         {
           prompt,
         },
-        {
-          timeout: 60000,
-        },
+        config,
       )
       .then((res) => {
         console.log(res);
-
-        setTemplate(JSON.stringify(res.data.template));
+        setTemplate(res.data);
         setDescription(res.data.description);
+        setDocumentList(res.data.documents);
         setCurrentComponent('References');
       })
       .catch((error) => {
@@ -111,14 +118,10 @@ export default function UsePage() {
 
           <Grid grow mt="xl">
             <Grid.Col span={8}>
-              <Result
-                prompt={prompt}
-                template={template}
-                description={description}
-              />
+              <Result template={template} />
             </Grid.Col>
             <Grid.Col span={4}>
-              <References />
+              <References references={documentList} />
             </Grid.Col>
           </Grid>
         </Container>

@@ -30,13 +30,13 @@ import CloudFormationDescription from '../../LandingSection/CloudFormationDescri
 import Usage from '../../LandingSection/Usage';
 import Header from '../../Header';
 import { useRouter } from 'next/navigation';
+import Reference from '../Reference';
 
-export default function References() {
-  const [opened, { toggle }] = useDisclosure(false);
-  const handleClick = () => {
-    console.log('버튼이 클릭되었습니다!');
-  };
-
+export default function References({ references }: { references: string[] }) {
+  // const [opened, { toggle }] = useDisclosure(false);
+  // const handleClick = () => {
+  //   console.log('버튼이 클릭되었습니다!');
+  // };
   const router = useRouter();
   return (
     <div>
@@ -47,51 +47,9 @@ export default function References() {
         spacing={{ base: 'xs', md: 20 }}
         verticalSpacing={{ base: 'xl', md: 20 }}
       >
-        <Paper
-          shadow="md"
-          p="md"
-          onClick={() => {
-            router.push('/docs/aws-properties-apigateway-apikey-stagekey');
-          }}
-        >
-          <Text fw={700} size="sm" truncate="end">
-            AuroraServerlessDBCluster
-          </Text>
-          <Text mt={5} c="gray" size="xs">
-            Auto scaling을 지원하는 RDS Aurora 클러스터를 만들어줘. 인스턴스
-            타입은 db.r5.large로 해줘.
-          </Text>
-        </Paper>
-
-        <Paper shadow="md" p="md">
-          <Text fw={700} size="sm">
-            설명 어쩌구
-          </Text>
-          <Text mt={5} c="gray" size="xs">
-            키 이름이 testkey인 EC2 인스턴스를 생성해줘. 추가로 20GB 크기의 io1
-            볼륨을 갖는 블록 디바이스 매핑을 포함시켜줘.
-          </Text>
-        </Paper>
-
-        <Paper shadow="md" p="md">
-          <Text fw={700} size="sm">
-            설명 어쩌구
-          </Text>
-          <Text mt={5} c="gray" size="xs">
-            #네트워킹”, “#보안”, “#스토리지” “#데이터베이스”, “EC2” 와 같은
-            해시태그를 사용할 수 있습니다.
-          </Text>
-        </Paper>
-
-        <Paper shadow="md" p="md">
-          <Text fw={700} size="sm">
-            설명 어쩌구
-          </Text>
-          <Text mt={5} c="gray" size="xs">
-            #네트워킹”, “#보안”, “#스토리지” “#데이터베이스”, “EC2” 와 같은
-            해시태그를 사용할 수 있습니다.
-          </Text>
-        </Paper>
+        {references.map((ref, idx) => (
+          <Reference key={`ref-${idx}`} reference={ref} />
+        ))}
       </SimpleGrid>
     </div>
   );

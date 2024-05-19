@@ -12,7 +12,5 @@ async function getTemplates() {
 export default async function TemplateHubPage() {
   const templateList = await getTemplates();
 
-  console.log(templateList);
-
   return <TemplateHub templates={templateList} />;
 }

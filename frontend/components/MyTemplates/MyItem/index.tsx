@@ -19,31 +19,37 @@ import {
 import {} from '@tabler/icons-react';
 import Link from 'next/link';
 // import { GithubIcon } from '@mantinex/dev-icons';
-import classes from './HubItems.module.css';
-import { IconSearch } from '@tabler/icons-react';
+import classes from './MyItems.module.css';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { useState } from 'react';
-import { resources } from '..';
+import { resources } from '../../TemplateHub';
 
-export default function HubItems({ templates }: { templates: any[] }) {
+const formatDate = (dateString: string) => {
+  const date = new Date(dateString);
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const year = String(date.getFullYear()).slice(-2);
+  return `${year}.${month}.${day}`;
+};
+
+interface IResult {
+  templates: any[];
+  isUploaded: boolean;
+}
+
+export default function MyItems({ templates, isUploaded }: IResult) {
   const router = useRouter();
 
   const handleHubItemClick = (id: number) => {
+    console.log(templates);
     console.log(id);
     console.log('/detail?id=${id}');
-    router.push(`/hub/${id}`);
+    if (isUploaded) {
+      router.push(`/hub/${id}`);
+    }
   };
 
-  // 이 객체를 통해 각 리소스 이름에 해당하는 색상을 빠르게 검색할 수 있습니다.
   const resourceColors: { [key: string]: string } = {};
-
-  // 모든 그룹과 아이템을 순회하며 resourceColors 객체를 생성합니다.
-  resources.forEach((group) => {
-    group.items.forEach((item) => {
-      resourceColors[item] = group.color;
-    });
-  });
-
   const tempHubItems = templates?.map((template) => {
     return {
       id: template.id,
@@ -52,6 +58,12 @@ export default function HubItems({ templates }: { templates: any[] }) {
       hashtags: template.hashtag || [],
       created: template.created,
     };
+  });
+
+  resources.forEach((group) => {
+    group.items.forEach((item) => {
+      resourceColors[item] = group.color;
+    });
   });
 
   const removePrefix = (item: string) => {
@@ -76,7 +88,9 @@ export default function HubItems({ templates }: { templates: any[] }) {
       <div className={classes.badges}>
         {item.hashtags.map((item: string, index: any) => {
           const displayItem = removePrefix(item);
+          // console.log(displayItem);
           return (
+            // 각 아이템에 대해 Badge 컴포넌트 생성
             <Badge
               key={index}
               variant="light"
@@ -94,7 +108,7 @@ export default function HubItems({ templates }: { templates: any[] }) {
         {item.prompt}
       </Text>
       <Text fz="xs" className={classes.userName}>
-        {item.userName}
+        {formatDate(item.created)}
       </Text>
     </Card>
   ));

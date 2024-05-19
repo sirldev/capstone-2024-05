@@ -60,3 +60,18 @@ body {
     animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
   }
 } */
+
+/* 웹킷 기반 브라우저 (Chrome, Safari 등) */
+body::-webkit-scrollbar {
+  display: none;
+}
+
+/* IE와 Edge */
+body {
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+/* Firefox */
+body {
+  scrollbar-width: none; /* Firefox */
+}
