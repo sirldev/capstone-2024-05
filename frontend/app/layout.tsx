@@ -43,7 +43,7 @@ export default function RootLayout({
         <body
         //  className={inter.className}>
         >
-          <MantineProvider theme={theme}>
+          <MantineProvider theme={theme} defaultColorScheme="light">
             <NavigationProgress />
             <Header />
             {children}
