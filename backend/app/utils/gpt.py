@@ -97,7 +97,7 @@ def gpt_genereate(instruction: str, retrieved_doc: List[dict]):
     is_valid, error_message = validate_template(template)
     print(f"execution_cnt=1, {completion.usage.total_tokens=}")
     if is_valid:
-        doc_title_list = [doc["title"] for doc in retrieved_doc]
+        doc_title_list = list(set([doc["title"] for doc in retrieved_doc]))
         return template, description, doc_title_list, 1
 
     # if there is no valid template
@@ -166,7 +166,7 @@ def gpt_generate_retry(instruction, retrieved_doc, error_message, wrong_template
         is_valid, error_message = validate_template(template)
         print(f"{execution_cnt=}, {completion.usage.total_tokens=}")
         if is_valid:
-            doc_title_list = [doc["title"] for doc in retrieved_doc]
+            doc_title_list = list(set([doc["title"] for doc in retrieved_doc]))
             return template, description, doc_title_list, execution_cnt
         
         wrong_template = template
