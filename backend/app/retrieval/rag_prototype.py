@@ -21,4 +21,4 @@ st.title('RAG Prototype')
 question = st.text_input('질문을 입력하세요:')
 
 if question:
-    st.write(retrieve_doc(question, pc_index, embedding, llm=llm, top_k=5))
+    st.write(retrieve_doc(question, pc_index, embedding, llm=llm))
