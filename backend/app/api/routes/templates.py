@@ -21,6 +21,24 @@ import main as app_main
 
 router = APIRouter()
 
+def find_all_type_values(dict_obj):
+    results = []
+    def _extract(dict_obj):
+        if isinstance(dict_obj, dict):
+            for k, v in dict_obj.items():
+                if k == "Type":
+                    if v.startswith("AWS::"):
+                        results.append(v.split("::")[1])
+                if isinstance(v, (dict, list)):
+                    _extract(v)
+        elif isinstance(dict_obj, list):
+            for item in dict_obj:
+                _extract(item)
+    try:
+        _extract(dict_obj)
+    except:
+        return results
+    return results
 
 # function to get values of dict
 def recursive_value_collect(dict_obj):
@@ -35,28 +53,6 @@ def recursive_value_collect(dict_obj):
                     yield item
         else:
             yield value
-
-
-def parse_prompt_result(result):
-    template_file, description = [], []
-    state = False
-
-    for l in result.split("\n"):
-        if "```" in l:
-            state = not state
-            continue
-        if state:
-            template_file.append(l + "\n")
-        else:
-            description.append(l + "\n")
-
-    description = "".join(description)
-    description = description.strip()
-
-    template_file = "".join(template_file)
-    template_file = json.loads(template_file)
-
-    return template_file, description
 
 
 # 해시태그 추가함수
@@ -199,6 +195,9 @@ async def create_template(
         filtered_keywords = [
             k for k in keywords if k not in ["AWS", "Amazon"] and len(k) > 2
         ]
+        type_res = find_all_type_values(template_file)
+        filtered_keywords += type_res
+        filtered_keywords = list(set(filtered_keywords))
 
         if not filtered_keywords:
             # 사전 정의된 키워드 기반이라 키워드가 없는 경우가 존재함
