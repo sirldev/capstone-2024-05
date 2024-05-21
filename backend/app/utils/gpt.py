@@ -29,8 +29,6 @@ def validate_template(template: dict):
     # 254 명령이 성공적으로 구문 분석되고 지정된 서비스에 요청이 전송되었지만, 서비스에서 오류가 반환되었습니다. 일반적으로 이는 잘못된 API 사용 또는 기타 서비스 특정 문제를 나타냅니다.
     # 255 일반적인 캐치올 오류입니다. 명령은 구문 분석이 올바르게 되었을 수 있지만, 명령을 실행하는 동안 명시되지 않은 런타임 오류가 발생했습니다. 이는 일반적인 오류 코드이기 때문에 오류가 255에서 더 구체적인 반환 코드로 변경될 수 있습니다. 255의 반환 코드는 특정한 오류 사례를 결정하기 위해 의존되어서는 안 됩니다.
 
-    print(f"{result.returncode=}")
-    print(f"{result.stderr=}")
 
     is_valid = result.returncode == 0
     error_message = "" if is_valid else result.stderr
@@ -95,7 +93,6 @@ def gpt_genereate(instruction: str, retrieved_doc: List[dict]):
     response = completion.choices[0].message.content
     template, description = parse_prompt_result(response)
     is_valid, error_message = validate_template(template)
-    print(f"execution_cnt=1, {completion.usage.total_tokens=}")
     if is_valid:
         doc_title_list = list(set([doc["title"] for doc in retrieved_doc]))
         return template, description, doc_title_list, 1
@@ -164,7 +161,6 @@ def gpt_generate_retry(instruction, retrieved_doc, error_message, wrong_template
         response = completion.choices[0].message.content
         template, description = parse_prompt_result(response)
         is_valid, error_message = validate_template(template)
-        print(f"{execution_cnt=}, {completion.usage.total_tokens=}")
         if is_valid:
             doc_title_list = list(set([doc["title"] for doc in retrieved_doc]))
             return template, description, doc_title_list, execution_cnt
