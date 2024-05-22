@@ -15,8 +15,9 @@ import { ColorSchemeScript, MantineProvider, createTheme } from '@mantine/core';
 import { NavigationProgress } from '@mantine/nprogress';
 
 export const metadata: Metadata = {
-  title: 'StackOrderFlow - 자연어 기반 AWS CloudFormation 템플릿 생성 서비스',
-  description: '자연어 기반 AWS CloudFormation 템플릿 생성 서비스',
+  title:
+    'StackOrderFlow - 자연어 기반 AWS CloudFormation 템플릿 생성 AI 어시스턴트',
+  description: '자연어 기반 AWS CloudFormation 템플릿 생성 AI 어시스턴트',
   icons: {
     icon: '/icon.png',
   },
