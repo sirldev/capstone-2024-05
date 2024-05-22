@@ -54,15 +54,24 @@ AWS CloudFormation에 특화된 서비스로 기존 GPT-4 모델에 비해 정�
 <br/>
 <br/>
 
+
+
 ## 📌 주요 기능
+
+<img width=600 src="https://github.com/kookmin-sw/capstone-2024-05/assets/81635179/66ef5327-8c5f-46d3-83ea-ca7811fe2819">
+
 ### 템플릿 생성
 RAG 기법을 적용하기 위해, 사용자 prompt를 바탕으로 관련이 있는 AWS CloudFormation 공식 문서를 검색합니다. 사용자 프롬프트와 검색된 관련 문서를 함께 GPT-4 API에 요청하여 템플릿을 생성합니다.
 
 ### 유효성 검증
 생성한 템플릿은 Validation API를 호출하여 유효성을 확인합니다. 유효하지 않은 템플릿은 Self-Feedback을 통해 스스로 개선 후 다시 유효성을 확인합니다. 결과적으로 유효한 템플릿만을 사용자에게 반환합니다.
 
+<img width=600 src="https://github.com/kookmin-sw/capstone-2024-05/assets/81635179/2333b76a-1238-4abe-9163-9326c89d15af">
+
 ### 템플릿 에디터
 생성된 템플릿은 JSON 형식에 맞게 구조화 되어 사용자에게 보여집니다. 환경 변수 등 private value를 즉각적으로 수정할 수 있습니다. 수정한 Template은 JSON 파일로 다운받아 바로 AWS CloudFormation에서 사용할 수 있습니다.
+
+<img width=600 src="https://github.com/kookmin-sw/capstone-2024-05/assets/81635179/577a46ec-92be-43f4-bd5a-5df79561d9f1">
 
 ### Template Hub
 생성된 템플릿은 사용자 간 공유할 수 있습니다. 템플릿을 생성할 때 AWS 리소스 기반 Hashtag를 추출합니다. 사용자들은 Template Hub에서 Hashtag 기반으로 검색하여 필요한 템플릿을 찾을 수 있습니다.
