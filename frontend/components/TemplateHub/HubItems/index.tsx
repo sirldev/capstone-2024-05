@@ -15,6 +15,7 @@ import {
   Grid,
   SimpleGrid,
   Paper,
+  Flex,
 } from '@mantine/core';
 import {} from '@tabler/icons-react';
 import Link from 'next/link';
@@ -98,6 +99,17 @@ export default function HubItems({ templates }: { templates: any[] }) {
       </Text>
     </Card>
   ));
+
+  if (templates.length === 0) {
+    return (
+      <Flex mt={20} justify="center" align="center" direction="column">
+        <Text>해당 리소스를 사용하는 템플릿 파일이 없어요.</Text>
+        <Button mt={12} onClick={() => router.push('/generator')}>
+          템플릿 만들러가기
+        </Button>
+      </Flex>
+    );
+  }
 
   return (
     <SimpleGrid

@@ -23,6 +23,7 @@ import axios from 'axios';
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
+import CodeSpaceEditor from '@/components/CodeSpaceEditor';
 
 interface IResult {
   prompt: string;
@@ -97,7 +98,7 @@ export default function Result({ template }: any) {
         결과
       </Text>
 
-      <JsonInput
+      {/* <JsonInput
         mt={7}
         value={value}
         onChange={setValue}
@@ -106,7 +107,9 @@ export default function Result({ template }: any) {
         formatOnBlur
         autosize
         minRows={4}
-      />
+      /> */}
+
+      <CodeSpaceEditor template={value} />
 
       <Text size="xl" fw={500} mt="lg">
         설명
