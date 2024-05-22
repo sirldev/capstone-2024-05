@@ -9,10 +9,13 @@
 
 ## 📔 목차
 - [💡 프로젝트 소개](#-프로젝트-소개)
+- [📌 주요 기능](#-주요-기능)
+- [📃 수행 결과](#-수행-결과)
 - [🛠️ 기술스택](#-기술스택)
 - [💻 서비스 구조도](#-서비스-구조도)
-- [📌 주요 기능](#-주요-기능)
 - [🧑‍💻 팀 소개](#-팀-소개)
+- [🔎 실행 방법](#-실행-방법)
+- [🗂 문서](#-문서)
 
 
 <br/>
@@ -77,6 +80,28 @@ RAG 기법을 적용하기 위해, 사용자 prompt를 바탕으로 관련이 �
 생성된 템플릿은 사용자 간 공유할 수 있습니다. 템플릿을 생성할 때 AWS 리소스 기반 Hashtag를 추출합니다. 사용자들은 Template Hub에서 Hashtag 기반으로 검색하여 필요한 템플릿을 찾을 수 있습니다.
 
 <br /> <br />
+
+
+## 📃 수행 결과
+<h4>✅  100개의 데이터로 테스트를 진행하여 GPT-4 대비 정확도가 <span style="background: #2880e3; color: white; border-radius: 1px;">65%</span> 높다는 결과를 얻었습니다. </h4>
+
+```
+          Only GPT         : 100개의 템플릿 중 46개 유효 (46%)
+         GPT + RAG         : 100개의 템플릿 중 65개 유효 (65%)
+ GPT + RAG + Self-Feedback : 100개의 템플릿 중 76개 유효 (76%)
+```
+
+#### ✅  사용자의 요구사항을 <span style="background: #2880e3; color: white; border-radius: 1px;">94%</span> 반영하는 데에 성공했습니다.
+```
+1. 사용자의 요청에서 요구사항을 선정합니다.
+2. 생성된 템플릿에서 요구사항 충족 여부를 확인합니다.
+3. 비율(충족된 요구사항/전체 요구사항)을 통해 성능을 계산합니다.
+
+테스트 결과 143개의 요구사항 중 135개를 충족하였습니다.
+```
+
+<br /> <br />
+
 
 ## 🛠️ 기술스택
 
@@ -180,8 +205,6 @@ RAG 기법을 적용하기 위해, 사용자 prompt를 바탕으로 관련이 �
 
 <br/><br/>
 
-<br/><br/>
-
 ## 🧑‍💻 팀 소개
 
 - 윤상원[팀장]
@@ -208,3 +231,40 @@ RAG 기법을 적용하기 위해, 사용자 prompt를 바탕으로 관련이 �
 > - 학번 : 20213100
 > - position : FE
 > - Email : ghdtmdgus100@kookmin.ac.kr
+
+<br/><br/>
+
+## 🔎 실행 방법
+**Common**
+```
+git clone https://github.com/kookmin-sw/capstone-2024-05.git
+```
+<details>
+<summary><b>Frontend</b></summary>
+
+```
+cd frontend
+npm install
+npm run dev
+```
+</details>
+
+<details>
+<summary><b>Backend</b></summary>
+
+```
+cd backend
+```
+</details>
+
+<details>
+<summary><b>AI</b></summary>
+
+```
+pip install
+```
+</details>
+
+<br/> <br/>
+
+## 🗂 문서
