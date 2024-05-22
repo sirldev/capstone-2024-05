@@ -244,8 +244,9 @@ git clone https://github.com/kookmin-sw/capstone-2024-05.git
 
 ```
 cd frontend
-npm install
-npm run dev
+yarn
+환경 변수 설정 (NEXT_PUBLIC_API_BASE_URL: StackOrderFlow API URL)
+yarn dev
 ```
 </details>
 
