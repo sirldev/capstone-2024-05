@@ -1,6 +1,6 @@
 'use client';
 
-import { Container, Title, LoadingOverlay, Loader, Grid } from '@mantine/core';
+import { Modal, Container, Title, LoadingOverlay, Loader, Grid } from '@mantine/core';
 // import { GithubIcon } from '@mantinex/dev-icons';
 import classes from './usepage.module.css';
 import UserInput from './UserInput/Index';
@@ -11,6 +11,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import Result from './Result';
 import { useAuth } from '@/context/AuthContext';
+import { useDisclosure } from '@mantine/hooks';
 
 export default function UsePage() {
   const [prompt, setPrompt] = useState('');
@@ -21,6 +22,7 @@ export default function UsePage() {
   const [currentComponent, setCurrentComponent] = useState('AWSDescription');
   const [visible, setVisible] = useState(false);
   const { isLoggedIn, accessToken } = useAuth();
+  const [isModalOpen, { open, close }] = useDisclosure(false);
 
   const handleComponentChange = () => {
     // visible을 true로 설정하여 로딩 오버레이를 활성화
@@ -55,7 +57,7 @@ export default function UsePage() {
         setCurrentComponent('References');
       })
       .catch((error) => {
-        console.log(error);
+        open();
       })
       .finally(() => {
         setVisible(false);
@@ -64,26 +66,6 @@ export default function UsePage() {
 
   return (
     <div className={classes.wrapper}>
-      {/* <Container size="lg" className={classes.inner}>
-        {currentComponent === 'AWSDescription' ? 
-          <Title className={classes.title} mt={0}>
-              어떤 AWS 리소스가 필요하세요?
-          </Title> : 
-          <Title className={classes.title} mt={0}>
-            템플릿 생성 중..
-          </Title>
-          }
-          
-          <Grid grow mt='xl'>
-            <Grid.Col span={8}>
-              <UserInput onButtonClick={handleComponentChange}/>
-            </Grid.Col>
-            <Grid.Col span={4}>
-              {currentComponent === 'AWSDescription' ? <AWSDescription /> : <References />}
-            </Grid.Col>
-          </Grid>
-        </Container> */}
-
       {currentComponent === 'AWSDescription' ? (
         <Container size="lg" className={classes.inner}>
           <Title className={classes.title} mt={0}>
@@ -126,6 +108,10 @@ export default function UsePage() {
           </Grid>
         </Container>
       )}
+
+      <Modal opened={isModalOpen} onClose={close} title="템플릿 생성 실패">
+        필요한 리소스를 구체적으로 입력해주세요.
+      </Modal>
     </div>
   );
 }
