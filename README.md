@@ -1,4 +1,4 @@
- <img width=300 style="margin-top: 6px;" src="https://github.com/kookmin-sw/capstone-2024-05/assets/81635179/2bbcbe69-8e55-4c46-b214-dd3f0e27206a?raw=true" >
+<img width=300 style="margin-top: 6px;" src="https://github.com/kookmin-sw/capstone-2024-05/assets/81635179/325933d2-f479-4d4f-ae6e-5610494a0990" >
 
 
 > 2024 KookminUniv SW 캡스톤 디자인 5조  
