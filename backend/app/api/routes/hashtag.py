@@ -78,5 +78,4 @@ def store_default_to_db(request: Request, db: Session = Depends(get_db)):
         db.refresh(isntance)
 
     hashtag = db.query(HashTag).all()
-    print(hashtag)
     return hashtag
