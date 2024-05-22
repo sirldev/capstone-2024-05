@@ -19,7 +19,6 @@ import {
 import { useDisclosure } from '@mantine/hooks';
 import { IconCheck, IconCopy, IconX } from '@tabler/icons-react';
 import { useEffect, useState } from 'react';
-import { NavigationProgress, nprogress } from '@mantine/nprogress';
 
 const code = `{
   "AWSTemplateFormatVersion": "2010-09-09",
@@ -168,26 +167,22 @@ const code = `{
 }
 `;
 
-export default function CodeSpaceEditor() {
+export default function CodeSpaceEditor({
+  template = code,
+}: {
+  template?: string;
+}) {
   const [visible, { toggle }] = useDisclosure(false);
 
-  const [loading, setLoading] = useState(true);
-  const [valid, setValid] = useState(false);
-
-  useEffect(() => {
-    if (loading) {
-      nprogress.start();
-    } else {
-      nprogress.complete();
-    }
-  }, [loading]);
+  const [loading, setLoading] = useState(false);
+  const [valid, setValid] = useState(true);
 
   return (
     <div className={classes.wrapper}>
-      <Container size={700} className={classes.inner}>
+      <Container className={classes.inner}>
         <Box pos="relative" p={8} className={classes['code-wrapper']}>
           <Flex justify="space-between" align="center">
-            <CopyButton value="https://mantine.dev" timeout={2000}>
+            <CopyButton value={template} timeout={2000}>
               {({ copied, copy }) => (
                 <Tooltip
                   label={copied ? 'Copied' : 'Copy'}
@@ -239,7 +234,7 @@ export default function CodeSpaceEditor() {
             <Editor
               height="400px"
               defaultLanguage="json"
-              defaultValue={code}
+              defaultValue={template}
               options={{
                 fontSize: '14px',
                 minimap: {
@@ -251,11 +246,11 @@ export default function CodeSpaceEditor() {
             />
           </Box>
 
-          <Group justify="center" mt={8}>
+          {/* <Group justify="center" mt={8}>
             <Button onClick={toggle}>Toggle overlay</Button>
             <Button onClick={() => setLoading(!loading)}>Toggle Loading</Button>
             <Button onClick={() => setValid(!valid)}>Check valid</Button>
-          </Group>
+          </Group> */}
         </Box>
       </Container>
     </div>

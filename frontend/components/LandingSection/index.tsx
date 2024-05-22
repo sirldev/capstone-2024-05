@@ -24,14 +24,15 @@ export default function LandingSection() {
             fully featured
           </Text>{' '}
           React components and hooks library */}
-          쉽고, 빠르게, 실수없이 <br />
-          AWS를 시작하세요
+          쉽게, 빠르게, 부담없이 <br />
+          AWS 리소스를 관리하세요
           {/* <br/> AWS CloudFormation <br/> 템플릿을 생성해보세요. */}
         </h1>
 
         <Text className={classes.description} color="dimmed">
-          필요한 리소스들을 입력하세요. 사용자의 자연어 입력을 분석하여 AWS
-          CloudFormation 템플릿을 자동으로 생성해 줍니다.
+          자연어를 통해 생성된 CloudFormation 템플릿을 통해
+          <br />
+          원하는 클라우드 인프라를 구성하세요.
         </Text>
 
         <Group className={classes.controls}>
@@ -69,9 +70,9 @@ export default function LandingSection() {
       <Container size={700} className={classes.inner}>
         <CloudFormationDescription />
       </Container>
-      <Container size={700} className={classes.inner}>
+      {/* <Container size={700} className={classes.inner}>
         <Usage />
-      </Container>
+      </Container> */}
     </div>
   );
 }
