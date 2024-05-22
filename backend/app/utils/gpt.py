@@ -93,7 +93,6 @@ def gpt_genereate(instruction: str, retrieved_doc: List[dict]):
     response = completion.choices[0].message.content
     template, description = parse_prompt_result(response)
     is_valid, error_message = validate_template(template)
-    print(f"execution_cnt=1, {completion.usage.total_tokens=}")
     if is_valid:
         doc_title_list = list(set([doc["title"] for doc in retrieved_doc]))
         return template, description, doc_title_list, 1

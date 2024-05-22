@@ -23,7 +23,7 @@ import Link from 'next/link';
 import classes from './TemplateHub.module.css';
 import { IconSearch } from '@tabler/icons-react';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import HubItems from './HubItems';
 
 interface IHub {
@@ -36,12 +36,17 @@ export default function TemplateHub({ templates }: IHub) {
   const [searchResults, setSearchResults] = useState<string[]>([]);
   const [filteredTemplates, setFilteredTemplates] = useState<any[]>([]);
 
+  useEffect(() => {
+    filterTemplates();
+  }, [searchResults || []]);
+
   const filterTemplates = () => {
-    const results = templates.filter((template) =>
-      searchResults.every((tag) => template.hashtag.includes(tag)),
+    const results = templates.filter(template =>
+      searchResults.every(tag => template.hashtag && template.hashtag.includes(tag))
     );
     setFilteredTemplates(results);
   };
+
 
   const handleIconClick = () => {
     if (value.length > 0) {
