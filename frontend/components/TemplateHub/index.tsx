@@ -36,17 +36,20 @@ export default function TemplateHub({ templates }: IHub) {
   const [searchResults, setSearchResults] = useState<string[]>([]);
   const [filteredTemplates, setFilteredTemplates] = useState<any[]>([]);
 
+  const [filterArray, setFilterArray] = useState<string[]>([]);
+
   useEffect(() => {
     filterTemplates();
   }, [searchResults || []]);
 
   const filterTemplates = () => {
-    const results = templates.filter(template =>
-      searchResults.every(tag => template.hashtag && template.hashtag.includes(tag))
+    const results = templates.filter((template) =>
+      searchResults.every(
+        (tag) => template.hashtag && template.hashtag.includes(tag),
+      ),
     );
     setFilteredTemplates(results);
   };
-
 
   const handleIconClick = () => {
     if (value.length > 0) {
@@ -82,7 +85,10 @@ export default function TemplateHub({ templates }: IHub) {
   const handleTagInput = (tags: string[]) => {
     // 입력된 태그들을 필터링하여 allItems 배열에 있는 태그만 남김
     const validTags = tags.filter((tag) => allItems.includes(tag));
+    console.log(tags);
     setValue(validTags);
+
+    setFilterArray(validTags);
   };
 
   const resourceColors: { [key: string]: string } = {};
@@ -93,6 +99,8 @@ export default function TemplateHub({ templates }: IHub) {
       resourceColors[item] = group.color;
     });
   });
+
+  console.log(templates);
 
   return (
     <div className={classes.wrapper}>
@@ -112,7 +120,34 @@ export default function TemplateHub({ templates }: IHub) {
           />
         </Container>
         <Container mt={80} size={'xl'}>
-          {showResults ? (
+          {filterArray.length > 0 && (
+            <div className={classes.badges}>
+              {filterArray.map((item: string, index: any) => {
+                return (
+                  <Badge
+                    key={index}
+                    variant="light"
+                    color={resourceColors[item]}
+                  >
+                    {item}
+                  </Badge>
+                );
+              })}
+              <Text>검색 결과</Text>
+            </div>
+          )}
+
+          <HubItems
+            templates={
+              filterArray.length > 0
+                ? templates.filter((template) =>
+                    filterArray.every((tag) => template.hashtag.includes(tag)),
+                  )
+                : templates
+            }
+          />
+
+          {/* {showResults ? (
             <>
               <div className={classes.badges}>
                 {searchResults.map((item: string, index: any) => {
@@ -136,7 +171,7 @@ export default function TemplateHub({ templates }: IHub) {
               <Text>​</Text>
               <HubItems templates={templates} />
             </>
-          )}
+          )} */}
         </Container>
       </Container>
     </div>
