@@ -1,0 +1,8 @@
+secrets.json
+test.ipynb
+documents
+__pycache__
+document.csv
+.python-version
+.env 
+.venv

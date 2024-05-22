@@ -13,15 +13,72 @@
         - Default region name : ap-northeast-2 입력
         - Default output format : json 입력
 
-### requirments 설치하기
+### How to install (without Docker)
 
-    - pip install -r requirements.txt
+- repository clone
 
-### 서버 실행하기
+```shell
+git clone https://github.com/kookmin-sw/capstone-2024-05.git
+```
 
-    - main함수 실행하면 됨.
-    - app폴더로 이동 후
-    - uvicorn main:app --reload
+- Backend 디렉토리로 이동
+
+```shell
+cd backend
+```
+
+- Python 가상 환경 설정
+
+```shell
+python -m venv .venv
+source venv/bin/activate
+
+```
+
+- 필요한 package 설치
+
+```shell
+pip install -r requirements.txt
+```
+
+- AWS CLI Configure 설정
+
+- 실행
+
+```shell
+cd app
+uvicorn main:app --host=0.0.0.0 --port=8000
+```
+
+### How to install (with Docker)
+
+- repository clone
+
+```shell
+git clone https://github.com/kookmin-sw/capstone-2024-05.git
+```
+
+- Backend 디렉토리로 이동
+
+```shell
+cd backend
+```
+
+- Docker 빌드 후 내부 컨테이너 진입
+
+```shell
+docker build . -t [image name]
+docker run -it -p [host port]:8000 --env-file .env [image name]
+```
+
+- AWS CLI Configure 설정
+
+- 실행
+
+```shell
+cd app
+uvicorn main:app --host=0.0.0.0 --port=8000
+```
 
 ### ENV
 
@@ -40,39 +97,34 @@ OPENAI_APIKEY
 ### 서버 디렉토리 구조
 
     - /app
-        - /api : API 코드가 모여있는 폴더입니다.
-            - /routes : domain별로 구분하여 개발 중입니다.
+        - /api : Functional APIs
+            - /routes
+                - hashtag.py
                 - templates.py
                 - users.pu
-            - main.py
-        - /db : 데이터베이스 관련 코드가 모여있는 폴더입니다.
-            - database.py : 현재 운영중인 DB를 연결하는 코드입니다.
-                - DB의존성 주입을 위한 get_db 메서드가 있습니다.
-                    - 세션 생성, 운영, 종료를 처리해주는 함수입니다.
-                    - DB사용 시에는 이 메서드 사용해주시면 됩니다.
-                    - api 메서드 파라미터에 db: Session = Depends(get_db) 작성해주시고 db 객체 사용해주시면 됩니다.
+            - router.py
+        - /db : Database Management
+            - database.py
             - models.py
-        - /retrieval
+        - /retrieval : RAG Implementation
             - init_vector_db.py
             - markdown_splitter.py
             - rag_prototype.py
             - rag.py
             - settings.py
-        - /static
+        - /static : Static Files
             - /examples
                 - example-error.json
                 - example-valid.json
-            - style.css
-        - /templates
-            - item.html
+            - tmp.json
+        - /templates : HTML Templates
             - main.html
-            - template-validation-fail.html
-            - template-validation-success.html
-        - /utils
+        - /utils : Utility Modules
+            - auth.py
             - gpt.py
             - setup.py
         - main.py
     - .env
-        : 데이터베이스 URL을 저장해야합니다. 연락주시면(현승) 별도로 전달드리겠습니다. (DB_URL)
     - README.md
     - requirements.txt
+    - Dockerfile
