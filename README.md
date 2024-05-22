@@ -1,4 +1,5 @@
-# Stack OrderFlow
+ <img width=300 style="margin-top: 6px;" src="https://github.com/kookmin-sw/capstone-2024-05/assets/81635179/2bbcbe69-8e55-4c46-b214-dd3f0e27206a?raw=true" >
+
 
 > 2024 KookminUniv SW 캡스톤 디자인 5조  
 > Github page : [https://kookmin-sw.github.io/capstone-2024-05/](https://kookmin-sw.github.io/capstone-2024-05/)
@@ -7,33 +8,66 @@
 <br/>
 
 ## 📔 목차
-- [💡 프로젝트 소개](#💡-프로젝트-소개)
-- [🛠️ 기술스택](#🛠️-기술스택)
-- [💻 서비스 구조도](#💻-서비스-구조도)
-- [📌 주요 기능](#📌-주요-기능)
-- [🧑‍💻 팀 소개](#🧑‍💻-팀-소개)
+- [💡 프로젝트 소개](#-프로젝트-소개)
+- [🛠️ 기술스택](#-기술스택)
+- [💻 서비스 구조도](#-서비스-구조도)
+- [📌 주요 기능](#-주요-기능)
+- [🧑‍💻 팀 소개](#-팀-소개)
 
 
 <br/>
-<br/>
+
+### ​
 
 ## 💡 프로젝트 소개
 
+<img width=600 src="https://github.com/kookmin-sw/capstone-2024-05/assets/81635179/fcfcbdec-b046-4d95-b35b-8220cd13223c">
+
+<br />
+
 ### 프로젝트 목표
-Amazon Web Services(AWS) CloudFormation 서비스의 템플릿 파일을 사용자 입력한 자연어를 통하여 생성하여 AWS 리소스 생성에 도움을 주는 프로젝트입니다.   
+사용자가 입력한 자연어를 바탕으로 Amazon Web Services(AWS) CloudFormation의 Template을 생성하여 복잡한 문법을 익히지 않고도 클라우드 인프라 관리를 돕는 서비스를 개발하는 것입니다.  
 [AWS CloudFormation이란?](https://docs.aws.amazon.com/ko_kr/AWSCloudFormation/latest/UserGuide/Welcome.html)
 
+<br />
+
 ### 프로젝트 개발 배경
-CloudFormation은 AWS 리소스를 자동으로 생성해 주는 서비스입니다. 사용하려는 AWS 리소스를 템플릿 파일로 작성하면, CloudFormation이 이를 분석해서 AWS 리소스를 생성합니다. 하지만 CloudFormation 서비스를 사용하기 위해서는 먼저 CloudFormation의 개념과 템플릿 언어를 학습하여야 합니다. 또 템플릿이 길고 복잡해질 경우 오류를 찾기 힘들고 관리하기가 어려워집니다. 우리는 이에 불편함을 느끼고 CloudFormation의 구체적인 문법을 모르더라도, 자연어를 통해 AWS 인프라를 구성할 수 있는 서비스를 개발하기로 하였습니다.
+CloudFormation은 AWS 리소스를 자동으로 생성해 주는 서비스입니다. 사용하려는 AWS 리소스를 템플릿 파일로 작성하면, CloudFormation이 이를 분석하여 AWS 리소스를 생성합니다. 하지만 CloudFormation 서비스를 사용하기 위해서는 먼저 CloudFormation의 개념과 템플릿 언어를 학습하여야 합니다. 또 템플릿이 길고 복잡해질 경우 오류를 찾기 힘들고 관리하기가 어려워집니다. 우리는 이에 불편함을 느끼고 CloudFormation의 구체적인 문법을 모르더라도, 자연어를 통해 AWS 인프라를 구성할 수 있는 서비스를 개발하기로 하였습니다.
+
+<br />
+
+### 소개 영상
+[<img width=600 src="https://github.com/kookmin-sw/capstone-2024-05/assets/81635179/bbcb5d29-7b9a-40bd-bf60-066fdaa544d7">](https://youtu.be/4CN9mUhLxfo) 
+
+<!-- [![소개 영상](https://github.com/kookmin-sw/capstone-2024-05/assets/81635179/43c4b6ed-c02e-4522-b842-2e4592baabea)](https://youtu.be/4CN9mUhLxfo)  -->
+
+<br />
 
 ### 기대 효과
-* **진입장벽 완화** : 자연어 처리를 통한 CloudFormation 템플릿 생성으로 템플릿 생성에 필요한 언어와 문법에 대한 학습의 진입장벽을 낮출 수 있습니다.
-* **인프라 구축 시간 단축** : 복잡한 JSON 또는 YAML 템플릿을 직접 작성하는 대신, 자연어로 원하는 인프라의 설명을 입력하기만 하면 되므로 인프라 구축에 필요한 시간을 줄일 수 있습니다.
-* **오류 감소** : **'Stack OrderFlow'** 를 통해 생성된 템플릿은 유효성 검사를 진행하므로, 사용자가 직접 템플릿을 작성했을 때 발생할 수 있는 실수를 방지할 수 있습니다.
-* **지식 공유** : 템플릿 파일 허브 기능을 통해 사용자들은 다른 사람들이 어떤 요구사항으로 어떤 템플릿을 생성했는지 볼 수 있어, 리소스 관리에 대한 지식과 영감을 얻을 수 있습니다.
+#### 생산성 증가
+7,000개가 넘는 AWS CloudFormation 문서를 읽고 이해하지 않아도 쉽고 빠르게 인프라를 구성할 수 있습니다.
+#### 정확도 증가
+AWS CloudFormation에 특화된 서비스로 기존 GPT-4 모델에 비해 정확하고 신뢰성 있는 템플릿을 생성합니다.
+#### 재사용성 증가
+생성된 템플릿을 다른 사용자가 재사용 할 수 있고, LLM fine-tuning을 위한 학습 데이터로 활용할 수 있습니다.
 
 <br/>
 <br/>
+
+## 📌 주요 기능
+### 템플릿 생성
+RAG 기법을 적용하기 위해, 사용자 prompt를 바탕으로 관련이 있는 AWS CloudFormation 공식 문서를 검색합니다. 사용자 프롬프트와 검색된 관련 문서를 함께 GPT-4 API에 요청하여 템플릿을 생성합니다.
+
+### 유효성 검증
+생성한 템플릿은 Validation API를 호출하여 유효성을 확인합니다. 유효하지 않은 템플릿은 Self-Feedback을 통해 스스로 개선 후 다시 유효성을 확인합니다. 결과적으로 유효한 템플릿만을 사용자에게 반환합니다.
+
+### 템플릿 에디터
+생성된 템플릿은 JSON 형식에 맞게 구조화 되어 사용자에게 보여집니다. 환경 변수 등 private value를 즉각적으로 수정할 수 있습니다. 수정한 Template은 JSON 파일로 다운받아 바로 AWS CloudFormation에서 사용할 수 있습니다.
+
+### Template Hub
+생성된 템플릿은 사용자 간 공유할 수 있습니다. 템플릿을 생성할 때 AWS 리소스 기반 Hashtag를 추출합니다. 사용자들은 Template Hub에서 Hashtag 기반으로 검색하여 필요한 템플릿을 찾을 수 있습니다.
+
+<br /> <br />
 
 ## 🛠️ 기술스택
 
@@ -44,11 +78,7 @@ CloudFormation은 AWS 리소스를 자동으로 생성해 주는 서비스입니
 <table>
   <tr>
     <td><strong>Framework</strong></td>
-    <td><img src="https://img.shields.io/badge/LangChain-294444?style=&logo=LangChain&logoColor=white" style="margin-top: 6px;"/></td>
-  </tr>
-  <tr>
-    <td><strong>Library</strong></td>
-    <td><img src="https://img.shields.io/badge/PyTorch-EE4C2C?style=&logo=pytorch&logoColor=white" style="margin-top: 6px;"/></td>
+    <td><img src="https://img.shields.io/badge/🦜 LangChain-294444?style=&logo=LangChain&logoColor=white" style="margin-top: 6px;"/></td>
   </tr>
 </table>
 
@@ -67,7 +97,8 @@ CloudFormation은 AWS 리소스를 자동으로 생성해 주는 서비스입니
   </tr>
   <tr>
     <td><strong>Database</strong></td>
-    <td><img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=&logo=postgreSQL&logoColor=white" style="margin-top: 6px;"/></td>
+    <td><img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=&logo=postgreSQL&logoColor=white" style="margin-top: 6px;"/> <img src="https://img.shields.io/badge/Pinecone-%23121011.svg?style=&logo=pinecone&logoColor=white" style="margin-top: 6px;"/>
+    </td>
   </tr>
 </table>
 
@@ -83,6 +114,25 @@ CloudFormation은 AWS 리소스를 자동으로 생성해 주는 서비스입니
   <tr>
     <td><strong>Framework</strong></td>
     <td><img src="https://img.shields.io/badge/Next.js-000000?style=e&logo=nextdotjs&logoColor=white" style="margin-top: 6px;"/></td>
+  </tr>
+</table>
+
+</div>
+
+<br />
+
+### ♾️ DevOps
+
+<div markdown="1" style="text-align:center">
+
+<table>
+  <tr>
+    <td><strong>Cloud</strong></td>
+    <td><img src="https://img.shields.io/badge/Amazon AWS-232F3E?style=e&logo=amazonaws&logoColor=white" style="margin-top: 6px;"/></td>
+  </tr>
+  <tr>
+    <td><strong>CI/CD</strong></td>
+    <td><img src="https://img.shields.io/badge/Github Actions-2088FF.svg?&style=&logo=githubactions&logoColor=white" style="margin-top: 6px;"/></td>
   </tr>
 </table>
 
@@ -117,27 +167,9 @@ CloudFormation은 AWS 리소스를 자동으로 생성해 주는 서비스입니
 
 ## 💻 서비스 구조도
 
-![orderFlow_1](https://github.com/kookmin-sw/capstone-2024-05/assets/81635179/74100128-5140-466f-9cec-8f51b972d233)
-
-![orderFlow_2](https://github.com/kookmin-sw/capstone-2024-05/assets/81635179/d26f17bf-5dde-46c6-96ff-4a4758fa755c)
+![orderFlow_1](https://github.com/kookmin-sw/capstone-2024-05/assets/81635179/673c3dbd-a059-4959-a0d4-ab4851bad77b)
 
 <br/><br/>
-
-## 📌 주요 기능
-
-* 사용자 프롬프트 기반 템플릿 생성
-
-
-* 템플릿 유효성 검사 
-   
-
-* 템플릿 허브   
-	* 사용자의 서비스 이용 사례 저장 및 공유
-
-* 템플릿 수정 기능
-	* 사용자가 직접 Template에 내용을 추가 / 삭제할 수 있는 기능
-
-
 
 <br/><br/>
 
@@ -167,4 +199,3 @@ CloudFormation은 AWS 리소스를 자동으로 생성해 주는 서비스입니
 > - 학번 : 20213100
 > - position : FE
 > - Email : ghdtmdgus100@kookmin.ac.kr
-
