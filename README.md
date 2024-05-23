@@ -24,7 +24,7 @@
 
 ## 💡 프로젝트 소개
 
-<img width=600 src="https://github.com/kookmin-sw/capstone-2024-05/assets/81635179/fcfcbdec-b046-4d95-b35b-8220cd13223c">
+<img width=600 src="https://github.com/kookmin-sw/capstone-2024-05/assets/81635179/0485f1d8-86d7-4538-8e2a-8439adcbe3e8">
 
 <br />
 
@@ -201,7 +201,7 @@ RAG 기법을 적용하기 위해, 사용자 prompt를 바탕으로 관련이 �
 
 ## 💻 서비스 구조도
 
-![orderFlow_1](https://github.com/kookmin-sw/capstone-2024-05/assets/81635179/673c3dbd-a059-4959-a0d4-ab4851bad77b)
+![orderFlow](https://github.com/kookmin-sw/capstone-2024-05/assets/81635179/4036f6b8-c9cf-457e-a299-f7469386c984)
 
 <br/><br/>
 
@@ -245,7 +245,6 @@ git clone https://github.com/kookmin-sw/capstone-2024-05.git
 ```
 cd frontend
 yarn
-환경 변수 설정 (NEXT_PUBLIC_API_BASE_URL: StackOrderFlow API URL)
 yarn dev
 ```
 </details>
@@ -254,18 +253,30 @@ yarn dev
 <summary><b>Backend</b></summary>
 
 ```
-cd backend
-```
-</details>
-
-<details>
-<summary><b>AI</b></summary>
-
-```
-pip install
+pip install -r backend/requirements.txt
+python backend/app/retrieval/init_vector_db.py
+cd backend/app 
+uvicorn main:app —reload
 ```
 </details>
 
 <br/> <br/>
 
 ## 🗂 문서
+
+<a href="https://docs.google.com/presentation/d/1tqXGDVQyiOiQ1uQ5uDb6iBwvbKFRv-OL/edit?usp=sharing&ouid=103838252580043416331&rtpof=true&sd=true">
+  📢 최종 발표 자료
+</a>
+
+<a href="https://drive.google.com/file/d/11GcKooIxkitk9eSd4-D8axFPqExdCrim/view?usp=sharing">
+  📺 시연 동영상
+</a>
+
+<a href="https://drive.google.com/file/d/1xxPPyCDWsZdA5606vctrAbv72Qbctgtv/view?usp=sharing">
+  🖼️ 포스터
+</a>
+  
+<a href="https://docs.google.com/document/d/10Blz3ixLK84w4umwC20AW5lX-FmlsQlP/edit?usp=sharing&ouid=103838252580043416331&rtpof=true&sd=true">
+  📄 수행 보고서
+</a>
+
