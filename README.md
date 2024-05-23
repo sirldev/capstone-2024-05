@@ -35,7 +35,11 @@
 <br />
 
 ### 프로젝트 개발 배경
-CloudFormation은 AWS 리소스를 자동으로 생성해 주는 서비스입니다. 사용하려는 AWS 리소스를 템플릿 파일로 작성하면, CloudFormation이 이를 분석하여 AWS 리소스를 생성합니다. 하지만 CloudFormation 서비스를 사용하기 위해서는 먼저 CloudFormation의 개념과 템플릿 언어를 학습하여야 합니다. 또 템플릿이 길고 복잡해질 경우 오류를 찾기 힘들고 관리하기가 어려워집니다. 우리는 이에 불편함을 느끼고 CloudFormation의 구체적인 문법을 모르더라도, 자연어를 통해 AWS 인프라를 구성할 수 있는 서비스를 개발하기로 하였습니다.
+CloudFormation은 AWS 리소스를 자동으로 생성해 주는 서비스입니다.   
+사용하려는 AWS 리소스를 템플릿 파일로 작성하면, CloudFormation이 이를 분석하여 AWS 리소스를 생성합니다.   
+하지만 CloudFormation 서비스를 사용하기 위해서는 먼저 CloudFormation의 개념과 템플릿 언어를 학습하여야 합니다.   
+또 템플릿이 길고 복잡해질 경우 오류를 찾기 힘들고 관리하기가 어려워집니다.   
+우리는 이에 불편함을 느끼고 CloudFormation의 구체적인 문법을 모르더라도, 자연어를 통해 AWS 인프라를 구성할 수 있는 서비스를 개발하기로 하였습니다.   
 
 <br />
 
@@ -64,7 +68,7 @@ AWS CloudFormation에 특화된 서비스로 기존 GPT-4 모델에 비해 정�
 <img width=600 src="https://github.com/kookmin-sw/capstone-2024-05/assets/81635179/66ef5327-8c5f-46d3-83ea-ca7811fe2819">
 
 ### 템플릿 생성
-RAG 기법을 적용하기 위해, 사용자 prompt를 바탕으로 관련이 있는 AWS CloudFormation 공식 문서를 검색합니다. 사용자 프롬프트와 검색된 관련 문서를 함께 GPT-4 API에 요청하여 템플릿을 생성합니다.
+RAG 기법을 적용하여, 사용자 입력을 바탕으로 관련이 있는 AWS CloudFormation 공식 문서를 검색합니다. 사용자의 입력과 검색된 관련 문서를 함께 GPT-4의 프롬프트로 입력하여 템플릿 파일을 생성합니다.
 
 ### 유효성 검증
 생성한 템플릿은 Validation API를 호출하여 유효성을 확인합니다. 유효하지 않은 템플릿은 Self-Feedback을 통해 스스로 개선 후 다시 유효성을 확인합니다. 결과적으로 유효한 템플릿만을 사용자에게 반환합니다.
@@ -72,12 +76,12 @@ RAG 기법을 적용하기 위해, 사용자 prompt를 바탕으로 관련이 �
 <img width=600 src="https://github.com/kookmin-sw/capstone-2024-05/assets/81635179/2333b76a-1238-4abe-9163-9326c89d15af">
 
 ### 템플릿 에디터
-생성된 템플릿은 JSON 형식에 맞게 구조화 되어 사용자에게 보여집니다. 환경 변수 등 private value를 즉각적으로 수정할 수 있습니다. 수정한 Template은 JSON 파일로 다운받아 바로 AWS CloudFormation에서 사용할 수 있습니다.
+생성된 템플릿은 JSON 형식에 맞게 구조화 되어 사용자에게 보여집니다. VPC ID 등 사용자가 직접 입력해야 하는 내용을 바로 수정할 수 있습니다. 수정한 Template은 JSON 파일로 다운받아 바로 AWS CloudFormation에서 사용할 수 있습니다.
 
 <img width=600 src="https://github.com/kookmin-sw/capstone-2024-05/assets/81635179/577a46ec-92be-43f4-bd5a-5df79561d9f1">
 
 ### Template Hub
-생성된 템플릿은 사용자 간 공유할 수 있습니다. 템플릿을 생성할 때 AWS 리소스 기반 Hashtag를 추출합니다. 사용자들은 Template Hub에서 Hashtag 기반으로 검색하여 필요한 템플릿을 찾을 수 있습니다.
+생성된 템플릿을 사용자 간 공유할 수 있습니다. 템플릿을 생성할 때 AWS 리소스 기반 Hashtag를 추출합니다. 사용자들은 Template Hub에서 Hashtag 기반으로 검색하여 필요한 템플릿을 찾을 수 있습니다.
 
 <br /> <br />
 
@@ -252,13 +256,134 @@ yarn dev
 <details>
 <summary><b>Backend</b></summary>
 
+## Template Validation API
+
+### AWS CLI Configure
+
+    1. aws 접속 후 IAM(Identity and Access Management) 접속
+    2. 사용자 - 사용자 생성
+    3. 권한 정책 - 권한추가
+        - cloudformation 검색 후 나온거 전부 추가함. (에러 나오면서 두 개인가 빠짐)
+    4. 보안자격증명 - 액세스 키 만들기
+    5. 콘솔에서 aws configure 실행한 뒤
+        - AWS Access Key ID 입력
+        - AWS Secret Access KEy 입력
+        - Default region name : ap-northeast-2 입력
+        - Default output format : json 입력
+
+### How to install (without Docker)
+
+- Backend 디렉토리로 이동
+
+```shell
+cd backend
 ```
-pip install -r backend/requirements.txt
-python backend/app/retrieval/init_vector_db.py
-cd backend/app 
-uvicorn main:app —reload
+
+- Python 가상 환경 설정
+
+```shell
+python -m venv .venv
+source venv/bin/activate
+
 ```
+
+- 필요한 package 설치
+
+```shell
+pip install -r requirements.txt
+```
+
+- AWS CLI Configure 설정
+
+- 실행
+
+```shell
+cd app
+uvicorn main:app --host=0.0.0.0 --port=8000
+```
+
+### How to install (with Docker)
+
+- repository clone
+
+```shell
+git clone https://github.com/kookmin-sw/capstone-2024-05.git
+```
+
+- Backend 디렉토리로 이동
+
+```shell
+cd backend
+```
+
+- Docker 빌드 후 내부 컨테이너 진입
+
+```shell
+docker build . -t [image name]
+docker run -it -p [host port]:8000 --env-file .env [image name]
+```
+
+- AWS CLI Configure 설정
+
+- 실행
+
+```shell
+cd app
+uvicorn main:app --host=0.0.0.0 --port=8000
+```
+
+### ENV
+
+DB_URL
+
+ACCESS_TOKEN_EXPIRE_MINUTES
+
+SECRET_KEY
+
+ALGORITHM
+
+PINECONE_APIKEY
+
+OPENAI_APIKEY
+
+### 서버 디렉토리 구조
+
+    - /app
+        - /api : Functional APIs
+            - /routes
+                - hashtag.py
+                - templates.py
+                - users.pu
+            - router.py
+        - /db : Database Management
+            - database.py
+            - models.py
+        - /retrieval : RAG Implementation
+            - init_vector_db.py
+            - markdown_splitter.py
+            - rag_prototype.py
+            - rag.py
+            - settings.py
+        - /static : Static Files
+            - /examples
+                - example-error.json
+                - example-valid.json
+            - tmp.json
+        - /templates : HTML Templates
+            - main.html
+        - /utils : Utility Modules
+            - auth.py
+            - gpt.py
+            - setup.py
+        - main.py
+    - .env
+    - README.md
+    - requirements.txt
+    - Dockerfile
+
+
 </details>
+
 
 <br/> <br/>
 
