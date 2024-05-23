@@ -48,14 +48,16 @@ export default function MyPage() {
   const [templateList, setTemplateList] = useState([]);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
-  const { isLoggedIn, accessToken } = useAuth();
+  const { isLoggedIn, accessToken, login } = useAuth();
 
   useEffect(() => {
     const fetchTemplates = async () => {
-      if (accessToken == null || !isLoggedIn) {
-        router.push('/login');
-        return;
-      }
+      // const token = localStorage.getItem('accessToken');
+      // console.log('새로고침');
+      // if (localStorage.getItem('accessToken') == null) {
+      //   router.push('/login');
+      //   return;
+      // }
 
       const config = {
         headers: {
@@ -72,7 +74,7 @@ export default function MyPage() {
         setTemplateList(data);
         setLoading(false);
       } catch (error) {
-        router.push('/login');
+        // router.push('/login');
       }
     };
 

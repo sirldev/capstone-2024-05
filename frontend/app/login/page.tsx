@@ -41,7 +41,7 @@ export default function Login() {
 
   const validatePassword = (value: string) => {
     setPassword(value);
-    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&.]{8,}$/;
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&.]{2,}$/;
     if (!passwordRegex.test(value)) {
       return false;
     }
@@ -85,7 +85,8 @@ export default function Login() {
           setLoading(false);
         }
       } catch (error) {
-        console.error('Network error:', error);
+        console.log(`로그인 실패 :${error}`);
+        setLoading(false);
       }
     }
   };
