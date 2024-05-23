@@ -239,17 +239,14 @@ RAG 기법을 적용하여, 사용자 입력을 바탕으로 관련이 있는 AW
 <br/><br/>
 
 ## 🔎 실행 방법
-**Common**
+### **🙏🏻 Common**
 
 
 ```
 git clone https://github.com/kookmin-sw/capstone-2024-05.git
 ```
 
-
-<details>
-
-<summary><b>Frontend</b></summary>
+### **🖥️ Frontend**
 
 
 ```
@@ -259,18 +256,13 @@ yarn dev
 ```
 
 
-</details>
-
-<details>
+### **💾 Backend**
 
 
-<summary><b>Backend</b></summary>
+### Template Validation API
 
 
-## Template Validation API
-
-
-### AWS CLI Configure
+#### AWS CLI Configure
 
     1. aws 접속 후 IAM(Identity and Access Management) 접속
     2. 사용자 - 사용자 생성
@@ -287,11 +279,14 @@ yarn dev
 
 - Backend 디렉토리로 이동
 
+
 ```shell
 cd backend
 ```
 
+
 - Python 가상 환경 설정
+
 
 ```shell
 python -m venv .venv
@@ -299,7 +294,9 @@ source venv/bin/activate
 
 ```
 
+
 - 필요한 package 설치
+
 
 ```shell
 pip install -r requirements.txt
@@ -309,10 +306,12 @@ pip install -r requirements.txt
 
 - 실행
 
+
 ```shell
 cd app
 uvicorn main:app --host=0.0.0.0 --port=8000
 ```
+
 
 ### How to install (with Docker)
 
@@ -367,6 +366,7 @@ PINECONE_APIKEY
 
 OPENAI_APIKEY
 
+
 ### 서버 디렉토리 구조
 
     - /app
@@ -401,9 +401,6 @@ OPENAI_APIKEY
     - README.md
     - requirements.txt
     - Dockerfile
-
-
-</details>
 
 
 <br/> <br/>
