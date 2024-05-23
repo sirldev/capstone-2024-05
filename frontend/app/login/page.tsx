@@ -55,7 +55,7 @@ export default function Login() {
 
     const isNicknameValid = validateNickname(nickname);
     const isPasswordValid = validatePassword(password);
-    
+
     if (isNicknameValid && isPasswordValid) {
       try {
         const response = await fetch(
@@ -85,7 +85,7 @@ export default function Login() {
           setLoading(false);
         }
       } catch (error) {
-        console.log(`로그인 실패 :${error}`)
+        console.log(`로그인 실패 :${error}`);
         setLoading(false);
       }
     }

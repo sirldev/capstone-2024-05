@@ -58,7 +58,6 @@ export default function MyPage() {
       //   router.push('/login');
       //   return;
       // }
-      
 
       const config = {
         headers: {

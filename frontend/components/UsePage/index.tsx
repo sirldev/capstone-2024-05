@@ -1,6 +1,13 @@
 'use client';
 
-import { Modal, Container, Title, LoadingOverlay, Loader, Grid } from '@mantine/core';
+import {
+  Modal,
+  Container,
+  Title,
+  LoadingOverlay,
+  Loader,
+  Grid,
+} from '@mantine/core';
 // import { GithubIcon } from '@mantinex/dev-icons';
 import classes from './usepage.module.css';
 import UserInput from './UserInput/Index';
